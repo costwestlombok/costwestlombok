@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreatePurposesTable extends Migration
 {
@@ -15,7 +15,7 @@ class CreatePurposesTable extends Migration
     {
         Schema::create('purposes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('purpose_name');
+            $table->text('purpose_name');
         });
     }
 

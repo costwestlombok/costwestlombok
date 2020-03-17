@@ -9,11 +9,13 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
+Route::get('/list', 'FrontController@list');
 
 Route::get('/Users', 'UsersController@login');
 Route::resource('dashboard', 'DashboardController');
@@ -39,7 +41,6 @@ Route::resource('project', 'ProjectController');
 Route::get('catalog/subsector/{sectorID}', 'CatalogController@get_subsector');
 Route::get('catalog/unit/{organizationID}', 'CatalogController@get_units');
 
-
 Route::get('transparency/{organization?}/citizens', 'TransparencyController@citizens')->name('transparency.citizens');
 Route::get('transparency/map', 'TransparencyController@map')->name('transparency.map');
 Route::get('transparency/faq', 'TransparencyController@faq')->name('transparency.faq');
@@ -61,7 +62,6 @@ Route::resource('tender', 'TenderController');
 Route::get('tender/{projectID}/create', 'TenderController@create');
 Route::resource('award', 'AwardController');
 Route::resource('contract', 'ContractController');
-
 
 Auth::routes();
 

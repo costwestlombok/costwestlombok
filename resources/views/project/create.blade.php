@@ -22,8 +22,8 @@
 
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-          
-          
+
+
           <div class="form-group">
               <label for="name">Code:</label>
               <input type="text" class="form-control" name="project_code"/>
@@ -33,15 +33,15 @@
               <label for="name">Purpose:</label>
               <select class="form-control" name="purposes_id" id="purposes_id">
                 <option value="0">Choose purposes</option>
-                <?php 
-                      if (count($purposes) > 0):
-                        foreach ($purposes as $purpose): 
-                ?>
-                      <option value="<?= $purpose['id'] ?>"><?= $purpose['purpose_name'] ?></option>
-                <?php 
-                        endforeach; 
-                      endif;
-                ?>
+                <?php
+if (count($purposes) > 0):
+    foreach ($purposes as $purpose):
+    ?>
+	                      <option value="<?=$purpose['id']?>"><?=$purpose['purpose_name']?></option>
+	                <?php
+endforeach;
+endif;
+?>
               </select>
           </div>
 
@@ -61,15 +61,15 @@
                   <label for="name">Sector:</label>
                   <select class="form-control" name="sectors_id" id="sectors_id">
                     <option value="0">Choose sector</option>
-                    <?php 
-                          if (count($sectors) > 0):
-                            foreach ($sectors as $sector): 
-                    ?>
-                          <option value="<?= $sector['id'] ?>"><?= $sector['sector_name'] ?></option>
-                    <?php 
-                            endforeach; 
-                          endif;
-                    ?>
+                    <?php
+if (count($sectors) > 0):
+    foreach ($sectors as $sector):
+    ?>
+	                          <option value="<?=$sector['id']?>"><?=$sector['sector_name']?></option>
+	                    <?php
+endforeach;
+endif;
+?>
                   </select>
               </div>
             </div>
@@ -89,15 +89,15 @@
                   <label for="name">Entity:</label>
                   <select class="form-control" name="organizations_id" id="organizations_id">
                     <option value="0">Choose entity</option>
-                    <?php 
-                          if (count($organizations) > 0):
-                            foreach ($organizations as $org): 
-                    ?>
-                          <option value="<?= $org['id'] ?>"><?= $org['organization_name'] ?></option>
-                    <?php 
-                            endforeach; 
-                          endif;
-                    ?>
+                    <?php
+if (count($organizations) > 0):
+    foreach ($organizations as $org):
+    ?>
+	                          <option value="<?=$org['id']?>"><?=$org['organization_name']?></option>
+	                    <?php
+endforeach;
+endif;
+?>
                   </select>
               </div>
             </div>
@@ -140,7 +140,7 @@
             <div class="col-md-6">
               <div class="form-group">
                   <label for="name">Budget approve date:</label>
-                  <input type="text" class="form-control" name="project_budget_approved" id="project_budget_approved">
+                  <input type="date" class="form-control" name="project_budget_approved" id="project_budget_approved">
               </div>
             </div>
           </div>
@@ -275,22 +275,22 @@
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
                   <label for="">Status:</label>
                   <select class="form-control" name="status" id="status">
                     <option value="0">Choose status</option>
-                    <?php 
-                          if (count($status) > 0):
-                            foreach ($status as $stat): 
-                    ?>
-                          <option value="<?= $stat['id'] ?>"><?= $stat['status_name'] ?></option>
-                    <?php 
-                            endforeach; 
-                          endif;
-                    ?>
+                    <?php
+if (count($status) > 0):
+    foreach ($status as $stat):
+    ?>
+	                          <option value="<?=$stat['id']?>"><?=$stat['status_name']?></option>
+	                    <?php
+endforeach;
+endif;
+?>
                   </select>
               </div>
             </div>
@@ -360,7 +360,7 @@
         },
         project_budget: {
           required: "Debe ingresar un presupuesto"
-        }, 
+        },
         project_budget_approved: {
           required: "deebe ingresar una fecha"
         },
