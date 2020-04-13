@@ -7,3 +7,6 @@ File: scss
 /*============================================================== 
  You can write your style here and overwrite our style
  ============================================================== */
+.navbar-brand-img {
+    height: 60px;
+}
