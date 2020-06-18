@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Organization;
+use Illuminate\Http\Request;
 
 class OrganizationController extends Controller
 {
@@ -13,7 +13,6 @@ class OrganizationController extends Controller
         $this->middleware('auth');
     }
 
-    
     /**
      * Display a listing of the resource.
      *
@@ -47,12 +46,12 @@ class OrganizationController extends Controller
     {
         //
         /*$request->validate([
-            'organization_name' => 'required',
-            'organization_legal_name' => 'required',
-            'description',
-            'address' => 'required',
-            'phone',
-            'postal_code'
+        'organization_name' => 'required',
+        'organization_legal_name' => 'required',
+        'description',
+        'address' => 'required',
+        'phone',
+        'postal_code'
         ]);*/
 
         $organization = new organization([
@@ -61,7 +60,7 @@ class OrganizationController extends Controller
             'description' => $request->get('description'),
             'address' => $request->get('address'),
             'phone' => $request->get('phone'),
-            'postal_code' => $request->get('postal_code')
+            'postal_code' => $request->get('postal_code'),
         ]);
 
         $organization->save();

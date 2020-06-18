@@ -19,7 +19,7 @@
                         <div class="login-form no-border no-border-radius">                         
                             <div class="welcome bg-grey p-t-20">                        
                                 <div class="welcome-text text-size-huge text-light text-center">
-                                <img src="{{ asset('images/login-sisocs.png') }}">
+                                <img src="{{ asset('images/logo.png') }}" style="height: 70px;">
                                 </div>
                             </div>
                             <div class="panel panel-flat no-border">
@@ -60,7 +60,7 @@
                                             <div class="col-sm-6 col-xs-6">
                                                 <div class="checkbox">
                                                     <label>
-                                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Recordarme
+                                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember me
                                                     </label>
                                                 </div>
                                             </div>
@@ -78,7 +78,7 @@
                                     </div>
 
                                     <div class="form-group text-center">
-                                        <a href="{{ route('password.request') }}">Olvido su contraseña?</a>
+                                        <a href="{{ route('password.request') }}">Forgot Password?</a>
                                     </div>
 
                                 </div>
@@ -91,7 +91,7 @@
 
                     <!-- Footer -->
                     <div class="footer text-size-mini">
-                        &copy; 2019 SISOCS &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Version - 2.0
+                        &copy; 2020 CoST &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp; West Nusa Tenggara
                     </div>
                     <!-- /footer -->
 

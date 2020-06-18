@@ -5,7 +5,7 @@
 
 <div class="panel panel-flat">
   <div class="panel-heading">
-    <h4 class="panel-title">@lang('labels.organizations')</h4>
+    <h4 class="panel-title">Add Organization Data</h4>
   </div>
   <div class="panel-body">
     @if ($errors->any())
@@ -18,14 +18,13 @@
       </div><br />
     @endif
       <form method="post" id="form" action="{{ route('organization.store') }}">
+        @csrf
           <div class="form-group">
-              
-              <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              <label for="name">@lang('labels.organization_name'):</label>
+              <label for="name">Organization Name:</label>
               <input type="text" class="form-control" name="organization_name"/>
           </div>
           <div class="form-group">
-              <label for="price">@lang('labels.organization_legal_name'):</label>
+              <label for="price">Organization Legal Name:</label>
               <input type="text" class="form-control" name="organization_legal_name"/>
           </div>
           <div class="form-group">

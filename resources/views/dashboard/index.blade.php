@@ -72,66 +72,29 @@
 		<div class="col-md-4">
 			<div class="panel panel-flat">
 				<div class="panel-heading">
-					<h5 class="panel-title">Planificación</h5>						
+					<h5 class="panel-title">Perencanaan</h5>						
 				</div>									
 				<div class="table-responsive">
 					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Proyectos</th>
-								<th>Presupuesto</th>														
+								<th>Kode Proyek</th>
+								<th>Nama Proyek</th>
+								<th>Anggaran</th>														
 							</tr>
 						</thead>
 						<tbody>
-							<?php 
-							if (count($projects) > 0):
-								foreach ($projects as $row):
-							?>
+							@if (count($projects) > 0)
+								@foreach ($projects as $row)
 							<tr>
-								<td><?= $row->id ?></td>
+								<td>{{$loop->index+1}}</td>
 								<td><?= $row->project_code ?></td>
+								<td>{{$row->project_name}}</td>
 								<td><?= number_format($row->project_budget) ?></td>
 							</tr>
-							<?php 
-								endforeach;
-							endif;
-							?>
-							<!--<tr>
-								<td>2</td>
-								<td>admin dashboard</td>
-								<td>646</td>											
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>web app kit</td>
-								<td>352</td>											
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>responsive design</td>
-								<td>764</td>												
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>backend application</td>
-								<td>342</td>													
-							</tr>
-							<tr>
-								<td>6</td>
-								<td>admin dashboard</td>
-								<td>627</td>											
-							</tr>
-							<tr>
-								<td>7</td>
-								<td>html admin</td>
-								<td>24</td>											
-							</tr>
-							<tr>
-								<td>8</td>
-								<td>jquery plugins</td>
-								<td>534</td>												
-							</tr>-->
+								@endforeach
+							@endif
 						</tbody>
 					</table>
 				</div>								
@@ -141,15 +104,15 @@
 		<div class="col-md-4">
 			<div class="panel panel-flat">
 				<div class="panel-heading">
-					<h5 class="panel-title">Calificación</h5>						
+					<h5 class="panel-title">Kualifikasi</h5>						
 				</div>
 				<div class="table-responsive">
 					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th class="col-md-1">#</th>
-								<th>Proyecto</th>
-								<th class="col-md-2">Oferentes</th>
+								<th>Proyek</th>
+								<th class="col-md-2">Penawar</th>
 								<th class="col-md-1"></th>														
 							</tr>
 						</thead>
@@ -160,48 +123,7 @@
 								<td>14%</td>
 								<td>521</td>											
 							</tr>
-							<tr>
-								<td>2</td>
-								<td>user_profile.html</td>
-								<td>9%</td>
-								<td>646</td>											
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>application_dashboard.html</td>
-								<td>6%</td>
-								<td>352</td>											
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>content_search.html</td>
-								<td>11%</td>
-								<td>764</td>												
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>submit_form.html</td>
-								<td>6%</td>
-								<td>342</td>													
-							</tr>
-							<tr>
-								<td>6</td>
-								<td>components.html</td>
-								<td>19%</td>
-								<td>627</td>											
-							</tr>
-							<tr>
-								<td>7</td>
-								<td>404.html</td>
-								<td>2%</td>
-								<td>24</td>											
-							</tr>
-							<tr>
-								<td>8</td>
-								<td>website_offline.html</td>
-								<td>2%</td>
-								<td>534</td>												
-							</tr>-->
+							-->
 						</tbody>
 					</table>
 				</div>	
@@ -211,16 +133,16 @@
 		<div class="col-md-4">
 			<div class="panel panel-flat">
 				<div class="panel-heading">
-					<h5 class="panel-title">Contratación</h5>						
+					<h5 class="panel-title">Kontrak</h5>						
 				</div>
 				<div class="table-responsive">
 					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th class="col-md-1">#</th>
-								<th>Proyecto</th>
-								<th class="col-md-2">Avance</th>
-								<th class="col-md-1">Desembolsos</th>														
+								<th>Proyek</th>
+								<th class="col-md-2">Proses</th>
+								<th class="col-md-1">Pencairan</th>														
 							</tr>
 						</thead>
 						<tbody>
@@ -230,48 +152,7 @@
 								<td>14%</td>
 								<td>521</td>											
 							</tr>
-							<tr>
-								<td>2</td>
-								<td>user_profile.html</td>
-								<td>9%</td>
-								<td>646</td>											
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>application_dashboard.html</td>
-								<td>6%</td>
-								<td>352</td>											
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>content_search.html</td>
-								<td>11%</td>
-								<td>764</td>												
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>submit_form.html</td>
-								<td>6%</td>
-								<td>342</td>													
-							</tr>
-							<tr>
-								<td>6</td>
-								<td>components.html</td>
-								<td>19%</td>
-								<td>627</td>											
-							</tr>
-							<tr>
-								<td>7</td>
-								<td>404.html</td>
-								<td>2%</td>
-								<td>24</td>											
-							</tr>
-							<tr>
-								<td>8</td>
-								<td>website_offline.html</td>
-								<td>2%</td>
-								<td>534</td>												
-							</tr>-->
+							-->
 						</tbody>
 					</table>
 				</div>	

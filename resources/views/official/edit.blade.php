@@ -5,7 +5,7 @@
 
 <div class="panel panel-flat">
   <div class="panel-heading">
-    <h4 class="panel-title">Sectors</h4>
+    <h4 class="panel-title">Official Data</h4>
   </div>
   <div class="panel-body">
     @if ($errors->any())
@@ -25,7 +25,7 @@
           <div class="form-group">
               <label for="price">Organization: </label>
               <select class="form-control" name="organizations_id">
-                <option value="0" selected="selected">Choose an Organizatin</option>
+                <option value="0" selected="selected">Choose an Organization</option>
                 @foreach( $organizations as $org )
                   @if($official->organizations_id == $org->id)
                   <option value='{{ $org->id }}' selected="selected">{{ $org->organization_name }}</option>

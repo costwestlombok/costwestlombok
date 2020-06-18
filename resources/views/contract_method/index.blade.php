@@ -12,7 +12,7 @@
 @section('content')
 	<div class="panel panel-flat">
 					<div class="panel-heading">
-						<h5 class="panel-title">Listado de Metodos</h5>				
+						<h5 class="panel-title">List Metode</h5>				
 					</div>
 
 					<div class="panel-body">
@@ -24,7 +24,7 @@
 							<thead>
 								<tr>
 									<th data-hide="phone, tablet">#</th>
-									<th data-toggle="true">Method Name</th>
+									<th data-toggle="true">Nama Metode</th>
 									<th>Actions</th>
 									<th data-hide="phone, tablet"></th>
 									<th data-hide="phone, tablet"></th>

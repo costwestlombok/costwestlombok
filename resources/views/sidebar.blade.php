@@ -30,31 +30,29 @@
 				<ul class="sidebar-accordion">
 					<li class="list-title">Principal</li>
 					<li>
-						<a href="#"><i class="icon-display4"></i><span class="list-label"> Dashboard</span></a>
+						<a href="{{url('/dashboard')}}"><i class="icon-display4"></i><span class="list-label"> Dashboard</span></a>
 					</li>
 					<li>
-						<a href="#"><i class="icon-display4"></i><span class="list-label"> <span>Catalogue</span></a>
+						<a href="#"><i class="icon-display4"></i><span class="list-label"> <span>Katalog</span></a>
 						<ul>
-							<li><a href="{{ route('organization.index') }}">Organizaciones</a></li>
-							<li><a href="{{route('organization_unit.index')}}">Unidades</a></li>
-							<li><a href="{{route('official.index')}}">Funcionarios</a></li>
-							<li><a href="{{route('role.index')}}">Rol</a></li>
-							<li><a href="{{route('sector.index')}}">Sector</a></li>
-							<li><a href="{{route('subsector.index')}}">Subsector</a></li>
-							<li><a href="{{route('source.index')}}">Fuentes de financiamiento</a></li>
-							<li><a href="{{route('purpose.index')}}">Propositos</a></li>
-							<!--<li><a href="">Departamento</a></li>
-								<li><a href="">Municipio</a></li>-->
-
-							<li><a href="{{route('contracttype.index')}}">Tipos de contratos</a></li>
-							<li><a href="">Oferentes</a></li>
-							<li><a href="{{route('tender_method.index')}}">Metodo de adquisición</a></li>
-							<li><a href="{{route('contract_method.index')}}">Metodo de contratación</a></li>
-							<li><a href="">Tipo de modificaciones de contrato</a></li>
-							<li><a href="">Contactos</a></li>
-							<li><a href="">Tipos de Garantía</a></li>
-							<li><a href="">Moneda</a></li>
-							<li><a href="{{route('status.index')}}">Estados</a></li>
+							<li @if(Request::segment(1) == 'organization') class="active" @endif><a href="{{ route('organization.index') }}">Organisasi</a></li>
+							<li @if(Request::segment(1) == 'organization_unit') class="active" @endif><a href="{{route('organization_unit.index')}}">Unit Organisasi</a></li>
+							<li @if(Request::segment(1) == 'official') class="active" @endif><a href="{{route('official.index')}}">Pejabat</a></li>
+							<li @if(Request::segment(1) == 'role') class="active" @endif><a href="{{route('role.index')}}">Tugas/Wewenang</a></li>
+							<li @if(Request::segment(1) == 'sector') class="active" @endif><a href="{{route('sector.index')}}">Sektor</a></li>
+							<li @if(Request::segment(1) == 'subsector') class="active" @endif><a href="{{route('subsector.index')}}">Subsektor</a></li>
+							<li @if(Request::segment(1) == 'source') class="active" @endif><a href="{{route('source.index')}}">Sumber Pendanaan</a></li>
+							<li @if(Request::segment(1) == 'purpose') class="active" @endif><a href="{{route('purpose.index')}}">Tujuan</a></li>
+							
+							<li @if(Request::segment(1) == 'contracttype') class="active" @endif><a href="{{route('contracttype.index')}}">Tipe Kontrak</a></li>
+							<li @if(Request::segment(1) == 'offerer') class="active" @endif><a href="{{route('offerer.index')}}">Penawar</a></li>
+							<li><a href="{{route('tender_method.index')}}">Metode Tender</a></li>
+							<li><a href="{{route('contract_method.index')}}">Metode Kontrak</a></li>
+							<li><a href="">Jenis Modifikasi Kontrak</a></li>
+							<li><a href="">Kontrak</a></li>
+							<li><a href="">Jenis Jaminan</a></li>
+							<li><a href="">Mata Uang</a></li>
+							<li><a href="{{route('status.index')}}">Status</a></li>
 						</ul>
 					</li>
 					<!--<li>
@@ -106,93 +104,93 @@
 							</ul>
 						</li>-->
 
-					<li class="list-title">Gestión de Proyectos</li>
+					<li class="list-title">Manajemen Proyek</li>
 
 					<li>
 						<a href="#">
-							<i class="icon-comment-discussion"></i><span>Proyectos</span>
+							<i class="icon-comment-discussion"></i><span>Proyek</span>
 						</a>
 						<ul>
-							<li><a href="{{ route('project.index') }}">Listas Proyectos</a></li>
-							<li><a href="{{ route('project.create') }}">Crear Proyecto</a></li>
+							<li><a href="{{ route('project.index') }}">List Proyek</a></li>
+							<li><a href="{{ route('project.create') }}">Buat Proyek Baru</a></li>
 						</ul>
 					</li>
 					<li>
 						<a href="#">
 							<i class="icon-comment-discussion"></i>
-							Invitación y Calificación
+							Tender
 						</a>
 						<ul>
-							<li><a href="{{route('tender.index')}}">Listar invitaciónes</a></li>
-							<li><a href="{{route('tender.create')}}">Crear invitación</a></li>
+							<li><a href="{{route('tender.index')}}">List Tender</a></li>
+							<li><a href="{{route('tender.create')}}">Buat Tender Baru</a></li>
 						</ul>
 					</li>
 					<li>
 						<a href="">
 							<i class="icon-comment-discussion"></i>
-							Evaluación de Ofertas/Adjudicación
+							Evaluasi Penwaran/Penghargaan
 						</a>
 						<ul>
-							<li><a href="{{route('award.index')}}">Listar Adjudicaciones</a></li>
-							<li><a href="#">Crear Adjudicación</a></li>
+							<li><a href="{{route('award.index')}}">List Penghargaan</a></li>
+							<li><a href="#">Buat Penghargaan Baru</a></li>
 						</ul>
 					</li>
 					<li>
 						<a href="#">
 							<i class="icon-comment-discussion"></i>
-							Contratación
+							Kontrak
 						</a>
 						<ul>
-							<li><a href="{{route('contract.index')}}">Listar Contrataciones</a></li>
-							<li><a href="{{route('contract.create')}}">Listar Contrataciones</a></li>
+							<li><a href="{{route('contract.index')}}">List Kontrak</a></li>
+							<li><a href="{{route('contract.create')}}">Create Kontrak Baru</a></li>
 						</ul>
 					</li>
 					<li>
 						<a href="#">
-							<i class="icon-comment-discussion"></i> Gestión de Contratos
+							<i class="icon-comment-discussion"></i> Manajemen Kontrak
 						</a>
 						<ul>
-							<li><a href="{{route('contract.index')}}">Gestiones de Contratos</a></li>
-							<li><a href="{{route('contract.create')}}">Crear Modificación</a></li>
+							<li><a href="{{route('contract.index')}}">List Manajemen Kontrak</a></li>
+							<li><a href="{{route('contract.create')}}">Buat Modifikasi</a></li>
 						</ul>
 					</li>
 					<li>
 						<a href="#">
-							<i class="icon-comment-discussion"></i> Ejecución
+							<i class="icon-comment-discussion"></i> Pengerjaan
 						</a>
 						<ul>
-							<li><a href="{{route('contract.index')}}">Ver Ejecución de Proyectos</a></li>
-							<li><a href="{{route('contract.create')}}">Registrar Ejecución</a></li>
+							<li><a href="{{route('contract.index')}}">Lihat Pengerjaan Proyek</a></li>
+							<li><a href="{{route('contract.create')}}">Data Pengerjaan Proyek</a></li>
 						</ul>
 					</li>
 					<li>
 						<a href="#">
-							<i class="icon-comment-discussion"></i> Avances y Garantías
+							<i class="icon-comment-discussion"></i> Progres dan Jaminan
 						</a>
 						<ul>
-							<li><a href="{{route('contract.index')}}">Ver Avances</a></li>
-							<li><a href="{{route('contract.create')}}">Registrar Avance</a></li>
+							<li><a href="{{route('contract.index')}}">Progress</a></li>
+							<li><a href="{{route('contract.create')}}">Record Progres</a></li>
 						</ul>
 					</li>
 					<li>
-						<a href=""><i class="icon-comment-discussion"></i> Ficha de finalización </a>
+						<a href=""><i class="icon-comment-discussion"></i> Formulir Pengisian</a>
 					</li>
 
-					<li class="list-title">Informes</li>
+					<li class="list-title">Laporan</li>
 
 					<li>
 						<a href="{{ route('reports.adquisitions') }}"><i class="icon-comment-discussion"></i>
-							Adquisiciones </a>
+							Akusisi </a>
 					</li>
 					<li>
-						<a href="{{ route('reports.technicians') }}"><i class="icon-comment-discussion"></i> Técnicos
+						<a href="{{ route('reports.technicians') }}"><i class="icon-comment-discussion"></i> Teknisi
 						</a>
 					</li>
 					<!--<li>
 							<a href="{{ route('reports.suppliers') }}"><i class="icon-comment-discussion"></i> Contratos y Proveedores </a>
 						</li>-->
 					<li>
-						<a href="{{ route('reports.managment') }}"><i class="icon-comment-discussion"></i> Gerenciales
+						<a href="{{ route('reports.managment') }}"><i class="icon-comment-discussion"></i> Manajemen/Pengelolaan
 						</a>
 					</li>
 					<!--<li>

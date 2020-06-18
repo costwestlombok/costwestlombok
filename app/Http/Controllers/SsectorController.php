@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Sector;
+use Illuminate\Http\Request;
 
 class SsectorController extends Controller
 {
-
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -47,12 +46,12 @@ class SsectorController extends Controller
     {
         //
         /*$request->validate([
-            'organization_name' => 'required',
-            'organization_legal_name' => 'required',
-            'description',
-            'address' => 'required',
-            'phone',
-            'postal_code'
+        'organization_name' => 'required',
+        'organization_legal_name' => 'required',
+        'description',
+        'address' => 'required',
+        'phone',
+        'postal_code'
         ]);*/
 
         $sector = new Sector([
@@ -118,4 +117,3 @@ class SsectorController extends Controller
         return redirect('/sector')->with('success', 'Sector has been destroyed');
     }
 }
-

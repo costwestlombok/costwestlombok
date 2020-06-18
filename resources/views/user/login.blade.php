@@ -81,7 +81,7 @@
 
 			<!-- Footer -->
 			<div class="footer text-size-mini">
-				&copy; 2019 SISOCS &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Version - 2.0
+				&copy; 2020 CoST &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp; West Nusa Tenggara
 			</div>
 			<!-- /footer -->
 

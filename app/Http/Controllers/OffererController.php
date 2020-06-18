@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Offerer;
+use Illuminate\Http\Request;
 
 class OffererController extends Controller
 {
-    
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -47,12 +46,12 @@ class OffererController extends Controller
     {
         //
         /*$request->validate([
-            'organization_name' => 'required',
-            'organization_legal_name' => 'required',
-            'description',
-            'address' => 'required',
-            'phone',
-            'postal_code'
+        'organization_name' => 'required',
+        'organization_legal_name' => 'required',
+        'description',
+        'address' => 'required',
+        'phone',
+        'postal_code'
         ]);*/
 
         $sector = new Sector([

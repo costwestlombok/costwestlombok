@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Organization;
 use App\OrganizationUnit;
+use Illuminate\Http\Request;
 
 class OrganizationUnitController extends Controller
 {
-
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -51,10 +50,10 @@ class OrganizationUnitController extends Controller
         //
         $unit = new OrganizationUnit([
             'unit_name' => $request->get('unit_name'),
-            'organizations_id' => $request->get('organizations_id')
+            'organizations_id' => $request->get('organizations_id'),
         ]);
         $unit->save();
-        return redirect('/organization_unit/create')->with('success', 'Unit has been created');
+        return redirect('/organization_unit')->with('success', 'Unit has been created');
     }
 
     /**
