@@ -14,6 +14,6 @@ class Sector extends Model
 
     public function unit()
     {
-        return $this->hasMany('App/Subsector', 'sector_id', 'id');
+        return $this->hasMany('App\Subsector', 'sector_id', 'id');
     }
 }

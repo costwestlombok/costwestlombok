@@ -14,6 +14,6 @@ class Organization extends Model
 
     public function unit()
     {
-        return $this->hasMany('App/OrganizationUnit', 'entity_id', 'id');
+        return $this->hasMany('App\OrganizationUnit', 'entity_id', 'id');
     }
 }

@@ -14,11 +14,11 @@ class Advance extends Model
 
     public function project()
     {
-        return $this->belongsTo('App/Project', 'project_id', 'id');
+        return $this->belongsTo('App\Project', 'project_id', 'id');
     }
 
     public function status()
     {
-        return $this->belongsTo('App/status', 'status_id', 'id');
+        return $this->belongsTo('App\status', 'status_id', 'id');
     }
 }

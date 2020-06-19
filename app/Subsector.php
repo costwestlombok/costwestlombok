@@ -19,6 +19,6 @@ class Subsector extends Model
 
     public function sector()
     {
-        return $this->belongsTo('App/Sector', 'sector_id', 'id');
+        return $this->belongsTo('App\Sector', 'sector_id', 'id');
     }
 }

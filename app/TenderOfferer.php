@@ -14,11 +14,11 @@ class TenderOfferer extends Model
 
     public function tender()
     {
-        return $this->belongsTo('App/Tender', 'tender_id', 'id');
+        return $this->belongsTo('App\Tender', 'tender_id', 'id');
     }
 
     public function offerer()
     {
-        return $this->belongsTo('App/Offerer', 'offerer_id', 'id');
+        return $this->belongsTo('App\Offerer', 'offerer_id', 'id');
     }
 }

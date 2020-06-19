@@ -21,36 +21,27 @@
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
           
-
           <div class="form-group">
               <label for="price">Organization: </label>
-              <select class="form-control" name="organizations_id">
-                <option value="0" selected="selected">Choose an Organization</option>
+              <select class="form-control" id="entity">
+                <option value="" selected="selected">Choose an Organization</option>
                 @foreach( $organizations as $org )
-                  @if($official->organizations_id == $org->id)
-                  <option value='{{ $org->id }}' selected="selected">{{ $org->organization_name }}</option>
-                  @else
-                  <option value='{{ $org->id }}'>{{ $org->organization_name }}</option>
-                  @endif
+                  <option value='{{ $org->id }}' @if($official->unit->entity_id == $org->id) selected @endif>{{ $org->name }}</option>
                 @endforeach
               </select>
           </div>
           <div class="form-group">
               <label for="price">Unit: </label>
-              <select class="form-control" name="organization_units_id">
-                <option value="0" selected="selected">Choose an Unit</option>
+              <select class="form-control" name="entity_unit_id" id="unit">
+                <option value="" selected="selected">Choose an Unit</option>
                 @foreach( $units as $unit )
-                  @if($official->organization_units_id == $unit->id) 
-                  <option value='{{ $unit->id }}' selected="selected">{{ $unit->unit_name }}</option>
-                  @else
-                  <option value='{{ $unit->id }}'>{{ $unit->unit_name }}</option>
-                  @endif
+                    <option value='{{ $unit->id }}' @if($official->entity_unit_id == $unit->id)  selected="selected" @endif>{{ $unit->unit_name }}</option>
                 @endforeach
               </select>
           </div>
           <div class="form-group">
               <label for="name">Official Name:</label>
-              <input type="text" class="form-control" name="official_name" value="{{$official->official_name}}" />
+              <input type="text" class="form-control" name="name" value="{{$official->name}}" />
           </div>
           <div class="form-group">
               <label for="name">Position:</label>
@@ -58,16 +49,33 @@
           </div>
           <div class="form-group">
               <label for="name">Email:</label>
-              <input type="text" class="form-control" name="email"{{ $official->email }}/>
+              <input type="text" class="form-control" name="email" value="{{ $official->email }}"/>
           </div>
           <div class="form-group">
               <label for="name">Phone:</label>
               <input type="text" class="form-control" name="phone" value="{{$official->phone}}" />
           </div>
-
-          <button type="submit" class="btn btn-primary">Save</button>
-        
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
       </form>
   </div>
 </div>
+@endsection
+@section('script')
+<script>
+  $('#entity').change(function(){
+      var entity_id = $(this).val();
+      $.ajax({
+        type: "GET",
+        url: "{{url('/get-unit')}}/"+entity_id,
+        success: function (data){
+          $('#unit option:gt(0)').remove();
+          $.each(data, function(){
+            $("#unit").append('<option value="'+this.id+'">'+this.unit_name+'</option>')
+          });
+        }
+      });
+  });
+</script>
 @endsection

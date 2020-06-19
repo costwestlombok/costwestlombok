@@ -21,6 +21,7 @@ Route::get('/Users', 'UsersController@login');
 Route::resource('dashboard', 'DashboardController');
 Route::resource('organization', 'OrganizationController');
 Route::resource('organization_unit', 'OrganizationUnitController');
+Route::get('/get-unit/{entity}', 'OrganizationUnitController@get_unit');
 //Route::resource('sector', 'SectorController');
 Route::resource('sector', 'SsectorController');
 Route::resource('subsector', 'SubsectorController');

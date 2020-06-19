@@ -14,11 +14,11 @@ class Ammendment extends Model
 
     public function engage()
     {
-        return $this->belongsTo('App/Contract', 'engage_id', 'id');
+        return $this->belongsTo('App\Contract', 'engage_id', 'id');
     }
 
     public function status()
     {
-        return $this->belongsTo('App/Status', 'status_id', 'id');
+        return $this->belongsTo('App\Status', 'status_id', 'id');
     }
 }

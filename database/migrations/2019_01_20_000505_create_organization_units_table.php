@@ -17,8 +17,8 @@ class CreateOrganizationUnitsTable extends Migration
         Schema::create('organization_units', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('unit_name');
-            $table->uuid('entity');
-            $table->foreign('entity')->references('id')->on('organizations');
+            $table->uuid('entity_id');
+            $table->foreign('entity_id')->references('id')->on('organizations');
             $table->timestamps();
         });
     }

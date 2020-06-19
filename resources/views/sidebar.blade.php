@@ -33,21 +33,21 @@
 						<a href="{{url('/dashboard')}}"><i class="icon-display4"></i><span class="list-label"> Dashboard</span></a>
 					</li>
 					<li>
-						<a href="#"><i class="icon-display4"></i><span class="list-label"> <span>Katalog</span></a>
+						<a href="#"><i class="icon-display4"></i><span class="list-label"> <span>Catalog</span></a>
 						<ul>
-							<li @if(Request::segment(1) == 'organization') class="active" @endif><a href="{{ route('organization.index') }}">Organisasi</a></li>
-							<li @if(Request::segment(1) == 'organization_unit') class="active" @endif><a href="{{route('organization_unit.index')}}">Unit Organisasi</a></li>
-							<li @if(Request::segment(1) == 'official') class="active" @endif><a href="{{route('official.index')}}">Pejabat</a></li>
-							<li @if(Request::segment(1) == 'role') class="active" @endif><a href="{{route('role.index')}}">Tugas/Wewenang</a></li>
-							<li @if(Request::segment(1) == 'sector') class="active" @endif><a href="{{route('sector.index')}}">Sektor</a></li>
-							<li @if(Request::segment(1) == 'subsector') class="active" @endif><a href="{{route('subsector.index')}}">Subsektor</a></li>
-							<li @if(Request::segment(1) == 'source') class="active" @endif><a href="{{route('source.index')}}">Sumber Pendanaan</a></li>
-							<li @if(Request::segment(1) == 'purpose') class="active" @endif><a href="{{route('purpose.index')}}">Tujuan</a></li>
+							<li @if(Request::segment(1) == 'organization') class="active" @endif><a href="{{ route('organization.index') }}">Organization</a></li>
+							<li @if(Request::segment(1) == 'organization_unit') class="active" @endif><a href="{{route('organization_unit.index')}}">Organization Unit</a></li>
+							<li @if(Request::segment(1) == 'official') class="active" @endif><a href="{{route('official.index')}}">Official</a></li>
+							<li @if(Request::segment(1) == 'role') class="active" @endif><a href="{{route('role.index')}}">Role</a></li>
+							<li @if(Request::segment(1) == 'sector') class="active" @endif><a href="{{route('sector.index')}}">Sector</a></li>
+							<li @if(Request::segment(1) == 'subsector') class="active" @endif><a href="{{route('subsector.index')}}">Subsector</a></li>
+							<li @if(Request::segment(1) == 'source') class="active" @endif><a href="{{route('source.index')}}">Source/Funding</a></li>
+							<li @if(Request::segment(1) == 'purpose') class="active" @endif><a href="{{route('purpose.index')}}">Project Purpose</a></li>
 							
-							<li @if(Request::segment(1) == 'contracttype') class="active" @endif><a href="{{route('contracttype.index')}}">Tipe Kontrak</a></li>
-							<li @if(Request::segment(1) == 'offerer') class="active" @endif><a href="{{route('offerer.index')}}">Penawar</a></li>
-							<li><a href="{{route('tender_method.index')}}">Metode Tender</a></li>
-							<li><a href="{{route('contract_method.index')}}">Metode Kontrak</a></li>
+							<li @if(Request::segment(1) == 'contracttype') class="active" @endif><a href="{{route('contracttype.index')}}">Contract Type</a></li>
+							<li @if(Request::segment(1) == 'offerer') class="active" @endif><a href="{{route('offerer.index')}}">Offerer</a></li>
+							<li><a href="{{route('tender_method.index')}}">Tender Method</a></li>
+							<li><a href="{{route('contract_method.index')}}">Contract Method</a></li>
 							<li><a href="">Jenis Modifikasi Kontrak</a></li>
 							<li><a href="">Kontrak</a></li>
 							<li><a href="">Jenis Jaminan</a></li>

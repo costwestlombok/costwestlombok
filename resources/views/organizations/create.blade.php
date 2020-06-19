@@ -21,29 +21,34 @@
         @csrf
           <div class="form-group">
               <label for="name">Organization Name:</label>
-              <input type="text" class="form-control" name="organization_name"/>
+              <input type="text" class="form-control" name="name"/>
           </div>
           <div class="form-group">
               <label for="price">Organization Legal Name:</label>
-              <input type="text" class="form-control" name="organization_legal_name"/>
+              <input type="text" class="form-control" name="legal_name"/>
           </div>
           <div class="form-group">
               <label for="price">Description :</label>
-              <input type="text" class="form-control" name="description"/>
+              <textarea name="description" class="form-control"  rows="3"></textarea>
           </div>
           <div class="form-group">
               <label for="quantity">Address:</label>
-              <input type="text" class="form-control" name="address"/>
+              <textarea name="address" class="form-control"  rows="3"></textarea>
           </div>
           <div class="form-group">
               <label for="quantity">Phone:</label>
               <input type="text" class="form-control" name="phone"/>
           </div>
           <div class="form-group">
+              <label for="quantity">Website:</label>
+              <input type="text" class="form-control" name="website"/>
+          </div>
+          <div class="form-group">
               <label for="quantity">Postal code:</label>
               <input type="text" class="form-control" name="postal_code"/>
           </div>
-          <button type="submit" class="btn btn-primary">Add</button>
+          <div class="pull-right">
+          <button type="submit" class="btn btn-primary">Add Data</button></div>
       </form>
   </div>
 </div>

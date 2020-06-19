@@ -14,6 +14,6 @@ class Official extends Model
 
     public function unit()
     {
-        return $this->belongsTo('App/OrganizationUnit', 'entity_unit_id', 'id');
+        return $this->belongsTo('App\OrganizationUnit', 'entity_unit_id', 'id');
     }
 }

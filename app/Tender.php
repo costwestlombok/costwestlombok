@@ -14,21 +14,21 @@ class Tender extends Model
 
     public function project()
     {
-        return $this->belongsTo('App/Project', 'project_id', 'id');
+        return $this->belongsTo('App\Project', 'project_id', 'id');
     }
 
     public function contract_type()
     {
-        return $this->belongsTo('App/ContractType', 'contract_type_id', 'id');
+        return $this->belongsTo('App\ContractType', 'contract_type_id', 'id');
     }
 
     public function tender_method()
     {
-        return $this->belongsTo('App/TenderMethod', 'tender_method_id', 'id');
+        return $this->belongsTo('App\TenderMethod', 'tender_method_id', 'id');
     }
 
     public function official()
     {
-        return $this->belongsTo('App/Official', 'official_id', 'id');
+        return $this->belongsTo('App\Official', 'official_id', 'id');
     }
 }

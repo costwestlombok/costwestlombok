@@ -12,7 +12,7 @@
 @section('content')
 	<div class="panel panel-flat">
 					<div class="panel-heading">
-						<h5 class="panel-title">List Organisasi</h5>				
+						<h5 class="panel-title">Organization List</h5>				
 					</div>
 
 					<div class="panel-body">
@@ -24,7 +24,7 @@
 							<thead>
 								<tr>
 									<th data-hide="phone, tablet">#</th>
-									<th data-toggle="true">Nama Organisasi</th>
+									<th data-toggle="true">Organization Name</th>
 									<th>Actions</th>
 									<th data-hide="phone, tablet"></th>
 									<th data-hide="phone, tablet"></th>
@@ -34,8 +34,8 @@
 							<tbody>
 								@foreach($organizations as $org)
 								<tr>
-									<td>{{$org->id}}</td>
-									<td>{{$org->organization_name}}</td>
+									<td>{{$loop->index+1}}</td>
+									<td>{{$org->name}}</td>
 									<td class="text-center">
 										<a href="{{ route('organization.edit', $org->id) }}" class="btn btn-defaut">
 											<i class="icon-pencil6"></i>

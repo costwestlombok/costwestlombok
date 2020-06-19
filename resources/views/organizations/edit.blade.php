@@ -22,30 +22,36 @@
 
           <div class="form-group">
               <label for="name">Organization Name:</label>
-              <input type="text" class="form-control" name="organization_name" value="{{$organization->organization_name}}" />
+              <input type="text" class="form-control" name="name" value="{{$organization->name}}" />
           </div>
           <div class="form-group">
               <label for="price">Organization legal name :</label>
-              <input type="text" class="form-control" name="organization_legal_name" value="{{$organization->organization_legal_name}}"/>
+              <input type="text" class="form-control" name="legal_name" value="{{$organization->legal_name}}"/>
           </div>
           <div class="form-group">
               <label for="price">Description :</label>
-              <input type="text" class="form-control" name="description" value="{{$organization->description}}"/>
+              <textarea class="form-control" name="description" rows="3">{{$organization->description}}</textarea>
           </div>
           <div class="form-group">
               <label for="quantity">Address:</label>
-              <input type="text" class="form-control" name="address" value="{{$organization->address}}"/>
+              <textarea name="address" class="form-control" rows="3">{{$organization->address}}</textarea>
           </div>
           <div class="form-group">
               <label for="quantity">Phone:</label>
               <input type="text" class="form-control" name="phone" value="{{$organization->phone}}"/>
           </div>
           <div class="form-group">
+              <label for="quantity">Website:</label>
+              <input type="text" class="form-control" name="website" value="{{$organization->website}}"/>
+          </div>
+          <div class="form-group">
               <label for="quantity">Postal code:</label>
               <input type="text" class="form-control" name="postal_code" value="{{$organization->postal_code}}"/>
           </div>
 
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Update Data</button>
+          </div>
         
       </form>
   </div>

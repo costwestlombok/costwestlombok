@@ -14,6 +14,6 @@ class AdvanceImage extends Model
 
     public function advance()
     {
-        return $this->belongsTo('App/Advance', 'advance_id', 'id');
+        return $this->belongsTo('App\Advance', 'advance_id', 'id');
     }
 }

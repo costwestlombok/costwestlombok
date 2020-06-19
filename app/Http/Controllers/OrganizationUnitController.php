@@ -47,13 +47,13 @@ class OrganizationUnitController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $unit = new OrganizationUnit([
-            'unit_name' => $request->get('unit_name'),
-            'organizations_id' => $request->get('organizations_id'),
+        $this->validate($request, [
+            'entity_id' => 'required',
         ]);
-        $unit->save();
-        return redirect('/organization_unit')->with('success', 'Unit has been created');
+        $data = $request->all();
+        OrganizationUnit::create($data);
+        alert('Success', 'Data saved successfully!', 'success');
+        return back();
     }
 
     /**
@@ -77,7 +77,6 @@ class OrganizationUnitController extends Controller
     {
         $unit = OrganizationUnit::find($id);
         $organizations = Organization::all();
-
         return view('organization_units.edit', ['unit' => $unit, 'organizations' => $organizations]);
 
     }
@@ -89,14 +88,15 @@ class OrganizationUnitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, OrganizationUnit $organizationUnit)
     {
-        $unit = OrganizationUnit::find($id);
-        $unit->unit_name = $request->get('unit_name');
-        $unit->organizations_id = $request->get('organizations_id');
-        $unit->save();
-
-        return redirect('organization_unit')->with('success', 'Data has been updated');
+        $this->validate($request, [
+            'entity_id' => 'required',
+        ]);
+        $data = $request->all();
+        $organizationUnit->update($data);
+        alert('Success', 'Data updated successfully!', 'success');
+        return redirect('/organization_unit');
 
     }
 
@@ -106,12 +106,18 @@ class OrganizationUnitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(OrganizationUnit $organizationUnit)
     {
-        //
-        $unit = OrganizationUnit::find($id);
-        $unit->delete();
 
-        return redirect('organization_unit')->with('succes', 'Record has been destroyed');
+        $organizationUnit->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
+
+        return back();
+    }
+
+    public function get_unit($entity)
+    {
+        $data = OrganizationUnit::where('entity_id', $entity)->get();
+        return response()->json($data);
     }
 }

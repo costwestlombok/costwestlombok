@@ -26,19 +26,16 @@
           </div>
           <div class="form-group">
               <label for="price">Organization: </label>
-              <select class="form-control" name="organizations_id">
+              <select class="form-control" name="entity_id">
                 <option value="0" selected="selected">Choose an Organization</option>
                 @foreach( $organizations as $org )
-                  @if($unit->organizations_id == $org->id)
-                  <option value='{{ $org->id }}' selected="selected">{{ $org->organization_name }}</option>
-                  @else
-                  <option value='{{ $org->id }}'>{{ $org->organization_name }}</option>
-                  @endif
+                  <option value='{{ $org->id }}' @if($unit->entity_id == $org->id) selected @endif>{{ $org->name }}</option>
                 @endforeach
               </select>
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
-        
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
       </form>
   </div>
 </div>

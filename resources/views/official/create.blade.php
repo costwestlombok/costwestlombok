@@ -22,25 +22,21 @@
           {{ csrf_field() }}
           <div class="form-group">
               <label for="price">Organization: </label>
-              <select class="form-control" name="organizations_id">
-                <option value="0" selected="selected">Choose an Organizatin</option>
+              <select class="form-control" id="entity" required>
+                <option value="" selected="selected">Choose an Organization</option>
                 @foreach( $organizations as $org )
-                  <option value='{{ $org->id }}'>{{ $org->organization_name }}</option>
+                  <option value='{{ $org->id }}'>{{ $org->name }}</option>
                 @endforeach
               </select>
           </div>
           <div class="form-group">
-              <label for="price">Unit: </label>
-              <select class="form-control" name="organization_units_id">
-                <option value="0" selected="selected">Choose an Unit</option>
-                @foreach( $units as $unit )
-                  <option value='{{ $unit->id }}'>{{ $unit->unit_name }}</option>
-                @endforeach
+              <label for="price">Organization Unit: </label>
+              <select class="form-control" name="entity_unit_id" id="unit" required>
               </select>
           </div>
           <div class="form-group">
               <label for="name">Official Name:</label>
-              <input type="text" class="form-control" name="official_name"/>
+              <input type="text" class="form-control" name="name" required/>
           </div>
           <div class="form-group">
               <label for="name">Position:</label>
@@ -54,9 +50,27 @@
               <label for="name">Phone:</label>
               <input type="text" class="form-control" name="phone"/>
           </div>
-
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
       </form>
   </div>
 </div>
+@endsection
+@section('script')
+  <script>
+      $('#entity').change(function(){
+          var entity_id = $(this).val();
+          $.ajax({
+            type: "GET",
+            url: "{{url('/get-unit')}}/"+entity_id,
+            success: function (data){
+              $('#unit option:gt(0)').remove();
+              $.each(data, function(){
+                $("#unit").append('<option value="'+this.id+'">'+this.unit_name+'</option>')
+              });
+            }
+          });
+      });
+  </script>
 @endsection

@@ -112,6 +112,8 @@
 
 	@stack('scripts')
 	<!--<script src="{{ asset('js/pages/dashboard_default.js') }}"></script>-->
+	@yield('script')
+	@include('sweetalert::alert')
 	<!-- /page scripts -->
 </body>
 

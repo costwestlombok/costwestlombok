@@ -27,14 +27,16 @@
           </div>
           <div class="form-group">
               <label for="price">Organization: </label>
-              <select class="form-control" name="organizations_id">
-                <option value="0" selected="selected">Choose an Organization</option>
+              <select class="form-control" name="entity_id" required>
+                <option value="" selected="selected">Choose an Organization</option>
                 @foreach( $organizations as $org )
-                  <option value='{{ $org->id }}'>{{ $org->organization_name }}</option>
+                  <option value='{{ $org->id }}'>{{ $org->name }}</option>
                 @endforeach
               </select>
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
       </form>
   </div>
 </div>

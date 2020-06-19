@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Official;
 use App\Organization;
 use App\OrganizationUnit;
+use Illuminate\Http\Request;
 
 class OfficialController extends Controller
 {
-    
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -50,27 +49,15 @@ class OfficialController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        /*$request->validate([
-            'organization_name' => 'required',
-            'organization_legal_name' => 'required',
-            'description',
-            'address' => 'required',
-            'phone',
-            'postal_code'
-        ]);*/
-
-        $official = new Official([
-            'organizations_id' => $request->get('organizations_id'),
-            'organization_units_id' => $request->get('organization_units_id'),
-            'official_name' => $request->get('official_name'),
-            'position' => $request->get('position'),
-            'email' => $request->get('email'),
-            'phone' => $request->get('phone'),
+        $this->validate($request, [
+            'entity_unit_id' => 'required',
+            'name' => 'required',
         ]);
 
-        $official->save();
-        return redirect('/official/create')->with('success', 'Record has been added');
+        $data = $request->all();
+        Official::create($data);
+        alert('Success', 'Data saved successfully!');
+        return back();
     }
 
     /**
@@ -95,7 +82,6 @@ class OfficialController extends Controller
         //
         $official = Official::find($id);
 
-
         $organizations = Organization::all();
         $units = OrganizationUnit::all();
 
@@ -109,19 +95,16 @@ class OfficialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Official $official)
     {
-        //
-        $official = Official::find($id);
-        $official->organizations_id = $request->get('organizations_id');
-        $official->organization_units_id = $request->get('organization_units_id');
-        $official->official_name = $request->get('official_name');
-        $official->position = $request->get('position');
-        $official->phone = $request->get('phone');
-        $official->email = $request->get('email');
-        $official->save();
-
-        return redirect('/official')->with('success', 'Data has been updated');
+        $this->validate($request, [
+            'entity_unit_id' => 'required',
+            'name' => 'required',
+        ]);
+        $data = $request->all();
+        $official->update($data);
+        alert('Success', 'Data updated successfully!');
+        return redirect('/official');
     }
 
     /**
@@ -130,11 +113,10 @@ class OfficialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Official $official)
     {
-        $official = Official::find($id);
         $official->delete();
-
-        return redirect('/official')->with('success', 'Record has been destroyed');
+        alert('Success', 'Data deleted successfully!', 'success');
+        return back();
     }
 }

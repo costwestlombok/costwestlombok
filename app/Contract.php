@@ -14,17 +14,17 @@ class Contract extends Model
 
     public function status()
     {
-        return $this->belongsTo('App/Status', 'status_id', 'id');
+        return $this->belongsTo('App\Status', 'status_id', 'id');
     }
 
     public function supplier()
     {
-        return $this->belongsTo('App/Offerer', 'supplier_id', 'id');
+        return $this->belongsTo('App\Offerer', 'supplier_id', 'id');
     }
 
     public function award()
     {
-        return $this->belongsTo('App/Award', 'awards_id', 'id');
+        return $this->belongsTo('App\Award', 'awards_id', 'id');
     }
 
 }

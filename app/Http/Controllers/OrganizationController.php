@@ -44,27 +44,10 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        /*$request->validate([
-        'organization_name' => 'required',
-        'organization_legal_name' => 'required',
-        'description',
-        'address' => 'required',
-        'phone',
-        'postal_code'
-        ]);*/
-
-        $organization = new organization([
-            'organization_name' => $request->get('organization_name'),
-            'organization_legal_name' => $request->get('organization_legal_name'),
-            'description' => $request->get('description'),
-            'address' => $request->get('address'),
-            'phone' => $request->get('phone'),
-            'postal_code' => $request->get('postal_code'),
-        ]);
-
-        $organization->save();
-        return redirect('/organization')->with('success', 'Organization has been added');
+        $data = $request->all();
+        Organization::create($data);
+        alert('Success', 'Data saved successfully!', 'success');
+        return redirect('/organization');
     }
 
     /**
@@ -98,19 +81,12 @@ class OrganizationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Organization $organization)
     {
-        //
-        $organization = Organization::find($id);
-        $organization->organization_name = $request->get('organization_name');
-        $organization->organization_legal_name = $request->get('organization_legal_name');
-        $organization->description = $request->get('description');
-        $organization->address = $request->get('address');
-        $organization->phone = $request->get('phone');
-        $organization->postal_code = $request->get('postal_code');
-        $organization->save();
-
-        return redirect('/organization')->with('success', 'Data has been updated');
+        $data = $request->all();
+        $organization->update($data);
+        alert('Success', 'Data updated successfully!', 'success');
+        return redirect('/organization');
 
     }
 
@@ -120,12 +96,12 @@ class OrganizationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Organization $organization)
     {
         //
-        $organization = Organization::find($id);
         $organization->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
 
-        return redirect('/organization')->with('success', 'Record has been deleted');
+        return redirect('/organization');
     }
 }

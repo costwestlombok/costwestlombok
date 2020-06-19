@@ -14,6 +14,6 @@ class ProjectDocument extends Model
 
     public function project()
     {
-        return $this->belongsTo('App/Project', 'project_id', 'id');
+        return $this->belongsTo('App\Project', 'project_id', 'id');
     }
 }

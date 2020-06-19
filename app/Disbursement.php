@@ -14,11 +14,11 @@ class Disbursement extends Model
 
     public function excecutions()
     {
-        return $this->belongsTo('App/Excecution', 'excecutions_id', 'id');
+        return $this->belongsTo('App\Excecution', 'excecutions_id', 'id');
     }
 
     public function status()
     {
-        return $this->belongsTo('App/Status', 'status_id', 'id');
+        return $this->belongsTo('App\Status', 'status_id', 'id');
     }
 }
