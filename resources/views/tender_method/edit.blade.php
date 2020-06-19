@@ -5,7 +5,7 @@
 
 <div class="panel panel-flat">
   <div class="panel-heading">
-    <h4 class="panel-title">Method</h4>
+    <h4 class="panel-title">Metode Tender</h4>
   </div>
   <div class="panel-body">
     @if ($errors->any())

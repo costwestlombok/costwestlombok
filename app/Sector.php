@@ -2,14 +2,18 @@
 
 namespace App;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Sector extends Model
 {
-    //
-    public $timestamps = false;
+    use Uuids;
+    protected $keyType = 'uuid';
+    protected $guarded = [];
+    public $incrementing = false;
 
-    protected $fillable = [
-    	'sector_name'
-    ];
+    public function unit()
+    {
+        return $this->hasMany('App/Subsector', 'sector_id', 'id');
+    }
 }

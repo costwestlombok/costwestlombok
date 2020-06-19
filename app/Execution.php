@@ -2,25 +2,28 @@
 
 namespace App;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Execution extends Model
 {
-    //
+    use Uuids;
+    protected $keyType = 'uuid';
+    protected $guarded = [];
+    public $incrementing = false;
 
-    protected $fillable = [
-    						'track_execution',
-    						'track_engage',
-    						'vartime',
-    						'varprice',
-    						'start_date',
-    						'program',
-    						'contract_state',
-    						'engages_id',
-    						'contacts_id',
-    						'statuses_id',
-    						'user_creation',
-    						'user_publication',
-    						'published_at'
-    						];
+    public function engage()
+    {
+        return $this->belongsTo('App/Contract', 'engage_id', 'id');
+    }
+
+    public function contract()
+    {
+        return $this->belongsTo('App/Contract', 'contract_id', 'id');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo('App/Status', 'status_id', 'id');
+    }
 }

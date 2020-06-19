@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTableProjectSources extends Migration
 {
@@ -15,17 +15,17 @@ class CreateTableProjectSources extends Migration
     {
         Schema::create('project_sources', function (Blueprint $table) {
             //
-            $table->increments('id');
+            $table->uuid('id')->primary();
             $table->string('track_project');
             $table->double('ammount')->nullable();
             $table->double('exchange_rate')->nullable();
-            $table->integer('projects_id')->unsigned();
+            $table->uuid('projects_id');
             $table->foreign('projects_id')->references('id')->on('projects');
-            $table->integer('sources_id')->unsigned();
+            $table->uuid('sources_id');
             $table->foreign('sources_id')->references('id')->on('sources');
-            $table->integer('currencies_id')->unsigned();
+            $table->uuid('currencies_id');
             $table->foreign('currencies_id')->references('id')->on('currencies');
-            $table->integer('statuses_id')->unsigned();
+            $table->uuid('statuses_id');
             $table->foreign('statuses_id')->references('id')->on('statuses');
             $table->integer('user_creation')->nullable();
             $table->integer('user_publication')->nullable();
@@ -41,10 +41,10 @@ class CreateTableProjectSources extends Migration
      */
     public function down()
     {
-        
+
         Schema::dropIfExists('project_sources');
         /*Schema::table('project_sources', function (Blueprint $table) {
-            //
-        });*/
+    //
+    });*/
     }
 }

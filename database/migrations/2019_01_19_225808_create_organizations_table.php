@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateOrganizationsTable extends Migration
 {
@@ -14,16 +14,16 @@ class CreateOrganizationsTable extends Migration
     public function up()
     {
         Schema::create('organizations', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('organization_name');
-            $table->string('organization_legal_name')->nullable();
+            $table->uuid('id')->primary();
+            $table->string('name');
+            $table->string('legal_name')->nullable();
             $table->string('description')->nullable();
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('postal_code')->nullable();
             $table->integer('main')->default(1);
-            $table->integer('active')->default(1);
-            $table->integer('belongs_to')->default(0);
+            $table->string('open_uri')->nullable();
+            $table->string('website')->nullable();
             $table->timestamps();
         });
     }

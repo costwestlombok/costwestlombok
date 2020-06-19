@@ -2,14 +2,13 @@
 
 namespace App;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 class TenderMethod extends Model
 {
-    //
-    public $timestamps = false;
-
-    protected $fillable = [
-    	'method_name'
-    ];
+    use Uuids;
+    protected $keyType = 'uuid';
+    protected $guarded = [];
+    public $incrementing = false;
 }

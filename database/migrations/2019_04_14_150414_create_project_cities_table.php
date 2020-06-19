@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateProjectCitiesTable extends Migration
 {
@@ -14,17 +14,17 @@ class CreateProjectCitiesTable extends Migration
     public function up()
     {
         Schema::create('project_cities', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id')->primary();
             $table->string('benefit');
             $table->date('date_published')->nullable();
-            $table->integer('projects_id')->unsigned();
+            $table->uuid('projects_id');
             $table->foreign('projects_id')->references('id')->on('projects');
-            $table->integer('cities_id')->unsigned();
+            $table->uuid('cities_id');
             $table->foreign('cities_id')->references('id')->on('cities');
             $table->string('city_code')->nullable();
-            $table->integer('states_id')->unsigned();
+            $table->uuid('states_id');
             $table->foreign('states_id')->references('id')->on('states');
-            $table->integer('statuses_id')->unsigned();
+            $table->uuid('statuses_id');
             $table->foreign('statuses_id')->references('id')->on('statuses');
             $table->integer('user_creation')->nullable();
             $table->integer('user_publication')->nullable();

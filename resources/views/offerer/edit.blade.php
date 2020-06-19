@@ -5,7 +5,7 @@
 
 <div class="panel panel-flat">
   <div class="panel-heading">
-    <h4 class="panel-title">Sectors</h4>
+    <h4 class="panel-title">Data Penawar</h4>
   </div>
   <div class="panel-body">
     @if ($errors->any())
@@ -17,14 +17,32 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('sector.update', $sector->id) }}">
+      <form method="post" action="{{ route('offerer.update', $offerer->id) }}">
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
           <div class="form-group">
-              
-              
-              <label for="name">Sector Name:</label>
-              <input type="text" class="form-control" name="sector_name" value="{{$sector->sector_name}}" />
+              <label for="name">Nama Penawar:</label>
+              <input type="text" class="form-control" name="offerer_name" value="{{$offerer->offerer_name}}"/>
+          </div>
+          <div class="form-group">
+              <label for="name">Nama Resmi Penawar:</label>
+              <input type="text" class="form-control" name="offerer_legal_name" value="{{$offerer->offerer_legal_name}}"/>
+          </div>
+          <div class="form-group">
+              <label for="name">Nomor Telpon:</label>
+              <input type="text" class="form-control" name="phone" value="{{$offerer->phone}}"/>
+          </div>
+          <div class="form-group">
+              <label for="name">Website:</label>
+              <input type="text" class="form-control" name="website" value="{{$offerer->website}}"/>
+          </div>
+          <div class="form-group">
+            <label for="name">Alamat:</label>
+            <textarea name="address" id="" rows="3" class="form-control">{{$offerer->address}}</textarea>
+          </div>
+          <div class="form-group">
+            <label for="name">Keterangan:</label>
+            <textarea name="description" id="" rows="5" class="form-control">{{$offerer->description}}</textarea>
           </div>
           <button type="submit" class="btn btn-primary">Save</button>
         

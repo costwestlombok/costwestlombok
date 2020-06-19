@@ -12,7 +12,7 @@
 @section('content')
 	<div class="panel panel-flat">
 					<div class="panel-heading">
-						<h5 class="panel-title">Listado de Metodos</h5>				
+						<h5 class="panel-title">List Metode Tender</h5>				
 					</div>
 
 					<div class="panel-body">

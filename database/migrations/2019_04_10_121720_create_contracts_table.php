@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateContractsTable extends Migration
 {
@@ -14,26 +14,22 @@ class CreateContractsTable extends Migration
     public function up()
     {
         Schema::create('contracts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('track_engage');
-            $table->string('track_contract');
-            $table->integer('n_modifiy')->nullable();
-            $table->string('modification_type')->nullable();
-            $table->text('justification')->nullable();
-            $table->double('current_price')->nullable();
-            $table->text('contract_current_scope')->nullable();
-            $table->string('adendum')->nullable();;
-            $table->string('current_prog')->nullable();
-            $table->string('other')->nullable();
-            $table->datetime('date')->nullable();
-            $table->datetime('contract_date')->nullable();
-            $table->integer('engages_id')->unsigned();
-            $table->foreign('engages_id')->references('id')->on('engages');
-            $table->integer('statuses_id')->unsigned();
-            $table->foreign('statuses_id')->references('id')->on('statuses');
-            $table->integer('user_creation')->nullable();
-            $table->integer('user_publication')->nullable();
-            $table->datetime('published_at')->nullable();
+            $table->uuid('id')->primary();
+            $table->uuid('awards_id');
+            $table->foreign('awards_id')->references('id')->on('awards');
+            $table->string('number')->nullable();
+            $table->datetime('start_date')->nullable();
+            $table->datetime('end_date')->nullable();
+            $table->datetime('max_extend_date')->nullable();
+            $table->integer('duration')->nullable();
+            $table->string('contract_title')->nullable();
+            $table->string('contract_scope')->nullable();
+            $table->double('price_local_currency')->nullable();
+            $table->double('price_usd_currency')->nullable();
+            $table->uuid('suppliers_id');
+            $table->foreign('suppliers_id')->references('id')->on('offerers');
+            $table->uuid('status_id');
+            $table->foreign('status_id')->references('id')->on('statuses');
             $table->timestamps();
         });
     }

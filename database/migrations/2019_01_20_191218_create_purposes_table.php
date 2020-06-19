@@ -14,7 +14,7 @@ class CreatePurposesTable extends Migration
     public function up()
     {
         Schema::create('purposes', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id')->primary();
             $table->text('purpose_name');
         });
     }

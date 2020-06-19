@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateAdvancesTable extends Migration
 {
@@ -14,31 +14,21 @@ class CreateAdvancesTable extends Migration
     public function up()
     {
         Schema::create('advances', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('track_advance');
-            $table->string('track_execution');
-            $table->decimal('pecent_programmed', 15, 2)->nullable();
-            $table->decimal('percent_real', 15, 2)->nullable();
-            $table->decimal('finance_programmed', 15, 2)->nullable();
-            $table->decimal('finance_real', 15, 2)->nullable();
+            $table->uuid('id')->primary();
+            $table->uuid('project_id');
+            $table->foreign('project_id')->references('id')->on('projects');
+            $table->uuid('status_id');
+            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->float('programmed_percent')->nullable();
+            $table->float('real_percent')->nullable();
+            $table->decimal('scheduled_financing')->nullable();
+            $table->decimal('real_financing')->nullable();
             $table->string('description_problems')->nullable();
             $table->string('description_issues')->nullable();
-            $table->date('advance_date')->nullable();
-            $table->string('file_warranties')->nullable();
-            $table->string('file_advance')->nullable();
-            $table->string('file_supervision')->nullable();
-            $table->string('file_evaluation')->nullable();
-            $table->string('file_technic')->nullable();
-            $table->string('file_finance')->nullable();
-            $table->string('file_reception')->nullable();
-            $table->string('file_unpleased')->nullable();
-            $table->integer('executions_id')->unsigned();
-            $table->foreign('executions_id')->references('id')->on('executions');
-            $table->integer('statuses_id')->unsigned();
-            $table->foreign('statuses_id')->references('id')->on('statuses');
-            $table->integer('user_creation')->nullable();
-            $table->integer('user_publication')->nullable();
-            $table->datetime('published_at')->nullable();
+            $table->string('guaranties_doc')->nullable();
+            $table->string('advance_doc')->nullable();
+            $table->date('date_of_advance')->nullable();
+            $table->datetime('date_of_publication')->nullable();
             $table->timestamps();
         });
     }

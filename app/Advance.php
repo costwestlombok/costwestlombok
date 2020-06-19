@@ -2,33 +2,23 @@
 
 namespace App;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Advance extends Model
 {
-    //
-    protected $fillable = [
-    						'track_advance',
-    						'track_execution',
-    						'pecent_programmed',
-    						'percent_real',
-    						'finance_programmed',
-    						'finance_real',
-    						'description_problems',
-    						'description_issues',
-    						'advance_date',
-    						'file_warranties',
-    						'file_advance',
-    						'file_supervision',
-    						'file_evaluation',
-    						'file_technic',
-    						'file_finance',
-    						'file_reception',
-    						'file_unpleased',
-    						'executions_id',
-    						'statuses_id',
-    						'user_creation',
-    						'user_publication',
-    						'published_at'
-    						];
+    use Uuids;
+    protected $keyType = 'uuid';
+    protected $guarded = [];
+    public $incrementing = false;
+
+    public function project()
+    {
+        return $this->belongsTo('App/Project', 'project_id', 'id');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo('App/status', 'status_id', 'id');
+    }
 }

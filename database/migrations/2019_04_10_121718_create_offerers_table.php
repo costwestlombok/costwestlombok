@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateOfferersTable extends Migration
 {
@@ -14,14 +14,14 @@ class CreateOfferersTable extends Migration
     public function up()
     {
         Schema::create('offerers', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id')->primary();
             $table->string('offerer_name');
-            $table->string('offerer_legal_name')->nullable();
+            $table->string('legal_name')->nullable();
             $table->string('description')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('website')->nullable();
-            $table->string('verification_website')->nullable();
+            $table->boolean('verification_website')->default(false);
             $table->timestamps();
         });
     }

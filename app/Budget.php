@@ -5,7 +5,7 @@ namespace App;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Budget extends Model
 {
     use Uuids;
     protected $keyType = 'uuid';

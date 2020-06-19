@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTendersTable extends Migration
 {
@@ -14,35 +14,33 @@ class CreateTendersTable extends Migration
     public function up()
     {
         Schema::create('tenders', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('track_tender');
-            $table->string('track_project');
+            $table->uuid('id')->primary();
+            $table->uuid('project_id');
+            $table->foreign('project_id')->references('id')->on('projects');
+            $table->uuid('contract_type_id');
+            $table->foreign('contract_type_id')->references('id')->on('contract_types');
+            $table->uuid('tender_method_id');
+            $table->foreign('tender_method_id')->references('id')->on('tender_methods');
+            $table->uuid('official_id');
+            $table->foreign('official_id')->references('id')->on('officials');
             $table->string('process_number')->nullable();
-            $table->text('process_name')->nullable();
-            $table->string('file_invitation')->nullable();
-            $table->string('file_qualification_bases')->nullable();
-            $table->string('file_resolution_stating_qualification')->nullable();
-            $table->string('file_call_for_tender')->nullable();
-            $table->string('file_terms_conditions')->nullable();
-            $table->string('file_amendments')->nullable();
-            $table->string('file_acceptance_certificate')->nullable();
-            $table->string('file_others')->nullable();
-            $table->integer('projects_id')->unsigned();
-            $table->foreign('projects_id')->references('id')->on('projects');
-            $table->integer('organizations_id')->unsigned();
-            $table->foreign('organizations_id')->references('id')->on('organizations');
-            $table->integer('organization_units_id')->nullable();
-            $table->integer('contract_types_id')->unsigned();
-            $table->foreign('contract_types_id')->references('id')->on('contract_types');
-            $table->integer('tender_methods_id')->unsigned();
-            $table->foreign('tender_methods_id')->references('id')->on('tender_methods');
-            $table->integer('officials_id')->nullable();
-            $table->integer('roles_id')->nullable();
-            $table->integer('statuses_id')->unsigned();
-            $table->foreign('statuses_id')->references('id')->on('statuses');
-            $table->integer('user_creation')->nullable();
-            $table->integer('user_publication')->nullable();
-            $table->dateTime('published_at')->nullable();
+            $table->text('project_process_name')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->date('max_extended_process')->nullable();
+            $table->integer('duration')->nullable(); // in days
+            $table->double('amount')->nullable();
+            $table->string('evaluation_process')->nullable(); //file?
+            $table->string('international_invitation')->nullable(); //file?
+            $table->string('basement')->nullable(); //file?
+            $table->string('resolution')->nullable(); //file?
+            $table->string('convocation')->nullable(); //file?
+            $table->string('tdr')->nullable(); //file?
+            $table->string('clarification')->nullable(); //file?
+            $table->string('acceptance_certificate')->nullable(); //file?
+            $table->uuid('status_id');
+            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->date('date_of_publication')->nullable();
             $table->timestamps();
         });
     }

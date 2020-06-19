@@ -2,15 +2,13 @@
 
 namespace App;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 class State extends Model
 {
-    //
-    public $timestamps = false;
-
-    public $fillable = [
-    	'state_name',
-    	'state_code',
-    ];
+    use Uuids;
+    protected $keyType = 'uuid';
+    protected $guarded = [];
+    public $incrementing = false;
 }

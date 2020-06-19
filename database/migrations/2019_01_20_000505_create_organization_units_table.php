@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateOrganizationUnitsTable extends Migration
 {
@@ -14,11 +14,11 @@ class CreateOrganizationUnitsTable extends Migration
     public function up()
     {
         //
-        Schema::create('organization_units', function(Blueprint $table){
-            $table->increments('id');
+        Schema::create('organization_units', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->string('unit_name');
-            $table->integer('organizations_id')->unsigned();
-            $table->foreign('organizations_id')->references('id')->on('organizations');
+            $table->uuid('entity');
+            $table->foreign('entity')->references('id')->on('organizations');
             $table->timestamps();
         });
     }

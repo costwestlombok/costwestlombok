@@ -2,20 +2,18 @@
 
 namespace App;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Organization extends Model
 {
-    //
-    protected $fillable = [
-    						'organization_name',
-    						'organization_legal_name',
-    						'description',
-    						'address',
-    						'phone',
-    						'postal_code',
-    						'main',
-    						'belongs_to',
-    						'active'
-    						];
+    use Uuids;
+    protected $keyType = 'uuid';
+    protected $guarded = [];
+    public $incrementing = false;
+
+    public function unit()
+    {
+        return $this->hasMany('App/OrganizationUnit', 'entity_id', 'id');
+    }
 }

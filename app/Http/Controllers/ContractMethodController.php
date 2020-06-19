@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\ContractMethod;
+use Illuminate\Http\Request;
 
 class ContractMethodController extends Controller
 {
-
 
     public function __construct()
     {
@@ -47,12 +46,12 @@ class ContractMethodController extends Controller
     {
         //
         /*$request->validate([
-            'organization_name' => 'required',
-            'organization_legal_name' => 'required',
-            'description',
-            'address' => 'required',
-            'phone',
-            'postal_code'
+        'organization_name' => 'required',
+        'organization_legal_name' => 'required',
+        'description',
+        'address' => 'required',
+        'phone',
+        'postal_code'
         ]);*/
 
         $method = new ContractMethod([
@@ -60,7 +59,7 @@ class ContractMethodController extends Controller
         ]);
 
         $method->save();
-        return redirect('/contract_method/index')->with('success', 'Record has been added');
+        return redirect('/contract_method')->with('success', 'Record has been added');
     }
 
     /**

@@ -2,12 +2,13 @@
 
 namespace App;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 class WarrantyType extends Model
 {
-    //
-    protected $fillable = [
-        'name'
-        ];
+    use Uuids;
+    protected $keyType = 'uuid';
+    protected $guarded = [];
+    public $incrementing = false;
 }

@@ -5,16 +5,16 @@ namespace App;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
-class Disbursement extends Model
+class Ammendment extends Model
 {
     use Uuids;
     protected $keyType = 'uuid';
     protected $guarded = [];
     public $incrementing = false;
 
-    public function excecutions()
+    public function engage()
     {
-        return $this->belongsTo('App/Excecution', 'excecutions_id', 'id');
+        return $this->belongsTo('App/Contract', 'engage_id', 'id');
     }
 
     public function status()

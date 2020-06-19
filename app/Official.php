@@ -2,17 +2,18 @@
 
 namespace App;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Official extends Model
 {
-    //
-    protected $fillable = [
-    	'organizations_id',
-    	'organization_units_id',
-    	'official_name',
-    	'position',
-    	'email',
-    	'phone'
-    ];
+    use Uuids;
+    protected $keyType = 'uuid';
+    protected $guarded = [];
+    public $incrementing = false;
+
+    public function unit()
+    {
+        return $this->belongsTo('App/OrganizationUnit', 'entity_unit_id', 'id');
+    }
 }

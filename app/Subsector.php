@@ -2,15 +2,23 @@
 
 namespace App;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Subsector extends Model
 {
-    //
-    public $timestamps = false;
+    use Uuids;
+    protected $keyType = 'uuid';
+    protected $guarded = [];
+    public $incrementing = false;
 
     protected $fillable = [
-    	'sectors_id',
-    	'subsector_name'
+        'sector_id',
+        'subsector_name',
     ];
+
+    public function sector()
+    {
+        return $this->belongsTo('App/Sector', 'sector_id', 'id');
+    }
 }

@@ -53,13 +53,9 @@ class OffererController extends Controller
         'phone',
         'postal_code'
         ]);*/
-
-        $sector = new Sector([
-            'sector_name' => $request->get('sector_name'),
-        ]);
-
-        $sector->save();
-        return redirect('/sector/create')->with('success', 'Section has been added');
+        $data = $request->all();
+        Offerer::create($data);
+        return redirect('/offerer')->with('success', 'Section has been added');
     }
 
     /**
@@ -82,8 +78,8 @@ class OffererController extends Controller
     public function edit($id)
     {
         //
-        $sector = Sector::find($id);
-        return view('sector.edit', ['sector' => $sector]);
+        $offerer = Offerer::find($id);
+        return view('offerer.edit', ['offerer' => $offerer]);
     }
 
     /**
@@ -96,11 +92,10 @@ class OffererController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $sector = Sector::find($id);
-        $sector->sector_name = $request->get('sector_name');
-        $sector->save();
-
-        return redirect('/sector')->with('sectors', 'data has been updated');
+        $offerer = Offerer::find($id);
+        $data = $request->all();
+        $offerer->update($data);
+        return redirect('/offerer')->with('offerers', 'data has been updated');
     }
 
     /**
@@ -111,9 +106,8 @@ class OffererController extends Controller
      */
     public function destroy($id)
     {
-        $sector = Sector::find($id);
-        $sector->delete();
-
-        return redirect('/sector')->with('success', 'Sector has been destroyed');
+        $offerer = Offerer::find($id);
+        $offerer->delete();
+        return redirect('/offerer')->with('success', 'offerer has been destroyed');
     }
 }

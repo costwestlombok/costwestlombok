@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Contract;
 use App\Organization;
 use App\Status;
-use App\Contract;
-
-
+use Illuminate\Http\Request;
 
 class ContractController extends Controller
 {
-    
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +24,6 @@ class ContractController extends Controller
     {
         //
         $obj = Contract::all();
-
 
         return view('contract.index', ['obj' => $obj]);
     }
@@ -45,11 +41,11 @@ class ContractController extends Controller
 
         $status = Status::all();
 
-        return view('contract.create', [ 
-                                        'organizations'  => $organizations,
-                                        'status'    => $status,
-                                    ]
-                    );
+        return view('contract.create', [
+            'organizations' => $organizations,
+            'status' => $status,
+        ]
+        );
     }
 
     /**

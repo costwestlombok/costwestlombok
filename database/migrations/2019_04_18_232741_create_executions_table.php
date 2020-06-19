@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateExecutionsTable extends Migration
 {
@@ -14,23 +14,19 @@ class CreateExecutionsTable extends Migration
     public function up()
     {
         Schema::create('executions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('track_execution');
-            $table->string('track_engage');
+            $table->uuid('id')->primary();
             $table->double('vartime')->nullable();
             $table->double('varprice')->nullable();
             $table->datetime('start_date')->nullable();
             $table->string('program')->nullable();
-            $table->integer('contract_state')->nullable();
-            $table->integer('engages_id')->unsigned();
-            $table->foreign('engages_id')->references('id')->on('engages');
-            $table->integer('contacts_id')->unsigned();
-            $table->foreign('contacts_id')->references('id')->on('contacts');
-            $table->integer('statuses_id')->unsigned();
-            $table->foreign('statuses_id')->references('id')->on('statuses');
-            $table->integer('user_creation')->nullable();
-            $table->integer('user_publication')->nullable();
-            $table->datetime('published_at')->nullable();
+            $table->string('contract_state')->nullable();
+            $table->uuid('engage_id');
+            $table->foreign('engage_id')->references('id')->on('contracts');
+            $table->uuid('contact_id');
+            $table->foreign('contact_id')->references('id')->on('contacts');
+            $table->uuid('status_id');
+            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->datetime('date_of_publication')->nullable();
             $table->timestamps();
         });
     }
