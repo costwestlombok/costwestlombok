@@ -24,7 +24,9 @@
               <label for="name">Purpose Name:</label>
               <input type="text" class="form-control" name="purpose_name" id="purpose_name"/>
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
       </form>
   </div>
 </div>

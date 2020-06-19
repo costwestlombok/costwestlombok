@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Subsector;
 use App\Sector;
+use App\Subsector;
+use Illuminate\Http\Request;
 
 class SubsectorController extends Controller
 {
-
-    
 
     public function __construct()
     {
@@ -48,23 +46,14 @@ class SubsectorController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        /*$request->validate([
-            'organization_name' => 'required',
-            'organization_legal_name' => 'required',
-            'description',
-            'address' => 'required',
-            'phone',
-            'postal_code'
-        ]);*/
-
-        $subsector = new Subsector([
-            'sectors_id' => $request->get('sectors_id'),
-            'subsector_name' => $request->get('subsector_name'),
+        $this->validate($request, [
+            'sector_id' => 'required',
+            'subsector_name' => 'required',
         ]);
-
-        $subsector->save();
-        return redirect('/subsector/create')->with('success', 'Record has been added');
+        $data = $request->all();
+        Subsector::create($data);
+        alert('Success', 'Data saved successfully!', 'success');
+        return back();
     }
 
     /**
@@ -101,15 +90,17 @@ class SubsectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Subsector $subsector)
     {
-        //
-        $subsector = Subsector::find($id);
-        $subsector->subsector_name = $request->get('subsector_name');
-        $subsector->sectors_id = $request->get('sectors_id');
-        $subsector->save();
+        $this->validate($request, [
+            'sector_id' => 'required',
+            'subsector_name' => 'required',
+        ]);
+        $data = $request->all();
+        $subsector->update($data);
+        alert('Success', 'Data updated successfully!', 'success');
 
-        return redirect('/subsector')->with('success', 'Data has been updated');
+        return redirect('/subsector');
     }
 
     /**
@@ -118,10 +109,10 @@ class SubsectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Subsector $subsector)
     {
-        $subsector = Subsector::find($id);
         $subsector->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
 
         return redirect('/subsector')->with('success', 'Record has been destroyed');
     }

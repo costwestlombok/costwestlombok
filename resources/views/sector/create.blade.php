@@ -18,13 +18,14 @@
       </div><br />
     @endif
       <form method="post" action="{{ route('sector.store') }}">
+        @csrf
           <div class="form-group">
-              
-              <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <label for="name">Sector Name:</label>
               <input type="text" class="form-control" name="sector_name"/>
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
       </form>
   </div>
 </div>

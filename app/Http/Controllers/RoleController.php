@@ -44,22 +44,13 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        /*$request->validate([
-        'organization_name' => 'required',
-        'organization_legal_name' => 'required',
-        'description',
-        'address' => 'required',
-        'phone',
-        'postal_code'
-        ]);*/
-
-        $role = new Role([
-            'role_name' => $request->get('role_name'),
+        $this->validate($request, [
+            'role_name' => 'required',
         ]);
-
-        $role->save();
-        return redirect('/role/create')->with('success', 'Record has been added');
+        $data = $request->all();
+        Role::create($data);
+        alert('Success', 'Data saved successfully!', 'success');
+        return back();
     }
 
     /**
@@ -93,13 +84,14 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        //
-        $role = Role::find($id);
-        $role->role_name = $request->get('role_name');
-        $role->save();
-
+        $this->validate($request, [
+            'role_name' => 'required',
+        ]);
+        $data = $request->all();
+        $role->update($data);
+        alert('Success', 'Data updated successfully!', 'success');
         return redirect('/role')->with('role', 'Data has been updated');
     }
 
@@ -109,10 +101,10 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        $role = Role::find($id);
         $role->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
 
         return redirect('/role')->with('success', 'Record has been destroyed');
     }

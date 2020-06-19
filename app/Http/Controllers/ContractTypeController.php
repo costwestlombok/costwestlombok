@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\ContractType;
+use Illuminate\Http\Request;
 
 class ContractTypeController extends Controller
 {
@@ -44,22 +44,15 @@ class ContractTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        /*$request->validate([
-            'organization_name' => 'required',
-            'organization_legal_name' => 'required',
-            'description',
-            'address' => 'required',
-            'phone',
-            'postal_code'
-        ]);*/
-
-        $contract_type = new ContractType([
-            'type_name' => $request->get('type_name'),
+        $this->validate($request, [
+            'type_name' => 'required',
         ]);
 
-        $contract_type->save();
-        return redirect('/contracttype/create')->with('success', 'Record has been added');
+        $data = $request->all();
+        ContractType::create($data);
+        alert('Success', 'Data saved successfully!', 'success');
+
+        return back();
     }
 
     /**
@@ -93,14 +86,17 @@ class ContractTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ContractType $contracttype)
     {
-        //
-        $contract_type = ContractType::find($id);
-        $contract_type->type_name = $request->get('type_name');
-        $contract_type->save();
+        $this->validate($request, [
+            'type_name' => 'required',
+        ]);
 
-        return redirect('/contracttype')->with('success', 'Data has been updated');
+        $data = $request->all();
+        $contracttype->update($data);
+        alert('Success', 'Data updated successfully!', 'success');
+
+        return redirect('/contracttype');
     }
 
     /**
@@ -109,11 +105,11 @@ class ContractTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ContractType $contracttype)
     {
-        $contract_type = ContractType::find($id);
-        $contract_type->delete();
+        $contracttype->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
 
-        return redirect('/contracttype')->with('success', 'Record has been destroyed');
+        return back();
     }
 }

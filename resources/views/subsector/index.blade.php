@@ -12,7 +12,7 @@
 @section('content')
 	<div class="panel panel-flat">
 					<div class="panel-heading">
-						<h5 class="panel-title">List Subsektor</h5>				
+						<h5 class="panel-title">Subsector List</h5>				
 					</div>
 
 					<div class="panel-body">
@@ -24,7 +24,8 @@
 							<thead>
 								<tr>
 									<th data-hide="phone, tablet">#</th>
-									<th data-toggle="true">Nama Subsektor</th>
+									<th data-toggle="true">Subsector Name</th>
+									<th>Sector Name</th>
 									<th>Actions</th>
 									<th data-hide="phone, tablet"></th>
 									<th data-hide="phone, tablet"></th>
@@ -34,8 +35,9 @@
 							<tbody>
 								@foreach($subsectors as $sub)
 								<tr>
-									<td>{{$sub->id}}</td>
+									<td>{{$loop->index+1}}</td>
 									<td>{{$sub->subsector_name}}</td>
+									<th>{{$sub->sector->sector_name}}</th>
 									<td class="text-center">
 										<a href="{{ route('subsector.edit', $sub->id) }}" class="btn btn-defaut">
 											<i class="icon-pencil6"></i>

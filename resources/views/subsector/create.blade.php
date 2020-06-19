@@ -25,18 +25,20 @@
           <div class="form-group"> 
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <label for="name">Subsector name:</label>
-              <input type="text" class="form-control" name="subsector_name"/>
+              <input type="text" class="form-control" name="subsector_name" required/>
           </div>
           <div class="form-group">
               <label for="price">Sector : </label>
-              <select class="form-control" name="sectors_id">
+              <select class="form-control" name="sector_id" required>
                 <option value="0" selected="selected">Choose a Sector</option>
                 @foreach( $sectors as $sector )
                   <option value='{{ $sector->id }}'>{{ $sector->sector_name }}</option>
                 @endforeach
               </select>
           </div>
-          <button type="submit" class="btn btn-primary">Add</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
           
       </form>
   </div>

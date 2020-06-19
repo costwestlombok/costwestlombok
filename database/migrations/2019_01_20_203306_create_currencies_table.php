@@ -17,6 +17,7 @@ class CreateCurrenciesTable extends Migration
             $table->uuid('id')->primary();
             $table->string('currency_name');
             $table->string('acronym');
+            $table->timestamps();
         });
     }
 

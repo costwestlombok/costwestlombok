@@ -23,22 +23,20 @@
 
           <div class="form-group">
               <label for="name">Subsector Name:</label>
-              <input type="text" class="form-control" name="subsector_name" value="{{$subsector->subsector_name}}" />
+              <input type="text" class="form-control" name="subsector_name" value="{{$subsector->subsector_name}}" required/>
           </div>
           <div class="form-group">
               <label for="price">Sector : </label>
-              <select class="form-control" name="sectors_id">
+              <select class="form-control" name="sector_id" required>
                 <option value="0" selected="selected">Choose a Sector</option>
                 @foreach( $sectors as $sector )
-                  @if($subsector->sectors_id == $sector->id)
-                    <option value='{{ $sector->id }}' selected="selected">{{ $sector->sector_name }}</option>
-                  @else
-                    <option value='{{ $sector->id }}'>{{ $sector->sector_name }}</option>
-                  @endif
+                  <option value='{{ $sector->id }}' @if($subsector->sector_id == $sector->id) selected="selected" @endif>{{ $sector->sector_name }}</option>
                 @endforeach
               </select>
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
         
       </form>
   </div>

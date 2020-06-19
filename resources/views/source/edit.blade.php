@@ -28,7 +28,9 @@
               <label for="name">Acronym:</label>
               <input type="text" class="form-control" name="acronym" value="{{$obj->acronym}}" />
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
         
       </form>
   </div>

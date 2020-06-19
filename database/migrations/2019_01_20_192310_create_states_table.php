@@ -17,6 +17,7 @@ class CreateStatesTable extends Migration
             $table->uuid('id')->primary();
             $table->string('state_name');
             $table->string('state_code', 50);
+            $table->timestamps();
         });
     }
 

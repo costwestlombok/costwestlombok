@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Source;
+use Illuminate\Http\Request;
 
 class SourceController extends Controller
 {
-
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -45,23 +44,15 @@ class SourceController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        /*$request->validate([
-            'organization_name' => 'required',
-            'organization_legal_name' => 'required',
-            'description',
-            'address' => 'required',
-            'phone',
-            'postal_code'
-        ]);*/
-
-        $source = new Source([
-            'source_name' => $request->get('source_name'),
-            'acronym' => $request->get('acronym'),
+        $this->validate($request, [
+            'source_name' => 'required',
         ]);
 
-        $source->save();
-        return redirect('/source')->with('success', 'Source has been added');
+        $data = $request->all();
+        Source::create($data);
+        alert('Success', 'Data saved successfully!', 'success');
+
+        return back();
     }
 
     /**
@@ -95,15 +86,18 @@ class SourceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Source $source)
     {
         //
-        $obj = Source::find($id);
-        $obj->source_name = $request->get('source_name');
-        $obj->acronym = $request->get('acronym');
-        $obj->save();
+        $this->validate($request, [
+            'source_name' => 'required',
+        ]);
 
-        return redirect('/source')->with('success', 'data has been updated');
+        $data = $request->all();
+        $source->update($data);
+        alert('Success', 'Data updated successfully!', 'success');
+
+        return redirect('/source');
     }
 
     /**
@@ -112,11 +106,11 @@ class SourceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Source $source)
     {
-        $source = Source::find($id);
         $source->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
 
-        return redirect('/source')->with('success', 'Sector has been destroyed');
+        return back();
     }
 }

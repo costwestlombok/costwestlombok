@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Purpose;
+use Illuminate\Http\Request;
 
 class PurposeController extends Controller
 {
-
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -45,21 +44,14 @@ class PurposeController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        /*$request->validate([
-            'organization_name' => 'required',
-            'organization_legal_name' => 'required',
-            'description',
-            'address' => 'required',
-            'phone',
-            'postal_code'
-        ]);*/
-
-        $purpose = new Purpose([
-            'purpose_name' => $request->get('purpose_name'),
+        $this->validate($request, [
+            'purpose_name' => 'required',
         ]);
 
-        $purpose->save();
+        $data = $request->all();
+        Purpose::create($data);
+        alert('Success', 'Data saved successfully!', 'success');
+
         return redirect('/purpose/create')->with('success', 'Record has been added');
     }
 

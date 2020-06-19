@@ -16,6 +16,7 @@ class CreateContractTypesTable extends Migration
         Schema::create('contract_types', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('type_name');
+            $table->timestamps();
         });
     }
 

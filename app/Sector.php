@@ -12,7 +12,7 @@ class Sector extends Model
     protected $guarded = [];
     public $incrementing = false;
 
-    public function unit()
+    public function subsector()
     {
         return $this->hasMany('App\Subsector', 'sector_id', 'id');
     }

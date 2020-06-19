@@ -16,6 +16,7 @@ class CreateContractMethodsTable extends Migration
         Schema::create('contract_methods', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('method_name');
+            $table->timestamps();
         });
     }
 

@@ -18,6 +18,7 @@ class CreateSubsectorsTable extends Migration
             $table->uuid('sector_id');
             $table->foreign('sector_id')->references('id')->on('sectors');
             $table->string('subsector_name');
+            $table->timestamps();
         });
     }
 

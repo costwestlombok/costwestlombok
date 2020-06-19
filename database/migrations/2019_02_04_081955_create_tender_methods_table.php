@@ -16,6 +16,7 @@ class CreateTenderMethodsTable extends Migration
         Schema::create('tender_methods', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('method_name');
+            $table->timestamps();
         });
     }
 

@@ -16,6 +16,7 @@ class CreatePurposesTable extends Migration
         Schema::create('purposes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('purpose_name');
+            $table->timestamps();
         });
     }
 

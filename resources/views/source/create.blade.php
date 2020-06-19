@@ -18,7 +18,7 @@
       </div><br />
     @endif
       <form method="post" action="{{ route('source.store') }}">
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+       @csrf
           <div class="form-group">
               <label for="name">Source Name:</label>
               <input type="text" class="form-control" name="source_name"/>
@@ -28,7 +28,9 @@
               <label for="name">Acronym:</label>
               <input type="text" class="form-control" name="acronym"/>
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
       </form>
   </div>
 </div>

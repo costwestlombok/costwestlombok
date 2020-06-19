@@ -12,11 +12,6 @@ class Subsector extends Model
     protected $guarded = [];
     public $incrementing = false;
 
-    protected $fillable = [
-        'sector_id',
-        'subsector_name',
-    ];
-
     public function sector()
     {
         return $this->belongsTo('App\Sector', 'sector_id', 'id');
