@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Libraries\Googlemaps;
 use App\Organization;
 use App\Project;
+use App\ProjectDocument;
 use App\Purpose;
 use App\Sector;
 use App\Status;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -36,7 +39,30 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        $map = new Googlemaps();
+        $config['center'] = "-8.6825504,116.1286378";
+        $config['map_width'] = "100%";
+        $config['map_height'] = "423px";
+        $config['geocodeCaching'] = true;
+        $config['zoomControlPosition'] = "BOTTOM_RIGHT"; //zoom control position
+        $config['zoom'] = "14"; //zoom value
+        $marker = array();
+        $marker['position'] = '-8.6825504,116.1286378';
+        $marker['draggable'] = true;
+        $marker['ondragend'] = 'document.getElementById("initial_lat").value =event.latLng.lat()
+                document.getElementById("initial_lon").value =event.latLng.lng();';
+        $marker['icon'] = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+        $marker1 = array();
+        $marker1['position'] = '-8.6825557,116.1308265';
+        $marker1['draggable'] = true;
+        $marker1['ondragend'] = 'document.getElementById("final_lat").value =event.latLng.lat()
+                document.getElementById("final_lon").value =event.latLng.lng();';
+        $marker1['icon'] = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+        $map->add_marker($marker);
+        $map->add_marker($marker1);
+        $map->initialize($config);
+
+        $map = $map->create_map();
 
         $purposes = Purpose::all();
 
@@ -44,13 +70,14 @@ class ProjectController extends Controller
 
         $organizations = Organization::all();
 
-        $status = Status::all();
+        $statuses = Status::all();
 
         return view('project.create', [
             'purposes' => $purposes,
             'sectors' => $sectors,
             'organizations' => $organizations,
-            'status' => $status,
+            'statuses' => $statuses,
+            'map' => $map,
         ]
         );
     }
@@ -63,46 +90,16 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $start = Carbon::parse($request->start_date);
+        $end = Carbon::parse($request->end_date);
+        $data['duration'] = $start->diffInDays($end);
 
-        $obj = new Project(
-            [
-                'project_code' => $request->get('project_code'),
-                'project_name' => $request->get('project_name'),
-                'project_description' => $request->get('project_description'),
-                'project_code_sefin' => $request->get('project_code_sefin'),
-                'project_budget' => $request->get('project_budget'),
-                'project_budget_approved' => $request->get('project_budget_approved'),
-                'environment_effect_description' => $request->get('environment_description'),
-                'resettlement_description' => $request->get('resettlement_description'),
-                'initial_lat' => $request->get('initial_lat'),
-                'initial_lon' => $request->get('initial_lon'),
-                'final_lat' => $request->get('final_lat'),
-                'final_lon' => $request->get('final_lon'),
+        Project::create($data);
 
-                'file_work_plans' => '',
-                'file_budget_multianual_program' => '',
-                'file_feasibility_study' => '',
-                'file_environment_effect_study' => '',
-                'file_environment_license_mitigation_contract' => '',
-                'file_resettlement_compensation_plan' => '',
-                'file_financing_agreement' => '',
-                'file_approval_description' => '',
-                'file_others' => '',
+        alert('Success', 'Data saved successfully!', 'success');
 
-                'organizations_id' => $request->get('organizations_id'),
-                'organization_units_id' => $request->get('units_id'),
-                'sectors_id' => $request->get('sectors_id'),
-                'subsectors_id' => $request->get('subsectors_id'),
-                'purposes_id' => $request->get('purposes_id'),
-                'officials_id' => $request->get('officials_id'),
-                'roles_id' => 1,
-                'statuses_id' => $request->get('status'),
-
-            ]
-        );
-        $obj->save();
-        return redirect('/project')->with('success', 'saved');
+        return redirect('/project');
     }
 
     /**
@@ -125,7 +122,48 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        $project = Project::find($id);
+        $map = new Googlemaps();
+        $config['center'] = "-8.6825504,116.1286378";
+        $config['map_width'] = "100%";
+        $config['map_height'] = "423px";
+        $config['geocodeCaching'] = true;
+        $config['zoomControlPosition'] = "BOTTOM_RIGHT"; //zoom control position
+        $config['zoom'] = "14"; //zoom value
+        $marker = array();
+        $marker['position'] = $project->initial_lat . ',' . $project->initial_lon;
+        $marker['draggable'] = true;
+        $marker['ondragend'] = 'document.getElementById("initial_lat").value =event.latLng.lat()
+                document.getElementById("initial_lon").value =event.latLng.lng();';
+        $marker['icon'] = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+        $marker1 = array();
+        $marker1['position'] = $project->final_lat . ',' . $project->final_lon;
+        $marker1['draggable'] = true;
+        $marker1['ondragend'] = 'document.getElementById("final_lat").value =event.latLng.lat()
+                document.getElementById("final_lon").value =event.latLng.lng();';
+        $marker1['icon'] = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+        $map->add_marker($marker);
+        $map->add_marker($marker1);
+        $map->initialize($config);
+
+        $map = $map->create_map();
+
+        $purposes = Purpose::all();
+
+        $sectors = Sector::all();
+
+        $organizations = Organization::all();
+
+        $statuses = Status::all();
+
+        return view('project.edit', [
+            'purposes' => $purposes,
+            'sectors' => $sectors,
+            'organizations' => $organizations,
+            'statuses' => $statuses,
+            'map' => $map,
+            'project' => $project,
+        ]);
     }
 
     /**
@@ -135,9 +173,13 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project)
     {
-        //
+        $data = $request->all();
+        $project->update($data);
+        alert('Success', 'Data updated successfully!', 'success');
+
+        return redirect('/project');
     }
 
     /**
@@ -146,8 +188,36 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        //
+        $project->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
+        return back();
+    }
+
+    public function project_file($project)
+    {
+        $data = ProjectDocument::where('project_id', $project)->get();
+        return view('project.file', compact('data', 'project'));
+    }
+
+    public function store_file(Request $request)
+    {
+        $data = $request->except('file');
+        $data['document_type'] = $request->file('file')->getClientOriginalExtension();
+        $file = $request->file('file')->store('project_files');
+
+        $data['document_path'] = $file;
+        ProjectDocument::create($data);
+        alert('Success', 'Data saved successfully!', 'success');
+
+        return redirect('/project/file/' . $request->project_id);
+    }
+
+    public function project_file_delete(ProjectDocument $projectdocument)
+    {
+        $projectdocument->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
+        return back();
     }
 }

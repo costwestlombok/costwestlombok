@@ -21,7 +21,6 @@ Route::get('/Users', 'UsersController@login');
 Route::resource('dashboard', 'DashboardController');
 Route::resource('organization', 'OrganizationController');
 Route::resource('organization_unit', 'OrganizationUnitController');
-Route::get('/get-unit/{entity}', 'OrganizationUnitController@get_unit');
 Route::resource('sector', 'SectorController');
 Route::resource('subsector', 'SubsectorController');
 Route::get('/subsector/ajax_get_subsector', 'SubsectorController@ajax_get_subsector');
@@ -36,8 +35,15 @@ Route::resource('currency', 'CurrencyController');
 Route::resource('offerer', 'OffererController');
 Route::resource('contact', 'ContactController');
 Route::resource('status', 'StatusController');
-Route::resource('project', 'ProjectController');
 Route::resource('warranty-type', 'WarrantyTypeController');
+
+Route::resource('project', 'ProjectController');
+Route::get('/project/file/{project}', 'ProjectController@project_file');
+Route::post('/project/file-store', 'ProjectController@store_file');
+
+Route::get('/get-unit/{entity}', 'OrganizationUnitController@get_unit');
+Route::get('/get-official/{unit}', 'OfficialController@get_official');
+Route::get('/get-subsector/{sector}', 'SubsectorController@get_subsector');
 
 Route::get('catalog/subsector/{sectorID}', 'CatalogController@get_subsector');
 Route::get('catalog/unit/{organizationID}', 'CatalogController@get_units');

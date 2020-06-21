@@ -119,4 +119,10 @@ class OfficialController extends Controller
         alert('Success', 'Data deleted successfully!', 'success');
         return back();
     }
+
+    public function get_official($unit)
+    {
+        $data = Official::where('entity_unit_id', $unit)->get();
+        return response()->json($data);
+    }
 }

@@ -114,7 +114,7 @@ class SubsectorController extends Controller
         $subsector->delete();
         alert('Success', 'Data deleted successfully!', 'success');
 
-        return redirect('/subsector')->with('success', 'Record has been destroyed');
+        return back();
     }
 
     /**
@@ -129,6 +129,12 @@ class SubsectorController extends Controller
 
         echo "something";
         return response()->json(['a' => 'A', 'name' => 'Carlos']);
+    }
+
+    public function get_subsector($sector)
+    {
+        $data = Subsector::where('sector_id', $sector)->get();
+        return response()->json($data);
     }
 
 }

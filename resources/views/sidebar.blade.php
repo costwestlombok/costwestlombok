@@ -33,7 +33,7 @@
 						<a href="{{url('/dashboard')}}"><i class="icon-display4"></i><span class="list-label"> Dashboard</span></a>
 					</li>
 					<li>
-						<a href="#"><i class="icon-display4"></i><span class="list-label"> <span>Catalog</span></a>
+						<a href="#"><i class="icon-newspaper"></i><span class="list-label"> <span>Catalog</span></a>
 						<ul>
 							<li @if(Request::segment(1) == 'organization') class="active" @endif><a href="{{ route('organization.index') }}">Organization</a></li>
 							<li @if(Request::segment(1) == 'organization_unit') class="active" @endif><a href="{{route('organization_unit.index')}}">Organization Unit</a></li>
@@ -104,13 +104,9 @@
 					<li class="list-title">Project Management</li>
 
 					<li>
-						<a href="#">
-							<i class="icon-comment-discussion"></i><span>Project</span>
+						<a href="{{ route('project.index') }}">
+							<i class="icon-magazine"></i><span>Project</span>
 						</a>
-						<ul>
-							<li><a href="{{ route('project.index') }}">Project List</a></li>
-							<li><a href="{{ route('project.create') }}">Create new Project</a></li>
-						</ul>
 					</li>
 					<li>
 						<a href="#">
