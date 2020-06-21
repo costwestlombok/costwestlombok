@@ -21,12 +21,12 @@
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
           <div class="form-group">
-              
-              
               <label for="name">Status Name:</label>
-              <input type="text" class="form-control" name="status_name" value="{{$status->status_name}}" />
+              <input type="text" class="form-control" name="status_name" value="{{$status->status_name}}" required/>
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
         
       </form>
   </div>

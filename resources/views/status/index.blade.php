@@ -12,7 +12,7 @@
 @section('content')
 	<div class="panel panel-flat">
 					<div class="panel-heading">
-						<h5 class="panel-title">Listado de Estados</h5>				
+						<h5 class="panel-title">Status List</h5>				
 					</div>
 
 					<div class="panel-body">
@@ -34,7 +34,7 @@
 							<tbody>
 								@foreach($status as $status)
 								<tr>
-									<td>{{$status->id}}</td>
+									<td>{{$loop->index+1}}</td>
 									<td>{{$status->status_name}}</td>
 									<td class="text-center">
 										<a href="{{ route('status.edit', $status->id) }}" class="btn btn-defaut">
@@ -84,12 +84,7 @@
 						</ul>
 
 					</div>
-				</div>
-
-				
-
-
-				
+				</div>				
 @stop
 
 @push('scripts')	

@@ -22,9 +22,11 @@
               
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <label for="name">Method Name:</label>
-              <input type="text" class="form-control" name="method_name"/>
+              <input type="text" class="form-control" name="method_name" required/>
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
       </form>
   </div>
 </div>

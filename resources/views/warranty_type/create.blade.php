@@ -5,7 +5,7 @@
 
 <div class="panel panel-flat">
   <div class="panel-heading">
-    <h4 class="panel-title">Sectors</h4>
+    <h4 class="panel-title">Warranty Type</h4>
   </div>
   <div class="panel-body">
     @if ($errors->any())
@@ -17,14 +17,15 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('sector.store') }}">
+      <form method="post" action="{{ route('warranty-type.store') }}">
           <div class="form-group">
-              
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              <label for="name">Sector Name:</label>
-              <input type="text" class="form-control" name="sector_name"/>
+              <label for="name">Warranty Type Name:</label>
+              <input type="text" class="form-control" name="name" required/>
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
       </form>
   </div>
 </div>

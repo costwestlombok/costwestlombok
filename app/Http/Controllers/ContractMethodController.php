@@ -44,22 +44,18 @@ class ContractMethodController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        /*$request->validate([
-        'organization_name' => 'required',
-        'organization_legal_name' => 'required',
-        'description',
-        'address' => 'required',
-        'phone',
-        'postal_code'
-        ]);*/
+        $this->validate($request, [
+            'method_name' => 'required',
+        ]);
 
         $method = new ContractMethod([
             'method_name' => $request->get('method_name'),
         ]);
 
         $method->save();
-        return redirect('/contract_method')->with('success', 'Record has been added');
+        alert('Success', 'Data saved successfully!', 'success');
+
+        return back();
     }
 
     /**
@@ -95,12 +91,16 @@ class ContractMethodController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'method_name' => 'required',
+        ]);
+
         $method = ContractMethod::find($id);
         $method->method_name = $request->get('method_name');
         $method->save();
+        alert('Success', 'Data updated successfully!', 'success');
 
-        return redirect('/contract_method')->with('success', 'Data has been updated');
+        return redirect('/contract_method');
     }
 
     /**
@@ -113,7 +113,8 @@ class ContractMethodController extends Controller
     {
         $method = ContractMethod::find($id);
         $method->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
 
-        return redirect('/contract_method')->with('success', 'Record has been destroyed');
+        return back();
     }
 }

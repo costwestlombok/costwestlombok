@@ -12,7 +12,7 @@
 @section('content')
 	<div class="panel panel-flat">
 					<div class="panel-heading">
-						<h5 class="panel-title">Listado de Sectores</h5>				
+						<h5 class="panel-title">Warranty Type List</h5>				
 					</div>
 
 					<div class="panel-body">
@@ -24,7 +24,7 @@
 							<thead>
 								<tr>
 									<th data-hide="phone, tablet">#</th>
-									<th data-toggle="true">Section Name</th>
+									<th data-toggle="true">Warranty Type Name</th>
 									<th>Actions</th>
 									<th data-hide="phone, tablet"></th>
 									<th data-hide="phone, tablet"></th>
@@ -32,17 +32,17 @@
 							</thead>
 							
 							<tbody>
-								@foreach($sectors as $sector)
+								@foreach($warranty_types as $warranty_type)
 								<tr>
-									<td>{{$sector->id}}</td>
-									<td>{{$sector->sector_name}}</td>
+									<td>{{$loop->index+1}}</td>
+									<td>{{$warranty_type->name}}</td>
 									<td class="text-center">
-										<a href="{{ route('sector.edit', $sector->id) }}" class="btn btn-defaut">
+										<a href="{{ route('warranty-type.edit', $warranty_type->id) }}" class="btn btn-defaut">
 											<i class="icon-pencil6"></i>
 										</a>
 									</td>
 									<td>
-										<form action="{{ route('sector.destroy', $sector->id)}}" method="post">
+										<form action="{{ route('warranty-type.destroy', $warranty_type->id)}}" method="post">
 											{{ csrf_field() }}
 											{{ method_field('DELETE') }}
 											<button class="btn btn-danger" type="submit">
@@ -56,7 +56,7 @@
 												<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
 												<ul class="dropdown-menu dropdown-menu-right">							
 													<li>
-														<a href="{{route('sector.edit', $sector->id)}}">
+														<a href="{{route('warranty-type.edit', $warranty_type->id)}}">
 															<i class="icon-pencil6"></i> Edit
 														</a>
 													</li>
@@ -76,7 +76,7 @@
 						<!--<div style="min-height:240px"></div>-->
 						<ul class="fab-menu fab-menu-absolute fab-menu-bottom-right" data-fab-toggle="hover">
 							<li>
-								<a class="fab-menu-btn btn bg-success btn-float btn-rounded btn-icon" href="{{route('sector.create')}}">
+								<a class="fab-menu-btn btn bg-success btn-float btn-rounded btn-icon" href="{{route('warranty-type.create')}}">
 									<i class="fab-icon-open icon-file-plus2"></i>
 									<!--<i class="fab-icon-close icon-cross2"></i>-->
 								</a>

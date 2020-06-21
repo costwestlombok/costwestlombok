@@ -5,7 +5,7 @@
 
 <div class="panel panel-flat">
   <div class="panel-heading">
-    <h4 class="panel-title">Sectors</h4>
+    <h4 class="panel-title">Warranty Type</h4>
   </div>
   <div class="panel-body">
     @if ($errors->any())
@@ -17,17 +17,16 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('sector.update', $sector->id) }}">
+      <form method="post" action="{{ route('warranty-type.update', $warranty_type->id) }}">
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
           <div class="form-group">
-              
-              
-              <label for="name">Sector Name:</label>
-              <input type="text" class="form-control" name="sector_name" value="{{$sector->sector_name}}" />
+              <label for="name">Warranty Type Name:</label>
+              <input type="text" class="form-control" name="name" value="{{$warranty_type->name}}" required/>
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
-        
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
       </form>
   </div>
 </div>

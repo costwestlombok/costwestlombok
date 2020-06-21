@@ -12,7 +12,7 @@
 @section('content')
 	<div class="panel panel-flat">
 					<div class="panel-heading">
-						<h5 class="panel-title">List Penawar</h5>				
+						<h5 class="panel-title">Offerer List</h5>				
 					</div>
 
 					<div class="panel-body">
@@ -24,7 +24,7 @@
 							<thead>
 								<tr>
 									<th data-hide="phone, tablet">#</th>
-									<th data-toggle="true">Nama Penawar</th>
+									<th data-toggle="true">Offerer Name</th>
 									<th>Actions</th>
 									<th data-hide="phone, tablet"></th>
 									<th data-hide="phone, tablet"></th>
@@ -34,7 +34,7 @@
 							<tbody>
 								@foreach($rows as $offerer)
 								<tr>
-									<td>{{$offerer->id}}</td>
+									<td>{{$loop->index+1}}</td>
 									<td>{{$offerer->offerer_name}}</td>
 									<td class="text-center">
 										<a href="{{ route('offerer.edit', $offerer->id) }}" class="btn btn-defaut">
@@ -85,11 +85,7 @@
 
 					</div>
 				</div>
-
-				
-
-
-				
+							
 @stop
 
 @push('scripts')	

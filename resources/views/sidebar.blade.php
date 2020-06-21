@@ -46,13 +46,10 @@
 							
 							<li @if(Request::segment(1) == 'contracttype') class="active" @endif><a href="{{route('contracttype.index')}}">Contract Type</a></li>
 							<li @if(Request::segment(1) == 'offerer') class="active" @endif><a href="{{route('offerer.index')}}">Offerer</a></li>
-							<li><a href="{{route('tender_method.index')}}">Tender Method</a></li>
-							<li><a href="{{route('contract_method.index')}}">Contract Method</a></li>
-							<li><a href="">Jenis Modifikasi Kontrak</a></li>
-							<li><a href="">Kontrak</a></li>
-							<li><a href="">Jenis Jaminan</a></li>
-							<li><a href="">Mata Uang</a></li>
-							<li><a href="{{route('status.index')}}">Status</a></li>
+							<li @if(Request::segment(1) == 'tender_method') class="active" @endif><a href="{{route('tender_method.index')}}">Tender Method</a></li>
+							<li @if(Request::segment(1) == 'contract_method') class="active" @endif><a href="{{route('contract_method.index')}}">Contract Method</a></li>
+							<li @if(Request::segment(1) == 'warranty-type') class="active" @endif><a href="{{route('warranty-type.index')}}">Warranty Type</a></li>
+							<li @if(Request::segment(1) == 'status') class="active" @endif><a href="{{route('status.index')}}">Status</a></li>
 						</ul>
 					</li>
 					<!--<li>
@@ -104,15 +101,15 @@
 							</ul>
 						</li>-->
 
-					<li class="list-title">Manajemen Proyek</li>
+					<li class="list-title">Project Management</li>
 
 					<li>
 						<a href="#">
-							<i class="icon-comment-discussion"></i><span>Proyek</span>
+							<i class="icon-comment-discussion"></i><span>Project</span>
 						</a>
 						<ul>
-							<li><a href="{{ route('project.index') }}">List Proyek</a></li>
-							<li><a href="{{ route('project.create') }}">Buat Proyek Baru</a></li>
+							<li><a href="{{ route('project.index') }}">Project List</a></li>
+							<li><a href="{{ route('project.create') }}">Create new Project</a></li>
 						</ul>
 					</li>
 					<li>

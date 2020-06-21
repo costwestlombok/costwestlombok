@@ -44,18 +44,16 @@ class OffererController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        /*$request->validate([
-        'organization_name' => 'required',
-        'organization_legal_name' => 'required',
-        'description',
-        'address' => 'required',
-        'phone',
-        'postal_code'
-        ]);*/
+        $this->validate($request, [
+            'offerer_name' => 'required',
+            'phone' => 'required',
+        ]);
+
         $data = $request->all();
         Offerer::create($data);
-        return redirect('/offerer')->with('success', 'Section has been added');
+        alert('Success', 'Data saved successfully!', 'success');
+
+        return back();
     }
 
     /**
@@ -89,13 +87,17 @@ class OffererController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Offerer $offerer)
     {
-        //
-        $offerer = Offerer::find($id);
+        $this->validate($request, [
+            'offerer_name' => 'required',
+            'phone' => 'required',
+        ]);
         $data = $request->all();
         $offerer->update($data);
-        return redirect('/offerer')->with('offerers', 'data has been updated');
+        alert('Success', 'Data updated successfully!', 'success');
+
+        return redirect('/offerer');
     }
 
     /**
@@ -104,10 +106,11 @@ class OffererController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Offerer $offerer)
     {
-        $offerer = Offerer::find($id);
         $offerer->delete();
-        return redirect('/offerer')->with('success', 'offerer has been destroyed');
+        alert('Success', 'Data deleted successfully!', 'success');
+
+        return back();
     }
 }

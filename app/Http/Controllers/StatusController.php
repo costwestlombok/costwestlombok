@@ -44,22 +44,18 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        /*$request->validate([
-        'organization_name' => 'required',
-        'organization_legal_name' => 'required',
-        'description',
-        'address' => 'required',
-        'phone',
-        'postal_code'
-        ]);*/
+        $this->validate($request, [
+            'status_name' => 'required',
+        ]);
 
         $status = new Status([
             'status_name' => $request->get('status_name'),
         ]);
 
         $status->save();
-        return redirect('/status/create')->with('success', 'Record has been added');
+        alert('Success', 'Data saved successfully!', 'success');
+
+        return back();
     }
 
     /**
@@ -95,12 +91,16 @@ class StatusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'status_name' => 'required',
+        ]);
+
         $status = Status::find($id);
         $status->status_name = $request->get('status_name');
         $status->save();
+        alert('Success', 'Data updated successfully!', 'success');
 
-        return redirect('/status')->with('success', 'Data has been updated');
+        return redirect('/status');
     }
 
     /**
@@ -113,7 +113,8 @@ class StatusController extends Controller
     {
         $status = Status::find($id);
         $status->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
 
-        return redirect('/status')->with('success', 'Record has been destroyed');
+        return back();
     }
 }

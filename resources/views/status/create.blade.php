@@ -22,9 +22,11 @@
               
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <label for="name">Status Name:</label>
-              <input type="text" class="form-control" name="status_name"/>
+              <input type="text" class="form-control" name="status_name" required/>
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
       </form>
   </div>
 </div>

@@ -5,7 +5,7 @@
 
 <div class="panel panel-flat">
   <div class="panel-heading">
-    <h4 class="panel-title">Penawar</h4>
+    <h4 class="panel-title">Offerer</h4>
   </div>
   <div class="panel-body">
     @if ($errors->any())
@@ -20,30 +20,32 @@
       <form method="post" action="{{ route('offerer.store') }}">
         @csrf
           <div class="form-group">
-              <label for="name">Nama Penawar:</label>
-              <input type="text" class="form-control" name="offerer_name"/>
+              <label for="name">Offerer Name:</label>
+              <input type="text" class="form-control" name="offerer_name" required/>
           </div>
           <div class="form-group">
-              <label for="name">Nama Resmi Penawar:</label>
-              <input type="text" class="form-control" name="offerer_legal_name"/>
+              <label for="name">Legal Name:</label>
+              <input type="text" class="form-control" name="legal_name"/>
           </div>
           <div class="form-group">
-              <label for="name">Nomor Telpon:</label>
-              <input type="text" class="form-control" name="phone"/>
+              <label for="name">Phone:</label>
+              <input type="text" class="form-control" name="phone" required/>
           </div>
           <div class="form-group">
               <label for="name">Website:</label>
               <input type="text" class="form-control" name="website"/>
           </div>
           <div class="form-group">
-            <label for="name">Alamat:</label>
+            <label for="name">Address:</label>
             <textarea name="address" id="" rows="3" class="form-control"></textarea>
           </div>
           <div class="form-group">
-            <label for="name">Keterangan:</label>
-            <textarea name="desctiption" id="" rows="5" class="form-control"></textarea>
+            <label for="name">Description:</label>
+            <textarea name="description" id="" rows="5" class="form-control"></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
       </form>
   </div>
 </div>

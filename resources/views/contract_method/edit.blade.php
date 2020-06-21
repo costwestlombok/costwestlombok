@@ -17,16 +17,16 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('tender_method.update', $method->id) }}">
+      <form method="post" action="{{ route('contract_method.update', $method->id) }}">
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
           <div class="form-group">
-              
-              
               <label for="name">Method Name:</label>
-              <input type="text" class="form-control" name="method_name" value="{{$method->method_name}}" />
+              <input type="text" class="form-control" name="method_name" value="{{$method->method_name}}" required />
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
         
       </form>
   </div>

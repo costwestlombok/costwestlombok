@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\WarrantyType;
+use Illuminate\Http\Request;
 
 class WarrantyTypeController extends Controller
 {
-
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -22,8 +21,8 @@ class WarrantyTypeController extends Controller
     public function index()
     {
         //
-        $sectors = Sector::all();
-        return view('sector.index', ['sectors' => $sectors]);
+        $warranty_types = WarrantyType::all();
+        return view('warranty_type.index', ['warranty_types' => $warranty_types]);
     }
 
     /**
@@ -34,7 +33,7 @@ class WarrantyTypeController extends Controller
     public function create()
     {
         //
-        return view('sector.create');
+        return view('warranty_type.create');
     }
 
     /**
@@ -45,22 +44,19 @@ class WarrantyTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        /*$request->validate([
-            'organization_name' => 'required',
-            'organization_legal_name' => 'required',
-            'description',
-            'address' => 'required',
-            'phone',
-            'postal_code'
-        ]);*/
 
-        $sector = new Sector([
-            'sector_name' => $request->get('sector_name'),
+        $this->validate($request, [
+            'name' => 'required',
         ]);
 
-        $sector->save();
-        return redirect('/sector/create')->with('success', 'Section has been added');
+        $warranty_type = new WarrantyType([
+            'name' => $request->get('name'),
+        ]);
+
+        $warranty_type->save();
+        alert('Success', 'Data saved successfully!', 'success');
+
+        return back();
     }
 
     /**
@@ -83,8 +79,8 @@ class WarrantyTypeController extends Controller
     public function edit($id)
     {
         //
-        $sector = Sector::find($id);
-        return view('sector.edit', ['sector' => $sector]);
+        $warranty_type = WarrantyType::find($id);
+        return view('warranty_type.edit', ['warranty_type' => $warranty_type]);
     }
 
     /**
@@ -96,12 +92,16 @@ class WarrantyTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $sector = Sector::find($id);
-        $sector->sector_name = $request->get('sector_name');
-        $sector->save();
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
 
-        return redirect('/sector')->with('sectors', 'data has been updated');
+        $warranty_type = WarrantyType::find($id);
+        $warranty_type->name = $request->get('name');
+        $warranty_type->save();
+        alert('Success', 'Data updated successfully!', 'success');
+
+        return redirect('/warranty-type');
     }
 
     /**
@@ -112,9 +112,10 @@ class WarrantyTypeController extends Controller
      */
     public function destroy($id)
     {
-        $sector = Sector::find($id);
-        $sector->delete();
+        $warranty_type = WarrantyType::find($id);
+        $warranty_type->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
 
-        return redirect('/sector')->with('success', 'Sector has been destroyed');
+        return back();
     }
 }

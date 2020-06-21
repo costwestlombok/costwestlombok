@@ -37,6 +37,7 @@ Route::resource('offerer', 'OffererController');
 Route::resource('contact', 'ContactController');
 Route::resource('status', 'StatusController');
 Route::resource('project', 'ProjectController');
+Route::resource('warranty-type', 'WarrantyTypeController');
 
 Route::get('catalog/subsector/{sectorID}', 'CatalogController@get_subsector');
 Route::get('catalog/unit/{organizationID}', 'CatalogController@get_units');

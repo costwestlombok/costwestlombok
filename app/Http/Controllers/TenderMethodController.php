@@ -44,22 +44,17 @@ class TenderMethodController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        /*$request->validate([
-        'organization_name' => 'required',
-        'organization_legal_name' => 'required',
-        'description',
-        'address' => 'required',
-        'phone',
-        'postal_code'
-        ]);*/
+        $this->validate($request, [
+            'method_name' => 'required',
+        ]);
 
         $sector = new TenderMethod([
             'method_name' => $request->get('method_name'),
         ]);
-
         $sector->save();
-        return redirect('/tender_method/create')->with('success', 'Record has been added');
+        alert('Success', 'Data saved successfully!', 'success');
+
+        return back();
     }
 
     /**
@@ -95,12 +90,16 @@ class TenderMethodController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'method_name' => 'required',
+        ]);
+        
         $method = TenderMethod::find($id);
         $method->method_name = $request->get('method_name');
         $method->save();
+        alert('Success', 'Data updated successfully!', 'success');
 
-        return redirect('/tender_method')->with('success', 'Data has been updated');
+        return redirect('/tender_method');
     }
 
     /**
@@ -113,7 +112,8 @@ class TenderMethodController extends Controller
     {
         $method = TenderMethod::find($id);
         $method->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
 
-        return redirect('/method')->with('success', 'Record has been destroyed');
+        return back();
     }
 }
