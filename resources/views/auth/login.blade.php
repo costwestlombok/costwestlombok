@@ -91,7 +91,7 @@
 
                     <!-- Footer -->
                     <div class="footer text-size-mini">
-                        &copy; 2020 CoST &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp; West Nusa Tenggara
+                        &copy; 2020 CoST &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp; West Lombok
                     </div>
                     <!-- /footer -->
 
