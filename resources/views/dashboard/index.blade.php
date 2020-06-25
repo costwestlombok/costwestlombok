@@ -91,7 +91,7 @@
 								<td>{{$loop->index+1}}</td>
 								<td><?= $row->project_code ?></td>
 								<td>{{$row->project_title}}</td>
-								<td><?= number_format($row->project_budget) ?></td>
+								<td><?= number_format($row->amount) ?></td>
 							</tr>
 								@endforeach
 							@endif
