@@ -147,7 +147,7 @@
                                         <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#"
                                                 id="h6-dropdown" data-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false">
-                                                Dokummen <i class="fa fa-angle-down m-l-5"></i>
+                                                Dokumen <i class="fa fa-angle-down m-l-5"></i>
                                             </a>
                                             <ul class="b-none dropdown-menu font-14 animated fadeInUp">
                                                 <li><a class="dropdown-item" href="../../wrapkit/pages-aboutus.html"
