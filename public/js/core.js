@@ -712,15 +712,15 @@ jQuery(document).ready(function ($) {
 	//----------------------------------
 	// SMOOTHSCROLL ANIMATION
 	//----------------------------------
-	$('a[href*=#]:not([data-toggle="tab"],[data-toggle="collapse"])').bind('click.smoothscroll', function (e) {
-		e.preventDefault();
-		var target = this.hash,
-			$target = $(target);
-		$('html, body').stop().animate({
-			'scrollTop': $target.offset().top - 60
-		}, 500, 'swing', function () {
-		});
-	});
+	// $('a[href*=#]:not([data-toggle="tab"],[data-toggle="collapse"])').bind('click.smoothscroll', function (e) {
+	// 	e.preventDefault();
+	// 	var target = this.hash,
+	// 		$target = $(target);
+	// 	$('html, body').stop().animate({
+	// 		'scrollTop': $target.offset().top - 60
+	// 	}, 500, 'swing', function () {
+	// 	});
+	// });
 
 	//----------------------------------
 	// THEME SWITCHER

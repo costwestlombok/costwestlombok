@@ -8,7 +8,7 @@
 				<div class="admin-user-info">
 					<ul class="user-info">
 						<li><a href="index.htm#" class="text-semibold text-size-large">Administrator </a></li>
-						<li><a href="index.htm#"><small></small></a></li>
+						<li><a href="index.htm#"><small>admin</small></a></li>
 					</ul>
 					<div class="logout-icon">
 						<a href="{{ route('logout') }}"
@@ -29,27 +29,43 @@
 			<div role="tabpanel" class="tab-pane active fadeIn" id="menu">
 				<ul class="sidebar-accordion">
 					<li class="list-title">Principal</li>
-					<li>
-						<a href="{{url('/dashboard')}}"><i class="icon-display4"></i><span class="list-label"> Dashboard</span></a>
+					<li class="{{ request()->segment(1) == 'dashboard' ? 'active' : '' }}">
+						<a href="{{url('/dashboard')}}"><i class="icon-display4"></i><span class="list-label">
+								Dashboard</span></a>
 					</li>
 					<li>
-						<a href="#"><i class="icon-newspaper"></i><span class="list-label"> <span>Catalog</span></a>
+						<a href="#" class="{{ request()->segment(1) == 'catalog' ? 'active' : '' }}"><i
+								class="icon-newspaper"></i><span class="list-label"> <span>Catalog</span></a>
 						<ul>
-							<li @if(Request::segment(1) == 'organization') class="active" @endif><a href="{{ route('organization.index') }}">Organization</a></li>
-							<li @if(Request::segment(1) == 'organization_unit') class="active" @endif><a href="{{route('organization_unit.index')}}">Organization Unit</a></li>
-							<li @if(Request::segment(1) == 'official') class="active" @endif><a href="{{route('official.index')}}">Official</a></li>
-							<li @if(Request::segment(1) == 'role') class="active" @endif><a href="{{route('role.index')}}">Role</a></li>
-							<li @if(Request::segment(1) == 'sector') class="active" @endif><a href="{{route('sector.index')}}">Sector</a></li>
-							<li @if(Request::segment(1) == 'subsector') class="active" @endif><a href="{{route('subsector.index')}}">Subsector</a></li>
-							<li @if(Request::segment(1) == 'source') class="active" @endif><a href="{{route('source.index')}}">Source/Funding</a></li>
-							<li @if(Request::segment(1) == 'purpose') class="active" @endif><a href="{{route('purpose.index')}}">Project Purpose</a></li>
-							
-							<li @if(Request::segment(1) == 'contracttype') class="active" @endif><a href="{{route('contracttype.index')}}">Contract Type</a></li>
-							<li @if(Request::segment(1) == 'offerer') class="active" @endif><a href="{{route('offerer.index')}}">Offerer</a></li>
-							<li @if(Request::segment(1) == 'tender_method') class="active" @endif><a href="{{route('tender_method.index')}}">Tender Method</a></li>
-							<li @if(Request::segment(1) == 'contract_method') class="active" @endif><a href="{{route('contract_method.index')}}">Contract Method</a></li>
-							<li @if(Request::segment(1) == 'warranty-type') class="active" @endif><a href="{{route('warranty-type.index')}}">Warranty Type</a></li>
-							<li @if(Request::segment(1) == 'status') class="active" @endif><a href="{{route('status.index')}}">Status</a></li>
+							<li class="{{ request()->segment(2) == 'organization' ? 'active' : '' }}"><a
+									href="{{ route('organization.index') }}">Organization</a></li>
+							<li class="{{ request()->segment(2) == 'organization_unit' ? 'active' : '' }}"><a
+									href="{{route('organization_unit.index')}}">Organization Unit</a></li>
+							<li class="{{ request()->segment(2) == 'official' ? 'active' : '' }}"><a
+									href="{{route('official.index')}}">Official</a></li>
+							<li class="{{ request()->segment(2) == 'role' ? 'active' : '' }}"><a
+									href="{{route('role.index')}}">Role</a></li>
+							<li class="{{ request()->segment(2) == 'sector' ? 'active' : '' }}"><a
+									href="{{route('sector.index')}}">Sector</a></li>
+							<li class="{{ request()->segment(2) == 'subsector' ? 'active' : '' }}"><a
+									href="{{route('subsector.index')}}">Subsector</a></li>
+							<li class="{{ request()->segment(2) == 'source' ? 'active' : '' }}"><a
+									href="{{route('source.index')}}">Source/Funding</a></li>
+							<li class="{{ request()->segment(2) == 'purpose' ? 'active' : '' }}"><a
+									href="{{route('purpose.index')}}">Project Purpose</a></li>
+
+							<li class="{{ request()->segment(2) == 'contracttype' ? 'active' : '' }}"><a
+									href="{{route('contracttype.index')}}">Contract Type</a></li>
+							<li class="{{ request()->segment(2) == 'offerer' ? 'active' : '' }}"><a
+									href="{{route('offerer.index')}}">Offerer</a></li>
+							<li class="{{ request()->segment(2) == 'tender_method' ? 'active' : '' }}"><a
+									href="{{route('tender_method.index')}}">Tender Method</a></li>
+							<li class="{{ request()->segment(2) == 'contract_method' ? 'active' : '' }}"><a
+									href="{{route('contract_method.index')}}">Contract Method</a></li>
+							<li class="{{ request()->segment(2) == 'warranty-type' ? 'active' : '' }}"><a
+									href="{{route('warranty-type.index')}}">Warranty Type</a></li>
+							<li class="{{ request()->segment(2) == 'status' ? 'active' : '' }}"><a
+									href="{{route('status.index')}}">Status</a></li>
 						</ul>
 					</li>
 					<!--<li>
@@ -103,7 +119,7 @@
 
 					<li class="list-title">Project Management</li>
 
-					<li>
+					<li class="{{ request()->segment(1) == 'project' ? 'active' : '' }}">
 						<a href="{{ route('project.index') }}">
 							<i class="icon-magazine"></i><span>Project</span>
 						</a>
@@ -119,7 +135,7 @@
 						</ul>
 					</li>
 					<li>
-						<a href="">
+						<a href="#">
 							<i class="icon-comment-discussion"></i>
 							Evaluasi Penwaran/Penghargaan
 						</a>
@@ -166,7 +182,7 @@
 						</ul>
 					</li>
 					<li>
-						<a href=""><i class="icon-comment-discussion"></i> Formulir Pengisian</a>
+						<a href="#"><i class="icon-comment-discussion"></i> Formulir Pengisian</a>
 					</li>
 
 					<li class="list-title">Laporan</li>
@@ -183,7 +199,8 @@
 							<a href="{{ route('reports.suppliers') }}"><i class="icon-comment-discussion"></i> Contratos y Proveedores </a>
 						</li>-->
 					<li>
-						<a href="{{ route('reports.managment') }}"><i class="icon-comment-discussion"></i> Manajemen/Pengelolaan
+						<a href="{{ route('reports.managment') }}"><i class="icon-comment-discussion"></i>
+							Manajemen/Pengelolaan
 						</a>
 					</li>
 					<!--<li>

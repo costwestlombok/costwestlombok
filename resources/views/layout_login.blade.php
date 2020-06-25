@@ -5,13 +5,15 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>SISOCS - Login</title>	
-	<link href="{{ asset('assets/images/favicon.ico') }}" rel="apple-touch-icon" type="image/png" sizes="144x144">
+	<title>COST LOMBOK BARAT</title>
+	<link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml" />
+
+	<!-- <link href="{{ asset('assets/images/favicon.ico') }}" rel="apple-touch-icon" type="image/png" sizes="144x144">
 	<link href="{{ asset('assets/images/favicon.ico') }}" rel="apple-touch-icon" type="image/png" sizes="114x114">
 	<link href="{{ asset('assets/images/favicon.ico') }}" rel="apple-touch-icon" type="image/png" sizes="72x72">
 	<link href="{{ asset('assets/images/favicon.ico') }}" rel="apple-touch-icon" type="image/png">
 	<link href="{{ asset('assets/images/favicon.ico') }}" rel="icon" type="image/png">
-	<link href="{{ asset('assets/images/favicon.ico') }}" rel="shortcut icon">
+	<link href="{{ asset('assets/images/favicon.ico') }}" rel="shortcut icon"> -->
 	
 	<!-- Global stylesheets -->	
 	<link type="text/css" rel="stylesheet" href="{{ asset('assets/fonts/fonts.css') }}">

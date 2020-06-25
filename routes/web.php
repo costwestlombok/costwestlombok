@@ -19,23 +19,26 @@ Route::get('/list', 'FrontController@list');
 
 Route::get('/Users', 'UsersController@login');
 Route::resource('dashboard', 'DashboardController');
-Route::resource('organization', 'OrganizationController');
-Route::resource('organization_unit', 'OrganizationUnitController');
-Route::resource('sector', 'SectorController');
-Route::resource('subsector', 'SubsectorController');
+
+// catalog
+Route::resource('catalog/organization', 'OrganizationController');
+Route::resource('catalog/organization_unit', 'OrganizationUnitController');
+Route::resource('catalog/official', 'OfficialController');
+Route::resource('catalog/role', 'RoleController');
+Route::resource('catalog/sector', 'SectorController');
+Route::resource('catalog/subsector', 'SubsectorController');
+Route::resource('catalog/source', 'SourceController');
+Route::resource('catalog/purpose', 'PurposeController');
+Route::resource('catalog/contracttype', 'ContractTypeController');
+Route::resource('catalog/offerer', 'OffererController');
+Route::resource('catalog/tender_method', 'TenderMethodController');
+Route::resource('catalog/contract_method', 'ContractMethodController');
+Route::resource('catalog/warranty-type', 'WarrantyTypeController');
+Route::resource('catalog/status', 'StatusController');
+
 Route::get('/subsector/ajax_get_subsector', 'SubsectorController@ajax_get_subsector');
-Route::resource('role', 'RoleController');
-Route::resource('official', 'OfficialController');
-Route::resource('source', 'SourceController');
-Route::resource('purpose', 'PurposeController');
-Route::resource('contracttype', 'ContractTypeController');
-Route::resource('tender_method', 'TenderMethodController');
-Route::resource('contract_method', 'ContractMethodController');
 Route::resource('currency', 'CurrencyController');
-Route::resource('offerer', 'OffererController');
 Route::resource('contact', 'ContactController');
-Route::resource('status', 'StatusController');
-Route::resource('warranty-type', 'WarrantyTypeController');
 
 Route::resource('project', 'ProjectController');
 Route::get('/project/file/{project}', 'ProjectController@project_file');
