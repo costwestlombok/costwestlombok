@@ -40,6 +40,8 @@ class CreateTendersTable extends Migration
             $table->string('acceptance_certificate')->nullable(); //file?
             $table->uuid('status_id');
             $table->foreign('status_id')->references('id')->on('statuses');
+            $table->uuid('tender_status_id');
+            $table->foreign('tender_status_id')->references('id')->on('tender_statuses');
             $table->date('date_of_publication')->nullable();
             $table->timestamps();
         });

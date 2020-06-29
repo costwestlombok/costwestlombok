@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\ContractType;
 use App\Organization;
+use App\Project;
 use App\Status;
 use App\Tender;
-use App\Project;
-use App\ContractType;
 use App\TenderMethod;
-
+use App\TenderStatus;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class TenderController extends Controller
 {
-
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -28,10 +28,8 @@ class TenderController extends Controller
     public function index()
     {
         //
-        $obj = Tender::all();
-        $projects = Project::all();
-
-        return view('tender.index', ['obj'=>$obj, 'projects'=> $projects]);
+        $tenders = Tender::all();
+        return view('tender.index', ['tenders' => $tenders]);
     }
 
     /**
@@ -40,29 +38,30 @@ class TenderController extends Controller
      * @param int $projectID
      * @return \Illuminate\Http\Response
      */
-    public function create( $projectID = 0 )
+    public function create()
     {
         //
 
         $organizations = Organization::all();
 
-        $status = Status::all();
+        $statuses = Status::all();
 
         $projects = Project::all();
 
-        $contracttypes = ContractType::all();
+        $contract_types = ContractType::all();
 
-        $methods  = TenderMethod::all();
+        $tender_methods = TenderMethod::all();
+        $tender_statuses = TenderStatus::all();
 
-        return view('tender.create', [ 
-                                        'organizations'     => $organizations,
-                                        'status'            => $status,
-                                        'projects'          => $projects,
-                                        'contracttypes'     => $contracttypes,
-                                        'methods'           => $methods,
-                                        'projectID'         => $projectID
-                                    ]
-                    );
+        return view('tender.create', [
+            'organizations' => $organizations,
+            'statuses' => $statuses,
+            'projects' => $projects,
+            'contract_types' => $contract_types,
+            'tender_methods' => $tender_methods,
+            'tender_statuses' => $tender_statuses,
+        ]
+        );
     }
 
     /**
@@ -73,33 +72,39 @@ class TenderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        if ($request->evaluation_process) {
+            $data['evaluation_process'] = $request->file('evaluation_process')->store('tender');
+        }
+        if ($request->international_invitation) {
+            $data['international_invitation'] = $request->file('international_invitation')->store('tender');
+        }
+        if ($request->basement) {
+            $data['basement'] = $request->file('basement')->store('tender');
+        }
+        if ($request->resolution) {
+            $data['resolution'] = $request->file('resolution')->store('tender');
+        }
+        if ($request->convocation) {
+            $data['convocation'] = $request->file('convocation')->store('tender');
+        }
+        if ($request->tdr) {
+            $data['tdr'] = $request->file('tdr')->store('tender');
+        }
+        if ($request->clarification) {
+            $data['clarification'] = $request->file('clarification')->store('tender');
+        }
+        if ($request->acceptance_certificate) {
+            $data['acceptance_certificate'] = $request->file('acceptance_certificate')->store('tender');
+        }
+        $start = Carbon::parse($request->start_date);
+        $end = Carbon::parse($request->end_date);
+        $data['duration'] = $start->diffInDays($end);
 
-        $obj = new Tender([
-                            'process_number'    => $request->get('process_number'),
-                            'process_name'      => $request->get('process_name'),
+        Tender::create($data);
+        alert('Success', 'Data saved successfully!', 'success');
 
-                            'file_invitation'   => '',
-                            'file_qualification_bases' => '',
-                            'file_resolution_stating_qualification' => '',
-                            'file_call_for_tender'  => '',
-                            'file_terms_conditions' => '',
-                            'file_amendments'       => '',
-                            'file_acceptance_certificate'   => '',
-                            'file_others'           => '',
-
-                            'projects_id'       => $request->get('projects_id'),
-                            'organizations_id'  => $request->get('organizations_id'),
-                            'organization_units_id'  => $request->get('units_id'),
-                            'officials_id'      => $request->get('officials_id'),
-                            //'roles_id'          => $request->get('roles_id'),
-                            'roles_id'          => 1,
-                            'contract_types_id' => $request->get('contract_types_id'),
-                            'tender_methods_id' => $request->get('tender_methods_id'),
-                            'statuses_id'       => $request->get('status'),
-                        ]);
-        $obj->save();
-        return redirect('/tender')->with('success', 'Data saved');
+        return back();
     }
 
     /**
@@ -146,5 +151,10 @@ class TenderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function store_file($file)
+    {
+        return $file->store('/tender');
     }
 }

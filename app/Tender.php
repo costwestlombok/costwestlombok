@@ -31,4 +31,14 @@ class Tender extends Model
     {
         return $this->belongsTo('App\Official', 'official_id', 'id');
     }
+
+    public function status()
+    {
+        return $this->belongsTo('App\Status', 'status_id', 'id');
+    }
+
+    public function tender_status()
+    {
+        return $this->belongsTo('App\TenderStatus', 'tender_status_id', 'id');
+    }
 }

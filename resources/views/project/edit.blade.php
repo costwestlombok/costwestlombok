@@ -53,7 +53,7 @@
                   <select class="form-control" name="" id="sector">
                     <option value="">Choose sector</option>
                     @foreach ($sectors as $sector)
-                        <option value="{{$sector->id}}">{{$sector->sector_name}}</option>
+                        <option value="{{$sector->id}}" @if($sector->id == $project->subsector->sector->id) selected @endif>{{$sector->sector_name}}</option>
                     @endforeach
                   </select>
               </div>
@@ -63,6 +63,9 @@
                   <label for="name">Sub sector:</label>
                   <select class="form-control" name="subsector_id" id="subsector">
                     <option value="">Choose sub sector</option>
+                    @foreach ($subsectors as $subsector)
+                        <option value="{{$subsector->id}}" @if($subsector->id == $project->subsector_id) selected @endif>{{$subsector->subsector_name}}</option>
+                    @endforeach
                   </select>
               </div>
             </div>
@@ -75,7 +78,7 @@
                   <select class="form-control" name="" id="entity">
                     <option value="0">Choose entity</option>
                     @foreach ($organizations as $org)
-                        <option value="{{$org->id}}">{{$org->name}}</option>
+                        <option value="{{$org->id}}" @if($org->id == $project->official->unit->org->id) selected @endif>{{$org->name}}</option>
                     @endforeach
                   </select>
               </div>
@@ -85,6 +88,9 @@
                   <label for="name">Unit:</label>
                   <select class="form-control" name="" id="unit">
                     <option value="">Choose unit</option>
+                    @foreach ($units as $unit)
+                        <option value="{{$unit->id}}" @if($unit->id == $project->official->unit->id) selected @endif>{{$unit->unit_name}}</option>
+                    @endforeach
                   </select>
               </div>
             </div>
@@ -93,6 +99,9 @@
                   <label for="name">Official:</label>
                   <select class="form-control" name="official_id" id="official">
                     <option value="">Choose Official</option>
+                    @foreach ($officials as $official)
+                        <option value="{{$official->id}}" @if($official->id == $project->official_id) selected @endif>{{$official->name}}</option>
+                    @endforeach
                   </select>
               </div>
             </div>
@@ -101,7 +110,7 @@
             <div class="col-md-12">
               <div class="form-group">
                   <label for="name">Budget:</label>
-                  <input type="text" class="form-control" name="budget" id="budget" value="{{$project->budget}}" required>
+                  <input type="text" class="form-control" name="budget" id="budget" value="{{ number_format($project->budget) }}" required>
               </div>
             </div>
           </div>
@@ -118,13 +127,13 @@
             <div class="col-md-6">
               <div class="form-group">
                   <label for="name">Start Date:</label>
-                  <input type="date" class="form-control" name="start_date" id="start_date" value="{{$project->start_date}}">
+                  <input type="date" class="form-control" name="start_date" id="start_date" value="{{ date_format(Carbon\Carbon::parse($project->start_date), 'Y-m-d') }}">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                   <label for="name">End Date:</label>
-                  <input type="date" class="form-control" name="end_date" id="end_date" value="{{$project->end_date}}">
+                  <input type="date" class="form-control" name="end_date" id="end_date" value="{{ date_format(Carbon\Carbon::parse($project->end_date), 'Y-m-d') }}">
               </div>
             </div>
           </div>
@@ -132,13 +141,13 @@
             <div class="col-md-6">
               <div class="form-group">
                   <label for="name">Approved Date:</label>
-                  <input type="date" class="form-control" name="date_of_approved" id="date_of_approved" value="{{$project->date_of_approved}}">
+                  <input type="date" class="form-control" name="date_of_approved" id="date_of_approved" value="{{ date_format(Carbon\Carbon::parse($project->date_of_approved), 'Y-m-d') }}">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                   <label for="name">Publication Date:</label>
-                  <input type="date" class="form-control" name="date_of_publication" id="date_of_publication" value="{{$project->date_of_publication}}">
+                  <input type="date" class="form-control" name="date_of_publication" id="date_of_publication" value="{{ date_format(Carbon\Carbon::parse($project->date_of_publication), 'Y-m-d') }}">
               </div>
             </div>
           </div>
@@ -194,7 +203,7 @@
                 <select class="form-control" name="status_id" id="status_id">
                   <option value="">Choose status</option>
                   @foreach ($statuses as $status)
-                      <option value="{{$status->id}}">{{$status->status_name}}</option>
+                      <option value="{{$status->id}}" @if($status->id == $project->status_id) selected @endif>{{$status->status_name}}</option>
                   @endforeach
                 </select>
             </div>

@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Libraries\Googlemaps;
+use App\Official;
 use App\Organization;
+use App\OrganizationUnit;
 use App\Project;
 use App\ProjectDocument;
 use App\Purpose;
 use App\Sector;
 use App\Status;
+use App\Subsector;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -151,8 +154,11 @@ class ProjectController extends Controller
         $purposes = Purpose::all();
 
         $sectors = Sector::all();
+        $subsectors = Subsector::where('sector_id', $project->subsector->sector->id)->get();
 
         $organizations = Organization::all();
+        $units = OrganizationUnit::where('entity_id', $project->official->unit->org->id)->get();
+        $officials = Official::where('entity_unit_id', $project->official->unit->id)->get();
 
         $statuses = Status::all();
 
@@ -163,6 +169,9 @@ class ProjectController extends Controller
             'statuses' => $statuses,
             'map' => $map,
             'project' => $project,
+            'subsectors' => $subsectors,
+            'units' => $units,
+            'officials' => $officials,
         ]);
     }
 
@@ -176,6 +185,7 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $data = $request->all();
+        $data['budget'] = str_replace(",", "", $request->budget);
         $project->update($data);
         alert('Success', 'Data updated successfully!', 'success');
 
@@ -216,6 +226,7 @@ class ProjectController extends Controller
 
     public function project_file_delete(ProjectDocument $projectdocument)
     {
+        Storage::delete($projectdocument->document_path);
         $projectdocument->delete();
         alert('Success', 'Data deleted successfully!', 'success');
         return back();
