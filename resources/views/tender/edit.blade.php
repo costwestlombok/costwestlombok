@@ -15,11 +15,10 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('tender.store') }}" enctype="multipart/form-data">
+      <form method="post" action="{{ route('tender.update', $tender->id) }}" enctype="multipart/form-data">
+        @csrf
+        {{ method_field('PATCH') }}
 
-
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
@@ -27,7 +26,7 @@
                   <select class="form-control" name="project_id" id="projects_id">
                     <option value="">Choose project</option>
                     @foreach ($projects as $project)
-                      <option value="{{$project->id}}">{{$project->project_title}}</option>                        
+                      <option value="{{$project->id}}" @if($project->id == $tender->project_id) selected @endif>{{$project->project_title}}</option>                        
                     @endforeach
                   </select>
               </div>
@@ -36,12 +35,12 @@
 
           <div class="form-group">
               <label for="name">Prosess Number:</label>
-              <input type="text" class="form-control" name="process_number"/>
+              <input type="text" class="form-control" name="process_number" value="{{$tender->process_number}}"/>
           </div>
 
           <div class="form-group">
               <label for="name">Process Name:</label>
-              <input type="text" class="form-control" name="project_process_name"/>
+              <input type="text" class="form-control" name="project_process_name" value="{{$tender->project_process_name}}"/>
           </div>
 
           <div class="row">
@@ -51,7 +50,7 @@
                   <select class="form-control" name="" id="entity">
                     <option value="0">Choose entity</option>
                     @foreach ($organizations as $org)
-                        <option value="{{$org->id}}">{{$org->name}}</option>
+                        <option value="{{$org->id}}" @if($org->id == $tender->official->unit->org->id) selected @endif>{{$org->name}}</option>
                     @endforeach
                   </select>
               </div>
@@ -60,7 +59,10 @@
               <div class="form-group">
                   <label for="name">Unit:</label>
                   <select class="form-control" name="" id="unit">
-                    <option value="">Choose unit</option>
+                    <option value="" >Choose unit</option>
+                    @foreach ($units as $unit)
+                        <option value="{{$unit->id}}" @if($unit->id == $tender->official->unit->id) selected @endif>{{$unit->unit_name}}</option>
+                    @endforeach
                   </select>
               </div>
             </div>
@@ -69,6 +71,9 @@
                   <label for="name">Official:</label>
                   <select class="form-control" name="official_id" id="official">
                     <option value="">Choose Official</option>
+                    @foreach ($officials as $official)
+                        <option value="{{$official->id}}" @if($official->id == $tender->official_id) selected @endif>{{$official->name}}</option>
+                    @endforeach
                   </select>
               </div>
             </div>
@@ -81,7 +86,7 @@
                   <select class="form-control" name="contract_type_id" id="contract_type_id">
                     <option value="0">Choose contract type</option>
                     @foreach ($contract_types as $ct)
-                        <option value="{{$ct->id}}">{{$ct->type_name}}</option>
+                        <option value="{{$ct->id}}" @if($ct->id == $tender->contract_type_id) selected @endif>{{$ct->type_name}}</option>
                     @endforeach
                   </select>
               </div>
@@ -92,7 +97,7 @@
                   <select class="form-control" name="tender_method_id" id="tender_method_id">
                     <option value="">Choose a tender method</option>
                     @foreach ($tender_methods as $tm)
-                        <option value="{{$tm->id}}">{{$tm->method_name}}</option>
+                        <option value="{{$tm->id}}" @if($tm->id == $tender->tender_method_id) selected @endif>{{$tm->method_name}}</option>
                     @endforeach
                   </select>
               </div>
@@ -103,26 +108,26 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label>Start Date</label>
-                <input type="date" name="start_date" class="form-control">
+                <input type="date" name="start_date" class="form-control" value="{{ date_format(Carbon\Carbon::parse($tender->start_date), 'Y-m-d') }}">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label>End Date</label>
-                <input type="date" name="End_date" class="form-control">
+                <input type="date" name="end_date" class="form-control" value="{{ date_format(Carbon\Carbon::parse($tender->end_date), 'Y-m-d') }}">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label>Max Extended Date</label>
-                <input type="date" name="max_extended_process" class="form-control">
+                <input type="date" name="max_extended_process" class="form-control" value="{{ date_format(Carbon\Carbon::parse($tender->max_extended_process), 'Y-m-d') }}">
               </div>
             </div>
           </div>
           
           <div class="form-group">
               <label for="name">Tender Amount:</label>
-              <input type="text" class="form-control" name="amount"/>
+              <input type="text" class="form-control" name="amount" value="{{ number_format($tender->amount) }}"/>
           </div>
 
           <div class="row">
@@ -204,7 +209,7 @@
                 <select class="form-control" name="status_id" id="status_id">
                   <option value="">Choose status</option>
                   @foreach ($statuses as $status)
-                      <option value="{{$status->id}}">{{$status->status_name}}</option>
+                      <option value="{{$status->id}}" @if($status->id == $tender->status_id) selected @endif>{{$status->status_name}}</option>
                   @endforeach
                 </select>
             </div>
@@ -218,7 +223,7 @@
                 <select class="form-control" name="tender_status_id">
                   <option value="">Choose tender status</option>
                   @foreach ($tender_statuses as $t_status)
-                      <option value="{{$t_status->id}}">{{$t_status->status_name}}</option>
+                      <option value="{{$t_status->id}}" @if($t_status->id == $tender->tender_status_id) selected @endif>{{$t_status->status_name}}</option>
                   @endforeach
                 </select>
             </div>
@@ -229,7 +234,7 @@
             <div class="col-md-12">
               <div class="form-group">
                   <label for="name">Date of Publication:</label>
-                  <input type="date" class="form-control" name="date_of_publication" id="date_of_publication">
+                  <input type="date" class="form-control" name="date_of_publication" id="date_of_publication" value="{{ date_format(Carbon\Carbon::parse($tender->date_of_publication), 'Y-m-d') }}">
               </div>
             </div>
           </div>
@@ -237,7 +242,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-right">
-                  <button type="submit" class="btn btn-primary">Save</button>
+                  <button type="submit" class="btn btn-primary">Update</button>
               </div>
             </div>
           </div>

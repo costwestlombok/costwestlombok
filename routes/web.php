@@ -35,6 +35,7 @@ Route::resource('catalog/tender_method', 'TenderMethodController');
 Route::resource('catalog/contract_method', 'ContractMethodController');
 Route::resource('catalog/warranty-type', 'WarrantyTypeController');
 Route::resource('catalog/status', 'StatusController');
+Route::resource('catalog/tender-status', 'TenderStatusController');
 
 Route::get('/subsector/ajax_get_subsector', 'SubsectorController@ajax_get_subsector');
 Route::resource('currency', 'CurrencyController');
@@ -43,6 +44,7 @@ Route::resource('contact', 'ContactController');
 Route::resource('project', 'ProjectController');
 Route::get('/project/file/{project}', 'ProjectController@project_file');
 Route::post('/project/file-store', 'ProjectController@store_file');
+Route::delete('/project/file/destroy/{projectdocument}', 'ProjectController@project_file_delete');
 
 Route::get('/get-unit/{entity}', 'OrganizationUnitController@get_unit');
 Route::get('/get-official/{unit}', 'OfficialController@get_official');

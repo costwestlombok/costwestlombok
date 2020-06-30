@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\ContractType;
+use App\Official;
 use App\Organization;
+use App\OrganizationUnit;
 use App\Project;
 use App\Status;
 use App\Tender;
@@ -11,6 +13,7 @@ use App\TenderMethod;
 use App\TenderStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Storage;
 
 class TenderController extends Controller
 {
@@ -40,16 +43,10 @@ class TenderController extends Controller
      */
     public function create()
     {
-        //
-
         $organizations = Organization::all();
-
         $statuses = Status::all();
-
         $projects = Project::all();
-
         $contract_types = ContractType::all();
-
         $tender_methods = TenderMethod::all();
         $tender_statuses = TenderStatus::all();
 
@@ -127,7 +124,27 @@ class TenderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tender = Tender::find($id);
+        $organizations = Organization::all();
+        $units = OrganizationUnit::where('entity_id', $tender->official->unit->org->id)->get();
+        $officials = Official::where('entity_unit_id', $tender->official->unit->id)->get();
+        $statuses = Status::all();
+        $projects = Project::all();
+        $contract_types = ContractType::all();
+        $tender_methods = TenderMethod::all();
+        $tender_statuses = TenderStatus::all();
+
+        return view('tender.edit', [
+            'organizations' => $organizations,
+            'statuses' => $statuses,
+            'projects' => $projects,
+            'contract_types' => $contract_types,
+            'tender_methods' => $tender_methods,
+            'tender_statuses' => $tender_statuses,
+            'tender' => $tender,
+            'units' => $units,
+            'officials' => $officials,
+        ]);
     }
 
     /**
@@ -137,9 +154,63 @@ class TenderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tender $tender)
     {
-        //
+        $data = $request->all();
+        if ($request->evaluation_process) {
+            if ($tender->evaluation_process) {
+                Storage::delete($tender->evaluation_process);
+            }
+            $data['evaluation_process'] = $request->file('evaluation_process')->store('tender');
+        }
+        if ($request->international_invitation) {
+            if ($tender->international_invitation) {
+                Storage::delete($tender->international_invitation);
+            }
+            $data['international_invitation'] = $request->file('international_invitation')->store('tender');
+        }
+        if ($request->basement) {
+            if ($tender->basement) {
+                Storage::delete($tender->basement);
+            }
+            $data['basement'] = $request->file('basement')->store('tender');
+        }
+        if ($request->resolution) {
+            if ($tender->resolution) {
+                Storage::delete($tender->resolution);
+            }
+            $data['resolution'] = $request->file('resolution')->store('tender');
+        }
+        if ($request->convocation) {
+            if ($tender->convocation) {
+                Storage::delete($tender->convocation);
+            }
+            $data['convocation'] = $request->file('convocation')->store('tender');
+        }
+        if ($request->tdr) {
+            if ($tender->tdr) {
+                Storage::delete($tender->tdr);
+            }
+            $data['tdr'] = $request->file('tdr')->store('tender');
+        }
+        if ($request->clarification) {
+            if ($tender->clarification) {
+                Storage::delete($tender->clarification);
+            }
+            $data['clarification'] = $request->file('clarification')->store('tender');
+        }
+        if ($request->acceptance_certificate) {
+            if ($tender->acceptance_certificate) {
+                Storage::delete($tender->acceptance_certificate);
+            }
+            $data['acceptance_certificate'] = $request->file('acceptance_certificate')->store('tender');
+        }
+
+        $data['amount'] = str_replace(",", "", $request->amount);
+        $tender->update($data);
+        alert('Success', 'Data updated successfully!', 'success');
+
+        return redirect('/tender');
     }
 
     /**
@@ -148,13 +219,34 @@ class TenderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tender $tender)
     {
-        //
-    }
-
-    public function store_file($file)
-    {
-        return $file->store('/tender');
+        if ($tender->evaluation_process) {
+            Storage::delete($tender->evaluation_process);
+        }
+        if ($tender->international_invitation) {
+            Storage::delete($tender->international_invitation);
+        }
+        if ($tender->basement) {
+            Storage::delete($tender->basement);
+        }
+        if ($tender->resolution) {
+            Storage::delete($tender->resolution);
+        }
+        if ($tender->convocation) {
+            Storage::delete($tender->convocation);
+        }
+        if ($tender->tdr) {
+            Storage::delete($tender->tdr);
+        }
+        if ($tender->clarification) {
+            Storage::delete($tender->clarification);
+        }
+        if ($tender->acceptance_certificate) {
+            Storage::delete($tender->acceptance_certificate);
+        }
+        $tender->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
+        return back();
     }
 }

@@ -60,6 +60,8 @@
 									href="{{route('offerer.index')}}">Offerer</a></li>
 							<li class="{{ request()->segment(2) == 'tender_method' ? 'active' : '' }}"><a
 									href="{{route('tender_method.index')}}">Tender Method</a></li>
+							<li class="{{ request()->segment(2) == 'tender_status' ? 'active' : '' }}"><a
+									href="{{route('tender-status.index')}}">Tender Status</a></li>
 							<li class="{{ request()->segment(2) == 'contract_method' ? 'active' : '' }}"><a
 									href="{{route('contract_method.index')}}">Contract Method</a></li>
 							<li class="{{ request()->segment(2) == 'warranty-type' ? 'active' : '' }}"><a
@@ -126,7 +128,7 @@
 					</li>
 					<li>
 						<a href="#">
-							<i class="icon-comment-discussion"></i>
+							<i class="icon-stamp"></i>
 							Tender
 						</a>
 						<ul>

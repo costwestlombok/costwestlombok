@@ -1,7 +1,8 @@
+
 @extends('layout')
 
 @section('title')
-
+    
 @stop
 
 @push('styles')
@@ -11,7 +12,7 @@
 @section('content')
 	<div class="panel panel-flat">
 					<div class="panel-heading">
-						<h5 class="panel-title">Tender List</h5>				
+						<h5 class="panel-title">Status List</h5>				
 					</div>
 
 					<div class="panel-body">
@@ -22,34 +23,25 @@
 						<table class="table table-togglable table-hover datatable datatable-header-basic">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Project</th>										
-									<th>Process Number</th>
-									<th>Process Name</th>
-									<th>Status</th>
-									<!--<th>Fecha de Entrega</th>
-									<th>Completado</th>
-									<th>Contactos</th>-->
-									<th class="text-center">Actions</th>
-									<th></th>
+									<th data-hide="phone, tablet">#</th>
+									<th data-toggle="true">Status Name</th>
+									<th>Actions</th>
+									<th data-hide="phone, tablet"></th>
 								</tr>
 							</thead>
 							
 							<tbody>
-								@foreach($tenders as $tender)
+								@foreach($tender_statuses as $status)
 								<tr>
 									<td>{{$loop->index+1}}</td>
-									<td>{{$tender->project->project_title}}</td>
-									<td>{{$tender->process_number}}</td>
-									<td>{{$tender->project_process_name}}</td>
-									<td>{{$tender->tender_status->status_name}}</td>
+									<td>{{$status->status_name}}</td>
 									<td class="text-center">
-										<a href="{{ route('tender.edit', $tender->id) }}" class="btn btn-defaut">
+										<a href="{{ route('tender-status.edit', $status->id) }}" class="btn btn-defaut">
 											<i class="icon-pencil6"></i>
 										</a>
 									</td>
 									<td>
-										<form action="{{ route('tender.destroy', $tender->id)}}" method="post">
+										<form action="{{ route('tender-status.destroy', $status->id)}}" method="post">
 											{{ csrf_field() }}
 											{{ method_field('DELETE') }}
 											<button class="btn btn-danger" type="submit">
@@ -57,7 +49,6 @@
 											</button>
 										</form>
 									</td>
-									
 								</tr>
 								@endforeach
 							</tbody>
@@ -67,7 +58,7 @@
 						<!--<div style="min-height:240px"></div>-->
 						<ul class="fab-menu fab-menu-absolute fab-menu-bottom-right" data-fab-toggle="hover">
 							<li>
-								<a class="fab-menu-btn btn bg-success btn-float btn-rounded btn-icon" href="{{route('tender.create')}}">
+								<a class="fab-menu-btn btn bg-success btn-float btn-rounded btn-icon" href="{{route('tender-status.create')}}">
 									<i class="fab-icon-open icon-file-plus2"></i>
 									<!--<i class="fab-icon-close icon-cross2"></i>-->
 								</a>
@@ -75,7 +66,7 @@
 						</ul>
 
 					</div>
-				</div>			
+				</div>				
 @stop
 
 @push('scripts')	

@@ -81,7 +81,7 @@
                                 <a href="{{ url('/storage/'.$file->document_path) }}" target="_blank"><i class="icon-file-download"></i> Download file</a>
                             </td>
                             <td>
-                                <form action="{{ url('project/file/destroy/', $file->id)}}" method="post">
+                                <form action="{{ url('project/file/destroy', $file->id)}}" method="post">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                     <button class="btn btn-danger" type="submit">
