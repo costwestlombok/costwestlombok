@@ -71,7 +71,12 @@ Route::get('reports/managment', 'ReportsController@managment')->name('reports.ma
 Route::get('reports/download', 'ReportsController@download')->name('reports.download');
 
 Route::resource('tender', 'TenderController');
-Route::get('tender/{projectID}/create', 'TenderController@create');
+Route::get('/tender-offerer/{tender}', 'TenderOffererController@index');
+Route::post('/tender-offerer', 'TenderOffererController@store');
+Route::delete('/tender-offerer/{tender}', 'TenderOffererController@destroy');
+Route::get('/get-supplier/{award}', 'TenderOffererController@get_sup');
+
+// Route::get('tender/{projectID}/create', 'TenderController@create');
 Route::resource('award', 'AwardController');
 Route::resource('contract', 'ContractController');
 

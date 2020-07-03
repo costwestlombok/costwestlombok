@@ -5,7 +5,7 @@
 
 <div class="panel panel-flat">
   <div class="panel-heading">
-    <h4 class="panel-title">Evaluación de Ofertas/Adjudicación</h4>
+    <h4 class="panel-title">Tender Evaluation/Award</h4>
   </div>
   <div class="panel-body">
     @if ($errors->any())
@@ -17,124 +17,111 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('award.store') }}">
-
-
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          
+      <form method="post" action="{{ route('award.store') }}" enctype="multipart/form-data">
+          @csrf
           <div class="form-group">
-              <label for="name">Invitación y calificación:</label>
-              <select class="form-control" name="tenders_id" id="tenders_id">
-                <option value="0">Elija invitación</option>
-                <?php 
-                      if (count($tenders) > 0):
-                        foreach ($tenders as $tender): 
-                ?>
-                      <option value="<?= $tender['id'] ?>"><?= $tender['process_name'] ?></option>
-                <?php 
-                        endforeach; 
-                      endif;
-                ?>
+              <label for="name">Tender Process Name:</label>
+              <select class="form-control" name="tender_id" id="tender_id" required>
+                <option value="">Choose Tender Process Name</option>
+                @foreach ($tenders as $tender)
+                    <option value="{{$tender->id}}">{{$tender->project_process_name}}</option>
+                @endforeach
               </select>
           </div>
 
           <div class="form-group">
-              <label for="name">Numero de proceso:</label>
-              <input type="text" class="form-control" name="process_number"/>
+              <label for="name">Process Number:</label>
+              <input type="text" class="form-control" name="process_number" required/>
           </div>
-
           <div class="form-group">
-              <label for="name">Costo estimado del contrato:</label>
-              <input type="text" class="form-control" name="contract_estimate_cost"/>
+              <label for="name">Particpants Number:</label>
+              <input type="number" class="form-control" name="participants_number"/>
           </div>
-
           <div class="form-group">
-              <label for="name">Número de participantes:</label>
-              <input type="text" class="form-control" name="participants_number"/>
-          </div>
-
-          
-
+            <label for="name">Contract Method:</label>
+            <select class="form-control" name="contract_method_id" id="contract_method_id">
+              <option value="">Choose Method</option>
+              @foreach ($contract_methods as $cm)
+                  <option value="{{$cm->id}}">{{$cm->method_name}}</option>
+              @endforeach
+            </select>
+        </div>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                  <label for="name">Metodo de calificación:</label>
-                  <select class="form-control" name="tendermethods_id" id="tendermethods_id">
-                    <option value="0">Elija un metodo</option>
-                    <?php 
-                          if (count($tendermethods) > 0):
-                            foreach ($tendermethods as $method): 
-                    ?>
-                          <option value="<?= $method['id'] ?>"><?= $method['method_name'] ?></option>
-                    <?php 
-                            endforeach; 
-                          endif;
-                    ?>
+                  <label for="name">Cost Estimation:</label>
+                  <input type="text" class="form-control" name="contract_estimate_cost"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                  <label for="name">Cost:</label>
+                  <input type="text" class="form-control" name="cost"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                  <label for="name">File - Opening Act:</label>
+                  <input type="file" class="form-control" name="opening_act" id="opening_act">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                  <label for="name">File Recommendation Report Act:</label>
+                  <input type="file" class="form-control" name="recomendation_report_act" id="recomendation_report_act">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                  <label for="name">File Award Resolution:</label>
+                  <input type="file" class="form-control" name="award_resolution" id="award_resolution">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                  <label for="name">File Other:</label>
+                  <input type="file" class="form-control" name="others" id="others">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                  <label for="name">Publishid At:</label>
+                  <input type="date" class="form-control" name="published_at" id="published_at">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                  <label for="status">Status:</label>
+                  <select class="form-control" name="status_id">
+                    <option value="">Choose status</option>
+                    @foreach ($status as $stat)
+                        <option value="{{$stat->id}}">{{$stat->status_name}}</option>
+                    @endforeach
                   </select>
               </div>
             </div>
           </div>
-
-          
-
-
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                  <label for="name">file 1:</label>
-                  <input type="file" class="form-control" name="resettlement_description" id="resettlement_description">
-              </div>
-            </div>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary">Save</button>
           </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                  <label for="name">file 2:</label>
-                  <input type="file" class="form-control" name="resettlement_description" id="resettlement_description">
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                  <label for="name">file 3:</label>
-                  <input type="file" class="form-control" name="resettlement_description" id="resettlement_description">
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                  <label for="name">file 4:</label>
-                  <input type="file" class="form-control" name="resettlement_description" id="resettlement_description">
-              </div>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                  <label for="">Status:</label>
-                  <select class="form-control" name="status" id="status">
-                    <option value="0">Choose status</option>
-                    <?php 
-                          if (count($status) > 0):
-                            foreach ($status as $stat): 
-                    ?>
-                          <option value="<?= $stat['id'] ?>"><?= $stat['status_name'] ?></option>
-                    <?php 
-                            endforeach; 
-                          endif;
-                    ?>
-                  </select>
-              </div>
-            </div>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Save</button>
       </form>
   </div>
 </div>

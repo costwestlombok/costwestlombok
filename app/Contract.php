@@ -19,7 +19,7 @@ class Contract extends Model
 
     public function supplier()
     {
-        return $this->belongsTo('App\Offerer', 'supplier_id', 'id');
+        return $this->belongsTo('App\Offerer', 'suppliers_id', 'id');
     }
 
     public function award()

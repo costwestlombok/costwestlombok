@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>COST LOMBOK BARAT</title>
+	<title>CoST - LOMBOK BARAT</title>
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ asset('css/custom.css') }}" rel="stylesheet" type="text/css" />
 

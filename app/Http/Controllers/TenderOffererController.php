@@ -3,28 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Award;
-use App\Contract;
-use App\Status;
-use Carbon\Carbon;
+use App\Offerer;
+use App\TenderOfferer;
 use Illuminate\Http\Request;
 
-class ContractController extends Controller
+class TenderOffererController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($tender_id)
     {
-        $contracts = Contract::all();
-        return view('contract.index', ['contracts' => $contracts]);
+        $tender_offerers = TenderOfferer::where('tender_id', $tender_id)->get();
+        if (count($tender_offerers) > 0) {
+            $data_offerers = $tender_offerers->map(function ($dt) {
+                return $dt->offerer_id;
+            });
+            $offerers = Offerer::whereNotIn('id', $data_offerers)->get();
+        } else {
+            $offerers = Offerer::all();
+        }
+        return view('tender.offerer', compact('offerers', 'tender_id', 'tender_offerers'));
     }
 
     /**
@@ -35,15 +36,6 @@ class ContractController extends Controller
     public function create()
     {
         //
-
-        $awards = Award::all();
-        $status = Status::all();
-
-        return view('contract.create', [
-            'awards' => $awards,
-            'status' => $status,
-        ]
-        );
     }
 
     /**
@@ -55,17 +47,10 @@ class ContractController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        // return $data;
-        $start = Carbon::parse($request->start_date);
-        $end = Carbon::parse($request->end_date);
-        $data['duration'] = $start->diffInDays($end);
-        $data['price_local_currency'] = str_replace(",", "", $request->price_local_currency);
-        $data['price_usd_currency'] = str_replace(",", "", $request->price_usd_currency);
-
-        Contract::create($data);
+        TenderOfferer::create($data);
         alert('Success', 'Data saved successfully!', 'success');
 
-        return redirect('/contract');
+        return back();
     }
 
     /**
@@ -77,7 +62,6 @@ class ContractController extends Controller
     public function show($id)
     {
         //
-        return view('contract.show');
     }
 
     /**
@@ -111,6 +95,15 @@ class ContractController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $to = TenderOfferer::find($id);
+        $to->delete();
+        alert('Data deleted successfully!', 'success');
+        return back();
+    }
+
+    public function get_sup(Award $award)
+    {
+        $supplier = TenderOfferer::with('offerer')->where('tender_id', $award->tender->id)->get();
+        return response()->json($supplier);
     }
 }

@@ -26,11 +26,10 @@ class CreateAwardsTable extends Migration
             $table->double('contract_estimate_cost');
             $table->double('cost');
 
-            $table->string('opening_act'); //file
-            $table->string('recomendation_report_act'); //file
-            $table->string('award_resolution'); //file
-            $table->string('others'); //file
-
+            $table->string('opening_act')->nullable(); //file
+            $table->string('recomendation_report_act')->nullable(); //file
+            $table->string('award_resolution')->nullable(); //file
+            $table->string('others')->nullable(); //file
             $table->dateTime('published_at')->nullable();
             $table->timestamps();
         });

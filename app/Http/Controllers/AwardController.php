@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Organization;
+use App\Award;
+use App\ContractMethod;
 use App\Status;
 use App\Tender;
-use App\TenderMethod;
-use App\Award;
-
-
+use Illuminate\Http\Request;
 
 class AwardController extends Controller
 {
-
-    
 
     public function __construct()
     {
@@ -29,8 +24,8 @@ class AwardController extends Controller
     public function index()
     {
         //
-        $obj = Award::all();
-        return view('award.index', ['obj'=>$obj]);
+        $awards = Award::all();
+        return view('award.index', compact('awards'));
     }
 
     /**
@@ -40,19 +35,16 @@ class AwardController extends Controller
      */
     public function create()
     {
-        //
-
         $tenders = Tender::all();
-        $tendermethods = TenderMethod::all();
-
+        $contract_methods = ContractMethod::all();
         $status = Status::all();
 
-        return view('award.create', [ 
-                                        'tenders'   => $tenders,
-                                        'tendermethods' => $tendermethods,
-                                        'status'    => $status,
-                                    ]
-                    );
+        return view('award.create', [
+            'tenders' => $tenders,
+            'contract_methods' => $contract_methods,
+            'status' => $status,
+        ]
+        );
     }
 
     /**
@@ -63,22 +55,25 @@ class AwardController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $obj = new Award([
-                            'tenders_id'    => $request->get('tenders_id'),
-                            'process_number'    => $request->get('process_number'),
-                            'contract_estimate_cost'    => $request->get('contract_estimate_cost'),
-                            'participants_number'       => $request->get('participants_number'),
-                            'statuses_id'               => $request->get('status'),
-                            'tender_methods_id'         => $request->get('tendermethods_id'),
+        $data = $request->all();
+        $data['cost'] = str_replace(",", "", $request->cost);
+        $data['contract_estimate_cost'] = str_replace(",", "", $request->contract_estimate_cost);
+        if ($request->opening_act) {
+            $data['opening_act'] = $request->file('opening_act')->store('awards');
+        }
+        if ($request->recomendation_report_act) {
+            $data['recomendation_report_act'] = $request->file('recomendation_report_act')->store('awards');
+        }
+        if ($request->award_resolution) {
+            $data['award_resolution'] = $request->file('award_resolution')->store('awards');
+        }
+        if ($request->others) {
+            $data['others'] = $request->file('others')->store('awards');
+        }
+        Award::create($data);
+        alert('Success', 'Data saved successfully!', 'success');
 
-                            'file_opening_act'          => '',
-                            'file_recomendation_report_act' => '',
-                            'file_award_resolution'     => '',
-                            'file_others'               => '',
-                        ]);
-        $obj->save();
-        return redirect('/award')->with('success', 'Data saved!');
+        return redirect('/award');
     }
 
     /**
@@ -99,9 +94,18 @@ class AwardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Award $award)
     {
-        //
+        $tenders = Tender::all();
+        $contract_methods = ContractMethod::all();
+        $status = Status::all();
+
+        return view('award.edit', [
+            'tenders' => $tenders,
+            'contract_methods' => $contract_methods,
+            'status' => $status,
+            'award' => $award,
+        ]);
     }
 
     /**
@@ -122,8 +126,22 @@ class AwardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Award $award)
     {
-        //
+        if ($tender->opening_act) {
+            Storage::delete($tender->opening_act);
+        }
+        if ($tender->recomendation_report_act) {
+            Storage::delete($tender->recomendation_report_act);
+        }
+        if ($tender->award_resolution) {
+            Storage::delete($tender->award_resolution);
+        }
+        if ($tender->others) {
+            Storage::delete($tender->others);
+        }
+        $award->delete();
+        alert('Success', 'Data deleted successfully!', 'success');
+        return back();
     }
 }

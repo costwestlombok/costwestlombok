@@ -132,37 +132,37 @@
 							Tender
 						</a>
 						<ul>
-							<li><a href="{{route('tender.index')}}">List Tender</a></li>
-							<li><a href="{{route('tender.create')}}">Buat Tender Baru</a></li>
+							<li><a href="{{route('tender.index')}}"> Tender List</a></li>
+							<li><a href="{{route('tender.create')}}"> Create New Tender</a></li>
 						</ul>
 					</li>
 					<li>
 						<a href="#">
 							<i class="icon-comment-discussion"></i>
-							Evaluasi Penwaran/Penghargaan
+							Award/Tender Evaluation
 						</a>
 						<ul>
-							<li><a href="{{route('award.index')}}">List Penghargaan</a></li>
-							<li><a href="#">Buat Penghargaan Baru</a></li>
+							<li><a href="{{route('award.index')}}">Award List</a></li>
+							<li><a href="#">Create New Award</a></li>
 						</ul>
 					</li>
 					<li>
 						<a href="#">
 							<i class="icon-comment-discussion"></i>
-							Kontrak
+							Contract
 						</a>
 						<ul>
-							<li><a href="{{route('contract.index')}}">List Kontrak</a></li>
-							<li><a href="{{route('contract.create')}}">Create Kontrak Baru</a></li>
+							<li><a href="{{route('contract.index')}}">Contract List</a></li>
+							<li><a href="{{route('contract.create')}}">Create New Contract</a></li>
 						</ul>
 					</li>
 					<li>
 						<a href="#">
-							<i class="icon-comment-discussion"></i> Manajemen Kontrak
+							<i class="icon-comment-discussion"></i> Contract Management
 						</a>
 						<ul>
-							<li><a href="{{route('contract.index')}}">List Manajemen Kontrak</a></li>
-							<li><a href="{{route('contract.create')}}">Buat Modifikasi</a></li>
+							<li><a href="{{route('contract.index')}}">Contract List</a></li>
+							<li><a href="{{route('contract.create')}}">Create New Contract</a></li>
 						</ul>
 					</li>
 					<li>

@@ -11,4 +11,9 @@ class Award extends Model
     protected $keyType = 'uuid';
     protected $guarded = [];
     public $incrementing = false;
+
+    public function tender()
+    {
+        return $this->belongsTo('App\Tender', 'tender_id', 'id');
+    }
 }

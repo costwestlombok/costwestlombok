@@ -22,8 +22,8 @@ class CreateContractsTable extends Migration
             $table->datetime('end_date')->nullable();
             $table->datetime('max_extend_date')->nullable();
             $table->integer('duration')->nullable();
-            $table->string('contract_title')->nullable();
-            $table->string('contract_scope')->nullable();
+            $table->string('contract_title', 500)->nullable();
+            $table->text('contract_scope')->nullable();
             $table->double('price_local_currency')->nullable();
             $table->double('price_usd_currency')->nullable();
             $table->uuid('suppliers_id');

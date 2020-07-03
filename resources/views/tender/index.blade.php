@@ -27,6 +27,7 @@
 									<th>Process Number</th>
 									<th>Process Name</th>
 									<th>Status</th>
+									<th>Offerers</th>
 									<!--<th>Fecha de Entrega</th>
 									<th>Completado</th>
 									<th>Contactos</th>-->
@@ -43,6 +44,11 @@
 									<td>{{$tender->process_number}}</td>
 									<td>{{$tender->project_process_name}}</td>
 									<td>{{$tender->tender_status->status_name}}</td>
+									<td>
+										<a href="{{url('/tender-offerer/'.$tender->id)}}" class="btn btn-info">
+											List Offerers
+										</a>
+									</td>
 									<td class="text-center">
 										<a href="{{ route('tender.edit', $tender->id) }}" class="btn btn-defaut">
 											<i class="icon-pencil6"></i>

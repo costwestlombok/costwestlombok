@@ -97,11 +97,11 @@ class TenderController extends Controller
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
         $data['duration'] = $start->diffInDays($end);
-
+        $data['amount'] = str_replace(",", "", $request->amount);
         Tender::create($data);
         alert('Success', 'Data saved successfully!', 'success');
 
-        return back();
+        return redirect('/tender');
     }
 
     /**
