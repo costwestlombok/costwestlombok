@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Award;
-use App\Completion;
+use App\Contact;
 use App\Contract;
+use App\Disbursment;
+use App\Execution;
 use App\Status;
-use Carbon\Carbon;
+use App\Warranty;
+use App\WarrantyType;
 use Illuminate\Http\Request;
 
-class ContractController extends Controller
+class ExecutionController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -24,8 +20,8 @@ class ContractController extends Controller
      */
     public function index()
     {
-        $contracts = Contract::all();
-        return view('contract.index', ['contracts' => $contracts]);
+        $executions = Execution::all();
+        return view('execution.index', compact('executions'));
     }
 
     /**
@@ -35,16 +31,10 @@ class ContractController extends Controller
      */
     public function create()
     {
-        //
-
-        $awards = Award::all();
+        $contacts = Contact::all();
         $status = Status::all();
-
-        return view('contract.create', [
-            'awards' => $awards,
-            'status' => $status,
-        ]
-        );
+        $contracts = Contract::all();
+        return view('execution.create', compact('contracts', 'status', 'contacts'));
     }
 
     /**
@@ -57,16 +47,11 @@ class ContractController extends Controller
     {
         $data = $request->all();
         // return $data;
-        $start = Carbon::parse($request->start_date);
-        $end = Carbon::parse($request->end_date);
-        $data['duration'] = $start->diffInDays($end);
-        $data['price_local_currency'] = str_replace(",", "", $request->price_local_currency);
-        $data['price_usd_currency'] = str_replace(",", "", $request->price_usd_currency);
-
-        Contract::create($data);
+        $data['varprice'] = str_replace(",", "", $request->varprice);
+        Execution::create($data);
         alert('Success', 'Data saved successfully!', 'success');
 
-        return redirect('/contract');
+        return redirect('/execution');
     }
 
     /**
@@ -78,7 +63,6 @@ class ContractController extends Controller
     public function show($id)
     {
         //
-        return view('contract.show');
     }
 
     /**
@@ -115,28 +99,44 @@ class ContractController extends Controller
         //
     }
 
-    public function completion($contract)
+    public function disbursment($execution)
     {
-        $data = Completion::where('contracts_id', $contract)->first();
-        return view('contract.completion', compact('data', 'contract'));
+        $data = Disbursment::where('executions_id', $execution)->get();
+        $status = Status::all();
+        return view('execution.disbursment', compact('data', 'execution', 'status'));
     }
 
-    public function completion_store(Request $request)
+    public function disbursment_store(Request $request)
     {
         $data = $request->all();
         // return $data;
-        $data['final_cost'] = str_replace(",", "", $request->final_cost);
-        Completion::create($data);
+        $data['amount'] = str_replace(",", "", $request->amount);
+        Disbursment::create($data);
         alert('Success', 'Data saved successfully!', 'success');
-
         return back();
     }
 
-    public function completion_destroy(Completion $completion)
+    public function disbursment_destroy(Disbursment $disbursment)
     {
-        $completion->delete();
+        $disbursment->delete();
         alert('Success', 'Data deleted successfully!', 'success');
+        return back();
+    }
 
+    public function warranty($execution)
+    {
+        $data = Warranty::where('executions_id', $execution)->get();
+        $warranty_types = WarrantyType::all();
+        $status = Status::all();
+        return view('execution.warranty', compact('data', 'warranty_types', 'status', 'execution'));
+    }
+
+    public function warranty_store(Request $request)
+    {
+        $data = $request->all();
+        $data['ammount'] = str_replace(",", "", $request->ammount);
+        Warranty::create($data);
+        alert('Success', 'Data saved successfully!', 'success');
         return back();
     }
 }

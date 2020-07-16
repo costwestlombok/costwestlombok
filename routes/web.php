@@ -79,7 +79,30 @@ Route::get('/get-supplier/{award}', 'TenderOffererController@get_sup');
 // Route::get('tender/{projectID}/create', 'TenderController@create');
 Route::resource('award', 'AwardController');
 Route::resource('contract', 'ContractController');
-
+//completions
+Route::get('/completions/{contract}', 'ContractController@completion');
+Route::post('/completion', 'ContractController@completion_store');
+Route::delete('/completions/destroy/{completion}', 'ContractController@completion_destroy');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//contract-management
+Route::resource('ammendment', 'AmmendmentController');
+
+//execution
+Route::resource('execution', 'ExecutionController');
+
+//disbursment
+Route::get('/disbursment/{execution}', 'ExecutionController@disbursment');
+Route::post('/disbursment', 'ExecutionController@disbursment_store');
+Route::delete('/disbursment/delete/{disbursment}', 'ExecutionController@disbursment_destroy');
+
+//warranty
+Route::get('/warranty/{execution}', 'ExecutionController@warranty');
+Route::post('/warranty', 'ExecutionController@warranty_store');
+
+Route::resource('progress', 'ProgressController');
+Route::get('/advance-images/{advance}', 'ProgressController@images');
+Route::post('/advance-images/{advance}', 'ProgressController@images_store');
+Route::delete('/advance-image/destroy/{advance_image}', 'ProgressController@image_destroy');

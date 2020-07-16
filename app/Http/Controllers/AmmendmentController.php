@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Purpose;
+use App\Ammendment;
+use App\Contract;
+use App\Status;
 use Illuminate\Http\Request;
 
-class PurposeController extends Controller
+class AmmendmentController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -20,9 +16,8 @@ class PurposeController extends Controller
      */
     public function index()
     {
-        //
-        $purposes = Purpose::all();
-        return view('purpose.index', ['purposes' => $purposes]);
+        $ammendments = Ammendment::all();
+        return view('ammendment.index', compact('ammendments'));
     }
 
     /**
@@ -32,8 +27,9 @@ class PurposeController extends Controller
      */
     public function create()
     {
-        //
-        return view('purpose.create');
+        $contracts = Contract::all();
+        $status = Status::all();
+        return view('ammendment.create', compact('contracts', 'status'));
     }
 
     /**
@@ -44,15 +40,22 @@ class PurposeController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
         $this->validate($request, [
-            'purpose_name' => 'required',
+            'engage_id' => 'required',
+            'justification' => 'required',
+            'modification_number' => 'required',
+            'modification_type' => 'required',
         ]);
-
         $data = $request->all();
-        Purpose::create($data);
+        $data['current_price'] = str_replace(",", "", $request->current_price);
+        if ($request['adendum']) {
+            $data['adendum'] = $request->file('adendum')->store('adendum');
+        }
+        Ammendment::create($data);
         alert('Success', 'Data saved successfully!', 'success');
 
-        return back();
+        return redirect('/ammendment');
     }
 
     /**
@@ -75,8 +78,6 @@ class PurposeController extends Controller
     public function edit($id)
     {
         //
-        $purpose = Purpose::find($id);
-        return view('purpose.edit', ['purpose' => $purpose]);
     }
 
     /**
@@ -89,11 +90,6 @@ class PurposeController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $purpose = Purpose::find($id);
-        $purpose->purpose_name = $request->get('purpose_name');
-        $purpose->save();
-
-        return redirect('catalog/purpose');
     }
 
     /**
@@ -104,9 +100,6 @@ class PurposeController extends Controller
      */
     public function destroy($id)
     {
-        $purpose = Purpose::find($id);
-        $purpose->delete();
-
-        return back();
+        //
     }
 }

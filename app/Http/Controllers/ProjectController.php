@@ -98,9 +98,8 @@ class ProjectController extends Controller
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
         $data['duration'] = $start->diffInDays($end);
-
+        $data['budget'] = str_replace(",", "", $request->budget);
         Project::create($data);
-
         alert('Success', 'Data saved successfully!', 'success');
 
         return redirect('/project');

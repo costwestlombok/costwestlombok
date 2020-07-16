@@ -120,7 +120,7 @@
             success: function (data){
               $('#supplier option:gt(0)').remove();
               $.each(data, function(){
-                $("#supplier").append('<option value="'+this.id+'">'+this.offerer.offerer_name+'</option>')
+                $("#supplier").append('<option value="'+this.offerer_id+'">'+this.offerer.offerer_name+'</option>')
               });
             }
           });

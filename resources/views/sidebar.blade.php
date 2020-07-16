@@ -161,40 +161,37 @@
 							<i class="icon-comment-discussion"></i> Contract Management
 						</a>
 						<ul>
-							<li><a href="{{route('contract.index')}}">Contract List</a></li>
-							<li><a href="{{route('contract.create')}}">Create New Contract</a></li>
+							<li><a href="{{route('ammendment.index')}}">Ammendments List</a></li>
+							<li><a href="{{route('ammendment.create')}}">Create New Ammendments</a></li>
 						</ul>
 					</li>
 					<li>
 						<a href="#">
-							<i class="icon-comment-discussion"></i> Pengerjaan
+							<i class="icon-comment-discussion"></i> Execution
 						</a>
 						<ul>
-							<li><a href="{{route('contract.index')}}">Lihat Pengerjaan Proyek</a></li>
-							<li><a href="{{route('contract.create')}}">Data Pengerjaan Proyek</a></li>
+							<li><a href="{{route('execution.index')}}">Execution List</a></li>
+							<li><a href="{{route('execution.create')}}">Create New Execution</a></li>
 						</ul>
 					</li>
 					<li>
 						<a href="#">
-							<i class="icon-comment-discussion"></i> Progres dan Jaminan
+							<i class="icon-comment-discussion"></i> Progress
 						</a>
 						<ul>
-							<li><a href="{{route('contract.index')}}">Progress</a></li>
-							<li><a href="{{route('contract.create')}}">Record Progres</a></li>
+							<li><a href="{{route('progress.index')}}">Progress</a></li>
+							<li><a href="{{route('progress.create')}}">Record Progress</a></li>
 						</ul>
-					</li>
-					<li>
-						<a href="#"><i class="icon-comment-discussion"></i> Formulir Pengisian</a>
 					</li>
 
-					<li class="list-title">Laporan</li>
+					<li class="list-title">Reports</li>
 
 					<li>
 						<a href="{{ route('reports.adquisitions') }}"><i class="icon-comment-discussion"></i>
-							Akusisi </a>
+							Adquisitions </a>
 					</li>
 					<li>
-						<a href="{{ route('reports.technicians') }}"><i class="icon-comment-discussion"></i> Teknisi
+						<a href="{{ route('reports.technicians') }}"><i class="icon-comment-discussion"></i> Technicians
 						</a>
 					</li>
 					<!--<li>

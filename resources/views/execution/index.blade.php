@@ -13,7 +13,7 @@
 @section('content')
 	<div class="panel panel-flat">
 					<div class="panel-heading">
-						<h5 class="panel-title">Contract List</h5>				
+						<h5 class="panel-title">Execution List</h5>				
 					</div>
 					<div class="panel-body">
 					</div>
@@ -22,32 +22,34 @@
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Supplier Name</th>										
-									<th>Award</th>
-									<th>Contract Number</th>
-									<th>Title</th>
-									<th>Completion</th>
+                                    <th>Contract Title</th>
+									<th>Start Date</th>										
+                                    <th>Contact</th>
+									<th>Disburment</th>
+									<th>Warranty</th>
 									<th class="text-center">Actions</th>
 									<th></th>
 								</tr>
 							</thead>
 							
 							<tbody>
-								@foreach ($contracts as $contract)
+								@foreach ($executions as $data)
 							<tr>
 								<td>{{$loop->index+1}}</td>
-								<td>{{$contract->supplier->offerer_name}}</td>
-								<td>{{$contract->award->process_number}}</td>
-								<td>{{$contract->number}}</td>
-								<td>{{$contract->contract_title}}</td>
-								<td>
-									<a class="btn btn-info" href="{{ url('/completions/'.$contract->id) }}">Completion</a>
+                                <td>{{$data->engage->contract_title}}</td>
+                                <td>{{$data->start_date}}</td>
+                                <td>{{$data->contact->name}}</td>
+                                <td>
+                                    <a href="{{ url('/disbursment/'.$data->id) }}" class="btn btn-info">Disbursments</a>
 								</td>
-								<td><a href="{{ route('contract.edit', $contract->id) }}" class="btn btn-defaut">
+								<td>
+									<a href="{{ url('/warranty/'.$data->id) }}" class="btn btn-info">Warranty</a>
+								</td>
+								<td><a href="{{ route('execution.edit', $data->id) }}" class="btn btn-defaut">
 									<i class="icon-pencil6"></i>
 								</a></td>
 								<td>
-									<form action="{{ route('contract.destroy', $contract->id)}}" method="post">
+									<form action="{{ route('execution.destroy', $data->id)}}" method="post">
 										{{ csrf_field() }}
 										{{ method_field('DELETE') }}
 										<button class="btn btn-danger" type="submit">
@@ -64,7 +66,7 @@
 						<!--<div style="min-height:240px"></div>-->
 						<ul class="fab-menu fab-menu-absolute fab-menu-bottom-right" data-fab-toggle="hover">
 							<li>
-								<a class="fab-menu-btn btn bg-success btn-float btn-rounded btn-icon" href="{{route('contract.create')}}">
+								<a class="fab-menu-btn btn bg-success btn-float btn-rounded btn-icon" href="{{route('execution.create')}}">
 									<i class="fab-icon-open icon-file-plus2"></i>
 									<!--<i class="fab-icon-close icon-cross2"></i>-->
 								</a>
@@ -85,3 +87,4 @@
 
 <script src="{{asset('js/pages/fab_buttons.js')}}"></script>
 @endpush
+

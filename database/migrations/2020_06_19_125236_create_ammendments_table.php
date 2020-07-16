@@ -14,12 +14,13 @@ class CreateAmmendmentsTable extends Migration
     public function up()
     {
         Schema::create('ammendments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->uuid('engaged_id');
-            $table->foreign('engaged_id')->references('id')->on('engages');
+            $table->uuid('id')->primary();
+            $table->uuid('engage_id');
+            $table->foreign('engage_id')->references('id')->on('contracts');
             $table->integer('modification_number')->nullable();
             $table->string('modification_type')->nullable();
-            $table->string('justification')->nullable();
+            $table->text('justification')->nullable();
+            $table->string('adendum')->nullable();
             $table->double('current_price')->nullable();
             $table->string('current_contract_scope')->nullable();
             $table->uuid('status_id');
