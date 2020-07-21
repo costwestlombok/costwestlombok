@@ -88,6 +88,7 @@ Route::resource('contract', 'ContractController');
 Route::get('/completions/{contract}', 'ContractController@completion');
 Route::post('/completion', 'ContractController@completion_store');
 Route::delete('/completions/destroy/{completion}', 'ContractController@completion_destroy');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
