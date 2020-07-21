@@ -4,59 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Organization;
 use Illuminate\Http\Request;
+use DataTables;
 
 class OrganizationController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
-        $organizations = Organization::all();
-        return view('organizations.index', ['organizations' => $organizations]);
+        return view('metronic.organizations.index');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
-        //
-        return view('organizations.create');
+        return view('metronic.organizations.edit');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
-        $data = $request->all();
-        Organization::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
-        return redirect('/organization');
+        Organization::create($request->all());
+        return redirect()->route('organization.index');;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    
+    public function show(Organization $organization)
     {
         //
     }
@@ -67,11 +41,9 @@ class OrganizationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Organization $organization)
     {
-        //
-        $organization = Organization::find($id);
-        return view('organizations.edit', ['organization' => $organization]);
+        return view('metronic.organizations.edit', compact('organization'));
     }
 
     /**
@@ -83,11 +55,8 @@ class OrganizationController extends Controller
      */
     public function update(Request $request, Organization $organization)
     {
-        $data = $request->all();
-        $organization->update($data);
-        alert('Success', 'Data updated successfully!', 'success');
-        return redirect('/organization');
-
+        $organization->update($request->all());
+        return redirect()->route('organization.index');;
     }
 
     /**
@@ -98,10 +67,32 @@ class OrganizationController extends Controller
      */
     public function destroy(Organization $organization)
     {
-        //
         $organization->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        return redirect()->route('organization.index');;
+    }
 
-        return redirect('/organization');
+    public function api()
+    {
+        return DataTables::of(Organization::query())
+        ->editColumn('created_at', function ($organization) {
+            return date('Y-m-d H:i:s', strtotime($organization->created_at));
+        })
+        ->addColumn('unit_count', function ($organization) {
+            return $organization->unit->count();
+        })
+        ->orderColumn('unit_count', function ($query, $order) {
+            $query->withCount('unit')
+            // sortBy(function ($organization) {
+            //     return $organization->unit->count();
+            // }, $order);
+            ->orderBy('unit_count', $order);
+        })
+        ->make(true);
+    }
+
+    public function deleteApi(Organization $organization)
+    {
+        $organization->delete();
+        return redirect()->route('organization.index');;
     }
 }

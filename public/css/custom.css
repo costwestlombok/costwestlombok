@@ -3,3 +3,17 @@
     height: 28px;
     width: auto;
 }
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.column-fit {
+    width: 1%;
+    white-space: nowrap;
+    /* text-align: right !important; */
+}
+
+table.dataTable > tbody > tr.child ul.dtr-details {
+    width: 100%;
+}

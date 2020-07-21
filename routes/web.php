@@ -12,8 +12,13 @@
  */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('metronic.dashboard');
+    return view('auth.login');
 })->name('welcome');
+
+Route::get('home', function () {
+    return view('metronic.dashboard');
+})->name('home');
 
 Route::get('/list', 'FrontController@list');
 
