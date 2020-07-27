@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Ammendment;
 use App\Contract;
 use App\Status;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class AmmendmentController extends Controller
 {
@@ -16,8 +18,7 @@ class AmmendmentController extends Controller
      */
     public function index()
     {
-        $ammendments = Ammendment::all();
-        return view('ammendment.index', compact('ammendments'));
+        return view('metronic.ammendment.index');
     }
 
     /**
@@ -27,9 +28,10 @@ class AmmendmentController extends Controller
      */
     public function create()
     {
-        $contracts = Contract::all();
-        $status = Status::all();
-        return view('ammendment.create', compact('contracts', 'status'));
+        // $contracts = Contract::all();
+        // $status = Status::all();
+        // return view('ammendment.create', compact('contracts', 'status'));
+        return view('metronic.ammendment.edit');
     }
 
     /**
@@ -52,8 +54,17 @@ class AmmendmentController extends Controller
         if ($request['adendum']) {
             $data['adendum'] = $request->file('adendum')->store('adendum');
         }
+        $status = Status::where('status_name', $request->status_id)->first();
+        if ($status) {
+            $data['status_id'] = $status->id;
+        } else {
+            $tm = Status::create([
+                'status_name' => $request->status_id,
+            ]);
+            $data['status_id'] = $tm->id;
+        }
         Ammendment::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
+        Session::put('success', 'Data saved successfully!');
 
         return redirect('/ammendment');
     }
@@ -101,5 +112,27 @@ class AmmendmentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function api($contract)
+    {
+        return DataTables::of(Ammendment::query()->where('engage_id', $contract))
+            ->editColumn('created_at', function ($ammendment) {
+                return date('Y-m-d H:i:s', strtotime($ammendment->created_at));
+            })
+            ->editColumn('current_price', function ($ammendment) {
+                return number_format($ammendment->current_price);
+            })
+            ->make(true);
+    }
+
+    public function ammendment(Contract $contract)
+    {
+        return view('metronic.ammendment.index', compact('contract'));
+    }
+
+    public function create_ammendment(Contract $contract)
+    {
+        return view('metronic.ammendment.edit', compact('contract'));
     }
 }

@@ -106,4 +106,10 @@ class TenderStatusController extends Controller
 
         return back();
     }
+
+    public function get_data()
+    {
+        $data = TenderStatus::select('status_name')->get()->pluck('status_name');
+        return response()->json($data);
+    }
 }

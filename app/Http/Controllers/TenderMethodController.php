@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\TenderMethod;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class TenderMethodController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -20,9 +22,7 @@ class TenderMethodController extends Controller
      */
     public function index()
     {
-        //
-        $rows = TenderMethod::all();
-        return view('tender_method.index', ['rows' => $rows]);
+        return view('metronic.tender.method.index');
     }
 
     /**
@@ -33,7 +33,7 @@ class TenderMethodController extends Controller
     public function create()
     {
         //
-        return view('tender_method.create');
+        return view('metronic.tender.method.edit');
     }
 
     /**
@@ -52,9 +52,9 @@ class TenderMethodController extends Controller
             'method_name' => $request->get('method_name'),
         ]);
         $sector->save();
-        alert('Success', 'Data saved successfully!', 'success');
 
-        return back();
+        Session::put("success", "Data saved successfully!");
+        return redirect('/catalog/tender_method');
     }
 
     /**
@@ -74,11 +74,9 @@ class TenderMethodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(TenderMethod $tender_method)
     {
-        //
-        $method = TenderMethod::find($id);
-        return view('tender_method.edit', ['method' => $method]);
+        return view('metronic.tender.method.edit', compact('tender_method'));
     }
 
     /**
@@ -93,13 +91,12 @@ class TenderMethodController extends Controller
         $this->validate($request, [
             'method_name' => 'required',
         ]);
-        
+
         $method = TenderMethod::find($id);
         $method->method_name = $request->get('method_name');
         $method->save();
-        alert('Success', 'Data updated successfully!', 'success');
-
-        return redirect('/tender_method');
+        Session::put("success", "Data updated successfully!");
+        return redirect('/catalog/tender_method');
     }
 
     /**
@@ -111,9 +108,22 @@ class TenderMethodController extends Controller
     public function destroy($id)
     {
         $method = TenderMethod::find($id);
-        $method->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        $data = $method->delete();
+        return response()->json($data);
+    }
 
-        return back();
+    public function api()
+    {
+        return DataTables::of(TenderMethod::query())
+            ->editColumn('created_at', function ($tender_method) {
+                return date('Y-m-d H:i:s', strtotime($tender_method->created_at));
+            })
+            ->make(true);
+    }
+
+    public function get_data()
+    {
+        $data = TenderMethod::select('method_name')->get()->pluck('method_name');
+        return response()->json($data);
     }
 }

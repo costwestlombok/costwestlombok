@@ -54,8 +54,8 @@
 							<li class="{{ request()->segment(2) == 'purpose' ? 'active' : '' }}"><a
 									href="{{route('purpose.index')}}">Project Purpose</a></li>
 
-							<li class="{{ request()->segment(2) == 'contracttype' ? 'active' : '' }}"><a
-									href="{{route('contracttype.index')}}">Contract Type</a></li>
+							<li class="{{ request()->segment(2) == 'contract_type' ? 'active' : '' }}"><a
+									href="{{route('contract_type.index')}}">Contract Type</a></li>
 							<li class="{{ request()->segment(2) == 'offerer' ? 'active' : '' }}"><a
 									href="{{route('offerer.index')}}">Offerer</a></li>
 							<li class="{{ request()->segment(2) == 'tender_method' ? 'active' : '' }}"><a
@@ -79,7 +79,7 @@
 								<li><a href="">Funcionarios</a></li>
 								<li><a href="">Entidad de adquisiciones</a></li>
 								<li><a href="">Unidades</a></li>
-								<li><a href="{{route('contracttype.index')}}">Tipos de contratos</a></li>
+								<li><a href="{{route('contract_type.index')}}">Tipos de contratos</a></li>
 								<li><a href="{{route('tender_method.index')}}">Metodos de Calificación</a></li>
 								<li><a href="">Oferentes</a></li>
 							</ul>

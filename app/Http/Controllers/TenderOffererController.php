@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Award;
 use App\Offerer;
+use App\Tender;
 use App\TenderOfferer;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class TenderOffererController extends Controller
 {
@@ -14,9 +17,9 @@ class TenderOffererController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($tender_id)
+    public function index(Tender $tender)
     {
-        $tender_offerers = TenderOfferer::where('tender_id', $tender_id)->get();
+        $tender_offerers = TenderOfferer::where('tender_id', $tender->id)->get();
         if (count($tender_offerers) > 0) {
             $data_offerers = $tender_offerers->map(function ($dt) {
                 return $dt->offerer_id;
@@ -25,7 +28,8 @@ class TenderOffererController extends Controller
         } else {
             $offerers = Offerer::all();
         }
-        return view('tender.offerer', compact('offerers', 'tender_id', 'tender_offerers'));
+        return view('metronic.tender.offerer', compact('offerers', 'tender', 'tender_offerers'));
+        // return view('metronic.tender.offerer', compact('tender_id'));
     }
 
     /**
@@ -47,9 +51,9 @@ class TenderOffererController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        // return $data;
         TenderOfferer::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
-
+        Session::put('success', 'Data saved successfully!');
         return back();
     }
 
@@ -105,5 +109,27 @@ class TenderOffererController extends Controller
     {
         $supplier = TenderOfferer::with('offerer')->where('tender_id', $award->tender->id)->get();
         return response()->json($supplier);
+    }
+
+    public function api()
+    {
+        return DataTables::of(TenderOfferer::query())
+            ->editColumn('created_at', function ($to) {
+                return date('Y-m-d H:i:s', strtotime($to->created_at));
+            })
+            ->addColumn('offerer', function ($to) {
+                return $to->offerer->offerer_name;
+            })
+            ->addColumn('contract', function ($to) {
+                return $to->offerer->contract->count();
+            })
+            ->orderColumn('contract', function ($query, $order) {
+                $query->withCount('contract')
+                // sortBy(function ($organization) {
+                //     return $organization->to->count();
+                // }, $order);
+                    ->orderBy('contract', $order);
+            })
+            ->make(true);
     }
 }

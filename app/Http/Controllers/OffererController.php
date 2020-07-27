@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Offerer;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class OffererController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -20,9 +22,7 @@ class OffererController extends Controller
      */
     public function index()
     {
-        //
-        $rows = Offerer::all();
-        return view('offerer.index', ['rows' => $rows]);
+        return view('metronic.offerer.index');
     }
 
     /**
@@ -33,7 +33,7 @@ class OffererController extends Controller
     public function create()
     {
         //
-        return view('offerer.create');
+        return view('metronic.offerer.edit');
     }
 
     /**
@@ -51,9 +51,8 @@ class OffererController extends Controller
 
         $data = $request->all();
         Offerer::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
-
-        return back();
+        Session::put("success", "Data saved successfully!");
+        return redirect()->route('offerer.index');
     }
 
     /**
@@ -73,11 +72,9 @@ class OffererController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Offerer $offerer)
     {
-        //
-        $offerer = Offerer::find($id);
-        return view('offerer.edit', ['offerer' => $offerer]);
+        return view('metronic.offerer.edit', compact('offerer'));
     }
 
     /**
@@ -95,9 +92,8 @@ class OffererController extends Controller
         ]);
         $data = $request->all();
         $offerer->update($data);
-        alert('Success', 'Data updated successfully!', 'success');
-
-        return redirect('/offerer');
+        Session::put("success", "Data updated successfully!");
+        return redirect()->route('offerer.index');
     }
 
     /**
@@ -108,9 +104,23 @@ class OffererController extends Controller
      */
     public function destroy(Offerer $offerer)
     {
-        $offerer->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        $data = $offerer->delete();
+        return response()->json($data);
+    }
 
-        return back();
+    public function api()
+    {
+        return DataTables::of(Offerer::query())
+            ->editColumn('created_at', function ($offerer) {
+                return date('Y-m-d H:i:s', strtotime($offerer->created_at));
+            })
+            ->addColumn('contract', function ($offerer) {
+                return $offerer->contract->count();
+            })
+            ->orderColumn('contract', function ($query, $order) {
+                $query->withCount('unit')
+                    ->orderBy('contract', $order);
+            })
+            ->make(true);
     }
 }

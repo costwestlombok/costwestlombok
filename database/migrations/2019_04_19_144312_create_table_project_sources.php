@@ -16,20 +16,13 @@ class CreateTableProjectSources extends Migration
         Schema::create('project_sources', function (Blueprint $table) {
             //
             $table->uuid('id')->primary();
-            $table->string('track_project');
-            $table->double('ammount')->nullable();
-            $table->double('exchange_rate')->nullable();
-            $table->uuid('projects_id');
-            $table->foreign('projects_id')->references('id')->on('projects');
-            $table->uuid('sources_id');
-            $table->foreign('sources_id')->references('id')->on('sources');
-            $table->uuid('currencies_id');
-            $table->foreign('currencies_id')->references('id')->on('currencies');
-            $table->uuid('statuses_id');
-            $table->foreign('statuses_id')->references('id')->on('statuses');
-            $table->integer('user_creation')->nullable();
-            $table->integer('user_publication')->nullable();
-            $table->datetime('published_at')->nullable();
+            $table->uuid('project_id');
+            $table->foreign('project_id')->references('id')->on('projects');
+            $table->uuid('source_id');
+            $table->foreign('source_id')->references('id')->on('sources');
+            $table->uuid('budget_id');
+            $table->foreign('budget_id')->references('id')->on('budgets');
+            $table->double('ammount');
             $table->timestamps();
         });
     }

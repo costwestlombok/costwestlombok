@@ -23,7 +23,7 @@ class CreateExecutionsTable extends Migration
             $table->uuid('engage_id');
             $table->foreign('engage_id')->references('id')->on('contracts');
             $table->uuid('contact_id');
-            $table->foreign('contact_id')->references('id')->on('contacts');
+            $table->foreign('contact_id')->references('id')->on('contacts')->nullable();
             $table->uuid('status_id');
             $table->foreign('status_id')->references('id')->on('statuses');
             $table->datetime('date_of_publication')->nullable();

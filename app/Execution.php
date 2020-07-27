@@ -26,4 +26,9 @@ class Execution extends Model
     {
         return $this->belongsTo('App\Status', 'status_id', 'id');
     }
+
+    public function warranty()
+    {
+        return $this->hasMany('App\Warranty', 'executions_id', 'id');
+    }
 }

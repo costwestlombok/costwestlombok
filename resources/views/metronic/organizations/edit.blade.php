@@ -63,8 +63,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary mr-2">{{ isset($organization) ? 'Update' : 'Create' }}</button>
-            <button type="reset" class="btn btn-secondary" onclick="javascript:history.back()">Cancel</button>
+            <div class="float-right">
+                <button type="reset" class="btn btn-secondary" onclick="javascript:history.back()">Cancel</button>
+                <button type="submit" class="btn btn-primary mr-2">{{ isset($organization) ? 'Update' : 'Create' }}</button>
+            </div>
         </div>
     </form>
     <!--end::Form-->

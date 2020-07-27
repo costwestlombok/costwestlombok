@@ -63,6 +63,15 @@ class ContractController extends Controller
         $data['price_local_currency'] = str_replace(",", "", $request->price_local_currency);
         $data['price_usd_currency'] = str_replace(",", "", $request->price_usd_currency);
 
+        $status = Status::where('status_name', $request->status_id)->first();
+        if ($status) {
+            $data['status_id'] = $status->id;
+        } else {
+            $tm = Status::create([
+                'status_name' => $request->status_id,
+            ]);
+            $data['status_id'] = $tm->id;
+        }
         Contract::create($data);
         alert('Success', 'Data saved successfully!', 'success');
 
@@ -75,10 +84,10 @@ class ContractController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Contract $contract)
     {
         //
-        return view('contract.show');
+        return view('metronic.contract.show', compact('contract'));
     }
 
     /**
@@ -87,9 +96,10 @@ class ContractController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Contract $contract)
     {
-        //
+        $award = Award::where('id', $contract->award->id)->first();
+        return view('metronic.contract.edit', compact('contract', 'award'));
     }
 
     /**
@@ -138,5 +148,10 @@ class ContractController extends Controller
         alert('Success', 'Data deleted successfully!', 'success');
 
         return back();
+    }
+
+    public function create_contract(Award $award)
+    {
+        return view('metronic.contract.edit', compact('award'));
     }
 }

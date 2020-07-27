@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-
 class DashboardController extends Controller
 {
 
@@ -19,10 +17,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        //
-
-        $projects = DB::table('projects')->limit(10)->orderBy('id', 'desc')->get();
-
-        return view('dashboard.index', ['projects' => $projects]);
+        return view('metronic.index');
     }
 }

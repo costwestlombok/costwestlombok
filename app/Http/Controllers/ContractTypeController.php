@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\ContractType;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class ContractTypeController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -20,9 +22,7 @@ class ContractTypeController extends Controller
      */
     public function index()
     {
-        //
-        $contract_types = ContractType::all();
-        return view('contract_type.index', ['contract_types' => $contract_types]);
+        return view('metronic.contract.type.index');
     }
 
     /**
@@ -33,7 +33,7 @@ class ContractTypeController extends Controller
     public function create()
     {
         //
-        return view('contract_type.create');
+        return view('metronic.contract.type.edit');
     }
 
     /**
@@ -50,9 +50,8 @@ class ContractTypeController extends Controller
 
         $data = $request->all();
         ContractType::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
-
-        return back();
+        Session::put("success", "Data saved successfully!");
+        return redirect('/catalog/contract_type');
     }
 
     /**
@@ -76,7 +75,7 @@ class ContractTypeController extends Controller
     {
         //
         $contract_type = ContractType::find($id);
-        return view('contract_type.edit', ['contract_type' => $contract_type]);
+        return view('metronic.contract.type.edit', ['contract_type' => $contract_type]);
     }
 
     /**
@@ -86,17 +85,16 @@ class ContractTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ContractType $contracttype)
+    public function update(Request $request, ContractType $contract_type)
     {
         $this->validate($request, [
             'type_name' => 'required',
         ]);
 
         $data = $request->all();
-        $contracttype->update($data);
-        alert('Success', 'Data updated successfully!', 'success');
-
-        return redirect('/contracttype');
+        $contract_type->update($data);
+        Session::put("success", "Data updated successfully!");
+        return redirect('/catalog/contract_type');
     }
 
     /**
@@ -105,11 +103,24 @@ class ContractTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ContractType $contracttype)
+    public function destroy(ContractType $contract_type)
     {
-        $contracttype->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        $data = $contract_type->delete();
+        return response()->json($data);
+    }
 
-        return back();
+    public function api()
+    {
+        return DataTables::of(ContracTtype::query())
+            ->editColumn('created_at', function ($contracttype) {
+                return date('Y-m-d H:i:s', strtotime($contracttype->created_at));
+            })
+            ->make(true);
+    }
+
+    public function get_data()
+    {
+        $data = ContractType::select('type_name')->get()->pluck('type_name');
+        return response()->json($data);
     }
 }

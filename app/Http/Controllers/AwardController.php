@@ -70,6 +70,26 @@ class AwardController extends Controller
         if ($request->others) {
             $data['others'] = $request->file('others')->store('awards');
         }
+
+        $contract_method = ContractMethod::where('method_name', $request->contract_method_id)->first();
+        $status = Status::where('status_name', $request->status_id)->first();
+
+        if ($contract_method) {
+            $data['contract_method_id'] = $contract_method->id;
+        } else {
+            $cm = ContractMethod::create([
+                'method_name' => $request->contract_method_id,
+            ]);
+            $data['contract_method_id'] = $cm->id;
+        }
+        if ($status) {
+            $data['status_id'] = $status->id;
+        } else {
+            $tm = Status::create([
+                'status_name' => $request->status_id,
+            ]);
+            $data['status_id'] = $tm->id;
+        }
         Award::create($data);
         alert('Success', 'Data saved successfully!', 'success');
 
@@ -143,5 +163,16 @@ class AwardController extends Controller
         $award->delete();
         alert('Success', 'Data deleted successfully!', 'success');
         return back();
+    }
+
+    public function create_award(Tender $tender)
+    {
+        return view('metronic.award.edit', compact('tender'));
+    }
+
+    public function award(Tender $tender)
+    {
+        $awards = Award::where('tender_id', $tender->id)->paginate(8);
+        return view('metronic.award.index', compact('tender', 'awards'));
     }
 }

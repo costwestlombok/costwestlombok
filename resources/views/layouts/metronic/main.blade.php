@@ -68,7 +68,7 @@
                     <ul class="menu-nav">
                         <li class="menu-item {{ request()->segment(1) == '' ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
-                            <a href="{{ url('/') }}" class="menu-link">
+                            <a href="{{ url('/dashboard') }}" class="menu-link">
                                 <span class="svg-icon menu-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                         width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -183,9 +183,9 @@
                                             <span class="menu-text">Project Purpose</span>
                                         </a>
                                     </li>
-                                    <li class="menu-item{{ request()->segment(2) == 'contracttype' ? ' menu-item-active' : '' }}"
+                                    <li class="menu-item{{ request()->segment(2) == 'contract_type' ? ' menu-item-active' : '' }}"
                                         aria-haspopup="true">
-                                        <a href="{{ route('contracttype.index') }}" class="menu-link">
+                                        <a href="{{ route('contract_type.index') }}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
@@ -244,7 +244,7 @@
                             <h4 class="menu-text">Project Management</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                         </li>
-                        <li class="menu-item{{ request()->segment(1) == 'project' ? 'active' : '' }}"
+                        <li class="menu-item{{ request()->segment(1) == 'project' ? ' menu-item-active' : '' }}"
                             aria-haspopup="true">
                             <a href="{{ route('project.index') }}" class="menu-link">
                                 <span class="svg-icon menu-icon">
@@ -261,7 +261,7 @@
                                 <span class="menu-text">Project</span>
                             </a>
                         </li>
-                        <li class="menu-item{{ request()->segment(1) == 'tender' ? 'active' : '' }}"
+                        <li class="menu-item{{ request()->segment(1) == 'tender' ? ' menu-item-active' : '' }}"
                             aria-haspopup="true">
                             <a href="{{ route('tender.index') }}" class="menu-link">
                                 <span class="svg-icon menu-icon">
@@ -282,7 +282,7 @@
                                 <span class="menu-text">Tender</span>
                             </a>
                         </li>
-                        <li class="menu-item{{ request()->segment(1) == 'award' ? 'active' : '' }}"
+                        <li class="menu-item{{ request()->segment(1) == 'award' ? ' menu-item-active' : '' }}"
                             aria-haspopup="true">
                             <a href="{{ route('award.index') }}" class="menu-link">
                                 <span class="svg-icon menu-icon">
@@ -305,7 +305,7 @@
                                 <span class="menu-text">Bid / Award Evaluation</span>
                             </a>
                         </li>
-                        <li class="menu-item{{ request()->segment(1) == 'contract' ? 'active' : '' }}"
+                        <li class="menu-item{{ request()->segment(1) == 'contract' ? ' menu-item-active' : '' }}"
                             aria-haspopup="true">
                             <a href="{{ route('contract.index') }}" class="menu-link">
                                 <span class="svg-icon menu-icon">

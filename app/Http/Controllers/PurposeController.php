@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Purpose;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class PurposeController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -20,9 +22,7 @@ class PurposeController extends Controller
      */
     public function index()
     {
-        //
-        $purposes = Purpose::all();
-        return view('purpose.index', ['purposes' => $purposes]);
+        return view('metronic.project.purpose.index');
     }
 
     /**
@@ -33,7 +33,7 @@ class PurposeController extends Controller
     public function create()
     {
         //
-        return view('purpose.create');
+        return view('metronic.project.purpose.edit');
     }
 
     /**
@@ -50,9 +50,8 @@ class PurposeController extends Controller
 
         $data = $request->all();
         Purpose::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
-
-        return back();
+        Session::put("success", "Data saved successfully!");
+        return redirect('/catalog/purpose');
     }
 
     /**
@@ -72,11 +71,9 @@ class PurposeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Purpose $purpose)
     {
-        //
-        $purpose = Purpose::find($id);
-        return view('purpose.edit', ['purpose' => $purpose]);
+        return view('metronic.project.purpose.edit', compact('purpose'));
     }
 
     /**
@@ -93,7 +90,8 @@ class PurposeController extends Controller
         $purpose->purpose_name = $request->get('purpose_name');
         $purpose->save();
 
-        return redirect('catalog/purpose');
+        Session::put("success", "Data updated successfully!");
+        return redirect('/catalog/purpose');
     }
 
     /**
@@ -102,11 +100,18 @@ class PurposeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Purpose $purpose)
     {
-        $purpose = Purpose::find($id);
-        $purpose->delete();
+        $data = $purpose->delete();
+        return response()->json($data);
+    }
 
-        return back();
+    public function api()
+    {
+        return DataTables::of(Purpose::query())
+            ->editColumn('created_at', function ($purpose) {
+                return date('Y-m-d H:i:s', strtotime($purpose->created_at));
+            })
+            ->make(true);
     }
 }

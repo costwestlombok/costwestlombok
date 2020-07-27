@@ -57,7 +57,19 @@
     <script src="{{ asset('metronic/assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('metronic/assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
     <script src="{{ asset('metronic/assets/js/scripts.bundle.js') }}"></script>
+    <script src="{{ asset('metronic/assets/js/pages/features/miscellaneous/sweetalert2.js') }}"></script>
+    <script src="{{ asset('metronic/assets/js/pages/features/miscellaneous/toastr.js') }}"></script>
     <!--end::Global Theme Bundle-->
+    @if(Session::has('success'))
+    <script type="text/javascript">
+        toastr.success('{!! Session::pull("success") !!}');
+    </script>
+    @endif
+    @if(Session::has('fail'))
+    <script type="text/javascript">
+        toastr.error('{!! Session::pull("fail") !!}');
+    </script>
+    @endif
     @yield('script')
 </body>
 <!--end::Body-->

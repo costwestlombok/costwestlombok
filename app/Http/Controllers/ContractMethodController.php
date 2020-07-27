@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\ContractMethod;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class ContractMethodController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -20,9 +22,7 @@ class ContractMethodController extends Controller
      */
     public function index()
     {
-        //
-        $rows = ContractMethod::all();
-        return view('contract_method.index', ['rows' => $rows]);
+        return view('metronic.contract.method.index');
     }
 
     /**
@@ -33,7 +33,7 @@ class ContractMethodController extends Controller
     public function create()
     {
         //
-        return view('contract_method.create');
+        return view('metronic.contract.method.edit');
     }
 
     /**
@@ -53,9 +53,8 @@ class ContractMethodController extends Controller
         ]);
 
         $method->save();
-        alert('Success', 'Data saved successfully!', 'success');
-
-        return back();
+        Session::put("success", "Data saved successfully!");
+        return redirect('/catalog/contract_method');
     }
 
     /**
@@ -78,8 +77,8 @@ class ContractMethodController extends Controller
     public function edit($id)
     {
         //
-        $method = ContractMethod::find($id);
-        return view('contract_method.edit', ['method' => $method]);
+        $contract_method = ContractMethod::find($id);
+        return view('metronic.contract.method.edit', compact('contract_method'));
     }
 
     /**
@@ -98,9 +97,8 @@ class ContractMethodController extends Controller
         $method = ContractMethod::find($id);
         $method->method_name = $request->get('method_name');
         $method->save();
-        alert('Success', 'Data updated successfully!', 'success');
-
-        return redirect('/contract_method');
+        Session::put("success", "Data updated successfully!");
+        return redirect('/catalog/contract_method');
     }
 
     /**
@@ -112,9 +110,22 @@ class ContractMethodController extends Controller
     public function destroy($id)
     {
         $method = ContractMethod::find($id);
-        $method->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        $data = $method->delete();
+        return response()->json($data);
+    }
 
-        return back();
+    public function api()
+    {
+        return DataTables::of(ContractMethod::query())
+            ->editColumn('created_at', function ($method) {
+                return date('Y-m-d H:i:s', strtotime($method->created_at));
+            })
+            ->make(true);
+    }
+
+    public function get_data()
+    {
+        $data = ContractMethod::select('method_name')->get()->pluck('method_name');
+        return response()->json($data);
     }
 }

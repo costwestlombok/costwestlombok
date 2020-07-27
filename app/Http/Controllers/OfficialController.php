@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Official;
-use App\Organization;
-use App\OrganizationUnit;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class OfficialController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -22,9 +22,7 @@ class OfficialController extends Controller
      */
     public function index()
     {
-        //
-        $officials = Official::all();
-        return view('official.index', ['officials' => $officials]);
+        return view('metronic.official.index');
     }
 
     /**
@@ -34,11 +32,7 @@ class OfficialController extends Controller
      */
     public function create()
     {
-        //
-        $organizations = Organization::all();
-        $units = OrganizationUnit::all();
-
-        return view('official.create', ['organizations' => $organizations, 'units' => $units]);
+        return view('metronic.official.edit');
     }
 
     /**
@@ -56,8 +50,8 @@ class OfficialController extends Controller
 
         $data = $request->all();
         Official::create($data);
-        alert('Success', 'Data saved successfully!');
-        return back();
+        Session::put("success", "Data saved successfully!");
+        return redirect('/catalog/official');
     }
 
     /**
@@ -77,15 +71,9 @@ class OfficialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Official $official)
     {
-        //
-        $official = Official::find($id);
-
-        $organizations = Organization::all();
-        $units = OrganizationUnit::all();
-
-        return view('official.edit', ['official' => $official, 'organizations' => $organizations, 'units' => $units]);
+        return view('metronic.official.edit', compact('official'));
     }
 
     /**
@@ -103,8 +91,9 @@ class OfficialController extends Controller
         ]);
         $data = $request->all();
         $official->update($data);
-        alert('Success', 'Data updated successfully!');
-        return redirect('/official');
+        Session::put("success", "Data updated successfully!");
+
+        return redirect('/catalog/official');
     }
 
     /**
@@ -115,14 +104,32 @@ class OfficialController extends Controller
      */
     public function destroy(Official $official)
     {
-        $official->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
-        return back();
+        $data = $official->delete();
+        return response()->json($data);
     }
 
     public function get_official($unit)
     {
         $data = Official::where('entity_unit_id', $unit)->get();
         return response()->json($data);
+    }
+
+    public function api()
+    {
+        return DataTables::of(Official::query())
+            ->editColumn('created_at', function ($official) {
+                return date('Y-m-d H:i:s', strtotime($official->created_at));
+            })
+            ->addColumn('unit', function ($official) {
+                return $official->unit->unit_name;
+            })
+            ->orderColumn('unit', function ($query, $order) {
+                $query->withCount('unit')
+                // sortBy(function ($organization) {
+                //     return $organization->unit->count();
+                // }, $order);
+                    ->orderBy('unit', $order);
+            })
+            ->make(true);
     }
 }

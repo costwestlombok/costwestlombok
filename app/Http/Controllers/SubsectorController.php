@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Sector;
 use App\Subsector;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class SubsectorController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -21,9 +23,7 @@ class SubsectorController extends Controller
      */
     public function index()
     {
-        //
-        $subsectors = Subsector::all();
-        return view('subsector.index', ['subsectors' => $subsectors]);
+        return view('metronic.subsector.index');
     }
 
     /**
@@ -33,9 +33,7 @@ class SubsectorController extends Controller
      */
     public function create()
     {
-        //
-        $sectors = Sector::all();
-        return view('subsector.create', ['sectors' => $sectors]);
+        return view('metronic.subsector.edit');
     }
 
     /**
@@ -52,8 +50,8 @@ class SubsectorController extends Controller
         ]);
         $data = $request->all();
         Subsector::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
-        return back();
+        Session::put("success", "Data saved successfully!");
+        return redirect('/catalog/subsector');
     }
 
     /**
@@ -73,14 +71,9 @@ class SubsectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Subsector $subsector)
     {
-        //
-        $subsector = Subsector::find($id);
-
-        $sectors = Sector::all();
-
-        return view('subsector.edit', ['subsector' => $subsector, 'sectors' => $sectors]);
+        return view('metronic.subsector.edit', compact('subsector'));
     }
 
     /**
@@ -98,9 +91,8 @@ class SubsectorController extends Controller
         ]);
         $data = $request->all();
         $subsector->update($data);
-        alert('Success', 'Data updated successfully!', 'success');
-
-        return redirect('/subsector');
+        Session::put("success", "Data saved successfully!");
+        return redirect('/catalog/subsector');
     }
 
     /**
@@ -111,10 +103,8 @@ class SubsectorController extends Controller
      */
     public function destroy(Subsector $subsector)
     {
-        $subsector->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
-
-        return back();
+        $data = $subsector->delete();
+        return response()->json($data);
     }
 
     /**
@@ -135,6 +125,22 @@ class SubsectorController extends Controller
     {
         $data = Subsector::where('sector_id', $sector)->get();
         return response()->json($data);
+    }
+
+    public function api()
+    {
+        return DataTables::of(Subsector::query())
+            ->editColumn('created_at', function ($subsector) {
+                return date('Y-m-d H:i:s', strtotime($subsector->created_at));
+            })
+            ->addColumn('sector', function ($subsector) {
+                return $subsector->sector->sector_name;
+            })
+            ->orderColumn('sector', function ($query, $order) {
+                $query->withCount('unit')
+                    ->orderBy('sector', $order);
+            })
+            ->make(true);
     }
 
 }

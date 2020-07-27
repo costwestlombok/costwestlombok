@@ -22,6 +22,7 @@
 									<th data-hide="phone, tablet">#</th>
 									<th data-toggle="true">Project Code</th>
 									<th>Project Name</th>
+									<th>Budget</th>
 									<th>File</th>
 									<th>Actions</th>
 									<th data-hide="phone, tablet"></th>
@@ -34,8 +35,11 @@
 								<tr>
 									<td>{{$loop->index+1}}</td>
 									<td>{{$project->project_code}}</td>
-									<th>{{$project->project_title}}</th>
-									<th><a class="btn btn-info" href="{{ url('/project/file/'.$project->id) }}" >Add File</a></th>
+									<td>{{$project->project_title}}</td>
+									<td>
+										<a href="{{ url('/project/budget/'.$project->id) }}" class="btn btn-sm btn-success"> Budget</a>
+									</td>
+									<td><a class="btn btn-info" href="{{ url('/project/file/'.$project->id) }}" >Add File</a></td>
 									<td class="text-center">
 										<a href="{{ route('project.edit', $project->id) }}" class="btn btn-defaut">
 											<i class="icon-pencil6"></i>

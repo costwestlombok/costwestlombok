@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Role;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class RoleController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -20,9 +22,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
-        $roles = Role::all();
-        return view('role.index', ['roles' => $roles]);
+        return view('metronic.role.index');
     }
 
     /**
@@ -33,7 +33,7 @@ class RoleController extends Controller
     public function create()
     {
         //
-        return view('role.create');
+        return view('metronic.role.edit');
     }
 
     /**
@@ -49,8 +49,8 @@ class RoleController extends Controller
         ]);
         $data = $request->all();
         Role::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
-        return back();
+        Session::put('success', 'Data saved successfully!');
+        return redirect('/catalog/role');
     }
 
     /**
@@ -70,11 +70,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        //
-        $role = Role::find($id);
-        return view('role.edit', ['role' => $role]);
+        return view('metronic.role.edit', compact('role'));
     }
 
     /**
@@ -91,8 +89,8 @@ class RoleController extends Controller
         ]);
         $data = $request->all();
         $role->update($data);
-        alert('Success', 'Data updated successfully!', 'success');
-        return redirect('/role')->with('role', 'Data has been updated');
+        Session::put('success', 'Data updated successfully!');
+        return back();
     }
 
     /**
@@ -103,9 +101,23 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $role->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
-
-        return redirect('/role')->with('success', 'Record has been destroyed');
+        $data = $role->delete();
+        return response()->json($data);
     }
+
+    public function api()
+    {
+        return DataTables::of(Role::query())
+            ->editColumn('created_at', function ($role) {
+                return date('Y-m-d H:i:s', strtotime($role->created_at));
+            })
+            ->make(true);
+    }
+
+    public function get_data()
+    {
+        $data = Role::select('role_name')->get()->pluck('role_name');
+        return response()->json($data);
+    }
+
 }

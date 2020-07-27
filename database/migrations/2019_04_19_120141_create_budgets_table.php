@@ -15,14 +15,14 @@ class CreateBudgetsTable extends Migration
     {
         Schema::create('budgets', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('executions_id');
-            $table->foreign('executions_id')->references('id')->on('executions');
-            $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses');
-            $table->string('order');
+            $table->string('name');
             $table->text('description')->nullable();
-            $table->decimal('amount');
-            $table->date('date')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->integer('duration')->nullable();
+            $table->uuid('project_id');
+            $table->foreign('project_id')->references('id')->on('projects');
+            $table->double('amount');
             $table->timestamps();
         });
     }

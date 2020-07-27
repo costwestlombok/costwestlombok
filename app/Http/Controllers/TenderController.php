@@ -13,6 +13,7 @@ use App\TenderMethod;
 use App\TenderStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Session;
 use Storage;
 
 class TenderController extends Controller
@@ -94,6 +95,47 @@ class TenderController extends Controller
         if ($request->acceptance_certificate) {
             $data['acceptance_certificate'] = $request->file('acceptance_certificate')->store('tender');
         }
+        $contract_type = ContractType::where('type_name', $request->contract_type_id)->first();
+        $tender_method = TenderMethod::where('method_name', $request->tender_method_id)->first();
+        $tender_status = TenderStatus::where('status_name', $request->tender_status_id)->first();
+        $status = Status::where('status_name', $request->status_id)->first();
+
+        if ($contract_type) {
+            $data['contract_type_id'] = $contract_type->id;
+        } else {
+            $ct = ContractType::create([
+                'type_name' => $request->contract_type_id,
+            ]);
+            $data['contract_type_id'] = $ct->id;
+        }
+
+        if ($tender_method) {
+            $data['tender_method_id'] = $tender_method->id;
+        } else {
+            $tm = TenderMethod::create([
+                'method_name' => $request->tender_method_id,
+            ]);
+            $data['tender_method_id'] = $tm->id;
+        }
+
+        if ($tender_status) {
+            $data['tender_status_id'] = $tender_status->id;
+        } else {
+            $ts = TenderStatus::create([
+                'status_name' => $request->tender_status_id,
+            ]);
+            $data['tender_status_id'] = $ts->id;
+        }
+
+        if ($status) {
+            $data['status_id'] = $status->id;
+        } else {
+            $tm = Status::create([
+                'status_name' => $request->status_id,
+            ]);
+            $data['status_id'] = $tm->id;
+        }
+
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
         $data['duration'] = $start->diffInDays($end);
@@ -208,8 +250,7 @@ class TenderController extends Controller
 
         $data['amount'] = str_replace(",", "", $request->amount);
         $tender->update($data);
-        alert('Success', 'Data updated successfully!', 'success');
-
+        Session::put("success", "Data saved successfully");
         return redirect('/tender');
     }
 
@@ -248,5 +289,15 @@ class TenderController extends Controller
         $tender->delete();
         alert('Success', 'Data deleted successfully!', 'success');
         return back();
+    }
+
+    public function index_tender(Project $project)
+    {
+        $tenders = Tender::where('project_id', $project->id)->paginate(8);
+        return view('metronic.tender.index', compact('tenders', 'project'));
+    }
+    public function create_tender(Project $project)
+    {
+        return view('metronic.tender.edit', compact('project'));
     }
 }

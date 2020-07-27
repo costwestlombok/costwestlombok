@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Status;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class StatusController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -20,9 +22,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-        //
-        $status = Status::all();
-        return view('status.index', ['status' => $status]);
+        return view('metronic.status.index');
     }
 
     /**
@@ -33,7 +33,7 @@ class StatusController extends Controller
     public function create()
     {
         //
-        return view('status.create');
+        return view('metronic.status.edit');
     }
 
     /**
@@ -53,9 +53,9 @@ class StatusController extends Controller
         ]);
 
         $status->save();
-        alert('Success', 'Data saved successfully!', 'success');
 
-        return back();
+        Session::put("success", "Data saved successfully!");
+        return redirect('/catalog/status');
     }
 
     /**
@@ -79,7 +79,7 @@ class StatusController extends Controller
     {
         //
         $status = Status::find($id);
-        return view('status.edit', ['status' => $status]);
+        return view('metronic.status.edit', ['status' => $status]);
     }
 
     /**
@@ -98,9 +98,9 @@ class StatusController extends Controller
         $status = Status::find($id);
         $status->status_name = $request->get('status_name');
         $status->save();
-        alert('Success', 'Data updated successfully!', 'success');
 
-        return redirect('/status');
+        Session::put("success", "Data updated successfully!");
+        return redirect('/catalog/status');
     }
 
     /**
@@ -112,9 +112,23 @@ class StatusController extends Controller
     public function destroy($id)
     {
         $status = Status::find($id);
-        $status->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        $data = $status->delete();
+        return response()->json($data);
 
-        return back();
+    }
+
+    public function api()
+    {
+        return DataTables::of(Status::query())
+            ->editColumn('created_at', function ($status) {
+                return date('Y-m-d H:i:s', strtotime($status->created_at));
+            })
+            ->make(true);
+    }
+
+    public function get_data()
+    {
+        $data = Status::select('status_name')->get()->pluck('status_name');
+        return response()->json($data);
     }
 }

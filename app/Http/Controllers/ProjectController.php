@@ -9,11 +9,13 @@ use App\OrganizationUnit;
 use App\Project;
 use App\ProjectDocument;
 use App\Purpose;
+use App\Role;
 use App\Sector;
 use App\Status;
 use App\Subsector;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Session;
 use Storage;
 
 class ProjectController extends Controller
@@ -32,8 +34,8 @@ class ProjectController extends Controller
     public function index()
     {
         //
-        $obj = Project::all();
-        return view('project.index', ['obj' => $obj]);
+        $projects = Project::paginate(8);
+        return view('metronic.project.index', ['projects' => $projects]);
     }
 
     /**
@@ -68,19 +70,7 @@ class ProjectController extends Controller
 
         $map = $map->create_map();
 
-        $purposes = Purpose::all();
-
-        $sectors = Sector::all();
-
-        $organizations = Organization::all();
-
-        $statuses = Status::all();
-
-        return view('project.create', [
-            'purposes' => $purposes,
-            'sectors' => $sectors,
-            'organizations' => $organizations,
-            'statuses' => $statuses,
+        return view('metronic.project.edit', [
             'map' => $map,
         ]
         );
@@ -99,10 +89,21 @@ class ProjectController extends Controller
         $end = Carbon::parse($request->end_date);
         $data['duration'] = $start->diffInDays($end);
         $data['budget'] = str_replace(",", "", $request->budget);
-        Project::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
 
-        return redirect('/project');
+        $role = Role::where('role_name', $request->role_id)->first();
+
+        if ($role) {
+            $data['role_id'] = $role->id;
+        } else {
+            $r = Role::create([
+                'role_name' => $request->role_id,
+            ]);
+            $data['role_id'] = $r->id;
+        }
+
+        Project::create($data);
+        Session::put("success", "Data saved successfully!");
+        return redirect()->route('project.index');
     }
 
     /**

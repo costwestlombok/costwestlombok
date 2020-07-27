@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\WarrantyType;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class WarrantyTypeController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -20,9 +22,7 @@ class WarrantyTypeController extends Controller
      */
     public function index()
     {
-        //
-        $warranty_types = WarrantyType::all();
-        return view('warranty_type.index', ['warranty_types' => $warranty_types]);
+        return view('metronic.warranty.type.index');
     }
 
     /**
@@ -33,7 +33,7 @@ class WarrantyTypeController extends Controller
     public function create()
     {
         //
-        return view('warranty_type.create');
+        return view('metronic.warranty.type.edit');
     }
 
     /**
@@ -54,9 +54,8 @@ class WarrantyTypeController extends Controller
         ]);
 
         $warranty_type->save();
-        alert('Success', 'Data saved successfully!', 'success');
-
-        return back();
+        Session::put("success", "Data saved successfully!");
+        return redirect('/catalog/warranty-type');
     }
 
     /**
@@ -80,7 +79,7 @@ class WarrantyTypeController extends Controller
     {
         //
         $warranty_type = WarrantyType::find($id);
-        return view('warranty_type.edit', ['warranty_type' => $warranty_type]);
+        return view('metronic.warranty.type.edit', ['warranty_type' => $warranty_type]);
     }
 
     /**
@@ -99,9 +98,8 @@ class WarrantyTypeController extends Controller
         $warranty_type = WarrantyType::find($id);
         $warranty_type->name = $request->get('name');
         $warranty_type->save();
-        alert('Success', 'Data updated successfully!', 'success');
-
-        return redirect('/warranty-type');
+        Session::put("success", "Data updated successfully!");
+        return redirect('/catalog/warranty-type');
     }
 
     /**
@@ -113,9 +111,23 @@ class WarrantyTypeController extends Controller
     public function destroy($id)
     {
         $warranty_type = WarrantyType::find($id);
-        $warranty_type->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        $data = $warranty_type->delete();
+        return response()->json($data);
 
-        return back();
+    }
+
+    public function api()
+    {
+        return DataTables::of(WarrantyType::query())
+            ->editColumn('created_at', function ($warranty) {
+                return date('Y-m-d H:i:s', strtotime($warranty->created_at));
+            })
+            ->make(true);
+    }
+
+    public function get_data()
+    {
+        $data = WarrantyType::select('name')->get()->pluck('name');
+        return response()->json($data);
     }
 }

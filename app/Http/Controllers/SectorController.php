@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Sector;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class SectorController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -20,9 +22,7 @@ class SectorController extends Controller
      */
     public function index()
     {
-        //
-        $sectors = Sector::all();
-        return view('sector.index', ['sectors' => $sectors]);
+        return view('metronic.sector.index');
     }
 
     /**
@@ -33,7 +33,7 @@ class SectorController extends Controller
     public function create()
     {
         //
-        return view('sector.create');
+        return view('metronic.sector.edit');
     }
 
     /**
@@ -50,9 +50,8 @@ class SectorController extends Controller
 
         $data = $request->all();
         Sector::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
-
-        return back();
+        Session::put("success", "Data saved successfully!");
+        return redirect('/catalog/sector');
     }
 
     /**
@@ -72,11 +71,9 @@ class SectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Sector $sector)
     {
-        //
-        $sector = Sector::find($id);
-        return view('sector.edit', ['sector' => $sector]);
+        return view('metronic.sector.edit', compact('sector'));
     }
 
     /**
@@ -94,9 +91,8 @@ class SectorController extends Controller
 
         $data = $request->all();
         $sector->update($data);
-        alert('Success', 'Data updated successfully!', 'success');
-
-        return redirect('/sector');
+        Session::put("success", "Data updated successfully!");
+        return redirect('/catalog/sector');
     }
 
     /**
@@ -107,9 +103,16 @@ class SectorController extends Controller
      */
     public function destroy(Sector $sector)
     {
-        $sector->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        $data = $sector->delete();
+        return response()->json($data);
+    }
 
-        return back();
+    public function api()
+    {
+        return DataTables::of(Sector::query())
+            ->editColumn('created_at', function ($sector) {
+                return date('Y-m-d H:i:s', strtotime($sector->created_at));
+            })
+            ->make(true);
     }
 }

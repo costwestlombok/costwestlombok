@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Source;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class SourceController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -20,9 +22,7 @@ class SourceController extends Controller
      */
     public function index()
     {
-        //
-        $rows = Source::all();
-        return view('source.index', ['rows' => $rows]);
+        return view('metronic.source.index');
     }
 
     /**
@@ -32,8 +32,7 @@ class SourceController extends Controller
      */
     public function create()
     {
-        //
-        return view('source.create');
+        return view('metronic.source.edit');
     }
 
     /**
@@ -50,9 +49,8 @@ class SourceController extends Controller
 
         $data = $request->all();
         Source::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
-
-        return back();
+        Session::put("success", "Data saved successfully!");
+        return redirect('/catalog/source');
     }
 
     /**
@@ -72,11 +70,9 @@ class SourceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Source $source)
     {
-        //
-        $obj = Source::find($id);
-        return view('source.edit', ['obj' => $obj]);
+        return view('metronic.source.edit', compact('source'));
     }
 
     /**
@@ -95,9 +91,8 @@ class SourceController extends Controller
 
         $data = $request->all();
         $source->update($data);
-        alert('Success', 'Data updated successfully!', 'success');
-
-        return redirect('/source');
+        Session::put("success", "Data updated successfully!");
+        return redirect('/catalog/source');
     }
 
     /**
@@ -108,9 +103,16 @@ class SourceController extends Controller
      */
     public function destroy(Source $source)
     {
-        $source->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        $data = $source->delete();
+        return response()->json($data);
+    }
 
-        return back();
+    public function api()
+    {
+        return DataTables::of(Source::query())
+            ->editColumn('created_at', function ($source) {
+                return date('Y-m-d H:i:s', strtotime($source->created_at));
+            })
+            ->make(true);
     }
 }

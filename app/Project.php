@@ -41,4 +41,14 @@ class Project extends Model
     {
         return $this->hasMany('App\ProjectDocument', 'project_id', 'id');
     }
+
+    public function tender()
+    {
+        return $this->hasMany('App\Tender', 'project_id', 'id');
+    }
+
+    public function latest_progress()
+    {
+        return $this->hasOne('App\Advance')->latest();
+    }
 }

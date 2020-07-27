@@ -20,6 +20,8 @@ Route::get('home', function () {
     return view('metronic.dashboard');
 })->name('home');
 
+Route::get('/get-entity', 'OrganizationController@get_entity');
+
 Route::get('/list', 'FrontController@list');
 
 Route::get('/Users', 'UsersController@login');
@@ -34,7 +36,7 @@ Route::resource('catalog/sector', 'SectorController');
 Route::resource('catalog/subsector', 'SubsectorController');
 Route::resource('catalog/source', 'SourceController');
 Route::resource('catalog/purpose', 'PurposeController');
-Route::resource('catalog/contracttype', 'ContractTypeController');
+Route::resource('catalog/contract_type', 'ContractTypeController');
 Route::resource('catalog/offerer', 'OffererController');
 Route::resource('catalog/tender_method', 'TenderMethodController');
 Route::resource('catalog/contract_method', 'ContractMethodController');
@@ -50,6 +52,11 @@ Route::resource('project', 'ProjectController');
 Route::get('/project/file/{project}', 'ProjectController@project_file');
 Route::post('/project/file-store', 'ProjectController@store_file');
 Route::delete('/project/file/destroy/{projectdocument}', 'ProjectController@project_file_delete');
+
+//budget
+Route::get('/project/budget/{project}', 'BudgetController@index');
+Route::post('/project/budget', 'BudgetController@store');
+Route::get('/project/source/{project}/{budget}', 'BudgetController@source');
 
 Route::get('/get-unit/{entity}', 'OrganizationUnitController@get_unit');
 Route::get('/get-official/{unit}', 'OfficialController@get_official');
@@ -75,7 +82,11 @@ Route::get('reports/suppliers', 'ReportsController@suppliers')->name('reports.su
 Route::get('reports/managment', 'ReportsController@managment')->name('reports.managment');
 Route::get('reports/download', 'ReportsController@download')->name('reports.download');
 
+//tender
 Route::resource('tender', 'TenderController');
+Route::get('/project-tender/{project}', 'TenderController@index_tender');
+Route::get('tender-create/{project}', 'TenderController@create_tender');
+
 Route::get('/tender-offerer/{tender}', 'TenderOffererController@index');
 Route::post('/tender-offerer', 'TenderOffererController@store');
 Route::delete('/tender-offerer/{tender}', 'TenderOffererController@destroy');
@@ -83,7 +94,13 @@ Route::get('/get-supplier/{award}', 'TenderOffererController@get_sup');
 
 // Route::get('tender/{projectID}/create', 'TenderController@create');
 Route::resource('award', 'AwardController');
+Route::get('tender-award/{tender}', 'AwardController@award');
+Route::get('award-create/{tender}', 'AwardController@create_award');
+
 Route::resource('contract', 'ContractController');
+Route::get('contract-create/{award}', 'ContractController@create_contract');
+// Route::get('contract/{contract}/{award}/edit', 'ContractController@edit');
+
 //completions
 Route::get('/completions/{contract}', 'ContractController@completion');
 Route::post('/completion', 'ContractController@completion_store');
@@ -95,20 +112,37 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //contract-management
 Route::resource('ammendment', 'AmmendmentController');
+Route::get('contract-ammendment/{contract}', 'AmmendmentController@ammendment');
+Route::get('contract-ammendment/{contract}/create', 'AmmendmentController@create_ammendment');
 
 //execution
 Route::resource('execution', 'ExecutionController');
-
+Route::get('contract-execution/{execution}', 'ExecutionController@execution');
+Route::get('contract-execution/{contract}/create', 'ExecutionController@create_execution');
 //disbursment
-Route::get('/disbursment/{execution}', 'ExecutionController@disbursment');
+Route::get('/disbursment/{execution}/create', 'ExecutionController@disbursment');
 Route::post('/disbursment', 'ExecutionController@disbursment_store');
 Route::delete('/disbursment/delete/{disbursment}', 'ExecutionController@disbursment_destroy');
 
 //warranty
 Route::get('/warranty/{execution}', 'ExecutionController@warranty');
+Route::get('/warranty/{execution}/create', 'ExecutionController@create_warranty');
 Route::post('/warranty', 'ExecutionController@warranty_store');
 
 Route::resource('progress', 'ProgressController');
+Route::get('project-progress/{project}', 'ProgressController@progress');
+Route::get('project-progress/{project}/create', 'ProgressController@create_progress');
+Route::post('project-progress', 'ProgressController@store');
+
 Route::get('/advance-images/{advance}', 'ProgressController@images');
 Route::post('/advance-images/{advance}', 'ProgressController@images_store');
 Route::delete('/advance-image/destroy/{advance_image}', 'ProgressController@image_destroy');
+
+//get-typeahed
+Route::get('/get-contract-type', 'ContractTypeController@get_data');
+Route::get('/get-contract-method', 'ContractMethodController@get_data');
+Route::get('/get-tender-method', 'TenderMethodController@get_data');
+Route::get('/get-tender-status', 'TenderStatusController@get_data');
+Route::get('/get-status', 'StatusController@get_data');
+Route::get('/get-role', 'RoleController@get_data');
+Route::get('/get-warranty-type', 'WarrantyTypeController@get_data');

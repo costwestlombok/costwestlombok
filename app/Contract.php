@@ -27,4 +27,14 @@ class Contract extends Model
         return $this->belongsTo('App\Award', 'awards_id', 'id');
     }
 
+    public function ammendment()
+    {
+        return $this->hasMany('App\Ammendment', 'engage_id', 'id');
+    }
+
+    public function execution()
+    {
+        return $this->hasOne('App\Execution', 'engage_id', 'id');
+    }
+
 }

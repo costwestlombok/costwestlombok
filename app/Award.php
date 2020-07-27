@@ -16,4 +16,9 @@ class Award extends Model
     {
         return $this->belongsTo('App\Tender', 'tender_id', 'id');
     }
+
+    public function contract()
+    {
+        return $this->hasOne('App\Contract', 'awards_id', 'id');
+    }
 }

@@ -8,6 +8,7 @@ use App\Project;
 use App\Status;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Session;
 use Storage;
 
 class ProgressController extends Controller
@@ -19,8 +20,8 @@ class ProgressController extends Controller
      */
     public function index()
     {
-        $advances = Advance::all();
-        return view('progress.index', compact('advances'));
+        $advances = Advance::orderBy('date_of_advance', 'DESC')->paginate(8);
+        return view('metronic.progress.index', compact('advances'));
     }
 
     /**
@@ -57,10 +58,20 @@ class ProgressController extends Controller
         if ($request->advance_doc) {
             $data['advance_doc'] = $request->file('advance_doc')->store('advance');
         }
-        Advance::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
+        $status = Status::where('status_name', $request->status_id)->first();
 
-        return redirect('/progress');
+        if ($status) {
+            $data['status_id'] = $status->id;
+        } else {
+            $tm = Status::create([
+                'status_name' => $request->status_id,
+            ]);
+            $data['status_id'] = $tm->id;
+        }
+
+        Advance::create($data);
+        Session::put('success', 'Data saved successfully!');
+        return redirect('project-progress/' . $request->project_id);
     }
 
     /**
@@ -144,5 +155,16 @@ class ProgressController extends Controller
         alert('Success', 'Data deleted successfully!', 'success');
 
         return back();
+    }
+
+    public function progress(Project $project)
+    {
+        $advances = Advance::orderBy('date_of_advance', 'DESC')->paginate(8);
+        return view('metronic.progress.index', compact('advances', 'project'));
+    }
+
+    public function create_progress(Project $project)
+    {
+        return view('metronic.progress.edit', compact('project'));
     }
 }
