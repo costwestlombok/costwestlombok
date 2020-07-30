@@ -66,3 +66,8 @@ Route::get('ammendment/{ammendment}/delete', 'AmmendmentController@destroy');
 
 Route::get('disbursment/{execution}', 'ExecutionController@api');
 Route::get('warranty/{execution}', 'ExecutionController@api_warranty');
+
+Route::get('project-document', 'ProjectController@api');
+Route::get('budget-source', 'BudgetController@api');
+Route::get('advance-image', 'ProgressController@api');
+Route::get('contact', 'ContactController@api');

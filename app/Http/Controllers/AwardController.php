@@ -24,8 +24,8 @@ class AwardController extends Controller
     public function index()
     {
         //
-        $awards = Award::all();
-        return view('award.index', compact('awards'));
+        $awards = Award::paginate(9);
+        return view('metronic.award.index', compact('awards'));
     }
 
     /**
@@ -93,7 +93,7 @@ class AwardController extends Controller
         Award::create($data);
         alert('Success', 'Data saved successfully!', 'success');
 
-        return redirect('/award');
+        return redirect('award/' . $request->tender_id);
     }
 
     /**
@@ -161,7 +161,7 @@ class AwardController extends Controller
             Storage::delete($tender->others);
         }
         $award->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        Session::put('success', 'Data deleted successfully!');
         return back();
     }
 

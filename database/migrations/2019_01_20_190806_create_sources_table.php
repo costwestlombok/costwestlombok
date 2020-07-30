@@ -16,7 +16,7 @@ class CreateSourcesTable extends Migration
         Schema::create('sources', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('source_name');
-            $table->string('acronym', 50);
+            $table->string('acronym', 50)->nullable();
             $table->timestamps();
         });
     }

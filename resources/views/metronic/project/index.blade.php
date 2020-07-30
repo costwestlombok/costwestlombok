@@ -2,6 +2,34 @@
 @section('style')
 @endsection
 @section('script')
+<script>
+    jQuery(document).ready(function () {
+        $(document).on('click', '.button', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var link = $(this).attr('href');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won\'t be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!"
+                }).then(function(result) {
+                    if (result.value) {
+                        $.ajax({
+                            type: "GET",
+                            url: "/api/organization_unit/"+ id +"/delete",
+                            success: function (data) {
+                                toastr.success("Data deleted successfully!");
+                                var table = $('#kt_datatable').DataTable(); 
+                                table.ajax.reload( null, false );
+                            }         
+                        });
+                    }
+                });
+            });
+    });
+</script>
 @endsection
 @section('content')
 <!--begin::Info-->
@@ -214,7 +242,7 @@
                                                 </a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="{{ url('project-award/'.$item->id) }}" class="navi-link">
+                                                <a href="{{ url('project-file/'.$item->id) }}" class="navi-link">
                                                     <span class="svg-icon menu-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -234,11 +262,11 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text"> Bid/Award Evaluation</span>
+                                                    <span class="navi-text"> Documents</span>
                                                 </a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="{{ url('project-contract/'.$item->id) }}" class="navi-link">
+                                                <a href="{{ url('project-budget/'.$item->id) }}" class="navi-link">
                                                     <span class="svg-icon menu-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -259,8 +287,17 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text"> Contract</span>
+                                                    <span class="navi-text"> Budget</span>
                                                 </a>
+                                            </li>
+                                            <hr>
+                                            <li class="navi-item">
+                                                <a href="{{url('project/'.$item->id.'/edit')}}" class="navi-link"><span><i class="flaticon2-pen"></i>
+                                                </span> &nbsp; Edit</a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" data-id="{{$item->id}}" class="button navi-link"><span><i class="flaticon2-trash"></i>
+                                                </span> &nbsp; Delete</a>
                                             </li>
                                         </ul>
                                         <!--end::Navigation-->
@@ -327,6 +364,7 @@
                                     <span class="font-weight-bold text-dark-50">{{$item->duration}}</span> days</span>
                             </div>
                             <!--end::Item-->
+                            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
                             <!--begin::Item-->
                             <div class="d-flex flex-column flex-lg-fill float-left mb-7">
                                 <span class="font-weight-bolder mb-4">
@@ -334,7 +372,7 @@
                                 </span>
                                 <div class="d-flex align-items-center flex-lg-fill">
                                     <span class="mr-4">
-                                        <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
+                                        <i class="icon-2x text-dark-50 flaticon-notepad"></i>
                                     </span>
                                     <div class="d-flex flex-column flex-lg-fill">
                                         <a href="{{ url('project-tender/'.$item->id) }}"><span
@@ -342,6 +380,46 @@
                                                 Tender</span></a>
                                         <a href="{{ url('tender-create/'.$item->id) }}"
                                             class="text-primary font-weight-bolder">Add New Tender</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="d-flex flex-column flex-lg-fill float-left mb-7">
+                                <span class="font-weight-bolder mb-4">
+                                    <a href="{{ url('project-file/'.$item->id) }}" class="text-dark">Files</a>
+                                </span>
+                                <div class="d-flex align-items-center flex-lg-fill">
+                                    <span class="mr-4">
+                                        <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
+                                    </span>
+                                    <div class="d-flex flex-column flex-lg-fill">
+                                        <a href="#"><span
+                                                class="text-dark-75 font-weight-bolder font-size-sm">{{number_format($item->file->count())}}
+                                                Files</span></a>
+                                        <a href="{{ url('project-file/'.$item->id) }}"
+                                            class="text-primary font-weight-bolder">Add New File</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="d-flex flex-column flex-lg-fill float-left mb-7">
+                                <span class="font-weight-bolder mb-4">
+                                    <a href="{{ url('project-budget/'.$item->id) }}" class="text-dark">Budget</a>
+                                </span>
+                                <div class="d-flex align-items-center flex-lg-fill">
+                                    <span class="mr-4">
+                                        <i class="icon-2x text-dark-50 flaticon-piggy-bank"></i>
+                                    </span>
+                                    <div class="d-flex flex-column flex-lg-fill">
+                                        <a href="#"><span
+                                                class="text-dark-75 font-weight-bolder font-size-sm">{{number_format($item->project_budget->count())}}
+                                                Budget</span></a>
+                                        <a href="{{ url('project-budget/'.$item->id) }}"
+                                            class="text-primary font-weight-bolder">Add New Budget</a>
                                     </div>
                                 </div>
 

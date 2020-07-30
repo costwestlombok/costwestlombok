@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Offerer;
+use App\Official;
+use App\Project;
+use App\Source;
+
 class DashboardController extends Controller
 {
 
@@ -17,6 +22,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('metronic.index');
+        $projects = Project::orderBy('created_at', 'DESC')->limit(4)->get();
+        $officials = Official::orderBy('created_at', 'DESC')->limit(5)->get();
+        $sources = Source::orderBy('created_at', 'DESC')->limit(5)->get();
+        $offerers = Offerer::orderBy('created_at', 'DESC')->limit(5)->get();
+        return view('metronic.index', compact('projects', 'officials', 'sources', 'offerers'));
     }
 }

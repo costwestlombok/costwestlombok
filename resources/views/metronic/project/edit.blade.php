@@ -120,8 +120,9 @@ $sectors = App\Sector::all();
 $organizations = App\Organization::all();
 $statuses = App\Status::all();
 if(isset($project)){
-$units = OrganizationUnit::where('entity_id', $project->official->unit->org->id)->get();
-$officials = Official::where('entity_unit_id', $project->official->unit->id)->get();
+$units = App\OrganizationUnit::where('entity_id', $project->official->unit->org->id)->get();
+$officials = App\Official::where('entity_unit_id', $project->official->unit->id)->get();
+$subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)->get();
 }
 @endphp
 {{-- card --}}
@@ -375,7 +376,7 @@ $officials = Official::where('entity_unit_id', $project->official->unit->id)->ge
                                     <div class="form-group fv-plugins-icon-container">
                                         <label for="name">Start Date:</label>
                                         <input type="date" class="form-control" name="start_date" id="start_date"
-                                            value="{{ $project->start_date ?? date('Y-m-d') }}">
+                                            value="{{ date_format(Carbon\Carbon::parse($project->start_date ?? date('Y-m-d')), 'Y-m-d') }} }}">
                                     </div>
                                     <!--end::Input-->
                                     <!--begin::Input-->

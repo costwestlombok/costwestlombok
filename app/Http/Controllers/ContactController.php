@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Contact;
+use DataTables;
+use Illuminate\Http\Request;
+use Session;
 
 class ContactController extends Controller
 {
 
-
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -21,9 +22,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
-        $rows = Contact::all();
-        return view('contact.index', ['rows' => $rows]);
+        return view('metronic.contact.index');
     }
 
     /**
@@ -34,7 +33,7 @@ class ContactController extends Controller
     public function create()
     {
         //
-        return view('contact.create');
+        return view('metronic.contact.edit');
     }
 
     /**
@@ -45,22 +44,10 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        /*$request->validate([
-            'organization_name' => 'required',
-            'organization_legal_name' => 'required',
-            'description',
-            'address' => 'required',
-            'phone',
-            'postal_code'
-        ]);*/
-
-        $sector = new Sector([
-            'sector_name' => $request->get('sector_name'),
-        ]);
-
-        $sector->save();
-        return redirect('/sector/create')->with('success', 'Section has been added');
+        $data = $request->all();
+        Contact::create($data);
+        Session::put('success', 'Data saved successfully!');
+        return redirect('catalog/contact');
     }
 
     /**
@@ -80,11 +67,9 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Contact $contact)
     {
-        //
-        $sector = Sector::find($id);
-        return view('sector.edit', ['sector' => $sector]);
+        return view('metronic.contact.edit', compact('contact'));
     }
 
     /**
@@ -94,14 +79,12 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Contact $contact)
     {
-        //
-        $sector = Sector::find($id);
-        $sector->sector_name = $request->get('sector_name');
-        $sector->save();
-
-        return redirect('/sector')->with('sectors', 'data has been updated');
+        $data = $request->all();
+        $contact->update($data);
+        Session::put('success', 'Data saved successfully!');
+        return redirect('/catalog/contact');
     }
 
     /**
@@ -116,5 +99,14 @@ class ContactController extends Controller
         $sector->delete();
 
         return redirect('/sector')->with('success', 'Sector has been destroyed');
+    }
+
+    public function api()
+    {
+        return DataTables::of(Contact::query())
+            ->editColumn('created_at', function ($contact) {
+                return date('Y-m-d H:i:s', strtotime($contact->created_at));
+            })
+            ->make(true);
     }
 }

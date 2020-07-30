@@ -102,7 +102,7 @@ class TenderStatusController extends Controller
     public function destroy(TenderStatus $tenderStatus)
     {
         $tenderStatus->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        Session::put('success', 'Data deleted successfully!');
 
         return back();
     }

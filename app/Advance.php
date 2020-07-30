@@ -21,4 +21,9 @@ class Advance extends Model
     {
         return $this->belongsTo('App\status', 'status_id', 'id');
     }
+
+    public function image()
+    {
+        return $this->hasMany('App\AdvanceImage', 'advance_id', 'id');
+    }
 }

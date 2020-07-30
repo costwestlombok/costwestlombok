@@ -32,8 +32,8 @@ class TenderController extends Controller
     public function index()
     {
         //
-        $tenders = Tender::all();
-        return view('tender.index', ['tenders' => $tenders]);
+        $tenders = Tender::paginate(8);
+        return view('metronic.tender.index', compact('tenders'));
     }
 
     /**
@@ -141,9 +141,9 @@ class TenderController extends Controller
         $data['duration'] = $start->diffInDays($end);
         $data['amount'] = str_replace(",", "", $request->amount);
         Tender::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
+        Session::put('success', 'Data saved successfully!');
 
-        return redirect('/tender');
+        return redirect('tender/' . $request->project_id);
     }
 
     /**
@@ -251,7 +251,7 @@ class TenderController extends Controller
         $data['amount'] = str_replace(",", "", $request->amount);
         $tender->update($data);
         Session::put("success", "Data saved successfully");
-        return redirect('/tender');
+        return redirect('tender/' . $request->project_id);
     }
 
     /**
@@ -287,7 +287,7 @@ class TenderController extends Controller
             Storage::delete($tender->acceptance_certificate);
         }
         $tender->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        Session::put('success', 'Data deleted successfully!');
         return back();
     }
 

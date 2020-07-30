@@ -11,10 +11,7 @@
 |
  */
 
-Route::get('/', function () {
-    return view('metronic.dashboard');
-    return view('auth.login');
-})->name('welcome');
+Route::get('/', 'FrontController@index');
 
 Route::get('home', function () {
     return view('metronic.dashboard');
@@ -46,17 +43,19 @@ Route::resource('catalog/tender-status', 'TenderStatusController');
 
 Route::get('/subsector/ajax_get_subsector', 'SubsectorController@ajax_get_subsector');
 Route::resource('currency', 'CurrencyController');
-Route::resource('contact', 'ContactController');
+Route::resource('catalog/contact', 'ContactController');
 
 Route::resource('project', 'ProjectController');
-Route::get('/project/file/{project}', 'ProjectController@project_file');
-Route::post('/project/file-store', 'ProjectController@store_file');
+Route::get('/project-file/{project}', 'ProjectController@project_file');
+Route::post('/project-file', 'ProjectController@store_file');
 Route::delete('/project/file/destroy/{projectdocument}', 'ProjectController@project_file_delete');
 
 //budget
-Route::get('/project/budget/{project}', 'BudgetController@index');
-Route::post('/project/budget', 'BudgetController@store');
-Route::get('/project/source/{project}/{budget}', 'BudgetController@source');
+Route::get('/project-budget/{project}', 'BudgetController@index');
+Route::get('/project-budget/{project}/create', 'BudgetController@create');
+Route::post('/project-budget', 'BudgetController@store');
+Route::get('/budget-source/{budget}', 'BudgetController@source');
+Route::post('budget-source', 'BudgetController@store_project_source');
 
 Route::get('/get-unit/{entity}', 'OrganizationUnitController@get_unit');
 Route::get('/get-official/{unit}', 'OfficialController@get_official');
@@ -102,9 +101,10 @@ Route::get('contract-create/{award}', 'ContractController@create_contract');
 // Route::get('contract/{contract}/{award}/edit', 'ContractController@edit');
 
 //completions
-Route::get('/completions/{contract}', 'ContractController@completion');
-Route::post('/completion', 'ContractController@completion_store');
-Route::delete('/completions/destroy/{completion}', 'ContractController@completion_destroy');
+Route::get('/contract-completion/{completion}', 'ContractController@completion');
+Route::get('/contract-completion/{contract}/create', 'ContractController@completion_create');
+Route::post('/contract-completion', 'ContractController@completion_store');
+Route::delete('/contract-completion/destroy/{completion}', 'ContractController@completion_destroy');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 Auth::routes();
 
@@ -146,3 +146,4 @@ Route::get('/get-tender-status', 'TenderStatusController@get_data');
 Route::get('/get-status', 'StatusController@get_data');
 Route::get('/get-role', 'RoleController@get_data');
 Route::get('/get-warranty-type', 'WarrantyTypeController@get_data');
+Route::get('/get-source', 'SourceController@get_data');

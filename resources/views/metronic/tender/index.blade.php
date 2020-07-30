@@ -128,6 +128,7 @@
         </div>
         <!--end::Details-->
         <!--begin::Toolbar-->
+        @if(isset($project))
         <div class="d-flex align-items-center">
             <!--begin::Button-->
             <a href="/metronic/demo5/.html" class=""></a>
@@ -150,6 +151,7 @@
                 </span>Add Tender</a>
             <!--end::Button-->
         </div>
+        @endif
         <!--end::Toolbar-->
     </div>
 </div>
@@ -204,42 +206,29 @@
                                                     <li class="navi-item">
                                                         <a href="{{url('tender-award/'.$item->id)}}" class="navi-link">
                                                             <span class="navi-icon">
-                                                                <i class="flaticon2-shopping-cart-1"></i>
+                                                                <i class="flaticon2-gift"></i>
                                                             </span>
-                                                            <span class="navi-text">Award</span>
+                                                            <span class="navi-text">Bid/Award</span>
                                                         </a>
                                                     </li>
                                                     <li class="navi-item">
-                                                        <a href="#" class="navi-link">
+                                                        <a href="{{url('tender-offerer/'.$item->id)}}"
+                                                            class="navi-link">
                                                             <span class="navi-icon">
-                                                                <i class="flaticon2-calendar-8"></i>
+                                                                <i class="flaticon-network"></i>
                                                             </span>
-                                                            <span class="navi-text">Event</span>
+                                                            <span class="navi-text">Offerer</span>
                                                         </a>
                                                     </li>
+                                                    <hr>
                                                     <li class="navi-item">
-                                                        <a href="#" class="navi-link">
-                                                            <span class="navi-icon">
-                                                                <i class="flaticon2-graph-1"></i>
-                                                            </span>
-                                                            <span class="navi-text">Report</span>
-                                                        </a>
+                                                        <a href="" class="navi-link"><span><i class="flaticon2-pen"></i>
+                                                            </span> &nbsp; Edit</a>
                                                     </li>
                                                     <li class="navi-item">
-                                                        <a href="#" class="navi-link">
-                                                            <span class="navi-icon">
-                                                                <i class="flaticon2-rocket-1"></i>
-                                                            </span>
-                                                            <span class="navi-text">Post</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="navi-item">
-                                                        <a href="#" class="navi-link">
-                                                            <span class="navi-icon">
-                                                                <i class="flaticon2-writing"></i>
-                                                            </span>
-                                                            <span class="navi-text">File</span>
-                                                        </a>
+                                                        <a href="" class="navi-link"><span><i
+                                                                    class="flaticon2-trash"></i>
+                                                            </span> &nbsp; Delete</a>
                                                     </li>
                                                 </ul>
                                                 <!--end::Navigation-->
@@ -255,7 +244,7 @@
                                         <!--begin: Item-->
                                         <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                             <span class="mr-4">
-                                                <i class="flaticon-piggy-bank icon-2x text-muted font-weight-bold"></i>
+                                                <i class="flaticon-coins icon-2x text-muted font-weight-bold"></i>
                                             </span>
                                             <div class="d-flex flex-column text-dark-75">
                                                 <span class="font-weight-bolder font-size-sm">Amount</span>
@@ -268,7 +257,7 @@
                                         <!--begin: Item-->
                                         <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                             <span class="mr-4">
-                                                <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
+                                                <i class="flaticon-network icon-2x text-muted font-weight-bold"></i>
                                             </span>
                                             <div class="d-flex flex-column flex-lg-fill">
                                                 <span

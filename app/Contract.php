@@ -37,4 +37,9 @@ class Contract extends Model
         return $this->hasOne('App\Execution', 'engage_id', 'id');
     }
 
+    public function completion()
+    {
+        return $this->hasOne('App\Completion', 'contracts_id', 'id');
+    }
+
 }

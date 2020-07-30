@@ -201,6 +201,15 @@
                                             <span class="menu-text">Offerer</span>
                                         </a>
                                     </li>
+                                    <li class="menu-item{{ request()->segment(2) == 'contact' ? ' menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{ route('contact.index') }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Contact</span>
+                                        </a>
+                                    </li>
                                     <li class="menu-item{{ request()->segment(2) == 'tender_method' ? ' menu-item-active' : '' }}"
                                         aria-haspopup="true">
                                         <a href="{{ route('tender_method.index') }}" class="menu-link">

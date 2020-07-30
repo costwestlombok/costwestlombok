@@ -3,17 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Libraries\Googlemaps;
-use App\Official;
-use App\Organization;
-use App\OrganizationUnit;
 use App\Project;
 use App\ProjectDocument;
-use App\Purpose;
 use App\Role;
-use App\Sector;
-use App\Status;
-use App\Subsector;
 use Carbon\Carbon;
+use DataTables;
 use Illuminate\Http\Request;
 use Session;
 use Storage;
@@ -23,7 +17,7 @@ class ProjectController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -103,7 +97,7 @@ class ProjectController extends Controller
 
         Project::create($data);
         Session::put("success", "Data saved successfully!");
-        return redirect()->route('project.index');
+        return redirect('/project');
     }
 
     /**
@@ -112,10 +106,9 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Project $project)
     {
-        //
-        return view('project.show');
+        return view('metronic.project.edit', compact('project'));
     }
 
     /**
@@ -152,27 +145,11 @@ class ProjectController extends Controller
 
         $map = $map->create_map();
 
-        $purposes = Purpose::all();
+        return view('metronic.project.edit', [
 
-        $sectors = Sector::all();
-        $subsectors = Subsector::where('sector_id', $project->subsector->sector->id)->get();
-
-        $organizations = Organization::all();
-        $units = OrganizationUnit::where('entity_id', $project->official->unit->org->id)->get();
-        $officials = Official::where('entity_unit_id', $project->official->unit->id)->get();
-
-        $statuses = Status::all();
-
-        return view('project.edit', [
-            'purposes' => $purposes,
-            'sectors' => $sectors,
-            'organizations' => $organizations,
-            'statuses' => $statuses,
             'map' => $map,
             'project' => $project,
-            'subsectors' => $subsectors,
-            'units' => $units,
-            'officials' => $officials,
+
         ]);
     }
 
@@ -187,8 +164,18 @@ class ProjectController extends Controller
     {
         $data = $request->all();
         $data['budget'] = str_replace(",", "", $request->budget);
+        $role = Role::where('role_name', $request->role_id)->first();
+
+        if ($role) {
+            $data['role_id'] = $role->id;
+        } else {
+            $r = Role::create([
+                'role_name' => $request->role_id,
+            ]);
+            $data['role_id'] = $r->id;
+        }
         $project->update($data);
-        alert('Success', 'Data updated successfully!', 'success');
+        Session::put('success', 'Data updated successfully!');
 
         return redirect('/project');
     }
@@ -202,14 +189,13 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        Session::put('success', 'Data deleted successfully!');
         return back();
     }
 
-    public function project_file($project)
+    public function project_file(Project $project)
     {
-        $data = ProjectDocument::where('project_id', $project)->get();
-        return view('project.file', compact('data', 'project'));
+        return view('metronic.project.file', compact('project'));
     }
 
     public function store_file(Request $request)
@@ -220,16 +206,25 @@ class ProjectController extends Controller
 
         $data['document_path'] = $file;
         ProjectDocument::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
+        Session::put('success', 'Data saved successfully!');
 
-        return redirect('/project/file/' . $request->project_id);
+        return back();
     }
 
     public function project_file_delete(ProjectDocument $projectdocument)
     {
         Storage::delete($projectdocument->document_path);
         $projectdocument->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        Session::put('success', 'Data deleted successfully!');
         return back();
+    }
+
+    public function api()
+    {
+        return DataTables::of(ProjectDocument::query())
+            ->editColumn('created_at', function ($organization) {
+                return date('Y-m-d H:i:s', strtotime($organization->created_at));
+            })
+            ->make(true);
     }
 }

@@ -80,7 +80,8 @@
                                                             class="text-primary text-uppercase font-weight-bold font-size-sm">Action:</span>
                                                     </li>
                                                     <li class="navi-item">
-                                                        <a href="{{url('contract/'.$contract->id.'/edit')}}" class="navi-link">
+                                                        <a href="{{url('contract/'.$contract->id.'/edit')}}"
+                                                            class="navi-link">
                                                             <span class="navi-icon">
                                                                 <i class="flaticon2-pen"></i>
                                                             </span>
@@ -95,7 +96,7 @@
                                                             <span class="navi-text">Hapus</span>
                                                         </a>
                                                     </li>
-                                                    
+
                                                 </ul>
                                                 <!--end::Navigation-->
                                             </div>
@@ -114,7 +115,8 @@
                                                 <i class="flaticon-piggy-bank icon-2x text-muted font-weight-bold"></i>
                                             </span>
                                             <div class="d-flex flex-column text-dark-75">
-                                                <span class="font-weight-bolder font-size-sm">Price local currency</span>
+                                                <span class="font-weight-bolder font-size-sm">Price local
+                                                    currency</span>
                                                 <span class="font-weight-bolder font-size-h5">
                                                     <span class="text-dark-50 font-weight-bold">Rp
                                                     </span>{{number_format($contract->price_local_currency)}}</span>
@@ -155,7 +157,9 @@
                                         <span
                                             class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($contract->max_extended_date)->format('D, d M Y') }}</span>
                                     </div>
-                                    <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200 ml-12 mr-12"></div>
+                                    <div
+                                        class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200 ml-12 mr-12">
+                                    </div>
                                     <div class="mr-12 d-flex flex-column mb-7 mr-12">
                                         <span class="d-block font-weight-bold">Ammendements</span>
                                         <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
@@ -163,12 +167,15 @@
                                                 <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
                                             </span>
                                             <div class="d-flex flex-column flex-lg-fill">
-                                                <span class="text-dark-75 font-weight-bolder font-size-sm">{{$contract->ammendment->count()}} Ammendements</span>
-                                                <a href="{{ url('contract-ammendment/'.$contract->id) }}" class="text-primary font-weight-bolder">View</a>
+                                                <span
+                                                    class="text-dark-75 font-weight-bolder font-size-sm">{{$contract->ammendment->count()}}
+                                                    Ammendements</span>
+                                                <a href="{{ url('contract-ammendment/'.$contract->id) }}"
+                                                    class="text-primary font-weight-bolder">View</a>
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="mr-12 d-flex flex-column mb-7 mr-12">
                                         <span class="d-block font-weight-bold">Executions</span>
                                         <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
@@ -176,18 +183,29 @@
                                                 <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
                                             </span>
                                             <div class="d-flex flex-column flex-lg-fill">
-                                                <span class="text-dark-75 font-weight-bolder font-size-sm">Executions</span>                                            
+                                                <span
+                                                    class="text-dark-75 font-weight-bolder font-size-sm">Executions</span>
                                                 @if($contract->execution)
-                                                    <a href="{{url('contract-execution/'.$contract->execution->id)}}" class="text-primary font-weight-bolder">View</a>
+                                                <a href="{{url('contract-execution/'.$contract->execution->id)}}"
+                                                    class="text-primary font-weight-bolder">View</a>
                                                 @else
-                                                    <a href="{{url('contract-execution/'.$contract->id.'/create')}}" class="text-primary font-weight-bolder">Create</a>
+                                                <a href="{{url('contract-execution/'.$contract->id.'/create')}}"
+                                                    class="text-primary font-weight-bolder">Create</a>
                                                 @endif
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
-                                       <button class="btn btn-primary">Completion</button>
+                                        @if($contract->completion)
+                                        <a class="btn btn-primary"
+                                            href="{{url('contract-completion/'.$contract->completion->id)}}">Show
+                                            Completion</a>
+                                        @else
+                                        <a class="btn btn-primary"
+                                            href="{{url('contract-completion/'.$contract->id.'/create')}}">Create
+                                            Completion</a>
+                                        @endif
                                     </div>
 
                                 </div>
@@ -196,7 +214,7 @@
                             <!--end::Info-->
                         </div>
                         <!--end::Top-->
-                        
+
                     </div>
                 </div>
             </div>

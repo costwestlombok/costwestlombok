@@ -3,17 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Budget;
+use App\Project;
 use App\ProjectSource;
 use App\Source;
 use Carbon\Carbon;
+use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class BudgetController extends Controller
 {
-    public function index($project)
+    public function index(Project $project)
     {
-        $data = Budget::where('project_id', $project)->get();
-        return view('project.budget', compact('data', 'project'));
+        $budgets = Budget::where('project_id', $project->id)->paginate(8);
+        return view('metronic.budget.index', compact('budgets', 'project'));
+    }
+
+    public function create(Project $project)
+    {
+        return view('metronic.budget.edit', compact('project'));
     }
 
     public function store(Request $request)
@@ -26,14 +34,51 @@ class BudgetController extends Controller
         $data['duration'] = $start->diffInDays($end);
 
         Budget::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
+        Session::put('success', 'Data saved successfully!');
+        return redirect('project-budget/' . $request->project_id);
+    }
+
+    public function source(Budget $budget)
+    {
+        return view('metronic.budget.source', compact('budget'));
+    }
+
+    public function store_project_source(Request $request)
+    {
+        $data = $request->all();
+        $source = Source::where('source_name', $request->source_id)->first();
+        if ($source) {
+            $data['source_id'] = $source->id;
+        } else {
+
+            if (preg_match_all('/\b(\w)/', strtoupper($request->source_id), $m)) {
+                $acronym = implode('', $m[1]);
+            }
+
+            $s = Source::create([
+                'source_name' => $request->source_id,
+                'acronym' => $acronym,
+            ]);
+            $data['source_id'] = $s->id;
+        }
+        $data['ammount'] = str_replace(",", "", $request->ammount);
+        ProjectSource::create($data);
+        Session::put('success', 'Data saved successfully!');
         return back();
     }
 
-    public function source($project, $budget)
+    public function api()
     {
-        $data = ProjectSource::where('project_id', $project)->where('budget_id', $budget)->get();
-        $sources = Source::all();
-        return view('project.source', compact('data', 'project', 'budget', 'sources'));
+        return DataTables::of(ProjectSource::query())
+            ->editColumn('created_at', function ($source) {
+                return date('Y-m-d H:i:s', strtotime($source->created_at));
+            })
+            ->addColumn('source_name', function ($source) {
+                return $source->source->source_name;
+            })
+            ->editColumn('ammount', function ($source) {
+                return number_format($source->ammount);
+            })
+            ->make(true);
     }
 }

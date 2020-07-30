@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Offerer;
+use Contact;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
@@ -50,7 +51,14 @@ class OffererController extends Controller
         ]);
 
         $data = $request->all();
-        Offerer::create($data);
+        $o = Offerer::create($data);
+        $dc['name'] = $o->legal_name;
+        $dc['address'] = $o->address;
+        $dc['phone'] = $o->phone;
+        $dc['position'] = "Offerer";
+        $dc['email'] = " ";
+        Contact::create($dc);
+
         Session::put("success", "Data saved successfully!");
         return redirect()->route('offerer.index');
     }

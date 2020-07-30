@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Project;
+
 class FrontController extends Controller
 {
-    function list() {
-        return view('front.list');
+    public function index()
+    {
+        $projects = Project::orderBy('created_at', 'DESC')->limit(5)->get();
+        return view('metronic.dashboard', compact('projects'));
     }
 }

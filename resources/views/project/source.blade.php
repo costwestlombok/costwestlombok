@@ -48,7 +48,7 @@
 
 <div class="panel panel-flat">
     <div class="panel-heading">
-        <h4 class="panel-title">Project Budget List</h4>
+        <h4 class="panel-title">Project Source List</h4>
     </div>
     <div class="panel-body">
         <div class="table-responsive">
@@ -56,7 +56,7 @@
                 <thead>
                     <tr>
                         <th data-hide="phone, tablet">#</th>
-                        <th data-toggle="true">Name</th>
+                        <th data-toggle="true">Budget</th>
                         <th>Amount</th>
                         <th>Start Date</th>
                         <th>End Date</th>

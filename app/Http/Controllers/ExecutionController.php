@@ -139,7 +139,7 @@ class ExecutionController extends Controller
     public function disbursment_destroy(Disbursment $disbursment)
     {
         $disbursment->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        Session::put('success', 'Data deleted successfully!');
         return back();
     }
 

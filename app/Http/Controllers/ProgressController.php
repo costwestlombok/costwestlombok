@@ -7,6 +7,7 @@ use App\AdvanceImage;
 use App\Project;
 use App\Status;
 use Carbon\Carbon;
+use DataTables;
 use Illuminate\Http\Request;
 use Session;
 use Storage;
@@ -119,10 +120,9 @@ class ProgressController extends Controller
         //
     }
 
-    public function images($advance)
+    public function images(Advance $advance)
     {
-        $images = AdvanceImage::where('advance_id', $advance)->get();
-        return view('progress.images', compact('images', 'advance'));
+        return view('metronic.progress.images', compact('advance'));
     }
 
     public function images_store(Request $request, $advance)
@@ -152,7 +152,7 @@ class ProgressController extends Controller
         // return $advance_image;
         Storage::delete($advance_image->path);
         $advance_image->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        Session::put('success', 'Data deleted successfully!');
 
         return back();
     }
@@ -166,5 +166,14 @@ class ProgressController extends Controller
     public function create_progress(Project $project)
     {
         return view('metronic.progress.edit', compact('project'));
+    }
+
+    public function api()
+    {
+        return DataTables::of(AdvanceImage::query())
+            ->editColumn('created_at', function ($ai) {
+                return date('Y-m-d H:i:s', strtotime($ai->created_at));
+            })
+            ->make(true);
     }
 }

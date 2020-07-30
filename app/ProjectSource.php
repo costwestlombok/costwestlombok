@@ -11,4 +11,18 @@ class ProjectSource extends Model
     protected $keyType = 'uuid';
     protected $guarded = [];
     public $incrementing = false;
+
+    public function project()
+    {
+        return $this->belongsTo('App\Project', 'project_id', 'id');
+    }
+    public function budget()
+    {
+        return $this->belongsTo('App\Budget', 'budget_id', 'id');
+    }
+    public function source()
+    {
+        return $this->belongsTo('App\Source', 'source_id', 'id');
+    }
+
 }

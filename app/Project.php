@@ -51,4 +51,14 @@ class Project extends Model
     {
         return $this->hasOne('App\Advance')->latest();
     }
+
+    public function project_source()
+    {
+        return $this->hasMany('App\ProjectSource', 'project_id', 'id');
+    }
+
+    public function project_budget()
+    {
+        return $this->hasMany('App\Budget', 'project_id', 'id');
+    }
 }

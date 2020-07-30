@@ -9,7 +9,7 @@
     <!--begin::Page Heading-->
     <div class="d-flex align-items-baseline flex-wrap mr-5">
         <!--begin::Page Title-->
-        <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">Progress/Advance</h2>
+        <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">Budget Project </h2>
         <!--end::Page Title-->
         <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
@@ -20,7 +20,7 @@
                 <a href="{{ url('/project') }}" class="text-muted">Project</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="" class="text-muted">Progress</a>
+                <a href="{{ url('/project') }}" class="text-muted">Budget</a>
             </li>
         </ul>
         <!--end::Breadcrumb-->
@@ -39,7 +39,7 @@
             <!--end::Separator-->
             <!--begin::Search Form-->
             <div class="d-flex align-items-center" id="kt_subheader_search">
-                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">{{$advances->total()}} Total</span>
+                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">{{$budgets->total()}} Total</span>
                 <form class="ml-5">
                     <div class="input-group input-group-sm input-group-solid" style="max-width: 175px">
                         <input type="text" class="form-control" id="kt_subheader_search_form" placeholder="Search...">
@@ -132,8 +132,8 @@
             <a href="/metronic/demo5/.html" class=""></a>
             <!--end::Button-->
             <!--begin::Button-->
-            <a href="{{ url('project-progress/'.$project->id.'/create') }}"
-                class="btn btn-primary font-weight-bolder"><span class="svg-icon svg-icon-md">
+            <a href="{{ url('project-budget/'.$project->id.'/create') }}" class="btn btn-primary font-weight-bolder"><span
+                    class="svg-icon svg-icon-md">
                     <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                         height="24px" viewBox="0 0 24 24" version="1.1">
@@ -146,7 +146,7 @@
                         </g>
                     </svg>
                     <!--end::Svg Icon-->
-                </span>Add Progress</a>
+                </span>Add Budget</a>
             <!--end::Button-->
         </div>
         <!--end::Toolbar-->
@@ -158,45 +158,73 @@
     <div class="container">
         <!--begin::Row-->
         <div class="row">
-            @foreach ($advances as $item)
-            <div class="col-md-12">
+            @foreach ($budgets as $item)
+            <div class="col-xl-4">
                 <!--begin::Card-->
                 <div class="card card-custom gutter-b card-stretch">
                     <!--begin::Body-->
                     <div class="card-body">
-                        <!--begin::Section-->
+                        <!--begin::Info-->
                         <div class="d-flex align-items-center">
                             <!--begin::Info-->
                             <div class="d-flex flex-column mr-auto">
                                 <!--begin: Title-->
-                                <a href="#"
-                                    class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">Progress/Advance
-                                    Date : {{ Carbon\Carbon::parse($item->date_of_advance)->format('D, d M Y') }}</a>
-                                <span
-                                    class="label label-lg label-light-success label-inline font-weight-bold py-4 w-25">{{$item->status->status_name}}</span>
+                                <div class="d-flex flex-column mr-auto">
+                                    <a href="#" class="text-dark text-hover-primary font-size-h4 font-weight-bolder mb-1">{{$item->name}}</a>
+                                </div>
                                 <!--end::Title-->
                             </div>
                             <!--end::Info-->
                             <!--begin::Toolbar-->
-                            <div class="card-toolbar mb-auto">
-                                <div class="dropdown dropdown-inline" data-toggle="tooltip" title="Option menus"
-                                    data-placement="left">
-                                    <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="card-toolbar mb-2">
+                                <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
+                                    <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="ki ki-bold-more-hor"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                                         <!--begin::Navigation-->
                                         <ul class="navi navi-hover">
                                             <li class="navi-header pb-1">
-                                                <span
-                                                    class="text-primary text-uppercase font-weight-bold font-size-sm">Actions:</span>
+                                                <span class="text-primary text-uppercase font-weight-bold font-size-sm">Add new:</span>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="{{ url('project-tender/'.$item->id) }}" class="navi-link">
-
-                                                    <span class="navi-text"><i class="flaticon2-pen"></i> &nbsp;
-                                                        Edit</span>
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon">
+                                                        <i class="flaticon2-shopping-cart-1"></i>
+                                                    </span>
+                                                    <span class="navi-text">Order</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon">
+                                                        <i class="flaticon2-calendar-8"></i>
+                                                    </span>
+                                                    <span class="navi-text">Event</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon">
+                                                        <i class="flaticon2-graph-1"></i>
+                                                    </span>
+                                                    <span class="navi-text">Report</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon">
+                                                        <i class="flaticon2-rocket-1"></i>
+                                                    </span>
+                                                    <span class="navi-text">Post</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon">
+                                                        <i class="flaticon2-writing"></i>
+                                                    </span>
+                                                    <span class="navi-text">File</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -206,96 +234,42 @@
                             </div>
                             <!--end::Toolbar-->
                         </div>
-
-                        <!--end::Section-->
-                        <div class="row mt-5 mb-5">
-                            <div class="col-md-6">
-                                <div class="d-flex flex-column align-items-cente py-2">
-                                    <!--begin::Title-->
-                                    <p class="text-dark-75 font-weight-bold font-size-lg mb-1">Theme/issues Description
-                                    </p>
-                                    <!--end::Title-->
-                                    <!--begin::Data-->
-                                    <span class="text-muted font-weight-bold">{{$item->description_issues}}</span>
-                                    <!--end::Data-->
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex flex-column align-items-cente py-2">
-                                    <!--begin::Title-->
-                                    <p class="text-dark-75 font-weight-bold font-size-lg mb-1">Problem Description</p>
-                                    <!--end::Title-->
-                                    <!--begin::Data-->
-                                    <span class="text-muted font-weight-bold">{{$item->description_problems}}</span>
-                                    <!--end::Data-->
-                                </div>
-                            </div>
+                        <!--end::Info-->
+                        <!--begin::Description-->
+                        <div class="mb-5 mt-3 font-weight-bold">{{$item->description}}</div>
+                        <!--end::Description-->
+                        <!--begin::Data-->
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Budget:</span>
+                            <a href="#" class="text-muted text-hover-primary">Rp {{number_format($item->amount)}}</a>
                         </div>
-                        <div class="row mr-1 ml-1">
-                            <!--begin::Content-->
-                            <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
-                                <div class="mr-12 d-flex flex-column mb-7 w-25">
-                                    <span class="d-block font-weight-bold mb-4">Scheduled Finance</span>
-                                    <span
-                                        class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text w-25">{{ number_format($item->scheduled_financing) }}</span>
-                                </div>
-                                <!--begin::Progress-->
-                                <div class="flex-row-fluid mb-7">
-                                    <span class="d-block font-weight-bold mb-4">Physical Program (%) </span>
-                                    <div class="d-flex align-items-center pt-2">
-                                        <div class="progress progress-xs mt-2 mb-2 w-100">
-                                            <div class="progress-bar bg-warning" role="progressbar"
-                                                style="width: {{number_format($item->programmed_percent)}}%;"
-                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <span
-                                            class="ml-3 font-weight-bolder">{{number_format($item->programmed_percent)}}%</span>
-                                    </div>
-                                </div>
-                                <!--end::Progress-->
-                            </div>
-                            <!--end::Content-->
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Start Date:</span>
+                            <span class="label label-lg label-light-primary label-inline font-weight-bold py-4">{{ date('D, d M Y', strtotime($item->start_date)) }}</span>
                         </div>
-                        <div class="row mr-1 ml-1">
-                            <!--begin::Content-->
-                            <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
-                                <div class="mr-12 d-flex flex-column mb-7 w-25">
-                                    <span class="d-block font-weight-bold mb-4">Real Finance</span>
-                                    <span
-                                        class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text w-25">{{ number_format($item->real_financing) }}</span>
-                                </div>
-                                <!--begin::Progress-->
-                                <div class="flex-row-fluid mb-7">
-                                    <span class="d-block font-weight-bold mb-4">Real Physical </span>
-                                    <div class="d-flex align-items-center pt-2">
-                                        <div class="progress progress-xs mt-2 mb-2 w-100">
-                                            <div class="progress-bar bg-warning" role="progressbar"
-                                                style="width: {{number_format($item->real_percent)}}%;"
-                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <span
-                                            class="ml-3 font-weight-bolder">{{number_format($item->real_percent)}}%</span>
-                                    </div>
-                                </div>
-                                <!--end::Progress-->
-                            </div>
-                            <!--end::Content-->
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-dark-75 font-weight-bolder mr-2">End Date:</span>
+                            <span class="label label-lg label-light-success label-inline font-weight-bold py-4">{{ date('D, d M Y', strtotime($item->end_date)) }}</span>
                         </div>
-                        <div class="d-flex align-items-center flex-lg-fill mr-5 my-5 ml-1">
-                            <span class="mr-4">
-                                <i class="icon-2x flaticon2-image-file"></i>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Duration:</span>
+                            <a href="#" class="text-muted text-hover-primary">{{number_format($item->duration)}} in days</a>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-justify">
+                            <span class="text-dark-75 font-weight-bolder mr-2">Sources:</span>
+                            <span href="#" class="text-muted text-hover-primary">
+                                <div class="d-flex flex-column flex-lg-fill align-items-end">
+                                    <a href="#"><span class="text-dark-75 font-weight-bolder font-size-sm">{{$item->source->count()}}
+                                            Sources</span></a>
+                                    <a href="{{url('budget-source/'.$item->id)}}" class="text-primary font-weight-bolder">Add New Source</a>
+                                </div>
                             </span>
-                            <div class="d-flex flex-column text-dark-75">
-                                <span class="font-weight-bolder font-size-sm">{{$item->image->count()}} Images</span>
-                                <span class="font-weight-bolder font-size-h5">
-                                    <a href="{{url('advance-images/'.$item->id)}}" class="tect-primary">Add New Image</a>
-                                </span>
-                            </div>
                         </div>
+                        <!--end::Data-->
                     </div>
                     <!--end::Body-->
                 </div>
-                <!--end::Card-->
+                <!--end:: Card-->
             </div>
             @endforeach
         </div>
@@ -304,25 +278,25 @@
         <!--begin::Pagination-->
         <div class="d-flex justify-content-between align-items-center flex-wrap">
             <div class="d-flex flex-wrap mr-3">
-                @if($advances->lastPage() > 1)
+                @if($budgets->lastPage() > 1)
 
-                <a href="{{ $advances->url(1) }}" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                <a href="{{ $budgets->url(1) }}" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
                     <i class="ki ki-bold-double-arrow-back icon-xs"></i>
                 </a>
 
-                <a href="{{ $advances->url(1) }}"
-                    class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($advances->currentPage() == 1) ? ' disabled' : '' }}">
+                <a href="{{ $budgets->url(1) }}"
+                    class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($budgets->currentPage() == 1) ? ' disabled' : '' }}">
                     <i class="ki ki-bold-arrow-back icon-xs"></i>
                 </a>
-                @for ($i = 1; $i <= $advances->lastPage(); $i++)
-                    <a href="{{ $advances->url($i) }}"
-                        class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($advances->currentPage() == $i) ? ' active' : '' }}">{{$i}}</a>
+                @for ($i = 1; $i <= $budgets->lastPage(); $i++)
+                    <a href="{{ $budgets->url($i) }}"
+                        class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($budgets->currentPage() == $i) ? ' active' : '' }}">{{$i}}</a>
                     @endfor
-                    <a href="{{ $advances->url($advances->currentPage()+1) }}"
-                        class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($advances->currentPage() == $advances->lastPage()) ? ' disabled' : '' }}">
+                    <a href="{{ $budgets->url($budgets->currentPage()+1) }}"
+                        class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($budgets->currentPage() == $budgets->lastPage()) ? ' disabled' : '' }}">
                         <i class="ki ki-bold-arrow-next icon-xs"></i>
                     </a>
-                    <a href="{{ $advances->url($advances->lastPage()) }}"
+                    <a href="{{ $budgets->url($budgets->lastPage()) }}"
                         class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
                         <i class="ki ki-bold-double-arrow-next icon-xs"></i>
                     </a>
@@ -339,7 +313,7 @@
                     <option value="50">50</option>
                     <option value="100">100</option>
                 </select>
-                <span class="text-muted">Displaying {{$advances->count()}} of {{$advances->total()}} records</span>
+                <span class="text-muted">Displaying {{$budgets->count()}} of {{$budgets->total()}} records</span>
             </div>
         </div>
         <!--end::Pagination-->

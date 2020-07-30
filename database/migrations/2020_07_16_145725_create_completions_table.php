@@ -20,7 +20,7 @@ class CreateCompletionsTable extends Migration
             $table->string('final_scope', 300)->nullable();
             $table->text('description')->nullable();
             $table->date('date')->nullable();
-            $table->string('justification', 300)->nullable();
+            $table->string('justification', 500)->nullable();
             $table->double('final_cost')->nullable();
             $table->timestamps();
         });

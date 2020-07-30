@@ -8,6 +8,7 @@ use App\Contract;
 use App\Status;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Session;
 
 class ContractController extends Controller
 {
@@ -24,8 +25,8 @@ class ContractController extends Controller
      */
     public function index()
     {
-        $contracts = Contract::all();
-        return view('contract.index', ['contracts' => $contracts]);
+        $contracts = Contract::paginate(8);
+        return view('metronic.contract.index', ['contracts' => $contracts]);
     }
 
     /**
@@ -75,7 +76,7 @@ class ContractController extends Controller
         Contract::create($data);
         alert('Success', 'Data saved successfully!', 'success');
 
-        return redirect('/contract');
+        return redirect('contract/' . $request->awards_id);
     }
 
     /**
@@ -125,10 +126,14 @@ class ContractController extends Controller
         //
     }
 
-    public function completion($contract)
+    public function completion(Completion $completion)
     {
-        $data = Completion::where('contracts_id', $contract)->first();
-        return view('contract.completion', compact('data', 'contract'));
+        return view('metronic.completion.show', compact('completion'));
+    }
+
+    public function completion_create(Contract $contract)
+    {
+        return view('metronic.completion.edit', compact('contract'));
     }
 
     public function completion_store(Request $request)
@@ -136,16 +141,16 @@ class ContractController extends Controller
         $data = $request->all();
         // return $data;
         $data['final_cost'] = str_replace(",", "", $request->final_cost);
-        Completion::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
+        $c = Completion::create($data);
+        Session::put('success', 'Data saved successfully!');
 
-        return back();
+        return redirect('contract-completion/' . $c->id);
     }
 
     public function completion_destroy(Completion $completion)
     {
         $completion->delete();
-        alert('Success', 'Data deleted successfully!', 'success');
+        Session::put('success', 'Data deleted successfully!');
 
         return back();
     }

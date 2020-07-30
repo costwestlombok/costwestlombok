@@ -115,4 +115,10 @@ class SourceController extends Controller
             })
             ->make(true);
     }
+
+    public function get_data()
+    {
+        $data = Source::select('source_name')->get()->pluck('source_name');
+        return response()->json($data);
+    }
 }

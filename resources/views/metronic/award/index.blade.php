@@ -9,19 +9,21 @@
     <!--begin::Page Heading-->
     <div class="d-flex align-items-baseline flex-wrap mr-5">
         <!--begin::Page Title-->
-        <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">Tender</h2>
+        <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">Award</h2>
         <!--end::Page Title-->
         <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
             <li class="breadcrumb-item">
                 <a href="{{ url('/dashboard') }}" class="text-muted">Dashboard</a>
             </li>
+            @if(isset($tender))
             <li class="breadcrumb-item">
                 <a href="{{ url('/project') }}" class="text-muted">Project</a>
             </li>
             <li class="breadcrumb-item">
                 <a href="{{url('tender/'.$tender->project->id)}}" class="text-muted">Tender</a>
             </li>
+            @endif
             <li class="breadcrumb-item">
                 <a href="" class="text-muted">Award</a>
             </li>
@@ -130,6 +132,7 @@
             <!--end::Group Actions-->
         </div>
         <!--end::Details-->
+        @if(isset($tender))
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
             <!--begin::Button-->
@@ -154,6 +157,7 @@
             <!--end::Button-->
         </div>
         <!--end::Toolbar-->
+        @endif
     </div>
 </div>
 {{-- End Project Sub Header --}}
@@ -199,42 +203,19 @@
                                             <li class="navi-item">
                                                 <a href="#" class="navi-link">
                                                     <span class="navi-icon">
-                                                        <i class="flaticon2-shopping-cart-1"></i>
+                                                        <i class="flaticon-clipboard"></i>
                                                     </span>
-                                                    <span class="navi-text">Order</span>
+                                                    <span class="navi-text">Contract</span>
                                                 </a>
                                             </li>
+                                            <hr>
                                             <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-calendar-8"></i>
-                                                    </span>
-                                                    <span class="navi-text">Event</span>
-                                                </a>
+                                                <a href="" class="navi-link"><span><i class="flaticon2-pen"></i>
+                                                </span> &nbsp; Edit</a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-graph-1"></i>
-                                                    </span>
-                                                    <span class="navi-text">Report</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-rocket-1"></i>
-                                                    </span>
-                                                    <span class="navi-text">Post</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-writing"></i>
-                                                    </span>
-                                                    <span class="navi-text">File</span>
-                                                </a>
+                                                <a href="" class="navi-link"><span><i class="flaticon2-trash"></i>
+                                                </span> &nbsp; Delete</a>
                                             </li>
                                         </ul>
                                         <!--end::Navigation-->
@@ -255,7 +236,7 @@
                         <!--begin: Item-->
                         <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                             <div class="mr-4 flex-shrink-0 text-center">
-                                <i class="icon-xl fas fa-user-friends"></i>
+                                <i class="icon-2x text-dark-50 flaticon-network"></i>
                             </div>
                             <div class="d-flex flex-column text-dark-75">
                                 <span class="font-weight-bolder font-size-sm">Participants</span>
@@ -268,7 +249,7 @@
                         <!--begin: Item-->
                         <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                             <span class="mr-4">
-                                <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
+                                <i class="flaticon-clipboard icon-2x text-muted font-weight-bold"></i>
                             </span>
                             <div class="d-flex flex-column flex-lg-fill">
                                 <span class="text-dark-75 font-weight-bolder font-size-sm">{{$item->contract->count()}}
