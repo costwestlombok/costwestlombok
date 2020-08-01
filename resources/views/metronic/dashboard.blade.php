@@ -494,8 +494,8 @@
             <!--end::Body-->
             <!--begin::Footer-->
             <div class="card-footer d-flex align-items-center">
-                <button type="button"
-                    class="btn btn-primary btn-sm text-uppercase font-weight-bolder mt-5 mt-sm-0 mr-auto mr-sm-0 ml-sm-auto">details</button>
+                <a href="{{url('project/'.$item->id)}}"
+                    class="btn btn-primary btn-sm text-uppercase font-weight-bolder mt-5 mt-sm-0 mr-auto mr-sm-0 ml-sm-auto">details</a>
             </div>
             <!--end::Footer-->
         </div>

@@ -208,7 +208,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                 </div>
                                 <div class="form-group fv-plugins-icon-container">
                                     <label>Purpose</label>
-                                    <select class="form-control" name="purpose_id" id="purpose" style="width: 100%;">
+                                    <select class="form-control" name="purpose_id" id="purpose" style="width: 100%;" required>
                                         <option value="">Choose purposes</option>
                                         @foreach ($purposes as $purpose)
                                         <option value="{{$purpose->id}}" @if(isset($project)) @if($project->purpose_id
@@ -325,7 +325,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                 </h4>
                                 <!--begin::Select-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label>Delivery Type</label>
+                                    
                                     <div class="row">
                                         <div class="col-md-12">
                                             {!! $map['js'] !!}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Advance;
 use App\Libraries\Googlemaps;
 use App\Project;
 use App\ProjectDocument;
@@ -108,7 +109,46 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('metronic.project.edit', compact('project'));
+        $progress = Advance::where('project_id', $project->id)->orderBy('date_of_advance')->get();
+
+        $pp = $progress->pluck('programmed_percent');
+        $rp = $progress->pluck('real_percent');
+        $date = $progress->map(function ($dt) {
+            return date('d M Y', strtotime($dt->date_of_advance));
+        });
+        $sf = $progress->map(function ($dt) {
+            return doubleval($dt->scheduled_financing);
+        });
+        $rf = $progress->map(function ($dt) {
+            return doubleval($dt->real_financing);
+        });
+        // return $rf;
+        $map = new Googlemaps();
+        $config['center'] = "-8.6825504,116.1286378";
+        $config['map_width'] = "100%";
+        $config['map_height'] = "423px";
+        $config['geocodeCaching'] = true;
+        $config['zoomControlPosition'] = "BOTTOM_RIGHT"; //zoom control position
+        $config['zoom'] = "14"; //zoom value
+        $marker = array();
+        $marker['position'] = $project->initial_lat . ',' . $project->initial_lon;
+        $marker['draggable'] = true;
+        $marker['ondragend'] = 'document.getElementById("initial_lat").value =event.latLng.lat()
+                document.getElementById("initial_lon").value =event.latLng.lng();';
+        $marker['icon'] = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+        $marker1 = array();
+        $marker1['position'] = $project->final_lat . ',' . $project->final_lon;
+        $marker1['draggable'] = true;
+        $marker1['ondragend'] = 'document.getElementById("final_lat").value =event.latLng.lat()
+                document.getElementById("final_lon").value =event.latLng.lng();';
+        $marker1['icon'] = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+        $map->add_marker($marker);
+        $map->add_marker($marker1);
+        $map->initialize($config);
+
+        $map = $map->create_map();
+
+        return view('metronic.project.show', compact('project', 'pp', 'rp', 'sf', 'rf', 'date', 'map'));
     }
 
     /**

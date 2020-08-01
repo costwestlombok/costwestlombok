@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Organization;
 use DataTables;
 use Illuminate\Http\Request;
+use Session;
 
 class OrganizationController extends Controller
 {

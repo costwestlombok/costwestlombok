@@ -3,7 +3,90 @@
 @endsection
 @section('script')
 <script>
+    "use strict";
+
+    // Shared Colors Definition
+    const primary = '#6993FF';
+    const success = '#1BC5BD';
+    const info = '#8950FC';
+    const warning = '#FFA800';
+    const danger = '#F64E60';
+    var label = '{{$date}}';
+    var label1 = label.replace(/&quot;/g,"\'");
+    console.log(label1);
+    var KTApexChartsDemo = function () {
+        var _demo1 = function () {
+		const apexChart = "#chart_1";
+            var options = {
+                series: [{
+                    name: 'Programmed',
+                    data: {{$pp}}
+                }, {
+                    name: 'Real',
+                    data: {{$rp}}
+                }],
+                chart: {
+                    height: 350,
+                    type: 'area'
+                },
+                dataLabels: {
+                    enabled: true
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                xaxis: {
+                    categories:  label1
+                },
+                
+                colors: [primary, success]
+            };
+
+            var chart = new ApexCharts(document.querySelector(apexChart), options);
+            chart.render();
+        };
+        var _demo2 = function () {
+		const apexChart = "#chart_2";
+            var options = {
+                series: [{
+                    name: 'Scheduled Financing',
+                    data: {{$sf}}
+                }, {
+                    name: 'Real Financing',
+                    data: {{$rf}}
+                }],
+                chart: {
+                    height: 350,
+                    type: 'area'
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                xaxis: {
+                    categories: label1
+                },
+                colors: [warning, danger]
+            };
+
+            var chart = new ApexCharts(document.querySelector(apexChart), options);
+            chart.render();
+        };
+        return {
+		// public functions
+            init: function () {
+                _demo1();
+                _demo2();
+            }
+        };
+
+    }();
+
     jQuery(document).ready(function () {
+        KTApexChartsDemo.init();
+
         $(document).on('click', '.button', function (e) {
                 e.preventDefault();
                 var id = $(this).data('id');
@@ -47,6 +130,9 @@
             <li class="breadcrumb-item">
                 <a href="{{ url('/project') }}" class="text-muted">Project</a>
             </li>
+            <li class="breadcrumb-item">
+                <a href="{{ url('/project') }}" class="text-muted">Detail</a>
+            </li>
         </ul>
         <!--end::Breadcrumb-->
     </div>
@@ -54,136 +140,11 @@
 </div>
 <br>
 <!--end::Info-->
-{{-- Project Sub Header --}}
-<div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
-    <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-        <!--begin::Details-->
-        <div class="d-flex align-items-center flex-wrap mr-2">
-            <!--begin::Separator-->
-            <div class="mt-2 mb-2 mr-5 bg-gray-200"></div>
-            <!--end::Separator-->
-            <!--begin::Search Form-->
-            <div class="d-flex align-items-center" id="kt_subheader_search">
-                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">{{$projects->total()}} Total</span>
-                <form class="ml-5">
-                    <div class="input-group input-group-sm input-group-solid" style="max-width: 175px">
-                        <input type="text" class="form-control" id="kt_subheader_search_form" placeholder="Search...">
-                        <div class="input-group-append">
-                            <span class="input-group-text">
-                                <span class="svg-icon">
-                                    <!--begin::Svg Icon | path:/metronic/theme/html/demo5/dist/assets/media/svg/icons/General/Search.svg-->
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24"></rect>
-                                            <path
-                                                d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
-                                                fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
-                                            <path
-                                                d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
-                                                fill="#000000" fill-rule="nonzero"></path>
-                                        </g>
-                                    </svg>
-                                    <!--end::Svg Icon-->
-                                </span>
-                                <!--<i class="flaticon2-search-1 icon-sm"></i>-->
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <!--end::Search Form-->
-            <!--begin::Group Actions-->
-            <div class="d-flex- align-items-center flex-wrap mr-2 d-none" id="kt_subheader_group_actions">
-                <div class="text-dark-50 font-weight-bold">
-                    <span id="kt_subheader_group_selected_rows">23</span>Selected:</div>
-                <div class="d-flex ml-6">
-                    <div class="dropdown mr-2" id="kt_subheader_group_actions_status_change">
-                        <button type="button" class="btn btn-light-primary font-weight-bolder btn-sm dropdown-toggle"
-                            data-toggle="dropdown">Update Status</button>
-                        <div class="dropdown-menu p-0 m-0 dropdown-menu-sm">
-                            <ul class="navi navi-hover pt-3 pb-4">
-                                <li
-                                    class="navi-header font-weight-bolder text-uppercase text-primary font-size-lg pb-0">
-                                    Change status to:</li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link" data-toggle="status-change" data-status="1">
-                                        <span class="navi-text">
-                                            <span
-                                                class="label label-light-success label-inline font-weight-bold">Approved</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link" data-toggle="status-change" data-status="2">
-                                        <span class="navi-text">
-                                            <span
-                                                class="label label-light-danger label-inline font-weight-bold">Rejected</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link" data-toggle="status-change" data-status="3">
-                                        <span class="navi-text">
-                                            <span
-                                                class="label label-light-warning label-inline font-weight-bold">Pending</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link" data-toggle="status-change" data-status="4">
-                                        <span class="navi-text">
-                                            <span class="label label-light-info label-inline font-weight-bold">On
-                                                Hold</span>
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <button class="btn btn-light-success font-weight-bolder btn-sm mr-2"
-                        id="kt_subheader_group_actions_fetch" data-toggle="modal"
-                        data-target="#kt_datatable_records_fetch_modal">Fetch Selected</button>
-                    <button class="btn btn-light-danger font-weight-bolder btn-sm mr-2"
-                        id="kt_subheader_group_actions_delete_all">Delete All</button>
-                </div>
-            </div>
-            <!--end::Group Actions-->
-        </div>
-        <!--end::Details-->
-        <!--begin::Toolbar-->
-        <div class="d-flex align-items-center">
-            <!--begin::Button-->
-            <a href="/metronic/demo5/.html" class=""></a>
-            <!--end::Button-->
-            <!--begin::Button-->
-            <a href="{{ route('project.create') }}" class="btn btn-primary font-weight-bolder"><span
-                    class="svg-icon svg-icon-md">
-                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                        height="24px" viewBox="0 0 24 24" version="1.1">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <rect x="0" y="0" width="24" height="24" />
-                            <circle fill="#000000" cx="9" cy="15" r="6" />
-                            <path
-                                d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z"
-                                fill="#000000" opacity="0.3" />
-                        </g>
-                    </svg>
-                    <!--end::Svg Icon-->
-                </span>Add Project</a>
-            <!--end::Button-->
-        </div>
-        <!--end::Toolbar-->
-    </div>
-</div>
-{{-- End Project Sub Header --}}
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">
         <!--begin::Row-->
         <div class="row">
-            @foreach ($projects as $item)
             <div class="col-md-12">
                 <!--begin::Card-->
                 <div class="card card-custom gutter-b card-stretch">
@@ -195,10 +156,10 @@
                             <div class="d-flex flex-column mr-auto">
                                 <!--begin: Title-->
                                 <a href="#"
-                                    class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">{{ str_limit($item->project_title, $limit = 100, $end = '...') }}</a>
-                                <span class="text-muted font-weight-bold">Project Code : {{$item->project_code}}</span>
-                                <span class="text-muted font-weight-bold">{{$item->subsector->sector->sector_name}} -
-                                    {{$item->subsector->subsector_name}}</span>
+                                    class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">{{ str_limit($project->project_title, $limit = 100, $end = '...') }}</a>
+                                <span class="text-muted font-weight-bold">Project Code : {{$project->project_code}}</span>
+                                <span class="text-muted font-weight-bold">{{$project->subsector->sector->sector_name}} -
+                                    {{$project->subsector->subsector_name}}</span>
                                 <!--end::Title-->
                             </div>
                             <!--end::Info-->
@@ -219,7 +180,7 @@
                                                     data:</span>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="{{ url('project-tender/'.$item->id) }}" class="navi-link">
+                                                <a href="{{ url('project-tender/'.$project->id) }}" class="navi-link">
                                                     <span class="svg-icon menu-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -242,7 +203,7 @@
                                                 </a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="{{ url('project-file/'.$item->id) }}" class="navi-link">
+                                                <a href="{{ url('project-file/'.$project->id) }}" class="navi-link">
                                                     <span class="svg-icon menu-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -266,7 +227,7 @@
                                                 </a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="{{ url('project-budget/'.$item->id) }}" class="navi-link">
+                                                <a href="{{ url('project-budget/'.$project->id) }}" class="navi-link">
                                                     <span class="svg-icon menu-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -292,11 +253,11 @@
                                             </li>
                                             <hr>
                                             <li class="navi-item">
-                                                <a href="{{url('project/'.$item->id.'/edit')}}" class="navi-link"><span><i class="flaticon2-pen"></i>
+                                                <a href="{{url('project/'.$project->id.'/edit')}}" class="navi-link"><span><i class="flaticon2-pen"></i>
                                                 </span> &nbsp; Edit</a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="#" data-id="{{$item->id}}" class="button navi-link"><span><i class="flaticon2-trash"></i>
+                                                <a href="#" data-id="{{$project->id}}" class="button navi-link"><span><i class="flaticon2-trash"></i>
                                                 </span> &nbsp; Delete</a>
                                             </li>
                                         </ul>
@@ -312,33 +273,33 @@
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="d-block font-weight-bold mb-4">Start Date</span>
                                 <span
-                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($item->start_date)->format('D, d M Y') }}</span>
+                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->start_date)->format('D, d M Y') }}</span>
                             </div>
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="d-block font-weight-bold mb-4">Due Date</span>
                                 <span
-                                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($item->end_date)->format('D, d M Y') }}</span>
+                                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->end_date)->format('D, d M Y') }}</span>
                             </div>
                             <!--begin::Progress-->
                             <div class="flex-row-fluid mb-7">
                                 <span class="d-block font-weight-bold mb-4">Progress - Real Physical <span
-                                        class="text-muted font-weight-bold">(Last update : {{ date('D, d M Y', strtotime($item->latest_progress->date_of_advance)) }} )</span>
+                                        class="text-muted font-weight-bold">(Last update : {{ date('D, d M Y', strtotime($project->latest_progress->date_of_advance)) }} )</span>
                                     <div class="float-right">
-                                        <a href="{{ url('project-progress/'.$item->id) }}">Add New Progress</a>
+                                        <a href="{{ url('project-progress/'.$project->id) }}">Add New Progress</a>
                                     </div>
                                     <div class="d-flex align-items-center pt-2">
                                         <div class="progress progress-xs mt-2 mb-2 w-100">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{number_format($item->latest_progress->real_percent)}}%;"
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{number_format($project->latest_progress->real_percent)}}%;"
                                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
-                                        <span class="ml-3 font-weight-bolder">{{number_format($item->latest_progress->real_percent)}}%</span>
+                                        <span class="ml-3 font-weight-bolder">{{number_format($project->latest_progress->real_percent)}}%</span>
                                     </div>
                             </div>
                             <!--end::Progress-->
                         </div>
                         <!--end::Content-->
                         <!--begin::Text-->
-                        <p class="mb-7 mt-3">{{ str_limit($item->project_description, $limit = 100, $end = '...') }}</p>
+                        <p class="mb-7 mt-3">{{ str_limit($project->project_description, $limit = 100, $end = '...') }}</p>
                         <!--end::Text-->
                         <!--begin::Blog-->
                         <div class="d-flex flex-wrap">
@@ -347,38 +308,38 @@
                                 <span class="font-weight-bolder mb-4">Budget</span>
                                 <span class="font-weight-bolder font-size-h5 pt-1">
                                     <span class="font-weight-bold text-dark-50">Rp
-                                    </span>{{ number_format($item->budget) }}</span>
+                                    </span>{{ number_format($project->budget) }}</span>
                             </div>
                             <!--end::Item-->
                             <!--begin::Item-->
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="font-weight-bolder mb-4">SEFIN Code</span>
                                 <span class="font-weight-bolder font-size-h5 pt-1">
-                                    <span class="font-weight-bold text-dark-50"></span>{{$item->code_sefin}}</span>
+                                    <span class="font-weight-bold text-dark-50"></span>{{$project->code_sefin}}</span>
                             </div>
                             <!--end::Item-->
                             <!--begin::Item-->
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="font-weight-bolder mb-4">Duration</span>
                                 <span class="font-weight-bolder font-size-h5 pt-1">
-                                    <span class="font-weight-bold text-dark-50">{{$item->duration}}</span> days</span>
+                                    <span class="font-weight-bold text-dark-50">{{$project->duration}}</span> days</span>
                             </div>
                             <!--end::Item-->
                             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
                             <!--begin::Item-->
                             <div class="d-flex flex-column flex-lg-fill float-left mb-7">
                                 <span class="font-weight-bolder mb-4">
-                                    <a href="{{ url('project-tender/'.$item->id) }}" class="text-dark">Tender</a>
+                                    <a href="{{ url('project-tender/'.$project->id) }}" class="text-dark">Tender</a>
                                 </span>
                                 <div class="d-flex align-items-center flex-lg-fill">
                                     <span class="mr-4">
                                         <i class="icon-2x text-dark-50 flaticon-notepad"></i>
                                     </span>
                                     <div class="d-flex flex-column flex-lg-fill">
-                                        <a href="{{ url('project-tender/'.$item->id) }}"><span
-                                                class="text-dark-75 font-weight-bolder font-size-sm">{{number_format($item->tender->count())}}
+                                        <a href="{{ url('project-tender/'.$project->id) }}"><span
+                                                class="text-dark-75 font-weight-bolder font-size-sm">{{number_format($project->tender->count())}}
                                                 Tender</span></a>
-                                        <a href="{{ url('tender-create/'.$item->id) }}"
+                                        <a href="{{ url('tender-create/'.$project->id) }}"
                                             class="text-primary font-weight-bolder">Add New Tender</a>
                                     </div>
                                 </div>
@@ -388,7 +349,7 @@
                             <!--begin::Item-->
                             <div class="d-flex flex-column flex-lg-fill float-left mb-7">
                                 <span class="font-weight-bolder mb-4">
-                                    <a href="{{ url('project-file/'.$item->id) }}" class="text-dark">Files</a>
+                                    <a href="{{ url('project-file/'.$project->id) }}" class="text-dark">Files</a>
                                 </span>
                                 <div class="d-flex align-items-center flex-lg-fill">
                                     <span class="mr-4">
@@ -396,9 +357,9 @@
                                     </span>
                                     <div class="d-flex flex-column flex-lg-fill">
                                         <a href="#"><span
-                                                class="text-dark-75 font-weight-bolder font-size-sm">{{number_format($item->file->count())}}
+                                                class="text-dark-75 font-weight-bolder font-size-sm">{{number_format($project->file->count())}}
                                                 Files</span></a>
-                                        <a href="{{ url('project-file/'.$item->id) }}"
+                                        <a href="{{ url('project-file/'.$project->id) }}"
                                             class="text-primary font-weight-bolder">Add New File</a>
                                     </div>
                                 </div>
@@ -408,7 +369,7 @@
                             <!--begin::Item-->
                             <div class="d-flex flex-column flex-lg-fill float-left mb-7">
                                 <span class="font-weight-bolder mb-4">
-                                    <a href="{{ url('project-budget/'.$item->id) }}" class="text-dark">Budget</a>
+                                    <a href="{{ url('project-budget/'.$project->id) }}" class="text-dark">Budget</a>
                                 </span>
                                 <div class="d-flex align-items-center flex-lg-fill">
                                     <span class="mr-4">
@@ -416,9 +377,9 @@
                                     </span>
                                     <div class="d-flex flex-column flex-lg-fill">
                                         <a href="#"><span
-                                                class="text-dark-75 font-weight-bolder font-size-sm">{{number_format($item->project_budget->count())}}
+                                                class="text-dark-75 font-weight-bolder font-size-sm">{{number_format($project->project_budget->count())}}
                                                 Budget</span></a>
-                                        <a href="{{ url('project-budget/'.$item->id) }}"
+                                        <a href="{{ url('project-budget/'.$project->id) }}"
                                             class="text-primary font-weight-bolder">Add New Budget</a>
                                     </div>
                                 </div>
@@ -426,64 +387,33 @@
                             </div>
                             <!--end::Item-->
                         </div>
+                        <hr>
+                        <div class="row mt-5 mb-5">
+                            <div class="col-md-6">
+                                <h3 class="card-label mt-5 mb-5">Progress Percent (%)</h3>
+                                <div id="chart_1"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="card-label mt-5 mb-5">Progress Financial</h3>
+                                <div id="chart_2"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 class="card-label mt-5 mb-5">Location</h3>
+
+                                {!! $map['js'] !!}
+                                {!! $map['html'] !!}
+                            </div>
+                        </div>
                         <!--end::Blog-->
                     </div>
                     <!--end::Body-->
-                    <!--begin::Footer-->
-                    <div class="card-footer d-flex align-items-center">
-                        <a href="{{url('project/'.$item->id)}}"
-                            class="btn btn-primary btn-sm text-uppercase font-weight-bolder mt-5 mt-sm-0 mr-auto mr-sm-0 ml-sm-auto">details</a>
-                    </div>
-                    <!--end::Footer-->
                 </div>
                 <!--end::Card-->
             </div>
-            @endforeach
         </div>
         <!--end::Row-->
-
-        <!--begin::Pagination-->
-        <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <div class="d-flex flex-wrap mr-3">
-                @if($projects->lastPage() > 1)
-
-                <a href="{{ $projects->url(1) }}" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                    <i class="ki ki-bold-double-arrow-back icon-xs"></i>
-                </a>
-
-                <a href="{{ $projects->url(1) }}"
-                    class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($projects->currentPage() == 1) ? ' disabled' : '' }}">
-                    <i class="ki ki-bold-arrow-back icon-xs"></i>
-                </a>
-                @for ($i = 1; $i <= $projects->lastPage(); $i++)
-                    <a href="{{ $projects->url($i) }}"
-                        class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($projects->currentPage() == $i) ? ' active' : '' }}">{{$i}}</a>
-                    @endfor
-                    <a href="{{ $projects->url($projects->currentPage()+1) }}"
-                        class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($projects->currentPage() == $projects->lastPage()) ? ' disabled' : '' }}">
-                        <i class="ki ki-bold-arrow-next icon-xs"></i>
-                    </a>
-                    <a href="{{ $projects->url($projects->lastPage()) }}"
-                        class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                        <i class="ki ki-bold-double-arrow-next icon-xs"></i>
-                    </a>
-                    @endif
-
-            </div>
-            <div class="d-flex align-items-center">
-                <select
-                    class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary"
-                    style="width: 75px;">
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="30">30</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
-                <span class="text-muted">Displaying {{$projects->count()}} of {{$projects->total()}} records</span>
-            </div>
-        </div>
-        <!--end::Pagination-->
     </div>
     <!--end::Container-->
 </div>
