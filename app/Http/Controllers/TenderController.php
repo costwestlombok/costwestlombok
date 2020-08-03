@@ -167,6 +167,7 @@ class TenderController extends Controller
     public function edit($id)
     {
         $tender = Tender::find($id);
+        $project = Project::where('id', $tender->project_id)->first();
         $organizations = Organization::all();
         $units = OrganizationUnit::where('entity_id', $tender->official->unit->org->id)->get();
         $officials = Official::where('entity_unit_id', $tender->official->unit->id)->get();
@@ -176,7 +177,8 @@ class TenderController extends Controller
         $tender_methods = TenderMethod::all();
         $tender_statuses = TenderStatus::all();
 
-        return view('tender.edit', [
+        return view('metronic.tender.edit', [
+            'project' => $project,
             'organizations' => $organizations,
             'statuses' => $statuses,
             'projects' => $projects,

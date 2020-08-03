@@ -322,16 +322,16 @@
                             <!--begin::Progress-->
                             <div class="flex-row-fluid mb-7">
                                 <span class="d-block font-weight-bold mb-4">Progress - Real Physical <span
-                                        class="text-muted font-weight-bold">(Last update : {{ date('D, d M Y', strtotime($item->latest_progress->date_of_advance)) }} )</span>
+                                        class="text-muted font-weight-bold">(Last update : {{ date('D, d M Y', strtotime($item->latest_progress->date_of_advance ?? date('D, d M Y'))) }} )</span>
                                     <div class="float-right">
                                         <a href="{{ url('project-progress/'.$item->id) }}">Add New Progress</a>
                                     </div>
                                     <div class="d-flex align-items-center pt-2">
                                         <div class="progress progress-xs mt-2 mb-2 w-100">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{number_format($item->latest_progress->real_percent)}}%;"
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{number_format($item->latest_progress->real_percent ?? '0')}}%;"
                                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
-                                        <span class="ml-3 font-weight-bolder">{{number_format($item->latest_progress->real_percent)}}%</span>
+                                        <span class="ml-3 font-weight-bolder">{{number_format($item->latest_progress->real_percent ?? '0')}}%</span>
                                     </div>
                             </div>
                             <!--end::Progress-->

@@ -134,7 +134,7 @@
             <a href="/metronic/demo5/.html" class=""></a>
             <!--end::Button-->
             <!--begin::Button-->
-            <a href="{{ url('project-tender/'.$project->id) }}" class="btn btn-primary font-weight-bolder"><span
+            <a href="{{ url('tender-create/'.$project->id) }}" class="btn btn-primary font-weight-bolder"><span
                     class="svg-icon svg-icon-md">
                     <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -222,7 +222,7 @@
                                                     </li>
                                                     <hr>
                                                     <li class="navi-item">
-                                                        <a href="" class="navi-link"><span><i class="flaticon2-pen"></i>
+                                                        <a href="{{url('tender/'.$item->id.'/edit')}}" class="navi-link"><span><i class="flaticon2-pen"></i>
                                                             </span> &nbsp; Edit</a>
                                                     </li>
                                                     <li class="navi-item">

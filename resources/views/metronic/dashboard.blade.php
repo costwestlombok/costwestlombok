@@ -80,7 +80,7 @@
                     <!--end::Item-->
                     <!--begin::Item-->
                     <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
-                        <a class="nav-link active border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
+                        <a class="nav-link border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
                             data-toggle="pill" href="#tab_forms_widget_3">
                             <span class="nav-icon py-2 w-auto">
                                 <span class="svg-icon svg-icon-3x">
@@ -141,7 +141,7 @@
                     <!--end::Item-->
                     <!--begin::Item-->
                     <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3">
-                        <a class="nav-link border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
+                        <a class="nav-link active border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
                             data-toggle="pill" href="#tab_forms_widget_5">
                             <span class="nav-icon py-2 w-auto">
                                 <span class="svg-icon svg-icon-3x">
