@@ -8,6 +8,8 @@ use App\Sector;
 use App\Source;
 use App\Subsector;
 use App\User;
+use App\ContractType;
+use App\Offerer;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +22,21 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+        
+
+        DB::statement("SET foreign_key_checks=0");
+        Offerer::truncate();
+        ContractType::truncate();
+        User::truncate();
+        Subsector::truncate();
+        Source::truncate();
+        Sector::truncate();
+        Role::truncate();
+        OrganizationUnit::truncate();
+        Organization::truncate();
+        Official::truncate();
+        DB::statement("SET foreign_key_checks=1");
+
         User::create([
             'name' => 'Administrator',
             'username' => 'admin',
@@ -34,7 +51,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'C. Josefa Valcarcel, 28 - 28071 Madrid - España',
             'phone' => '22-32-72-00 ext:1501',
             'postal_code' => '421423',
-            'main' => '',
+            'main' => 0,
             'open_uri' => '',
             'website' => 'www.dgt.es',
         ]);
