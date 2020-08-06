@@ -16,15 +16,7 @@
                     confirmButtonText: "Yes, delete it!"
                 }).then(function(result) {
                     if (result.value) {
-                        $.ajax({
-                            type: "GET",
-                            url: "/api/organization_unit/"+ id +"/delete",
-                            success: function (data) {
-                                toastr.success("Data deleted successfully!");
-                                var table = $('#kt_datatable').DataTable(); 
-                                table.ajax.reload( null, false );
-                            }         
-                        });
+                        window.location.href = "/api/project/"+ id +"/delete"; 
                     }
                 });
             });

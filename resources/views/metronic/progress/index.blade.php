@@ -2,6 +2,24 @@
 @section('style')
 @endsection
 @section('script')
+<script>
+    $(document).on('click', '.button', function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var link = $(this).attr('href');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won\'t be able to revert this and it\'s child!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!"
+            }).then(function (result) {
+                if (result.value) {
+                    window.location.href = "/project-progress/"+ id +"/delete";
+                }
+            });
+        });
+</script>
 @endsection
 @section('content')
 <!--begin::Info-->
@@ -193,10 +211,17 @@
                                                     class="text-primary text-uppercase font-weight-bold font-size-sm">Actions:</span>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="{{ url('project-tender/'.$item->id) }}" class="navi-link">
+                                                <a href="{{ url('progress/'.$item->id.'/edit') }}" class="navi-link">
 
                                                     <span class="navi-text"><i class="flaticon2-pen"></i> &nbsp;
                                                         Edit</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" data-id="{{$item->id}}" class="button navi-link">
+
+                                                    <span class="navi-text"><i class="flaticon2-trash"></i> &nbsp;
+                                                        Delete</span>
                                                 </a>
                                             </li>
                                         </ul>

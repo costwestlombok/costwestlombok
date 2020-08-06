@@ -64,7 +64,7 @@
                         render: function (data, type, full, meta) {
                             return '\
                             <div class="text-right nowrap">\
-                			<a href="/catalog/ammendment/'+ full.id + '/edit" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
+                			<a href="/ammendment/'+ full.id + '/edit" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
                 				<i class="fas fa-pen"></i>\
                 			</a>\
                             <a href="#"  data-id="'+full.id+'" class="button btn btn-sm btn-clean btn-icon" data-id='+  full.id +' title="Delete"><i class="fas fa-trash"></i></a>\

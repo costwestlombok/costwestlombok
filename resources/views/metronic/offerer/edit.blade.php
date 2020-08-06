@@ -45,7 +45,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="name">Address:</label>
-                        <textarea name="address" id="" rows="5" class="form-control">{{$offerer->address ?? ''}}</textarea>
+                        <textarea name="address" id="" rows="5" class="form-control" required>{{$offerer->address ?? ''}}</textarea>
                       </div>
                 </div>
                 <div class="col-lg-6">

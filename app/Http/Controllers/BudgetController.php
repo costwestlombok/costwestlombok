@@ -38,6 +38,32 @@ class BudgetController extends Controller
         return redirect('project-budget/' . $request->project_id);
     }
 
+    public function edit(Budget $budget)
+    {
+        $project = Project::where('id', $budget->project_id)->first();
+        return view('metronic.budget.edit', compact('budget', 'project'));
+    }
+
+    public function update(Request $request, Budget $budget)
+    {
+        $data = $request->all();
+        $start = Carbon::parse($request->start_date);
+        $end = Carbon::parse($request->end_date);
+        $data['amount'] = str_replace(",", "", $request->amount);
+        $data['duration'] = $start->diffInDays($end);
+
+        $budget->update($data);
+        Session::put('success', 'Data updated successfully!');
+        return redirect('project-budget/' . $request->project_id);
+    }
+
+    public function destroy(Budget $budget)
+    {
+        $budget->delete();
+        Session::put('success', 'Data deleted successfully!');
+        return back();
+    }
+
     public function source(Budget $budget)
     {
         return view('metronic.budget.source', compact('budget'));
@@ -64,6 +90,13 @@ class BudgetController extends Controller
         $data['ammount'] = str_replace(",", "", $request->ammount);
         ProjectSource::create($data);
         Session::put('success', 'Data saved successfully!');
+        return back();
+    }
+
+    public function destroy_source(ProjectSource $project_source)
+    {
+        $project_source->delete();
+        Session::put('success', 'Data deleted successfully!');
         return back();
     }
 

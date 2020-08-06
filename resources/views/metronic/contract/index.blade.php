@@ -2,6 +2,26 @@
 @section('style')
 @endsection
 @section('script')
+<script>
+    jQuery(document).ready(function () {
+        $(document).on('click', '.button', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var link = $(this).attr('href');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won\'t be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!"
+                }).then(function(result) {
+                    if (result.value) {
+                        window.location.href = "/api/contract/"+ id +"/delete"; 
+                    }
+                });
+            });
+    });
+</script>
 @endsection
 @section('content')
 <!--begin::Info-->
@@ -21,7 +41,7 @@
                 <a href="{{ url('/project') }}" class="text-muted">Project</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="{{url('tender/'.$tender->project->id)}}" class="text-muted">Tender</a>
+                <a href="{{url('project-tender/'.$tender->project->id)}}" class="text-muted">Tender</a>
             </li>
             @endif
             <li class="breadcrumb-item">
@@ -190,7 +210,7 @@
                                                         </a>
                                                     </li>
                                                     <li class="navi-item">
-                                                        <a href="#" class="navi-link">
+                                                        <a href="#" data-id="{{$contract->id}}" class="button navi-link">
                                                             <span class="navi-icon">
                                                                 <i class="flaticon2-trash"></i>
                                                             </span>

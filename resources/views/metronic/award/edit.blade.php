@@ -139,7 +139,7 @@
                                         <label for="name">Contract Method:</label>
                                         <div class="typeahead">
                                             <input class="form-control"
-                                                value="{{$award->contract_type->type_name ?? ''}}"
+                                                value="{{$award->contract_method->method_name ?? ''}}"
                                                 id="contract_method_id" name="contract_method_id" type="text" dir="ltr"
                                                 style="width: 100%">
                                         </div>
@@ -160,11 +160,11 @@
                                 <div class="my-5">
                                     <!--begin::Input-->
                                     <div class="form-group">
-                                        <label for="name">File International Invitation:</label>
+                                        <label for="name">File Opening Act:</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="opening_act"
                                                 id="opening_act">
-                                            <label class="custom-file-label" for="opening_act">Choose file</label>
+                                            <label class="custom-file-label" for="opening_act">{{$award->opening_act ? 'Upload file to change document' : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                     <!--end::Input-->
@@ -175,8 +175,7 @@
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="recomendation_report_act"
                                                 id="recomendation_report_act">
-                                            <label class="custom-file-label" for="recomendation_report_act">Choose
-                                                file</label>
+                                            <label class="custom-file-label" for="recomendation_report_act">{{$award->recomendation_report_act ? 'Upload file to change document' : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                     <!--end::Input-->
@@ -185,7 +184,7 @@
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="award_resolution"
                                                 id="award_resolution">
-                                            <label class="custom-file-label" for="award_resolution">Choose file</label>
+                                            <label class="custom-file-label" for="award_resolution">{{$award->award_resolution ? 'Upload file to change document' : 'Choose file'}}</label>
                                         </div>
                                     </div>
 
@@ -193,7 +192,7 @@
                                         <label for="name">File Others:</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="others" id="others">
-                                            <label class="custom-file-label" for="others">Choose file</label>
+                                            <label class="custom-file-label" for="others">{{$award->others ? 'Upload file to change document' : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                     <div class="form-group">

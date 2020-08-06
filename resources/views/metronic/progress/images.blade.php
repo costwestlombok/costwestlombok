@@ -140,7 +140,7 @@
                     if (result.value) {
                         $.ajax({
                             type: "GET",
-                            url: "/api/tender-offerer/"+ id +"/delete",
+                            url: "/advance-image/"+ id +"/delete",
                             success: function (data) {
                                 toastr.success("Data deleted successfully!");
                                 var table = $('#kt_datatable').DataTable(); 

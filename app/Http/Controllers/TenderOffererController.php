@@ -101,7 +101,7 @@ class TenderOffererController extends Controller
     {
         $to = TenderOfferer::find($id);
         $to->delete();
-        alert('Data deleted successfully!', 'success');
+        Session::put('success', 'Data deleted successfully!');
         return back();
     }
 

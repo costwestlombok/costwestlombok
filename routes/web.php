@@ -53,8 +53,12 @@ Route::delete('/project/file/destroy/{projectdocument}', 'ProjectController@proj
 //budget
 Route::get('/project-budget/{project}', 'BudgetController@index');
 Route::get('/project-budget/{project}/create', 'BudgetController@create');
+Route::get('/project-budget/{budget}/edit', 'BudgetController@edit');
+Route::patch('/project-budget/{budget}/update', 'BudgetController@update');
+Route::get('/project-budget/{budget}/delete', 'BudgetController@destroy');
 Route::post('/project-budget', 'BudgetController@store');
 Route::get('/budget-source/{budget}', 'BudgetController@source');
+Route::get('/budget-source/{project_source}/delete', 'BudgetController@destroy_source');
 Route::post('budget-source', 'BudgetController@store_project_source');
 
 Route::get('/get-unit/{entity}', 'OrganizationUnitController@get_unit');
@@ -88,7 +92,7 @@ Route::get('tender-create/{project}', 'TenderController@create_tender');
 
 Route::get('/tender-offerer/{tender}', 'TenderOffererController@index');
 Route::post('/tender-offerer', 'TenderOffererController@store');
-Route::delete('/tender-offerer/{tender}', 'TenderOffererController@destroy');
+Route::get('/tender-offerer/{tender}/delete', 'TenderOffererController@destroy');
 Route::get('/get-supplier/{award}', 'TenderOffererController@get_sup');
 
 // Route::get('tender/{projectID}/create', 'TenderController@create');
@@ -103,8 +107,10 @@ Route::get('contract-create/{award}', 'ContractController@create_contract');
 //completions
 Route::get('/contract-completion/{completion}', 'ContractController@completion');
 Route::get('/contract-completion/{contract}/create', 'ContractController@completion_create');
+Route::get('/contract-completion/{completion}/edit', 'ContractController@completion_edit');
+Route::patch('/contract-completion/{completion}/update', 'ContractController@completion_update');
 Route::post('/contract-completion', 'ContractController@completion_store');
-Route::delete('/contract-completion/destroy/{completion}', 'ContractController@completion_destroy');
+Route::get('/contract-completion/{completion}/delete', 'ContractController@completion_destroy');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 Auth::routes();
 
@@ -121,22 +127,28 @@ Route::get('contract-execution/{execution}', 'ExecutionController@execution');
 Route::get('contract-execution/{contract}/create', 'ExecutionController@create_execution');
 //disbursment
 Route::get('/disbursment/{execution}/create', 'ExecutionController@disbursment');
+Route::get('/disbursment/{disbursment}/edit', 'ExecutionController@disbursment_edit');
+Route::patch('/disbursment/{disbursment}/update', 'ExecutionController@disbursment_update');
 Route::post('/disbursment', 'ExecutionController@disbursment_store');
-Route::delete('/disbursment/delete/{disbursment}', 'ExecutionController@disbursment_destroy');
+Route::get('/disbursment/{disbursment}/delete', 'ExecutionController@disbursment_destroy');
 
 //warranty
 Route::get('/warranty/{execution}', 'ExecutionController@warranty');
 Route::get('/warranty/{execution}/create', 'ExecutionController@create_warranty');
+Route::get('/warranty/{warranty}/edit', 'ExecutionController@edit_warranty');
+Route::patch('/warranty/{warranty}/update', 'ExecutionController@update_warranty');
+Route::get('/warranty/{warranty}/delete', 'ExecutionController@destroy_warranty');
 Route::post('/warranty', 'ExecutionController@warranty_store');
 
 Route::resource('progress', 'ProgressController');
 Route::get('project-progress/{project}', 'ProgressController@progress');
 Route::get('project-progress/{project}/create', 'ProgressController@create_progress');
+Route::get('project-progress/{progress}/delete', 'ProgressController@destroy');
 Route::post('project-progress', 'ProgressController@store');
 
 Route::get('/advance-images/{advance}', 'ProgressController@images');
 Route::post('/advance-images/{advance}', 'ProgressController@images_store');
-Route::delete('/advance-image/destroy/{advance_image}', 'ProgressController@image_destroy');
+Route::get('/advance-image/{advance_image}/delete', 'ProgressController@image_destroy');
 
 //get-typeahed
 Route::get('/get-contract-type', 'ContractTypeController@get_data');

@@ -19,25 +19,25 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Name:</label>
-                        <input type="text" name="name" class="form-control" required>
+                        <input type="text" name="name" value="{{$budget->name ?? ''}}" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="name">Description:</label>
-                        <textarea name="description" rows="6" class="form-control"></textarea>
+                        <textarea name="description" rows="6" class="form-control">{{$budget->description ?? ''}}</textarea>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Start Date:</label>
-                        <input type="date" name="start_date" class="form-control">
+                        <input type="date" name="start_date" class="form-control" value="{{ date_format(Carbon\Carbon::parse($budget->start_date ?? date('Y-m-d')), 'Y-m-d') }}">
                     </div>
                     <div class="form-group">
                         <label for="name">End Date:</label>
-                        <input type="date" name="end_date" class="form-control" value="{{date('m-d-Y')}}">
+                        <input type="date" name="end_date" class="form-control" value="{{ date_format(Carbon\Carbon::parse($budget->end_date ?? date('Y-m-d')), 'Y-m-d') }}">
                     </div>
                     <div class="form-group">
                         <label for="name">Ammount:</label>
-                        <input type="text" name="amount" class="form-control" required>
+                        <input type="text" name="amount" value="{{ number_format($budget->amount) ?? ''}}" class="form-control" required>
                     </div>
                 </div>
             </div>

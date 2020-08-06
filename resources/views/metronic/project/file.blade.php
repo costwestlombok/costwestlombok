@@ -99,6 +99,22 @@
 
     jQuery(document).ready(function () {
         KTDatatablesDataSourceAjaxServer.init();
+        $(document).on('click', '.button', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var link = $(this).attr('href');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won\'t be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!"
+                }).then(function(result) {
+                    if (result.value) {
+                        window.location.href = "/api/project-file/"+ id +"/delete"; 
+                    }
+                });
+            });
     });
 </script>
 @endsection

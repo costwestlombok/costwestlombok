@@ -71,3 +71,11 @@ Route::get('project-document', 'ProjectController@api');
 Route::get('budget-source', 'BudgetController@api');
 Route::get('advance-image', 'ProgressController@api');
 Route::get('contact', 'ContactController@api');
+
+Route::get('project/{project}/delete', 'ProjectController@destroy');
+Route::get('project-file/{projectdocument}/delete', 'ProjectController@project_file_delete');
+Route::get('tender/{tender}/delete', 'TenderController@destroy');
+Route::get('award/{award}/delete', 'AwardController@destroy');
+Route::get('contract/{contract}/delete', 'ContractController@destroy');
+Route::get('ammendment/{ammendment}/delete', 'AmmendmentController@destroy');
+Route::get('execution/{execution}/delete', 'ExecutionController@destroy');

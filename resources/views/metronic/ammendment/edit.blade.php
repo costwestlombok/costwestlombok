@@ -16,7 +16,7 @@
 
             // passing in `null` for the `options` arguments will result in the default
             // options being used
-            
+
             $('#status_id').typeahead(null, {
                 name: 'status_id',
                 source: status
@@ -40,7 +40,8 @@
 <div class="card">
     <!--begin::Form-->
     <form method="post"
-        action="{{ isset($ammendment) ? route('ammendment.update', $ammendment) : route('ammendment.store') }}" enctype="multipart/form-data">
+        action="{{ isset($ammendment) ? route('ammendment.update', $ammendment) : route('ammendment.store') }}"
+        enctype="multipart/form-data">
         @csrf
         @if(isset($ammendment))
         @method('patch')
@@ -49,35 +50,45 @@
         <div class="card-body">
             <div class="form-group">
                 <label for="name">Modification Number:</label>
-                <input type="number" class="form-control" name="modification_number" required />
+                <input type="number" class="form-control" value="{{$ammendment->modification_number ?? '0'}}"
+                    name="modification_number" required />
             </div>
 
             <div class="form-group">
                 <label for="name">Modification Type:</label>
-                <input type="text" class="form-control" name="modification_type" required />
+                <input type="text" class="form-control" value="{{$ammendment->modification_type ?? ''}}"
+                    name="modification_type" required />
             </div>
 
             <div class="form-group">
                 <label for="name">Justification:</label>
-                <textarea class="form-control" name="justification" rows="5" required></textarea>
+                <textarea class="form-control" name="justification" rows="5"
+                    required>{{$ammendment->justification ?? ''}}</textarea>
             </div>
 
             <div class="form-group">
                 <label for="current_price">Current Price:</label>
-                <input type="text" class="form-control" name="current_price" required />
+                <input type="text" class="form-control" name="current_price"
+                    value="{{ number_format($ammendment->current_price) ?? '0'}}" required />
             </div>
             <div class="form-group">
                 <label for="current_contract_scope">Current Contract Scope:</label>
-                <textarea rows="5" class="form-control" name="current_contract_scope"></textarea>
+                <textarea rows="5" class="form-control"
+                    name="current_contract_scope">{{$ammendment->current_contract_scope ?? ''}}</textarea>
             </div>
             <div class="form-group">
                 <label for="">Date of Publication:</label>
-                <input type="date" name="date_of_publication" class="form-control">
+                <input type="date" name="date_of_publication" class="form-control"
+                    value="{{ Carbon\Carbon::parse($contract->date_of_publication ?? date('Y-m-d'))->format('Y-m-d') }}">
                 </select>
             </div>
             <div class="form-group">
                 <label for="">Adendum File:</label>
-                <input type="file" name="adendum" class="form-control">
+                <div class="custom-file">
+                <input type="file" class="custom-file-input" name="adendum" id="adendum">
+                <label class="custom-file-label"
+                    for="adendum">{{$ammendment->adendum ? 'Upload file to change document' : 'Choose file'}}</label>
+                </div>
                 </select>
             </div>
             <div class="form-group">

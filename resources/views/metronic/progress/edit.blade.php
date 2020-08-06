@@ -40,7 +40,7 @@
 <div class="card">
     <!--begin::Form-->
     <form method="post"
-        action="{{ isset($progress) ? url('project-progress/'.$progress->id) : url('/project-progress') }}" enctype="multipart/form-data">
+        action="{{ isset($progress) ? url('progress/'.$progress->id) : url('/project-progress') }}" enctype="multipart/form-data">
         @csrf
         @if(isset($progress))
         @method('patch')
@@ -51,13 +51,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Physical Program (%):</label>
-                        <input type="number" step="0.01" name="programmed_percent" class="form-control">
+                        <input type="number" step="0.01" name="programmed_percent" value="{{number_format($progress->programmed_percent ?? '0')}}" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Real Physical (%):</label>
-                        <input type="number" step="0.01" name="real_percent" class="form-control">
+                        <input type="number" step="0.01" name="real_percent" value="{{number_format($progress->real_percent ?? '0')}}" class="form-control">
                     </div>
                 </div>
             </div>
@@ -66,42 +66,48 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Scheduled Finance:</label>
-                        <input type="text" name="scheduled_financing" class="form-control">
+                        <input type="text" name="scheduled_financing" class="form-control" value="{{number_format($progress->scheduled_financing ?? '0')}}">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Real Finance:</label>
-                        <input type="text" name="real_financing" class="form-control">
+                        <input type="text" name="real_financing" class="form-control" value="{{number_format($progress->real_financing ?? '0')}}">
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="name">Description of Problems:</label>
-                <textarea name="description_problems" rows="5" class="form-control"></textarea>
+                <textarea name="description_problems" rows="5" class="form-control">{{$progress->description_problems ?? ''}}</textarea>
             </div>
     
             <div class="form-group">
                 <label for="name">Description of Theme/Issues:</label>
-                <textarea name="description_issues" rows="5" class="form-control"></textarea>
+                <textarea name="description_issues" rows="5" class="form-control">{{$progress->description_issues ?? ''}}</textarea>
             </div>
             <div class="form-group">
                 <label for="name">Advance Date:</label>
-                <input type="date" name="date_of_advance" class="form-control">
+                <input type="date" name="date_of_advance" class="form-control" value="{{Carbon\Carbon::parse($progress->date_of_advance ?? date('Y-m-d'))->format('Y-m-d') }}">
             </div>
             <div class="form-group">
                 <label for="name">Publication Date:</label>
-                <input type="date" name="date_of_publication" class="form-control">
+                <input type="date" name="date_of_publication" class="form-control" value="{{Carbon\Carbon::parse($progress->date_of_publication ?? date('Y-m-d'))->format('Y-m-d') }}">
             </div>
             <div class="form-group">
                 <label for="">Guaranties File:</label>
-                <input type="file" name="guaranties_doc" class="form-control">
-                </select>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="guaranties_doc"
+                        id="guaranties_doc">
+                    <label class="custom-file-label" for="guaranties_doc">{{$progress->guaranties_doc ? 'Upload file to change document' : 'Choose file'}}</label>
+                </div>
             </div>
             <div class="form-group">
                 <label for="">Advance File:</label>
-                <input type="file" name="advance_doc" class="form-control">
-                </select>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="advance_doc"
+                        id="advance_doc">
+                    <label class="custom-file-label" for="advance_doc">{{$progress->advance_doc ? 'Upload file to change document' : 'Choose file'}}</label>
+                </div>
             </div>
             <div class="form-group">
                 <label>Status:</label>

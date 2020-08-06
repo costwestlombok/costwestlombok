@@ -43,7 +43,7 @@ $contacts = App\Contact::all();
 <div class="card">
     <!--begin::Form-->
     <form method="post"
-        action="{{ isset($disbursment) ? url('/disbursment/'.$disbursment->id) : url('/disbursment') }}">
+        action="{{ isset($disbursment) ? url('disbursment/'.$disbursment->id.'/update') : url('/disbursment') }}">
         @csrf
         @if(isset($disbursment))
         @method('patch')
@@ -52,24 +52,24 @@ $contacts = App\Contact::all();
         <div class="card-body">
             <div class="form-group">
                 <label for="name">Order:</label>
-                <input type="number" name="order" class="form-control">
+                <input type="number" name="order" value="{{$disbursment->order ?? '0'}}" class="form-control">
             </div>
             <div class="form-group">
                 <label for="name">Disbursment Date:</label>
-                <input type="date" name="date" class="form-control" value="{{date('m-d-Y')}}">
+                <input type="date" name="date" class="form-control" value="{{Carbon\Carbon::parse($execution->date ?? date('Y-m-d'))->format('Y-m-d') }}">
             </div>
             <div class="form-group">
                 <label for="name">Amount:</label>
-                <input type="text" name="amount" class="form-control">
+                <input type="text" name="amount" class="form-control" value="{{number_format($disbursment->amount ?? '0')}}">
             </div>
             <div class="form-group">
                 <label for="name">Description:</label>
-                <textarea name="description" rows="5" class="form-control"></textarea>
+                <textarea name="description" rows="5" class="form-control">{{$disbursment->description ?? ''}}</textarea>
             </div>
             <div class="form-group">
                 <label>Status:</label>
                 <div class="typeahead">
-                    <input class="form-control" value="{{$ammendment->status->status_name ?? ''}}" id="status_id"
+                    <input class="form-control" value="{{$disbursment->status->status_name ?? ''}}" id="status_id"
                         name="status_id" type="text" dir="ltr" style="width: 100%">
                 </div>
             </div>

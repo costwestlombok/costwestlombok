@@ -16,4 +16,9 @@ class Warranty extends Model
     {
         return $this->belongsTo('App\WarrantyType', 'warranty_types_id', 'id');
     }
+
+    public function status()
+    {
+        return $this->belongsTo('App\Status', 'status_id', 'id');
+    }
 }

@@ -108,19 +108,19 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label>Start Date</label>
-                <input type="date" name="start_date" class="form-control" value="{{ date_format(Carbon\Carbon::parse($tender->start_date), 'm-d-Y') }}">
+                <input type="date" name="start_date" class="form-control" value="{{ date_format(Carbon\Carbon::parse($tender->start_date), 'Y-m-d') }}">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label>End Date</label>
-                <input type="date" name="end_date" class="form-control" value="{{ date_format(Carbon\Carbon::parse($tender->end_date), 'm-d-Y') }}">
+                <input type="date" name="end_date" class="form-control" value="{{ date_format(Carbon\Carbon::parse($tender->end_date), 'Y-m-d') }}">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label>Max Extended Date</label>
-                <input type="date" name="max_extended_process" class="form-control" value="{{ date_format(Carbon\Carbon::parse($tender->max_extended_process), 'm-d-Y') }}">
+                <input type="date" name="max_extended_process" class="form-control" value="{{ date_format(Carbon\Carbon::parse($tender->max_extended_process), 'Y-m-d') }}">
               </div>
             </div>
           </div>
@@ -234,7 +234,7 @@
             <div class="col-md-12">
               <div class="form-group">
                   <label for="name">Date of Publication:</label>
-                  <input type="date" class="form-control" name="date_of_publication" id="date_of_publication" value="{{ date_format(Carbon\Carbon::parse($tender->date_of_publication), 'm-d-Y') }}">
+                  <input type="date" class="form-control" name="date_of_publication" id="date_of_publication" value="{{ date_format(Carbon\Carbon::parse($tender->date_of_publication), 'Y-m-d') }}">
               </div>
             </div>
           </div>

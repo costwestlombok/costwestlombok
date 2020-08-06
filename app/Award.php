@@ -21,4 +21,14 @@ class Award extends Model
     {
         return $this->hasOne('App\Contract', 'awards_id', 'id');
     }
+
+    public function contract_method()
+    {
+        return $this->belongsTo('App\ContractMethod', 'contract_method_id', 'id');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo('App\Status', 'status_id', 'id');
+    }
 }

@@ -2,6 +2,26 @@
 @section('style')
 @endsection
 @section('script')
+<script>
+    jQuery(document).ready(function () {
+        $(document).on('click', '.button', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var link = $(this).attr('href');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won\'t be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!"
+                }).then(function(result) {
+                    if (result.value) {
+                        window.location.href = "/contract-completion/"+ id +"/delete"; 
+                    }
+                });
+            });
+    });
+</script>
 @endsection
 @section('content')
 <!--begin::Info-->
@@ -66,7 +86,7 @@
                                                     class="text-primary text-uppercase font-weight-bold font-size-sm">Action:</span>
                                             </li>
                                             <li class="navi-item">
-                                                <a href=""
+                                                <a href="{{url('contract-completion/'.$completion->id.'/edit')}}"
                                                     class="navi-link">
                                                     <span class="navi-icon">
                                                         <i class="flaticon2-pen"></i>
@@ -75,7 +95,7 @@
                                                 </a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="#" class="navi-link">
+                                                <a href="#" data-id="{{$completion->id}}" class="button navi-link">
                                                     <span class="navi-icon">
                                                         <i class="flaticon2-trash"></i>
                                                     </span>
@@ -106,11 +126,11 @@
                         </div>
                         <div class="d-flex w-100 align-items-center mb-4">
                             <span class="text-dark-75 font-weight-bolder mr-2 w-25">Justification</span>
-                            <p class="text-muted text-hover-primary w-75">: {{$completion->justification}}</p>
+                            <p class="text-muted w-75">: {!!$completion->justification!!}</p>
                         </div>
                         <div class="d-flex w-100 align-items-center mb-4">
                             <span class="text-dark-75 font-weight-bolder mr-2 w-25">Description</span>
-                            <a href="#" class="text-muted text-hover-primary w-75">: {{$completion->description}}</a>
+                            <p href="#" class="text-muted w-75">: {{$completion->description}}</p>
                         </div>
                         <!--end::Data-->
                     </div>

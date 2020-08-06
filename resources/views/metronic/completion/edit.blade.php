@@ -19,26 +19,26 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Final Scope:</label>
-                        <input type="text" name="final_scope" class="form-control" required>
+                        <input type="text" name="final_scope" class="form-control" value="{{$completion->final_scope ?? ''}}" required>
                     </div>
                     <div class="form-group">
                         <label for="name">Final Cost:</label>
-                        <input type="text" name="final_cost" class="form-control" required>
+                        <input type="text" name="final_cost" class="form-control" value="{{ number_format($completion->final_cost ?? '0') }}" required>
                     </div>
                     <div class="form-group">
                         <label for="name">Justification:</label>
-                        <textarea name="justification" rows="3" class="form-control"></textarea>
+                        <textarea name="justification" rows="3" class="form-control">{{$completion->justification}}</textarea>
                     </div>
                     
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Final Date:</label>
-                        <input type="date" name="date" class="form-control" value="{{date('m-d-Y')}}">
+                        <input type="date" name="date" class="form-control" value="{{ Carbon\Carbon::parse($contract->date ?? date('Y-m-d'))->format('Y-m-d') }}">
                     </div>
                     <div class="form-group">
                         <label for="name">Description:</label>
-                        <textarea name="description" rows="7" class="form-control"></textarea>
+                        <textarea name="description" rows="7" class="form-control">{{$completion->description}}</textarea>
                     </div>
                     
                 </div>

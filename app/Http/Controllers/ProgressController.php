@@ -92,9 +92,11 @@ class ProgressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Advance $progress)
     {
-        //
+        // return $progress;
+        $project = Project::where('id', $progress->project_id)->first();
+        return view('metronic.progress.edit', compact('project', 'progress'));
     }
 
     /**
@@ -104,9 +106,42 @@ class ProgressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Advance $progress)
     {
-        //
+        $data = $request->all();
+        // return $data;
+        if ($request->scheduled_financing) {
+            $data['scheduled_financing'] = str_replace(",", "", $request->scheduled_financing);
+        }
+        if ($request->real_financing) {
+            $data['real_financing'] = str_replace(",", "", $request->real_financing);
+        }
+        if ($request->guaranties_doc) {
+            if ($progress->guaranties_doc) {
+                Storage::delete($progress->guaranties_doc);
+            }
+            $data['guaranties_doc'] = $request->file('guaranties_doc')->store('advance');
+        }
+        if ($request->advance_doc) {
+            if ($progress->advance_doc) {
+                Storage::delete($progress->advance_doc);
+            }
+            $data['advance_doc'] = $request->file('advance_doc')->store('advance');
+        }
+        $status = Status::where('status_name', $request->status_id)->first();
+
+        if ($status) {
+            $data['status_id'] = $status->id;
+        } else {
+            $tm = Status::create([
+                'status_name' => $request->status_id,
+            ]);
+            $data['status_id'] = $tm->id;
+        }
+
+        $progress->update($data);
+        Session::put('success', 'Data updated successfully!');
+        return redirect('project-progress/' . $progress->project_id);
     }
 
     /**
@@ -115,9 +150,17 @@ class ProgressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Advance $progress)
     {
-        //
+        if ($progress->guaranties_doc) {
+            Storage::delete($progress->guaranties_doc);
+        }
+        if ($progress->advance_doc) {
+            Storage::delete($progress->advance_doc);
+        }
+        $progress->delete();
+        Session::put('success', 'Data deleted successfully!');
+        return back();
     }
 
     public function images(Advance $advance)

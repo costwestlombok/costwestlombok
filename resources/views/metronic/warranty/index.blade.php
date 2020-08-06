@@ -61,7 +61,7 @@
                         render: function (data, type, full, meta) {
                             return '\
                             <div class="text-right nowrap">\
-                			<a href="/catalog/warranty/'+ full.id + '/edit" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
+                			<a href="/warranty/'+ full.id + '/edit" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
                 				<i class="fas fa-pen"></i>\
                 			</a>\
                             <a href="#"  data-id="'+full.id+'" class="button btn btn-sm btn-clean btn-icon" data-id='+  full.id +' title="Delete"><i class="fas fa-trash"></i></a>\
@@ -124,7 +124,7 @@
                     if (result.value) {
                         $.ajax({
                             type: "GET",
-                            url: "/api/warranty/"+ id +"/delete",
+                            url: "/warranty/"+ id +"/delete",
                             success: function (data) {
                                 toastr.success("Data deleted successfully!");
                                 var table = $('#kt_datatable').DataTable(); 

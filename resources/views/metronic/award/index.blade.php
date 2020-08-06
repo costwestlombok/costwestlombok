@@ -2,6 +2,26 @@
 @section('style')
 @endsection
 @section('script')
+<script>
+    jQuery(document).ready(function () {
+        $(document).on('click', '.button', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var link = $(this).attr('href');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won\'t be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!"
+                }).then(function(result) {
+                    if (result.value) {
+                        window.location.href = "/api/award/"+ id +"/delete"; 
+                    }
+                });
+            });
+    });
+</script>
 @endsection
 @section('content')
 <!--begin::Info-->
@@ -21,7 +41,7 @@
                 <a href="{{ url('/project') }}" class="text-muted">Project</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="{{url('tender/'.$tender->project->id)}}" class="text-muted">Tender</a>
+                <a href="{{url('project-tender/'.$tender->project->id)}}" class="text-muted">Tender</a>
             </li>
             @endif
             <li class="breadcrumb-item">
@@ -201,7 +221,7 @@
                                                     new:</span>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="#" class="navi-link">
+                                                <a href="{{ empty($item->contract) ? url('contract-create/'.$item->id) : url('contract/'.$item->contract->id) }}" class="navi-link">
                                                     <span class="navi-icon">
                                                         <i class="flaticon-clipboard"></i>
                                                     </span>
@@ -210,11 +230,11 @@
                                             </li>
                                             <hr>
                                             <li class="navi-item">
-                                                <a href="" class="navi-link"><span><i class="flaticon2-pen"></i>
+                                                <a href="{{url('award/'.$item->id.'/edit')}}" class="navi-link"><span><i class="flaticon2-pen"></i>
                                                 </span> &nbsp; Edit</a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="" class="navi-link"><span><i class="flaticon2-trash"></i>
+                                                <a href="#" data-id="{{$item->id}}" class="button navi-link"><span><i class="flaticon2-trash"></i>
                                                 </span> &nbsp; Delete</a>
                                             </li>
                                         </ul>
@@ -252,9 +272,9 @@
                                 <i class="flaticon-clipboard icon-2x text-muted font-weight-bold"></i>
                             </span>
                             <div class="d-flex flex-column flex-lg-fill">
-                                <span class="text-dark-75 font-weight-bolder font-size-sm">{{$item->contract->count()}}
+                                <span class="text-dark-75 font-weight-bolder font-size-sm">{{!empty($item->contract) ? $item->contract->count() : '0'}}
                                     Contract</span>
-                                @if($item->contract->count() == 0)
+                                @if(empty($item->contract))
                                 <a href="{{ url('contract-create/'.$item->id) }}"
                                     class="text-primary font-weight-bolder">Add New Contract</a>
                                 @else

@@ -60,10 +60,10 @@ class ExecutionController extends Controller
             ]);
             $data['status_id'] = $tm->id;
         }
-        Execution::create($data);
-        Session::put('Success', 'Data saved successfully!', 'success');
+        $execution = Execution::create($data);
+        Session::put('success', 'Data saved successfully!');
 
-        return redirect('contract-execution/' . $request->engage_id);
+        return redirect('contract-execution/' . $execution->id);
     }
 
     /**
@@ -83,9 +83,10 @@ class ExecutionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Execution $execution)
     {
-        //
+        $contract = Contract::where('id', $execution->engage_id)->first();
+        return view('metronic.execution.edit', compact('contract', 'execution'));
     }
 
     /**
@@ -95,9 +96,24 @@ class ExecutionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Execution $execution)
     {
-        //
+        $data = $request->all();
+        $data['varprice'] = str_replace(",", "", $request->varprice);
+        $status = Status::where('status_name', $request->status_id)->first();
+
+        if ($status) {
+            $data['status_id'] = $status->id;
+        } else {
+            $tm = Status::create([
+                'status_name' => $request->status_id,
+            ]);
+            $data['status_id'] = $tm->id;
+        }
+        $execution->update($data);
+        Session::put('success', 'Data update successfully!');
+
+        return redirect('contract-execution/' . $execution->id);
     }
 
     /**
@@ -106,14 +122,23 @@ class ExecutionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Execution $execution)
     {
-        //
+        $id = $execution->engage->id;
+        $execution->delete();
+        Session::put('success', 'Data deleted successfully!');
+        return redirect('contract/' . $id);
     }
 
     public function disbursment(Execution $execution)
     {
         return view('metronic.execution.disbursment', compact('execution'));
+    }
+
+    public function disbursment_edit(Disbursment $disbursment)
+    {
+        $execution = Execution::where('id', $disbursment->executions_id)->first();
+        return view('metronic.execution.disbursment', compact('execution', 'disbursment'));
     }
 
     public function disbursment_store(Request $request)
@@ -136,6 +161,25 @@ class ExecutionController extends Controller
         return redirect('contract-execution/' . $request->executions_id);
     }
 
+    public function disbursment_update(Request $request, Disbursment $disbursment)
+    {
+        $data = $request->all();
+        $data['amount'] = str_replace(",", "", $request->amount);
+        $status = Status::where('status_name', $request->status_id)->first();
+
+        if ($status) {
+            $data['status_id'] = $status->id;
+        } else {
+            $tm = Status::create([
+                'status_name' => $request->status_id,
+            ]);
+            $data['status_id'] = $tm->id;
+        }
+        $disbursment->update($data);
+        Session::put('success', 'Data updated successfully!');
+        return redirect('contract-execution/' . $request->executions_id);
+    }
+
     public function disbursment_destroy(Disbursment $disbursment)
     {
         $disbursment->delete();
@@ -151,6 +195,12 @@ class ExecutionController extends Controller
     public function create_warranty(Execution $execution)
     {
         return view('metronic.warranty.edit', compact('execution'));
+    }
+
+    public function edit_warranty(Warranty $warranty)
+    {
+        $execution = Execution::where('id', $warranty->executions_id)->first();
+        return view('metronic.warranty.edit', compact('execution', 'warranty'));
     }
 
     public function warranty_store(Request $request)
@@ -181,6 +231,43 @@ class ExecutionController extends Controller
         Warranty::create($data);
         Session::put('success', 'Data saved successfully!');
         return redirect('warranty/' . $request->executions_id);
+    }
+
+    public function update_warranty(Request $request, Warranty $warranty)
+    {
+        $data = $request->all();
+        $data['ammount'] = str_replace(",", "", $request->ammount);
+        $status = Status::where('status_name', $request->status_id)->first();
+
+        if ($status) {
+            $data['status_id'] = $status->id;
+        } else {
+            $tm = Status::create([
+                'status_name' => $request->status_id,
+            ]);
+            $data['status_id'] = $tm->id;
+        }
+
+        $warranty_type = WarrantyType::where('name', $request->warranty_types_id)->first();
+
+        if ($warranty_type) {
+            $data['warranty_types_id'] = $warranty_type->id;
+        } else {
+            $wt = WarrantyType::create([
+                'name' => $request->warranty_types_id,
+            ]);
+            $data['warranty_types_id'] = $wt->id;
+        }
+        $warranty->update($data);
+        Session::put('success', 'Data updated successfully!');
+        return redirect('warranty/' . $request->executions_id);
+    }
+
+    public function destroy_warranty(Warranty $warranty)
+    {
+        $warranty->delete();
+        Session::put('success', 'Data deleted successfully!');
+        return back();
     }
 
     public function api($execution)

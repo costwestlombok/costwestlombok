@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Contact;
 use App\Offerer;
-use Contact;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;

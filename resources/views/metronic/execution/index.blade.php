@@ -56,7 +56,7 @@
                         render: function (data, type, full, meta) {
                             return '\
                             <div class="text-right nowrap">\
-                			<a href="/catalog/execution/'+ full.id + '/edit" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
+                			<a href="../disbursment/'+ full.id + '/edit" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
                 				<i class="fas fa-pen"></i>\
                 			</a>\
                             <a href="#"  data-id="'+ full.id + '" class="button btn btn-sm btn-clean btn-icon" data-id=' + full.id + ' title="Delete"><i class="fas fa-trash"></i></a>\
@@ -111,13 +111,29 @@
                 if (result.value) {
                     $.ajax({
                         type: "GET",
-                        url: "/api/execution/" + id + "/delete",
+                        url: "../disbursment/" + id + "/delete",
                         success: function (data) {
                             toastr.success("Data deleted successfully!");
                             var table = $('#kt_datatable').DataTable();
                             table.ajax.reload(null, false);
                         }
                     });
+                }
+            });
+        });
+        $(document).on('click', '.button-ex', function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var link = $(this).attr('href');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won\'t be able to revert this and it\'s child!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!"
+            }).then(function (result) {
+                if (result.value) {
+                    window.location.href = "/api/execution/"+ id +"/delete";
                 }
             });
         });
@@ -166,6 +182,39 @@
     <div class="card-header">
         <div class="card-title">
             <h3 class="card-label">Execution</h3>
+        </div>
+        <div class="card-toolbar">
+            <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
+                <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="ki ki-bold-more-hor"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+                    <!--begin::Navigation-->
+                    <ul class="navi navi-hover">
+                        <li class="navi-header pb-1">
+                            <span class="text-primary text-uppercase font-weight-bold font-size-sm">Action:</span>
+                        </li>
+                        <li class="navi-item">
+                            <a href="{{url('execution/'.$execution->id.'/edit')}}" class="navi-link">
+                                <span class="navi-icon">
+                                    <i class="flaticon2-pen"></i>
+                                </span>
+                                <span class="navi-text">Edit</span>
+                            </a>
+                        </li>
+                        <li class="navi-item">
+                            <a href="#" data-id="{{$execution->id}}" class="button-ex navi-link">
+                                <span class="navi-icon">
+                                    <i class="flaticon2-trash"></i>
+                                </span>
+                                <span class="navi-text">Hapus</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                    <!--end::Navigation-->
+                </div>
+            </div>
         </div>
     </div>
     <div class="card-body">

@@ -7,13 +7,15 @@ use App\ContractMethod;
 use App\Status;
 use App\Tender;
 use Illuminate\Http\Request;
+use Session;
+use Storage;
 
 class AwardController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -91,9 +93,9 @@ class AwardController extends Controller
             $data['status_id'] = $tm->id;
         }
         Award::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
+        Session::put('success', 'Data saved successfully!');
 
-        return redirect('award/' . $request->tender_id);
+        return redirect('tender-award/' . $request->tender_id);
     }
 
     /**
@@ -116,14 +118,10 @@ class AwardController extends Controller
      */
     public function edit(Award $award)
     {
-        $tenders = Tender::all();
-        $contract_methods = ContractMethod::all();
-        $status = Status::all();
+        $tender = Tender::where('id', $award->tender_id)->first();
 
-        return view('award.edit', [
-            'tenders' => $tenders,
-            'contract_methods' => $contract_methods,
-            'status' => $status,
+        return view('metronic.award.edit', [
+            'tender' => $tender,
             'award' => $award,
         ]);
     }
@@ -135,9 +133,59 @@ class AwardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Award $award)
     {
-        //
+        $data = $request->all();
+        $data['cost'] = str_replace(",", "", $request->cost);
+        $data['contract_estimate_cost'] = str_replace(",", "", $request->contract_estimate_cost);
+        if ($request->opening_act) {
+            if ($award->opening_act) {
+                Storage::delete($award->opening_act);
+            }
+            $data['opening_act'] = $request->file('opening_act')->store('awards');
+        }
+        if ($request->recomendation_report_act) {
+            if ($award->recomendation_report_act) {
+                Storage::delete($award->recomendation_report_act);
+            }
+            $data['recomendation_report_act'] = $request->file('recomendation_report_act')->store('awards');
+        }
+        if ($request->award_resolution) {
+            if ($award->award_resolution) {
+                Storage::delete($award->award_resolution);
+            }
+            $data['award_resolution'] = $request->file('award_resolution')->store('awards');
+        }
+        if ($request->others) {
+            if ($award->others) {
+                Storage::delete($award->others);
+            }
+            $data['others'] = $request->file('others')->store('awards');
+        }
+
+        $contract_method = ContractMethod::where('method_name', $request->contract_method_id)->first();
+        $status = Status::where('status_name', $request->status_id)->first();
+
+        if ($contract_method) {
+            $data['contract_method_id'] = $contract_method->id;
+        } else {
+            $cm = ContractMethod::create([
+                'method_name' => $request->contract_method_id,
+            ]);
+            $data['contract_method_id'] = $cm->id;
+        }
+        if ($status) {
+            $data['status_id'] = $status->id;
+        } else {
+            $tm = Status::create([
+                'status_name' => $request->status_id,
+            ]);
+            $data['status_id'] = $tm->id;
+        }
+        $award->update($data);
+        Session::put('success', 'Data updated successfully!');
+
+        return redirect('tender-award/' . $request->tender_id);
     }
 
     /**
@@ -148,17 +196,17 @@ class AwardController extends Controller
      */
     public function destroy(Award $award)
     {
-        if ($tender->opening_act) {
-            Storage::delete($tender->opening_act);
+        if ($award->opening_act) {
+            Storage::delete($award->opening_act);
         }
-        if ($tender->recomendation_report_act) {
-            Storage::delete($tender->recomendation_report_act);
+        if ($award->recomendation_report_act) {
+            Storage::delete($award->recomendation_report_act);
         }
-        if ($tender->award_resolution) {
-            Storage::delete($tender->award_resolution);
+        if ($award->award_resolution) {
+            Storage::delete($award->award_resolution);
         }
-        if ($tender->others) {
-            Storage::delete($tender->others);
+        if ($award->others) {
+            Storage::delete($award->others);
         }
         $award->delete();
         Session::put('success', 'Data deleted successfully!');

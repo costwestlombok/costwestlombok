@@ -127,13 +127,13 @@
             <div class="col-md-6">
               <div class="form-group">
                   <label for="name">Start Date:</label>
-                  <input type="date" class="form-control" name="start_date" id="start_date" value="{{ date_format(Carbon\Carbon::parse($project->start_date), 'm-d-Y') }}">
+                  <input type="date" class="form-control" name="start_date" id="start_date" value="{{ date_format(Carbon\Carbon::parse($project->start_date), 'Y-m-d') }}">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                   <label for="name">End Date:</label>
-                  <input type="date" class="form-control" name="end_date" id="end_date" value="{{ date_format(Carbon\Carbon::parse($project->end_date), 'm-d-Y') }}">
+                  <input type="date" class="form-control" name="end_date" id="end_date" value="{{ date_format(Carbon\Carbon::parse($project->end_date), 'Y-m-d') }}">
               </div>
             </div>
           </div>
@@ -141,13 +141,13 @@
             <div class="col-md-6">
               <div class="form-group">
                   <label for="name">Approved Date:</label>
-                  <input type="date" class="form-control" name="date_of_approved" id="date_of_approved" value="{{ date_format(Carbon\Carbon::parse($project->date_of_approved), 'm-d-Y') }}">
+                  <input type="date" class="form-control" name="date_of_approved" id="date_of_approved" value="{{ date_format(Carbon\Carbon::parse($project->date_of_approved), 'Y-m-d') }}">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                   <label for="name">Publication Date:</label>
-                  <input type="date" class="form-control" name="date_of_publication" id="date_of_publication" value="{{ date_format(Carbon\Carbon::parse($project->date_of_publication), 'm-d-Y') }}">
+                  <input type="date" class="form-control" name="date_of_publication" id="date_of_publication" value="{{ date_format(Carbon\Carbon::parse($project->date_of_publication), 'Y-m-d') }}">
               </div>
             </div>
           </div>

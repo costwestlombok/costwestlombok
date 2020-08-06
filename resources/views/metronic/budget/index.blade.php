@@ -2,6 +2,26 @@
 @section('style')
 @endsection
 @section('script')
+<script>
+    jQuery(document).ready(function () {
+        $(document).on('click', '.button', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var link = $(this).attr('href');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won\'t be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!"
+                }).then(function(result) {
+                    if (result.value) {
+                        window.location.href = "/project-budget/"+ id +"/delete"; 
+                    }
+                });
+            });
+    });
+</script>
 @endsection
 @section('content')
 <!--begin::Info-->
@@ -185,47 +205,15 @@
                                         <!--begin::Navigation-->
                                         <ul class="navi navi-hover">
                                             <li class="navi-header pb-1">
-                                                <span class="text-primary text-uppercase font-weight-bold font-size-sm">Add new:</span>
+                                                <span class="text-primary text-uppercase font-weight-bold font-size-sm">Action:</span>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-shopping-cart-1"></i>
-                                                    </span>
-                                                    <span class="navi-text">Order</span>
-                                                </a>
+                                                <a href="{{url('project-budget/'.$item->id.'/edit')}}" class="navi-link"><span><i class="flaticon2-pen"></i>
+                                                </span> &nbsp; Edit</a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-calendar-8"></i>
-                                                    </span>
-                                                    <span class="navi-text">Event</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-graph-1"></i>
-                                                    </span>
-                                                    <span class="navi-text">Report</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-rocket-1"></i>
-                                                    </span>
-                                                    <span class="navi-text">Post</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-writing"></i>
-                                                    </span>
-                                                    <span class="navi-text">File</span>
-                                                </a>
+                                                <a href="#" data-id="{{$item->id}}" class="button navi-link"><span><i class="flaticon2-trash"></i>
+                                                </span> &nbsp; Delete</a>
                                             </li>
                                         </ul>
                                         <!--end::Navigation-->

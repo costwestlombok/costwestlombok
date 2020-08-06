@@ -7,6 +7,7 @@ use App\Contract;
 use App\Status;
 use DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Session;
 
 class AmmendmentController extends Controller
@@ -66,7 +67,7 @@ class AmmendmentController extends Controller
         Ammendment::create($data);
         Session::put('success', 'Data saved successfully!');
 
-        return redirect('/ammendment');
+        return redirect('contract-ammendment/' . $request->engage_id);
     }
 
     /**
@@ -86,9 +87,10 @@ class AmmendmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Ammendment $ammendment)
     {
-        //
+        $contract = Contract::where('id', $ammendment->engage_id)->first();
+        return view('metronic.ammendment.edit', compact('ammendment', 'contract'));
     }
 
     /**
@@ -98,9 +100,28 @@ class AmmendmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Ammendment $ammendment)
     {
-        //
+        $data = $request->all();
+        $data['current_price'] = str_replace(",", "", $request->current_price);
+        if ($request['adendum']) {
+            if ($ammendment->adendum) {
+                Storage::delete($ammendment->adendum);
+            }
+            $data['adendum'] = $request->file('adendum')->store('adendum');
+        }
+        $status = Status::where('status_name', $request->status_id)->first();
+        if ($status) {
+            $data['status_id'] = $status->id;
+        } else {
+            $tm = Status::create([
+                'status_name' => $request->status_id,
+            ]);
+            $data['status_id'] = $tm->id;
+        }
+        $ammendment->update($data);
+        Session::put('success', 'Data updated successfully!');
+        return redirect('contract-ammendment/' . $request->engage_id);
     }
 
     /**
@@ -109,9 +130,14 @@ class AmmendmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ammendment $ammendment)
     {
-        //
+        if ($ammendment->adendum) {
+            Storage::delete($ammendment->adendum);
+        }
+        $ammendment->delete();
+        Session::put('success', 'Data deleted successfully!');
+        return back();
     }
 
     public function api($contract)

@@ -239,7 +239,7 @@
                                     <div class="form-group">
                                         <label for="name">Tender method:</label>
                                         <div class="typeahead">
-                                            <input class="form-control" value="{{$tender->tender_method->type_name ?? ''}}" id="tender_method_id" name="tender_method_id" type="text" dir="ltr" style="width: 100%" >
+                                            <input class="form-control" value="{{$tender->tender_method->method_name ?? ''}}" id="tender_method_id" name="tender_method_id" type="text" dir="ltr" style="width: 100%" >
                                         </div>
                                     </div>
                                 </div>
@@ -323,7 +323,7 @@
                                         <label for="name">File International Invitation:</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="international_invitation" id="international_invitation">
-                                            <label class="custom-file-label" for="international_invitation">Choose file</label>
+                                            <label class="custom-file-label" for="international_invitation"> {{$tender->international_invitation ? 'Upload file to change document' : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                     <!--end::Input-->
@@ -333,7 +333,7 @@
                                         <label for="name">File Basement:</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="basement" id="basement">
-                                            <label class="custom-file-label" for="basement">Choose file</label>
+                                            <label class="custom-file-label" for="basement">{{$tender->basement ? 'Upload file to change document' : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                     <!--end::Input-->
@@ -341,7 +341,7 @@
                                         <label for="name">File Resolution:</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="resolution" id="resolution">
-                                            <label class="custom-file-label" for="resolution">Choose file</label>
+                                            <label class="custom-file-label" for="resolution">{{$tender->resolution ? 'Upload file to change document' : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                     
@@ -349,7 +349,7 @@
                                         <label for="name">File Convocation:</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="convocation" id="convocation">
-                                            <label class="custom-file-label" for="convocation">Choose file</label>
+                                            <label class="custom-file-label" for="convocation">{{$tender->convocation ? 'Upload file to change document' : 'Choose file'}}</label>
                                         </div>
                                     </div>
 
@@ -357,21 +357,21 @@
                                         <label for="name">File TDR:</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="tdr" id="tdr">
-                                            <label class="custom-file-label" for="tdr">Choose file</label>
+                                            <label class="custom-file-label" for="tdr">{{$tender->tdr ? 'Upload file to change document' : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">File Clarification:</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="clarification" id="clarification">
-                                            <label class="custom-file-label" for="clarification">Choose file</label>
+                                            <label class="custom-file-label" for="clarification">{{$tender->clarification ? 'Upload file to change document' : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">File Acceptance Certificate:</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="acceptance_certificate" id="acceptance_certificate">
-                                            <label class="custom-file-label" for="acceptance_certificate">Choose file</label>
+                                            <label class="custom-file-label" for="acceptance_certificate">{{$tender->acceptance_certificate ? 'Upload file to change document' : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                 </div>

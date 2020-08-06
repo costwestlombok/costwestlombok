@@ -68,37 +68,37 @@
         <div class="card-body">
             <div class="form-group">
                 <label for="name">Start Date</label>
-                <input type="date" name="start_date" class="form-control" required>
+                <input type="date" name="start_date" class="form-control" value="{{Carbon\Carbon::parse($execution->start_date ?? date('Y-m-d'))->format('Y-m-d') }}" required>
             </div>
             <div class="form-group">
                 <label for="name">Price:</label>
-                <input type="text" name="varprice" class="form-control">
+                <input type="text" name="varprice" value="{{ number_format($execution->varprice ?? '0') }}"  class="form-control">
             </div>
             <div class="form-group">
                 <label for="name">Program:</label>
-                <input type="text" class="form-control" name="program" />
+                <input type="text" class="form-control" value="{{$execution->program ?? ''}}" name="program" />
             </div>
             <div class="form-group">
                 <label for="name">Contract State:</label>
-                <textarea name="contract_state" rows="10" class="form-control"></textarea>
+                <textarea name="contract_state" rows="10" class="form-control">{{$execution->contract_state ?? ''}}</textarea>
             </div>
             <div class="form-group">
                 <label for="current_price">Contact:</label>
                 <select name="contact_id" class="form-control" id="contact">
                     @foreach ($contacts as $contact)
-                    <option value="{{$contact->id}}">{{$contact->name}}</option>
+                    <option value="{{$contact->id}}" @if($execution) @if($execution->contact_id == $contact->id) selected @endif @endif>{{$contact->name}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group">
                 <label for="">Date of Publication:</label>
-                <input type="date" name="date_of_publication" class="form-control">
+                <input type="date" name="date_of_publication" value="{{Carbon\Carbon::parse($execution->date_of_publication ?? date('Y-m-d'))->format('Y-m-d') }}" class="form-control">
                 </select>
             </div>
             <div class="form-group">
                 <label>Status:</label>
                 <div class="typeahead">
-                    <input class="form-control" value="{{$ammendment->status->status_name ?? ''}}" id="status_id"
+                    <input class="form-control" value="{{$execution->status->status_name ?? ''}}" id="status_id"
                         name="status_id" type="text" dir="ltr" style="width: 100%">
                 </div>
             </div>

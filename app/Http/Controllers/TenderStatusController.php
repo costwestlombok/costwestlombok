@@ -47,7 +47,7 @@ class TenderStatusController extends Controller
             'status_name' => 'required',
         ]);
         TenderStatus::create($data);
-        alert('Success', 'Data saved successfully!', 'success');
+        Session::put('success', 'Data saved successfully!');
 
         return back();
     }
@@ -89,7 +89,7 @@ class TenderStatusController extends Controller
         ]);
         $data = $request->all();
         $tenderStatus->update($data);
-        alert('Success', 'Data updated successfully!', 'success');
+        Session::put('success', 'Data updated successfully!');
         return redirect('/catalog/tender-status');
     }
 

@@ -60,7 +60,7 @@
 <div class="card">
     <!--begin::Form-->
     <form method="post"
-        action="{{ isset($warranty) ? url('warranty/'.$warranty->id) : url('warranty') }}" >
+        action="{{ isset($warranty) ? url('warranty/'.$warranty->id.'/update') : url('warranty') }}" >
         @csrf
         @if(isset($warranty))
         @method('patch')
@@ -70,24 +70,24 @@
             <div class="form-group">
                 <label>Warranty Type:</label>
                 <div class="typeahead">
-                    <input class="form-control" value="{{$warranty->type->type_name ?? ''}}" id="warranty_types_id"
+                    <input class="form-control" value="{{$warranty->type->name ?? ''}}" id="warranty_types_id"
                         name="warranty_types_id" type="text" dir="ltr" style="width: 100%">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="number">Amount:</label>
-                <input type="text" name="ammount" class="form-control">
+                <input type="text" name="ammount" value="{{number_format($warranty->ammount ?? '0')}}" class="form-control">
             </div>
 
             <div class="form-group">
                 <label for="name">Expiration Date:</label>
-                <input type="date" name="expiration_date" class="form-control" value="{{date('m-d-Y')}}">
+                <input type="date" name="expiration_date" class="form-control" value="{{Carbon\Carbon::parse($warranty->expiration_date ?? date('Y-m-d'))->format('Y-m-d') }}">
             </div>
 
             <div class="form-group">
                 <label for="name">Publication Date:</label>
-                <input type="date" name="date_of_publication" class="form-control" value="{{date('m-d-Y')}}">
+                <input type="date" name="date_of_publication" class="form-control" value="{{Carbon\Carbon::parse($warranty->date_of_publication ?? date('Y-m-d'))->format('Y-m-d') }}">
             </div>
             <div class="form-group">
                 <label>Status:</label>

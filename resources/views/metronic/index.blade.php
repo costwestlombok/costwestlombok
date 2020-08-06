@@ -234,7 +234,7 @@
                                 <!--end::Svg Icon-->
                             </span></a>
                     </div>
-                    <div class="position-absolute right-0 bottom-0 mr-5 overflow-hidden">
+                    <div class="position-absolute right-0 bottom-0 mr-5 mb-2 overflow-hidden">
                         <img src="/metronic/assets/media/svg/humans/c.png"
                             class="max-h-100px max-h-xl-175px" alt="">
                     </div>
@@ -385,15 +385,7 @@
             <!--begin::Header-->
             <div class="card-header border-0">
                 <h3 class="card-title font-weight-bolder text-dark">Officials</h3>
-                <div class="card-toolbar">
-                    <div class="dropdown dropdown-inline">
-                        <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="ki ki-bold-more-ver"></i>
-                        </a>
-
-                    </div>
-                </div>
+                
             </div>
             <!--end::Header-->
             <!--begin::Body-->
@@ -448,7 +440,7 @@
             <div class="card-header border-0">
                 <h3 class="card-title font-weight-bolder text-dark">Sources</h3>
                 <div class="card-toolbar">
-                    <a href="#" class="btn btn-primary">Add New</a>
+                    <a href="{{ url('catalog/source/create') }}" class="btn btn-primary">Add New</a>
                 </div>
             </div>
             <!--end::Header-->
