@@ -39,50 +39,60 @@
 $contacts = App\Contact::all();
 @endphp
 @section('content')
-<!--begin::Card-->
-<div class="card">
-    <!--begin::Form-->
-    <form method="post"
-        action="{{ isset($disbursment) ? url('disbursment/'.$disbursment->id.'/update') : url('/disbursment') }}">
-        @csrf
-        @if(isset($disbursment))
-        @method('patch')
-        @endif
-        <input type="hidden" name="executions_id" value="{{$execution->id}}">
-        <div class="card-body">
-            <div class="form-group">
-                <label for="name">Order:</label>
-                <input type="number" name="order" value="{{$disbursment->order ?? '0'}}" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="name">Disbursment Date:</label>
-                <input type="date" name="date" class="form-control" value="{{Carbon\Carbon::parse($execution->date ?? date('Y-m-d'))->format('Y-m-d') }}">
-            </div>
-            <div class="form-group">
-                <label for="name">Amount:</label>
-                <input type="text" name="amount" class="form-control" value="{{number_format($disbursment->amount ?? '0')}}">
-            </div>
-            <div class="form-group">
-                <label for="name">Description:</label>
-                <textarea name="description" rows="5" class="form-control">{{$disbursment->description ?? ''}}</textarea>
-            </div>
-            <div class="form-group">
-                <label>Status:</label>
-                <div class="typeahead">
-                    <input class="form-control" value="{{$disbursment->status->status_name ?? ''}}" id="status_id"
-                        name="status_id" type="text" dir="ltr" style="width: 100%">
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+        <!--begin::Card-->
+        <div class="card">
+            <!--begin::Form-->
+            <form method="post"
+                action="{{ isset($disbursment) ? url('disbursment/'.$disbursment->id.'/update') : url('/disbursment') }}">
+                @csrf
+                @if(isset($disbursment))
+                @method('patch')
+                @endif
+                <input type="hidden" name="executions_id" value="{{$execution->id}}">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="name">Order:</label>
+                        <input type="number" name="order" value="{{$disbursment->order ?? '0'}}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Disbursment Date:</label>
+                        <input type="date" name="date" class="form-control"
+                            value="{{Carbon\Carbon::parse($execution->date ?? date('Y-m-d'))->format('Y-m-d') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Amount:</label>
+                        <input type="text" name="amount" class="form-control"
+                            value="{{number_format($disbursment->amount ?? '0')}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Description:</label>
+                        <textarea name="description" rows="5"
+                            class="form-control">{{$disbursment->description ?? ''}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Status:</label>
+                        <div class="typeahead">
+                            <input class="form-control" value="{{$disbursment->status->status_name ?? ''}}"
+                                id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%">
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="card-footer">
+                    <div class="text-right">
+                        <button type="reset" class="btn btn-secondary"
+                            onclick="javascript:history.back()">Cancel</button>
+                        <button type="submit"
+                            class="btn btn-primary ml-2">{{ isset($disbursment) ? 'Update' : 'Create' }}</button>
+                    </div>
+                </div>
+            </form>
+            <!--end::Form-->
         </div>
-        <div class="card-footer">
-            <div class="float-right">
-                <button type="reset" class="btn btn-secondary" onclick="javascript:history.back()">Cancel</button>
-                <button type="submit"
-                    class="btn btn-primary mr-2">{{ isset($disbursment) ? 'Update' : 'Create' }}</button>
-            </div>
-        </div>
-    </form>
-    <!--end::Form-->
+        <!--end::Card-->
+    </div>
+    <!--end::Container-->
 </div>
-<!--end::Card-->
 @endsection

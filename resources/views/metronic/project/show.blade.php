@@ -115,31 +115,37 @@
 </script>
 @endsection
 @section('content')
-<!--begin::Info-->
-<div class="d-flex align-items-center flex-wrap mr-1">
-    <!--begin::Page Heading-->
-    <div class="d-flex align-items-baseline flex-wrap mr-5">
-        <!--begin::Page Title-->
-        <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">Project</h2>
-        <!--end::Page Title-->
-        <!--begin::Breadcrumb-->
-        <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
-            <li class="breadcrumb-item">
-                <a href="{{ url('/dashboard') }}" class="text-muted">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="{{ url('/project') }}" class="text-muted">Project</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="{{ url('/project') }}" class="text-muted">Detail</a>
-            </li>
-        </ul>
-        <!--end::Breadcrumb-->
+<div class="subheader py-3 py-lg-8  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Info-->
+        <div class="d-flex align-items-center flex-wrap mr-1">
+
+            <!--begin::Page Heading-->
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <!--begin::Page Title-->
+                <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">
+                    Detail Project
+                </h2>
+                <!--end::Page Title-->
+
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('project.index') }}" class="text-muted">
+                            Project </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a href="javascript:" class="text-muted">
+                            Detail Project </a>
+                    </li>
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page Heading-->
+        </div>
+        <!--end::Info-->
     </div>
-    <!--end::Page Heading-->
 </div>
-<br>
-<!--end::Info-->
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">

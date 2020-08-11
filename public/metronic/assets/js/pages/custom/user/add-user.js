@@ -19,24 +19,29 @@ var KTAddUser = function () {
 
 		// Validation before going to next page
 		_wizard.on('beforeNext', function (wizard) {
-			_validations[wizard.getStep() - 1].validate().then(function(status) {
+			// Don't go to the next step yet
+			_wizard.stop();
+
+			// Validate form
+			var validator = _validations[wizard.getStep() - 1]; // get validator for currnt step
+			validator.validate().then(function (status) {
 		        if (status == 'Valid') {
 					_wizard.goNext();
 					KTUtil.scrollTop();
 				} else {
-					swal.fire({
+					Swal.fire({
 		                text: "Sorry, looks like there are some errors detected, please try again.",
 		                icon: "error",
 		                buttonsStyling: false,
 		                confirmButtonText: "Ok, got it!",
-		                confirmButtonClass: "btn font-weight-bold btn-light"
+						customClass: {
+							confirmButton: "btn font-weight-bold btn-light"
+						}
 		            }).then(function() {
 						KTUtil.scrollTop();
 					});
 				}
 		    });
-
-			_wizard.stop();  // Don't go to the next step
 		});
 
 		// Change Event
@@ -46,6 +51,8 @@ var KTAddUser = function () {
 	}
 
 	var _initValidations = function () {
+		// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+
 		// Validation Rules For Step 1
 		_validations.push(FormValidation.formValidation(
 			_formEl,

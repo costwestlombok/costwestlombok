@@ -14,7 +14,10 @@
 Route::get('/', 'FrontController@index');
 
 Route::get('home', function () {
-    return view('metronic.dashboard');
+    if (Auth::check()) {
+        return redirect('dashboard');
+    }
+    return redirect('/');
 })->name('home');
 
 Route::get('/get-entity', 'OrganizationController@get_entity');
@@ -114,7 +117,7 @@ Route::get('/contract-completion/{completion}/delete', 'ContractController@compl
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 //contract-management
 Route::resource('ammendment', 'AmmendmentController');

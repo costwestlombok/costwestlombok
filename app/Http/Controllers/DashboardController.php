@@ -6,13 +6,14 @@ use App\Offerer;
 use App\Official;
 use App\Project;
 use App\Source;
+use Auth;
 
 class DashboardController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -22,6 +23,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        if (Auth::guest()) {
+            return redirect('/');
+        }
         $projects = Project::orderBy('created_at', 'DESC')->limit(4)->get();
         $officials = Official::orderBy('created_at', 'DESC')->limit(5)->get();
         $sources = Source::orderBy('created_at', 'DESC')->limit(5)->get();

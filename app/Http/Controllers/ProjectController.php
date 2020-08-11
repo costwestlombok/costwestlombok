@@ -28,8 +28,11 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
-        $projects = Project::paginate(8);
+        if (request()->get('query')) {
+            $projects = Project::where('project_title', 'like', '%'.request()->get('query').'%')->paginate(10);
+        } else {
+            $projects = Project::paginate(10);
+        }
         return view('metronic.project.index', ['projects' => $projects]);
     }
 

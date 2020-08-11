@@ -5,61 +5,45 @@
 <script>
     jQuery(document).ready(function () {
         $(document).on('click', '.button', function (e) {
-                e.preventDefault();
-                var id = $(this).data('id');
-                var link = $(this).attr('href');
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won\'t be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes, delete it!"
-                }).then(function(result) {
-                    if (result.value) {
-                        window.location.href = "/api/project/"+ id +"/delete"; 
-                    }
-                });
+            e.preventDefault();
+            var id = $(this).data('id');
+            var link = $(this).attr('href');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won\'t be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!"
+            }).then(function (result) {
+                if (result.value) {
+                    window.location.href = "/api/project/" + id + "/delete";
+                }
             });
+        });
     });
 </script>
 @endsection
 @section('content')
-<!--begin::Info-->
-<div class="d-flex align-items-center flex-wrap mr-1">
-    <!--begin::Page Heading-->
-    <div class="d-flex align-items-baseline flex-wrap mr-5">
-        <!--begin::Page Title-->
-        <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">Project</h2>
-        <!--end::Page Title-->
-        <!--begin::Breadcrumb-->
-        <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
-            <li class="breadcrumb-item">
-                <a href="{{ url('/dashboard') }}" class="text-muted">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="{{ url('/project') }}" class="text-muted">Project</a>
-            </li>
-        </ul>
-        <!--end::Breadcrumb-->
-    </div>
-    <!--end::Page Heading-->
-</div>
-<br>
-<!--end::Info-->
-{{-- Project Sub Header --}}
+<!--begin::Subheader-->
 <div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
     <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
         <!--begin::Details-->
         <div class="d-flex align-items-center flex-wrap mr-2">
+            <!--begin::Title-->
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                Project </h5>
+            <!--end::Title-->
             <!--begin::Separator-->
-            <div class="mt-2 mb-2 mr-5 bg-gray-200"></div>
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
             <!--end::Separator-->
             <!--begin::Search Form-->
             <div class="d-flex align-items-center" id="kt_subheader_search">
-                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">{{$projects->total()}} Total</span>
-                <form class="ml-5">
+                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">{{$projects->total()}}
+                    Total</span>
+                <form class="ml-5" action="{{ route('project.index') }}" method="GET">
                     <div class="input-group input-group-sm input-group-solid" style="max-width: 175px">
-                        <input type="text" class="form-control" id="kt_subheader_search_form" placeholder="Search...">
+                        <input type="text" name="query" value="{{ request()->get('query') }}" class="form-control"
+                            id="kt_subheader_search_form" placeholder="Search...">
                         <div class="input-group-append">
                             <span class="input-group-text">
                                 <span class="svg-icon">
@@ -146,9 +130,6 @@
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
             <!--begin::Button-->
-            <a href="/metronic/demo5/.html" class=""></a>
-            <!--end::Button-->
-            <!--begin::Button-->
             <a href="{{ route('project.create') }}" class="btn btn-primary font-weight-bolder"><span
                     class="svg-icon svg-icon-md">
                     <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
@@ -169,7 +150,8 @@
         <!--end::Toolbar-->
     </div>
 </div>
-{{-- End Project Sub Header --}}
+<!--end::Subheader-->
+
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">
@@ -284,12 +266,14 @@
                                             </li>
                                             <hr>
                                             <li class="navi-item">
-                                                <a href="{{url('project/'.$item->id.'/edit')}}" class="navi-link"><span><i class="flaticon2-pen"></i>
-                                                </span> &nbsp; Edit</a>
+                                                <a href="{{url('project/'.$item->id.'/edit')}}"
+                                                    class="navi-link"><span><i class="flaticon2-pen"></i>
+                                                    </span> &nbsp; Edit</a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="#" data-id="{{$item->id}}" class="button navi-link"><span><i class="flaticon2-trash"></i>
-                                                </span> &nbsp; Delete</a>
+                                                <a href="#" data-id="{{$item->id}}" class="button navi-link"><span><i
+                                                            class="flaticon2-trash"></i>
+                                                    </span> &nbsp; Delete</a>
                                             </li>
                                         </ul>
                                         <!--end::Navigation-->
@@ -314,16 +298,20 @@
                             <!--begin::Progress-->
                             <div class="flex-row-fluid mb-7">
                                 <span class="d-block font-weight-bold mb-4">Progress - Real Physical <span
-                                        class="text-muted font-weight-bold">(Last update : {{ date('D, d M Y', strtotime($item->latest_progress->date_of_advance ?? date('D, d M Y'))) }} )</span>
+                                        class="text-muted font-weight-bold">(Last update :
+                                        {{ date('D, d M Y', strtotime($item->latest_progress->date_of_advance ?? date('D, d M Y'))) }}
+                                        )</span>
                                     <div class="float-right">
                                         <a href="{{ url('project-progress/'.$item->id) }}">Add New Progress</a>
                                     </div>
                                     <div class="d-flex align-items-center pt-2">
                                         <div class="progress progress-xs mt-2 mb-2 w-100">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{number_format($item->latest_progress->real_percent ?? '0')}}%;"
+                                            <div class="progress-bar bg-warning" role="progressbar"
+                                                style="width: {{number_format($item->latest_progress->real_percent ?? '0')}}%;"
                                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
-                                        <span class="ml-3 font-weight-bolder">{{number_format($item->latest_progress->real_percent ?? '0')}}%</span>
+                                        <span
+                                            class="ml-3 font-weight-bolder">{{number_format($item->latest_progress->real_percent ?? '0')}}%</span>
                                     </div>
                             </div>
                             <!--end::Progress-->
@@ -447,23 +435,23 @@
                     class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($projects->currentPage() == 1) ? ' disabled' : '' }}">
                     <i class="ki ki-bold-arrow-back icon-xs"></i>
                 </a>
-                @for ($i = 1; $i <= $projects->lastPage(); $i++)
-                    <a href="{{ $projects->url($i) }}"
-                        class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($projects->currentPage() == $i) ? ' active' : '' }}">{{$i}}</a>
-                    @endfor
-                    <a href="{{ $projects->url($projects->currentPage()+1) }}"
-                        class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($projects->currentPage() == $projects->lastPage()) ? ' disabled' : '' }}">
-                        <i class="ki ki-bold-arrow-next icon-xs"></i>
-                    </a>
-                    <a href="{{ $projects->url($projects->lastPage()) }}"
-                        class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                        <i class="ki ki-bold-double-arrow-next icon-xs"></i>
-                    </a>
-                    @endif
-
+                @for ($i = 1; $projects->lastPage() >= $i; $i++)
+                <a href="{{ $projects->url($i) }}"
+                    class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($projects->currentPage() == $i) ? ' active' : '' }}">{{$i}}</a>
+                @endfor
+                <a href="{{ $projects->url($projects->currentPage()+1) }}"
+                    class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($projects->currentPage() == $projects->lastPage()) ? ' disabled' : '' }}">
+                    <i class="ki ki-bold-arrow-next icon-xs"></i>
+                </a>
+                <a href="{{ $projects->url($projects->lastPage()) }}"
+                    class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                    <i class="ki ki-bold-double-arrow-next icon-xs"></i>
+                </a>
+                @endif
             </div>
+            <form action="" method="get"></form>
             <div class="d-flex align-items-center">
-                <select
+                {{-- <select
                     class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary"
                     style="width: 75px;">
                     <option value="10">10</option>
@@ -471,7 +459,7 @@
                     <option value="30">30</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
-                </select>
+                </select> --}}
                 <span class="text-muted">Displaying {{$projects->count()}} of {{$projects->total()}} records</span>
             </div>
         </div>

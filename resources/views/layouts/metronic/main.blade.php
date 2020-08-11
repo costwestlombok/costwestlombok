@@ -66,7 +66,7 @@
                     data-menu-dropdown-timeout="500">
                     <!--begin::Menu Nav-->
                     <ul class="menu-nav">
-                        <li class="menu-item {{ request()->segment(1) == '' ? 'menu-item-active' : '' }}"
+                        <li class="menu-item {{ request()->segment(1) == '' || request()->segment(1) == 'dashboard' ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
                             <a href="{{ url('/dashboard') }}" class="menu-link">
                                 <span class="svg-icon menu-icon">
@@ -430,7 +430,7 @@
                         <!--begin::Desktop Search-->
                         <div class="quick-search quick-search-inline ml-20 w-300px">
                             <!--begin::Form-->
-                            <form method="get" class="quick-search-form">
+                            <form method="get" class="quick-search-form" action="{{ route('project.index') }}">
                                 <div class="input-group rounded bg-light">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -453,7 +453,8 @@
                                             </span>
                                         </span>
                                     </div>
-                                    <input type="text" class="form-control h-45px" placeholder="Search..." />
+                                    <input type="text" name="query" value="{{ request()->get('query') }}"
+                                        class="form-control h-45px" placeholder="Search..." />
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="quick-search-close ki ki-close icon-sm text-muted"></i>
@@ -545,16 +546,8 @@
             </div>
             <!--end::Header-->
             <!--begin::Content-->
-            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-                <!--begin::Entry-->
-                <div class="d-flex flex-column-fluid">
-                    <!--begin::Container-->
-                    <div class="container">
-                        @yield('content')
-                    </div>
-                    <!--end::Container-->
-                </div>
-                <!--end::Entry-->
+            <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+                @yield('content')
             </div>
             <!--end::Content-->
             <!--begin::Footer-->
@@ -564,7 +557,7 @@
                     <!--begin::Copyright-->
                     <div class="text-dark order-2 order-md-1">
                         <span class="text-muted font-weight-bold mr-2">2020©</span>
-                        <a href="#" target="_blank" class="text-dark-75 text-hover-primary">CoST West Lombok</a>
+                        <a href="{{ url('/') }}" class="text-dark-75 text-hover-primary">CoST West Lombok</a>
                     </div>
                     <!--end::Copyright-->
                 </div>

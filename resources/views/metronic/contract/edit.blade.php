@@ -52,7 +52,7 @@
 </script>
 @endsection
 @php
-    $suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
+$suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
 @endphp
 @section('content')
 {{-- card --}}
@@ -86,7 +86,8 @@
                 <select class="form-control" name="suppliers_id" id="supplier">
                     <option value="">Choose supplier</option>
                     @foreach ($suppliers as $supp)
-                    <option value="{{$supp->offerer_id}}" @if(isset($contract)) @if($contract->suppliers_id == $supp->offerer_id) selected @endif @endif >{{$supp->offerer->legal_name}}</option>
+                    <option value="{{$supp->offerer_id}}" @if(isset($contract)) @if($contract->suppliers_id ==
+                        $supp->offerer_id) selected @endif @endif >{{$supp->offerer->legal_name}}</option>
                     @endforeach
                 </select>
             </div>
@@ -94,13 +95,17 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="price_local_currency">Price in Local Currency:</label>
-                        <input type="text" class="form-control" value="{{number_format($contract->price_local_currency ?? '0')}}" name="price_local_currency" required />
+                        <input type="text" class="form-control"
+                            value="{{number_format($contract->price_local_currency ?? '0')}}"
+                            name="price_local_currency" required />
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="price_usd_currency">Price in USD Currency:</label>
-                        <input type="text" class="form-control" value="{{number_format($contract->price_usd_currency ?? '0')}}" name="price_usd_currency" required />
+                        <input type="text" class="form-control"
+                            value="{{number_format($contract->price_usd_currency ?? '0')}}" name="price_usd_currency"
+                            required />
                     </div>
                 </div>
             </div>
@@ -108,19 +113,25 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="start">Start Date:</label>
-                        <input type="date" class="form-control" value="{{ Carbon\Carbon::parse($contract->start_date ?? date('Y-m-d'))->format('Y-m-d') }}" name="start_date" required />
+                        <input type="date" class="form-control"
+                            value="{{ Carbon\Carbon::parse($contract->start_date ?? date('Y-m-d'))->format('Y-m-d') }}"
+                            name="start_date" required />
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="end">End Date:</label>
-                        <input type="date" class="form-control" value="{{Carbon\Carbon::parse($contract->end_date ?? date('Y-m-d'))->format('Y-m-d') }}" name="end_date" required />
+                        <input type="date" class="form-control"
+                            value="{{Carbon\Carbon::parse($contract->end_date ?? date('Y-m-d'))->format('Y-m-d') }}"
+                            name="end_date" required />
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="max_extend_date">Max Extended Date:</label>
-                <input type="date" class="form-control" value="{{Carbon\Carbon::parse($contract->max_entended_date ?? date('Y-m-d'))->format('Y-m-d') }}" name="max_extend_date" required />
+                <input type="date" class="form-control"
+                    value="{{Carbon\Carbon::parse($contract->max_entended_date ?? date('Y-m-d'))->format('Y-m-d') }}"
+                    name="max_extend_date" required />
             </div>
             <div class="form-group">
                 <label>Status:</label>
@@ -133,7 +144,7 @@
         <div class="card-footer">
             <div class="float-right">
                 <button type="reset" class="btn btn-secondary" onclick="javascript:history.back()">Cancel</button>
-                <button type="submit" class="btn btn-primary mr-2">{{ isset($contract) ? 'Update' : 'Create' }}</button>
+                <button type="submit" class="btn btn-primary ml-2">{{ isset($contract) ? 'Update' : 'Create' }}</button>
             </div>
         </div>
     </form>

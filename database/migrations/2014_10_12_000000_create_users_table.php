@@ -19,6 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('type')->nullable(); // admin, agency
+            $table->uuid('agency_id')->nullable();
+            $table->foreign('agency_id')->references('id')->on('agencies');
             $table->rememberToken();
             $table->timestamps();
         });
