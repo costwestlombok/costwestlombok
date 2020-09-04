@@ -10,7 +10,9 @@
 <script src="{{ asset('metronic/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 <script src="/metronic/assets/js/pages/crud/forms/widgets/form-repeater.js"></script>
 <!--end::Page Vendors-->
-<script>var COST_URL = "{{ url('api/project-document') }}";</script>
+<script>
+    var COST_URL = "{{ url('api/project-document') }}";
+</script>
 <script>
     "use strict";
     var KTDatatablesDataSourceAjaxServer = function () {
@@ -152,55 +154,54 @@
             <h3 class="card-label">Add New Document</h3>
         </div>
     </div>
-    <form method="post"
-    action="{{ isset($file) ? url('project-file/'.$file->id) : url('project-file') }}"
-    enctype="multipart/form-data">
-    @csrf
-    @if(isset($file))
-    @method('patch')
-    @endif
-    <input type="hidden" name="project_id" value="{{$project->id}}">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                  <label for="name">Document Name:</label>
-                  <input type="text" name="document_name" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="name">Description:</label>
-                <textarea name="document_description" rows="5" class="form-control"></textarea>
-            </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="name">Author Name:</label>
-                    <input type="text" name="author" class="form-control">
+    <form method="post" action="{{ isset($file) ? url('project-file/'.$file->id) : url('project-file') }}"
+        enctype="multipart/form-data">
+        @csrf
+        @if(isset($file))
+        @method('patch')
+        @endif
+        <input type="hidden" name="project_id" value="{{$project->id}}">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Document Name</label>
+                        <input type="text" name="document_name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Description</label>
+                        <textarea name="document_description" rows="5" class="form-control"></textarea>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="name">Date of Publication:</label>
-                    <input type="date" name="date_of_publication" class="form-control" value="{{date('m-d-Y')}}">
-                </div>
-                <div class="form-group">
-                    <label>Document:</label>
-                    <div></div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="file" name="file">
-                        <label class="custom-file-label" for="file">Choose file</label>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Author Name</label>
+                        <input type="text" name="author" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Date of Publication</label>
+                        <input type="date" name="date_of_publication" class="form-control" value="{{date('m-d-Y')}}">
+                    </div>
+                    <div class="form-group">
+                        <label>Document</label>
+                        <div></div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="file" name="file">
+                            <label class="custom-file-label" for="file">Choose file</label>
+                        </div>
                     </div>
                 </div>
             </div>
-          </div>
-    </div>
-    <div class="card-footer">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="float-right">
-                    <button type="submit" class="btn font-weight-bold btn-success mr-2">Submit</button>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="float-right">
+                        <button type="submit" class="btn font-weight-bold btn-success mr-2">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </form>
 </div>
 <br>

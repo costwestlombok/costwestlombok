@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="name">Role Name:</label>
+                                <label for="name">Role Name</label>
                                 <input type="text" class="form-control" value="{{ $role->role_name ?? '' }}"
                                     name="role_name" required />
                             </div>

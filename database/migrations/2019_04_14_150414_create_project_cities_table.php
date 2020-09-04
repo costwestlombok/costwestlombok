@@ -18,14 +18,14 @@ class CreateProjectCitiesTable extends Migration
             $table->string('benefit');
             $table->date('date_published')->nullable();
             $table->uuid('projects_id');
-            $table->foreign('projects_id')->references('id')->on('projects');
+            $table->foreign('projects_id')->references('id')->on('projects')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('cities_id');
-            $table->foreign('cities_id')->references('id')->on('cities');
+            $table->foreign('cities_id')->references('id')->on('cities')->onUpdate('cascade')->onDelete('cascade');
             $table->string('city_code')->nullable();
             $table->uuid('states_id');
-            $table->foreign('states_id')->references('id')->on('states');
+            $table->foreign('states_id')->references('id')->on('states')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('statuses_id');
-            $table->foreign('statuses_id')->references('id')->on('statuses');
+            $table->foreign('statuses_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('user_creation')->nullable();
             $table->integer('user_publication')->nullable();
             $table->datetime('published_at')->nullable();

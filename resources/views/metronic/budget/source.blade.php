@@ -10,7 +10,9 @@
 <script src="{{ asset('metronic/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 <script src="/metronic/assets/js/pages/crud/forms/widgets/form-repeater.js"></script>
 <!--end::Page Vendors-->
-<script>var COST_URL = "{{ url('api/budget-source') }}";</script>
+<script>
+    var COST_URL = "{{ url('api/budget-source') }}";
+</script>
 <script>
     var KTTypeahead = function () {
         var demo1 = function () {
@@ -66,7 +68,7 @@
                         data: 'source_name'
                     },
                     {
-                        data: 'ammount'
+                        data: 'amount'
                     },
                     {
                         data: 'created_at',
@@ -190,35 +192,35 @@
         </div>
     </div>
     <form action="{{ url('budget-source') }}" method="POST">
-    @csrf
-    <input type="hidden" name="budget_id" value="{{$budget->id}}">
-    <input type="hidden" name="project_id" value="{{$budget->project->id}}">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="name">Source Name:</label>
-                    <div class="typeahead">
-                        <input class="form-control" id="source_id"
-                            name="source_id" type="text" dir="ltr" style="width: 100%">
+        @csrf
+        <input type="hidden" name="budget_id" value="{{$budget->id}}">
+        <input type="hidden" name="project_id" value="{{$budget->project->id}}">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="name">Source Name</label>
+                        <div class="typeahead">
+                            <input class="form-control" id="source_id" name="source_id" type="text" dir="ltr"
+                                style="width: 100%">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="name">Amount:</label>
-                    <input type="text" class="form-control" name="ammount">
-                </div>
-            </div>    
-        </div>
-    </div>
-    <div class="card-footer">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="float-right">
-                    <button type="submit" class="btn font-weight-bold btn-success mr-2">Submit</button>
+                    <div class="form-group">
+                        <label for="name">Amount</label>
+                        <input type="text" class="form-control" name="amount">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="float-right">
+                        <button type="submit" class="btn font-weight-bold btn-success mr-2">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 <br>

@@ -4,26 +4,23 @@
 @section('script')
 <script>
     "use strict";
-
     // Shared Colors Definition
     const primary = '#6993FF';
     const success = '#1BC5BD';
     const info = '#8950FC';
     const warning = '#FFA800';
     const danger = '#F64E60';
-    var label = '{{$date}}';
-    var label1 = label.replace(/&quot;/g,"\'");
-    console.log(label1);
+    var label = JSON.parse('{!! $date !!}');
     var KTApexChartsDemo = function () {
         var _demo1 = function () {
 		const apexChart = "#chart_1";
             var options = {
                 series: [{
                     name: 'Programmed',
-                    data: {{$pp}}
+                    data: {{ $pp }}
                 }, {
                     name: 'Real',
-                    data: {{$rp}}
+                    data: {{ $rp }}
                 }],
                 chart: {
                     height: 350,
@@ -36,7 +33,7 @@
                     curve: 'smooth'
                 },
                 xaxis: {
-                    categories:  label1
+                    categories:  label
                 },
                 
                 colors: [primary, success]
@@ -50,10 +47,10 @@
             var options = {
                 series: [{
                     name: 'Scheduled Financing',
-                    data: {{$sf}}
+                    data: {{ $sf }}
                 }, {
                     name: 'Real Financing',
-                    data: {{$rf}}
+                    data: {{ $rf }}
                 }],
                 chart: {
                     height: 350,
@@ -66,7 +63,7 @@
                     curve: 'smooth'
                 },
                 xaxis: {
-                    categories: label1
+                    categories: label
                 },
                 colors: [warning, danger]
             };
@@ -83,7 +80,6 @@
         };
 
     }();
-
     jQuery(document).ready(function () {
         KTApexChartsDemo.init();
 
@@ -115,37 +111,28 @@
 </script>
 @endsection
 @section('content')
-<div class="subheader py-3 py-lg-8  subheader-transparent " id="kt_subheader">
-    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-        <!--begin::Info-->
-        <div class="d-flex align-items-center flex-wrap mr-1">
-
-            <!--begin::Page Heading-->
-            <div class="d-flex align-items-baseline flex-wrap mr-5">
-                <!--begin::Page Title-->
-                <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">
-                    Detail Project
-                </h2>
-                <!--end::Page Title-->
-
-                <!--begin::Breadcrumb-->
-                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('project.index') }}" class="text-muted">
-                            Project </a>
-                    </li>
-                    <li class="breadcrumb-item active">
-                        <a href="javascript:" class="text-muted">
-                            Detail Project </a>
-                    </li>
-                </ul>
-                <!--end::Breadcrumb-->
-            </div>
-            <!--end::Page Heading-->
+<!--begin::Subheader-->
+<div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
+    <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Details-->
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <!--begin::Title-->
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                Detail Project </h5>
+            <!--end::Title-->
         </div>
-        <!--end::Info-->
+        <!--end::Details-->
+        <!--begin::Toolbar-->
+        <div class="d-flex align-items-center">
+            <!--begin::Button-->
+            <a href="javascript:history.back()" class="btn btn-default font-weight-bold">Back </a>
+            <!--end::Button-->
+        </div>
+        <!--end::Toolbar-->
     </div>
 </div>
+<!--end::Subheader-->
+
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">
@@ -163,16 +150,17 @@
                                 <!--begin: Title-->
                                 <a href="#"
                                     class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">{{ str_limit($project->project_title, $limit = 100, $end = '...') }}</a>
-                                <span class="text-muted font-weight-bold">Project Code : {{$project->project_code}}</span>
-                                <span class="text-muted font-weight-bold">{{$project->subsector->sector->sector_name}} -
-                                    {{$project->subsector->subsector_name}}</span>
+                                <span class="text-muted font-weight-bold">Project Code :
+                                    {{ $project->project_code }}</span>
+                                <span class="text-muted font-weight-bold">{{ $project->subsector->sector->sector_name }}
+                                    -
+                                    {{ $project->subsector->subsector_name }}</span>
                                 <!--end::Title-->
                             </div>
                             <!--end::Info-->
                             <!--begin::Toolbar-->
                             <div class="card-toolbar mb-auto">
-                                <div class="dropdown dropdown-inline" data-toggle="tooltip" title="Option menus"
-                                    data-placement="left">
+                                <div class="dropdown dropdown-inline">
                                     <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="ki ki-bold-more-hor"></i>
@@ -180,11 +168,6 @@
                                     <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                                         <!--begin::Navigation-->
                                         <ul class="navi navi-hover">
-                                            <li class="navi-header pb-1">
-                                                <span
-                                                    class="text-primary text-uppercase font-weight-bold font-size-sm">Add
-                                                    data:</span>
-                                            </li>
                                             <li class="navi-item">
                                                 <a href="{{ url('project-tender/'.$project->id) }}" class="navi-link">
                                                     <span class="svg-icon menu-icon">
@@ -205,7 +188,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text"> Tender</span>
+                                                    <span class="navi-text ml-2"> Tender</span>
                                                 </a>
                                             </li>
                                             <li class="navi-item">
@@ -229,7 +212,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text"> Documents</span>
+                                                    <span class="navi-text ml-2"> Documents</span>
                                                 </a>
                                             </li>
                                             <li class="navi-item">
@@ -254,18 +237,22 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text"> Budget</span>
+                                                    <span class="navi-text ml-2"> Budget</span>
                                                 </a>
                                             </li>
+                                            @if(Auth::check())
                                             <hr>
                                             <li class="navi-item">
-                                                <a href="{{url('project/'.$project->id.'/edit')}}" class="navi-link"><span><i class="flaticon2-pen"></i>
-                                                </span> &nbsp; Edit</a>
+                                                <a href="{{ url('project/'.$project->id.'/edit') }}"
+                                                    class="navi-link"><span><i class="flaticon2-pen"></i>
+                                                    </span><span class="navi-text ml-2"> Edit</span></a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="#" data-id="{{$project->id}}" class="button navi-link"><span><i class="flaticon2-trash"></i>
-                                                </span> &nbsp; Delete</a>
+                                                <a href="#" data-id="{{ $project->id }}"
+                                                    class="button navi-link"><span><i class="flaticon2-trash"></i>
+                                                    </span><span class="navi-text ml-2"> Delete</span></a>
                                             </li>
+                                            @endif
                                         </ul>
                                         <!--end::Navigation-->
                                     </div>
@@ -288,24 +275,33 @@
                             </div>
                             <!--begin::Progress-->
                             <div class="flex-row-fluid mb-7">
-                                <span class="d-block font-weight-bold mb-4">Progress - Real Physical <span
-                                        class="text-muted font-weight-bold">(Last update : {{ date('D, d M Y', strtotime($project->latest_progress->date_of_advance)) }} )</span>
+                                <span class="d-block font-weight-bold mb-4">Progress - Real Physical
+                                    @if($project->latest_progress)
+                                    <span class="text-muted font-weight-bold">
+                                        (Last update :
+                                        {{ date('D, d M Y', strtotime($project->latest_progress->date_of_advance)) }} )
+                                    </span>
+                                    @endif
+                                    @if(Auth::check())
                                     <div class="float-right">
                                         <a href="{{ url('project-progress/'.$project->id) }}">Add New Progress</a>
                                     </div>
+                                    @endif
                                     <div class="d-flex align-items-center pt-2">
                                         <div class="progress progress-xs mt-2 mb-2 w-100">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{number_format($project->latest_progress->real_percent)}}%;"
+                                            <div class="progress-bar bg-warning" role="progressbar"
+                                                style="width: {{ number_format($project->latest_progress ? $project->latest_progress->real_percent : 0) }}%;"
                                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
-                                        <span class="ml-3 font-weight-bolder">{{number_format($project->latest_progress->real_percent)}}%</span>
+                                        <span
+                                            class="ml-3 font-weight-bolder">{{ number_format($project->latest_progress ? $project->latest_progress->real_percent : 0) }}%</span>
                                     </div>
                             </div>
                             <!--end::Progress-->
                         </div>
                         <!--end::Content-->
                         <!--begin::Text-->
-                        <p class="mb-7 mt-3">{{ str_limit($project->project_description, $limit = 100, $end = '...') }}</p>
+                        <p class="mb-7 mt-3">{!! $project->project_description !!}</p>
                         <!--end::Text-->
                         <!--begin::Blog-->
                         <div class="d-flex flex-wrap">
@@ -321,14 +317,15 @@
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="font-weight-bolder mb-4">SEFIN Code</span>
                                 <span class="font-weight-bolder font-size-h5 pt-1">
-                                    <span class="font-weight-bold text-dark-50"></span>{{$project->code_sefin}}</span>
+                                    <span class="font-weight-bold text-dark-50"></span>{{ $project->code_sefin }}</span>
                             </div>
                             <!--end::Item-->
                             <!--begin::Item-->
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="font-weight-bolder mb-4">Duration</span>
                                 <span class="font-weight-bolder font-size-h5 pt-1">
-                                    <span class="font-weight-bold text-dark-50">{{$project->duration}}</span> days</span>
+                                    <span class="font-weight-bold text-dark-50">{{ $project->duration }}</span>
+                                    days</span>
                             </div>
                             <!--end::Item-->
                             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
@@ -343,10 +340,12 @@
                                     </span>
                                     <div class="d-flex flex-column flex-lg-fill">
                                         <a href="{{ url('project-tender/'.$project->id) }}"><span
-                                                class="text-dark-75 font-weight-bolder font-size-sm">{{number_format($project->tender->count())}}
+                                                class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->tenders->count()) }}
                                                 Tender</span></a>
+                                        @if(Auth::check())
                                         <a href="{{ url('tender-create/'.$project->id) }}"
                                             class="text-primary font-weight-bolder">Add New Tender</a>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -363,10 +362,12 @@
                                     </span>
                                     <div class="d-flex flex-column flex-lg-fill">
                                         <a href="#"><span
-                                                class="text-dark-75 font-weight-bolder font-size-sm">{{number_format($project->file->count())}}
+                                                class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->file->count()) }}
                                                 Files</span></a>
+                                        @if(Auth::check())
                                         <a href="{{ url('project-file/'.$project->id) }}"
                                             class="text-primary font-weight-bolder">Add New File</a>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -383,10 +384,12 @@
                                     </span>
                                     <div class="d-flex flex-column flex-lg-fill">
                                         <a href="#"><span
-                                                class="text-dark-75 font-weight-bolder font-size-sm">{{number_format($project->project_budget->count())}}
+                                                class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->project_budget->count()) }}
                                                 Budget</span></a>
+                                        @if(Auth::check())
                                         <a href="{{ url('project-budget/'.$project->id) }}"
                                             class="text-primary font-weight-bolder">Add New Budget</a>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -407,7 +410,6 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h3 class="card-label mt-5 mb-5">Location</h3>
-
                                 {!! $map['js'] !!}
                                 {!! $map['html'] !!}
                             </div>

@@ -20,7 +20,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="name">Warranty Type:</label>
+                                <label for="name">Warranty Type</label>
                                 <input type="text" class="form-control" value="{{ $warranty_type->name ?? '' }}"
                                     name="name" required />
                             </div>

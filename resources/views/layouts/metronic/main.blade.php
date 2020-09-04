@@ -311,7 +311,7 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="menu-text">Bid / Award Evaluation</span>
+                                <span class="menu-text">Bid/Award Evaluation</span>
                             </a>
                         </li>
                         <li class="menu-item{{ request()->segment(1) == 'contract' ? ' menu-item-active' : '' }}"

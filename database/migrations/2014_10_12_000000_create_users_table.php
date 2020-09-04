@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('type')->nullable(); // admin, agency
             $table->uuid('agency_id')->nullable();
-            $table->foreign('agency_id')->references('id')->on('agencies');
+            $table->foreign('agency_id')->references('id')->on('agencies')->onUpdate('cascade')->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });

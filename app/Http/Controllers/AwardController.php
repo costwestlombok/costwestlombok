@@ -95,7 +95,7 @@ class AwardController extends Controller
         Award::create($data);
         Session::put('success', 'Data saved successfully!');
 
-        return redirect('tender-award/' . $request->tender_id);
+        return redirect('tender/' . $request->tender_id . '/award');
     }
 
     /**
@@ -216,11 +216,5 @@ class AwardController extends Controller
     public function create_award(Tender $tender)
     {
         return view('metronic.award.edit', compact('tender'));
-    }
-
-    public function award(Tender $tender)
-    {
-        $awards = Award::where('tender_id', $tender->id)->paginate(8);
-        return view('metronic.award.index', compact('tender', 'awards'));
     }
 }

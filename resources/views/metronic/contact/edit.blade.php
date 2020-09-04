@@ -20,27 +20,27 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="name">Name:</label>
+                                <label for="name">Name</label>
                                 <input type="text" name="name" value="{{$contact->name ?? ''}}" class="form-control"
                                     required>
                             </div>
                             <div class="form-group">
-                                <label for="name">Position:</label>
+                                <label for="name">Position</label>
                                 <input type="text" name="position" value="{{$contact->position ?? ''}}"
                                     class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="name">Email:</label>
+                                <label for="name">Email</label>
                                 <input type="email" name="email" value="{{$contact->email ?? ''}}" class="form-control"
                                     required>
                             </div>
                             <div class="form-group">
-                                <label for="name">Phone:</label>
+                                <label for="name">Phone</label>
                                 <input type="text" name="phone" value="{{$contact->phone ?? ''}}" class="form-control"
                                     required>
                             </div>
                             <div class="form-group">
-                                <label for="name">Address:</label>
+                                <label for="name">Address</label>
                                 <textarea name="address" rows="3" class="form-control"
                                     required>{{$contact->address ?? ''}}</textarea>
                             </div>

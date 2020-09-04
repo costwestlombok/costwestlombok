@@ -20,9 +20,9 @@ class CreateDisbursmentsTable extends Migration
             $table->string('description', 500)->nullable();
             $table->double('amount');
             $table->uuid('executions_id');
-            $table->foreign('executions_id')->references('id')->on('executions');
+            $table->foreign('executions_id')->references('id')->on('executions')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

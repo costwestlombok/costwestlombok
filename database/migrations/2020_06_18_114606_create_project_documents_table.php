@@ -16,7 +16,7 @@ class CreateProjectDocumentsTable extends Migration
         Schema::create('project_documents', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('project_id');
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('project_id')->references('id')->on('projects')->onUpdate('cascade')->onDelete('cascade');
             $table->string('document_name');
             $table->string('document_type')->nullable();
             $table->string('document_description')->nullable();

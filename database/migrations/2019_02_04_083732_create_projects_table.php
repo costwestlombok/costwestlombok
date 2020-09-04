@@ -16,15 +16,15 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('subsector_id');
-            $table->foreign('subsector_id')->references('id')->on('subsectors');
+            $table->foreign('subsector_id')->references('id')->on('subsectors')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('official_id');
-            $table->foreign('official_id')->references('id')->on('officials');
+            $table->foreign('official_id')->references('id')->on('officials')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('purpose_id');
-            $table->foreign('purpose_id')->references('id')->on('purposes');
+            $table->foreign('purpose_id')->references('id')->on('purposes')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('role_id')->nullable();
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
             $table->string('project_code')->nullable();
             $table->string('project_title')->nullable();
             $table->text('project_description')->nullable();

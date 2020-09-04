@@ -5,7 +5,9 @@
 @section('script')
 <script src="/metronic/assets/js/pages/custom/wizard/wizard-3.js"></script>
 <script src="/metronic/assets/js/pages/crud/forms/widgets/select2.js"></script>
-<script>var COST_URL = "{{ url('/get-entity') }}";</script>
+<script>
+    var COST_URL = "{{ url('/get-entity') }}";
+</script>
 <script>
     var KTSelect2 = function () {
         // Private functions
@@ -125,35 +127,26 @@ $officials = App\Official::where('entity_unit_id', $project->official->unit->id)
 $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)->get();
 }
 @endphp
-<div class="subheader py-3 py-lg-8  subheader-transparent " id="kt_subheader">
+<div class="subheader py-2 py-lg-4  subheader-transparent " id="kt_subheader">
     <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-        <!--begin::Info-->
-        <div class="d-flex align-items-center flex-wrap mr-1">
-
-            <!--begin::Page Heading-->
-            <div class="d-flex align-items-baseline flex-wrap mr-5">
-                <!--begin::Page Title-->
-                <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">
-                    {{ request()->segment(2) == 'create' ? 'Create' : 'Edit' }} Project
-                </h2>
-                <!--end::Page Title-->
-
-                <!--begin::Breadcrumb-->
-                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('project.index') }}" class="text-muted">
-                            Project </a>
-                    </li>
-                    <li class="breadcrumb-item active">
-                        <a href="javascript:" class="text-muted">
-                            {{ request()->segment(2) == 'create' ? 'Create' : 'Edit' }} Project </a>
-                    </li>
-                </ul>
-                <!--end::Breadcrumb-->
+        <!--begin::Details-->
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <!--begin::Title-->
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                {{ isset($project) ? 'Edit' : 'Add' }} Project </h5>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+            <!--end::Separator-->
+            <!--begin::Search Form-->
+            <div class="d-flex align-items-center" id="kt_subheader_search">
+                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
+                    {{ isset($project) ? 'Edit project details and save changes' : 'Enter project details and submit' }}
+                </span>
             </div>
-            <!--end::Page Heading-->
+            <!--end::Search Form-->
         </div>
-        <!--end::Info-->
+        <!--end::Details-->
     </div>
 </div>
 <div class="d-flex flex-column-fluid">
@@ -228,13 +221,13 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                     <!--end::Input-->
                                     <!--begin::Input-->
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Project Name:</label>
+                                        <label for="name">Project Name</label>
                                         <input type="text" class="form-control" name="project_title"
                                             value="{{$project->project_title ?? ''}}" required />
                                     </div>
                                     <!--end::Input-->
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Project Description:</label>
+                                        <label for="name">Project Description</label>
                                         <textarea name="project_description" id="project_description" rows="3"
                                             class="form-control">{{$project->project_description ?? ''}}</textarea>
                                     </div>
@@ -252,22 +245,22 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                         </select>
                                     </div>
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Budget:</label>
+                                        <label for="name">Budget</label>
                                         <input type="text" class="form-control" name="budget" id="budget"
                                             value="{{ number_format($project->budget ?? '0') }}" required>
                                     </div>
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">SEFIN code:</label>
+                                        <label for="name">SEFIN code</label>
                                         <input type="text" class="form-control" name="code_sefin"
                                             value="{{$project->code_sefin ?? ''}}" id="code_sefin">
                                     </div>
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Environment impact description:</label>
+                                        <label for="name">Environment impact description</label>
                                         <textarea name="environment_desc" id="environment_desc" class="form-control"
                                             rows="3">{{$project->environment_desc ?? ''}}</textarea>
                                     </div>
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Settlement description:</label>
+                                        <label for="name">Settlement description</label>
                                         <textarea name="settlement_desc" id="settlement_desc" class="form-control"
                                             rows="3">{{$project->settlement_desc ?? ''}}</textarea>
                                     </div>
@@ -278,7 +271,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                     <!--begin::Input-->
                                     <div class="form-group fv-plugins-icon-container">
                                         <div class="form-group">
-                                            <label for="name">Role:</label>
+                                            <label for="name">Role</label>
                                             <div class="typeahead">
                                                 <input class="form-control" value="{{$project->role->role_name ?? ''}}"
                                                     id="role_id" name="role_id" type="text" dir="ltr"
@@ -315,7 +308,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                     </div>
                                     <!--end::Input-->
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Official:</label>
+                                        <label for="name">Official</label>
                                         <select class="form-control" name="official_id" id="official"
                                             style="width: 100%;">
                                             @if(isset($project))
@@ -330,7 +323,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                     <div class="row">
                                         <div class="col-xl-6">
                                             <div class="form-group fv-plugins-icon-container">
-                                                <label for="name">Sector:</label>
+                                                <label for="name">Sector</label>
                                                 <select class="form-control" name="" id="sector" style="width: 100%;">
                                                     <option value="">Choose sector</option>
                                                     @foreach ($sectors as $sector)
@@ -344,7 +337,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                         </div>
                                         <div class="col-xl-6">
                                             <div class="form-group fv-plugins-icon-container">
-                                                <label for="name">Sub sector:</label>
+                                                <label for="name">Sub sector</label>
                                                 <select class="form-control" name="subsector_id" id="subsector"
                                                     style="width: 100%;">
                                                     @if(isset($project))
@@ -370,6 +363,12 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
 
                                         <div class="row">
                                             <div class="col-md-12">
+                                                <!--begin::Input-->
+                                                <div class="form-group">
+                                                    <input id="map_search" type="text" class="form-control"
+                                                        name="map_search" />
+                                                </div>
+                                                <!--end::Input-->
                                                 {!! $map['js'] !!}
                                                 {!! $map['html'] !!}
                                             </div>
@@ -379,16 +378,18 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="name">Initial Lat:</label>
+                                                <label for="name">Initial Lat</label>
                                                 <input type="text" class="form-control" name="initial_lat"
-                                                    id="initial_lat" value="{{$project->initial_lat ?? ''}}">
+                                                    id="initial_lat"
+                                                    value="{{$project->initial_lat ?? -8.683070211544514}}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="name">Inital Lon:</label>
+                                                <label for="name">Inital Lon</label>
                                                 <input type="text" class="form-control" name="initial_lon"
-                                                    id="initial_lon" value="{{$project->initial_lon ?? ''}}">
+                                                    id="initial_lon"
+                                                    value="{{$project->initial_lon ?? 116.13077257514645}}">
                                             </div>
                                         </div>
                                     </div>
@@ -396,16 +397,16 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="name">Final Lat:</label>
+                                                <label for="name">Final Lat</label>
                                                 <input type="text" class="form-control" name="final_lat" id="final_lat"
-                                                    value="{{$project->final_lat ?? ''}}">
+                                                    value="{{$project->final_lat ?? -8.679305276105104}}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="name">Final Lon:</label>
+                                                <label for="name">Final Lon</label>
                                                 <input type="text" class="form-control" name="final_lon" id="final_lon"
-                                                    value="{{$project->final_lon ?? ''}}">
+                                                    value="{{$project->final_lon ?? 116.13759645742493}}">
                                             </div>
                                         </div>
                                     </div>
@@ -416,32 +417,32 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                     <div class="my-5">
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label for="name">Start Date:</label>
+                                            <label for="name">Start Date</label>
                                             <input type="date" class="form-control" name="start_date" id="start_date"
                                                 value="{{ date_format(Carbon\Carbon::parse($project->start_date ?? date('Y-m-d')), 'Y-m-d') }}">
                                         </div>
                                         <!--end::Input-->
                                         <!--begin::Input-->
                                         <div class="form-group">
-                                            <label for="name">End Date:</label>
+                                            <label for="name">End Date</label>
                                             <input type="date" class="form-control" name="end_date" id="end_date"
                                                 value="{{ date_format(Carbon\Carbon::parse($project->end_date ?? date('Y-m-d')), 'Y-m-d') }}">
                                         </div>
                                         <!--end::Input-->
                                         <div class="form-group">
-                                            <label for="name">Approved Date:</label>
+                                            <label for="name">Approved Date</label>
                                             <input type="date" class="form-control" name="date_of_approved"
                                                 id="date_of_approved"
                                                 value="{{ date_format(Carbon\Carbon::parse($project->date_of_approved ?? date('Y-m-d')), 'Y-m-d') }}">
                                         </div>
                                         <div class="form-group">
-                                            <label for="name">Publication Date:</label>
+                                            <label for="name">Publication Date</label>
                                             <input type="date" class="form-control" name="date_of_publication"
                                                 id="date_of_publication"
                                                 value="{{ date_format(Carbon\Carbon::parse($project->date_of_publication ?? date('Y-m-d')), 'Y-m-d') }}">
                                         </div>
                                         <div class="form-group">
-                                            <label>Status:</label>
+                                            <label>Status</label>
                                             <select class="form-control" name="status_id" id="status"
                                                 style="width: 100%;">
                                                 <option value="">Choose status</option>

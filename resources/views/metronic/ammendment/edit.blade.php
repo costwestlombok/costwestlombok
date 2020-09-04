@@ -49,56 +49,56 @@
                 @if(isset($ammendment))
                 @method('patch')
                 @endif
-                <input type="hidden" name="engage_id" value="{{$contract->id}}">
+                <input type="hidden" name="engage_id" value="{{ $contract->id }}">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="name">Modification Number:</label>
-                        <input type="number" class="form-control" value="{{$ammendment->modification_number ?? '0'}}"
+                        <label for="name">Modification Number</label>
+                        <input type="number" class="form-control" value="{{ $ammendment->modification_number ?? '' }}"
                             name="modification_number" required />
                     </div>
 
                     <div class="form-group">
-                        <label for="name">Modification Type:</label>
-                        <input type="text" class="form-control" value="{{$ammendment->modification_type ?? ''}}"
+                        <label for="name">Modification Type</label>
+                        <input type="text" class="form-control" value="{{ $ammendment->modification_type ?? '' }}"
                             name="modification_type" required />
                     </div>
 
                     <div class="form-group">
-                        <label for="name">Justification:</label>
+                        <label for="name">Justification</label>
                         <textarea class="form-control" name="justification" rows="5"
-                            required>{{$ammendment->justification ?? ''}}</textarea>
+                            required>{{ $ammendment->justification ?? '' }}</textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="current_price">Current Price:</label>
+                        <label for="current_price">Current Price</label>
                         <input type="text" class="form-control" name="current_price"
-                            value="{{ number_format($ammendment->current_price) ?? '0'}}" required />
+                            value="{{ $ammendment->current_price ?? '' }}" required />
                     </div>
                     <div class="form-group">
-                        <label for="current_contract_scope">Current Contract Scope:</label>
+                        <label for="current_contract_scope">Current Contract Scope</label>
                         <textarea rows="5" class="form-control"
-                            name="current_contract_scope">{{$ammendment->current_contract_scope ?? ''}}</textarea>
+                            name="current_contract_scope">{{ $ammendment->current_contract_scope ?? '' }}</textarea>
                     </div>
                     <div class="form-group">
-                        <label for="">Date of Publication:</label>
+                        <label for="">Date of Publication</label>
                         <input type="date" name="date_of_publication" class="form-control"
                             value="{{ Carbon\Carbon::parse($contract->date_of_publication ?? date('Y-m-d'))->format('Y-m-d') }}">
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="">Adendum File:</label>
+                        <label for="">Adendum File</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="adendum" id="adendum">
                             <label class="custom-file-label"
-                                for="adendum">{{$ammendment->adendum ? 'Upload file to change document' : 'Choose file'}}</label>
+                                for="adendum">{{ isset($ammendment) ? ($ammendment->adendum ? 'Upload file to change document' : 'Choose file')  : 'Choose file' }}</label>
                         </div>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Status:</label>
+                        <label>Status</label>
                         <div class="typeahead">
-                            <input class="form-control" value="{{$ammendment->status->status_name ?? ''}}"
-                                id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%">
+                            <input class="form-control" value="{{ $ammendment->status->status_name ?? '' }}"
+                                id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%" required>
                         </div>
                     </div>
                 </div>

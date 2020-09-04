@@ -17,12 +17,12 @@ class CreateTableProjectSources extends Migration
             //
             $table->uuid('id')->primary();
             $table->uuid('project_id');
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('project_id')->references('id')->on('projects')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('source_id');
-            $table->foreign('source_id')->references('id')->on('sources');
+            $table->foreign('source_id')->references('id')->on('sources')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('budget_id');
-            $table->foreign('budget_id')->references('id')->on('budgets');
-            $table->double('ammount');
+            $table->foreign('budget_id')->references('id')->on('budgets')->onUpdate('cascade')->onDelete('cascade');
+            $table->double('amount');
             $table->timestamps();
         });
     }

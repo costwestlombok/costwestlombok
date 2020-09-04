@@ -51,32 +51,31 @@ $contacts = App\Contact::all();
                 @if(isset($disbursment))
                 @method('patch')
                 @endif
-                <input type="hidden" name="executions_id" value="{{$execution->id}}">
+                <input type="hidden" name="executions_id" value="{{ $execution->id }}">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="name">Order:</label>
-                        <input type="number" name="order" value="{{$disbursment->order ?? '0'}}" class="form-control">
+                        <label for="name">Order</label>
+                        <input type="number" name="order" value="{{ $disbursment->order ?? '' }}" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="name">Disbursment Date:</label>
+                        <label for="name">Disbursment Date</label>
                         <input type="date" name="date" class="form-control"
-                            value="{{Carbon\Carbon::parse($execution->date ?? date('Y-m-d'))->format('Y-m-d') }}">
+                            value="{{ Carbon\Carbon::parse($execution->date ?? date('Y-m-d'))->format('Y-m-d') }}">
                     </div>
                     <div class="form-group">
-                        <label for="name">Amount:</label>
-                        <input type="text" name="amount" class="form-control"
-                            value="{{number_format($disbursment->amount ?? '0')}}">
+                        <label for="name">Amount</label>
+                        <input type="text" name="amount" class="form-control" value="{{ $disbursment->amount ?? '' }}">
                     </div>
                     <div class="form-group">
-                        <label for="name">Description:</label>
+                        <label for="name">Description</label>
                         <textarea name="description" rows="5"
-                            class="form-control">{{$disbursment->description ?? ''}}</textarea>
+                            class="form-control">{{ $disbursment->description ?? '' }}</textarea>
                     </div>
                     <div class="form-group">
-                        <label>Status:</label>
+                        <label>Status</label>
                         <div class="typeahead">
-                            <input class="form-control" value="{{$disbursment->status->status_name ?? ''}}"
-                                id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%">
+                            <input class="form-control" value="{{ $disbursment->status->status_name ?? '' }}"
+                                id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%" required>
                         </div>
                     </div>
                 </div>

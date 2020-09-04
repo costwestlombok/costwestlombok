@@ -14,51 +14,51 @@ class Project extends Model
 
     public function subsector()
     {
-        return $this->belongsTo('App\Subsector', 'subsector_id', 'id');
+        return $this->belongsTo(Subsector::class);
     }
 
     public function official()
     {
-        return $this->belongsTo('App\Official', 'official_id', 'id');
+        return $this->belongsTo(Official::class);
     }
 
     public function purpose()
     {
-        return $this->belongsTo('App\Purpose', 'purpose_id', 'id');
+        return $this->belongsTo(Purpose::class);
     }
 
     public function role()
     {
-        return $this->belongsTo('App\Role', 'role_id', 'id');
+        return $this->belongsTo(Role::class);
     }
 
     public function status()
     {
-        return $this->belongsTo('App\Status', 'status_id', 'id');
+        return $this->belongsTo(Status::class);
     }
 
     public function file()
     {
-        return $this->hasMany('App\ProjectDocument', 'project_id', 'id');
+        return $this->hasMany(ProjectDocument::class);
     }
 
-    public function tender()
+    public function tenders()
     {
-        return $this->hasMany('App\Tender', 'project_id', 'id');
+        return $this->hasMany(Tender::class);
     }
 
     public function latest_progress()
     {
-        return $this->hasOne('App\Advance')->latest();
+        return $this->hasOne('App\Advance');
     }
 
     public function project_source()
     {
-        return $this->hasMany('App\ProjectSource', 'project_id', 'id');
+        return $this->hasMany(ProjectSource::class);
     }
 
     public function project_budget()
     {
-        return $this->hasMany('App\Budget', 'project_id', 'id');
+        return $this->hasMany(Budget::class);
     }
 }

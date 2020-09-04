@@ -16,7 +16,7 @@ class CreateCompletionsTable extends Migration
         Schema::create('completions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('contracts_id');
-            $table->foreign('contracts_id')->references('id')->on('contracts');
+            $table->foreign('contracts_id')->references('id')->on('contracts')->onUpdate('cascade')->onDelete('cascade');
             $table->string('final_scope', 300)->nullable();
             $table->text('description')->nullable();
             $table->date('date')->nullable();

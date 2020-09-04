@@ -87,7 +87,7 @@ class BudgetController extends Controller
             ]);
             $data['source_id'] = $s->id;
         }
-        $data['ammount'] = str_replace(",", "", $request->ammount);
+        $data['amount'] = str_replace(",", "", $request->amount);
         ProjectSource::create($data);
         Session::put('success', 'Data saved successfully!');
         return back();
@@ -109,8 +109,8 @@ class BudgetController extends Controller
             ->addColumn('source_name', function ($source) {
                 return $source->source->source_name;
             })
-            ->editColumn('ammount', function ($source) {
-                return number_format($source->ammount);
+            ->editColumn('amount', function ($source) {
+                return number_format($source->amount);
             })
             ->make(true);
     }

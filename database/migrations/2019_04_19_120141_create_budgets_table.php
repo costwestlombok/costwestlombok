@@ -21,7 +21,7 @@ class CreateBudgetsTable extends Migration
             $table->date('end_date')->nullable();
             $table->integer('duration')->nullable();
             $table->uuid('project_id');
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('project_id')->references('id')->on('projects')->onUpdate('cascade')->onDelete('cascade');
             $table->double('amount');
             $table->timestamps();
         });

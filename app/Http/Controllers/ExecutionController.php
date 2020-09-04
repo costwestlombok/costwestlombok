@@ -206,7 +206,7 @@ class ExecutionController extends Controller
     public function warranty_store(Request $request)
     {
         $data = $request->all();
-        $data['ammount'] = str_replace(",", "", $request->ammount);
+        $data['amount'] = str_replace(",", "", $request->amount);
         $status = Status::where('status_name', $request->status_id)->first();
 
         if ($status) {
@@ -236,7 +236,7 @@ class ExecutionController extends Controller
     public function update_warranty(Request $request, Warranty $warranty)
     {
         $data = $request->all();
-        $data['ammount'] = str_replace(",", "", $request->ammount);
+        $data['amount'] = str_replace(",", "", $request->amount);
         $status = Status::where('status_name', $request->status_id)->first();
 
         if ($status) {

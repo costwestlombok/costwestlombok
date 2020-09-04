@@ -16,9 +16,9 @@ class CreateTenderOfferersTable extends Migration
         Schema::create('tender_offerers', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('offerer_id');
-            $table->foreign('offerer_id')->references('id')->on('offerers');
+            $table->foreign('offerer_id')->references('id')->on('offerers')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('tender_id');
-            $table->foreign('tender_id')->references('id')->on('tenders');
+            $table->foreign('tender_id')->references('id')->on('tenders')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

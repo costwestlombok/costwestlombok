@@ -17,7 +17,7 @@ class CreateOfficialsTable extends Migration
             //
             $table->uuid('id')->primary();
             $table->uuid('entity_unit_id');
-            $table->foreign('entity_unit_id')->references('id')->on('organization_units');
+            $table->foreign('entity_unit_id')->references('id')->on('organization_units')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name')->nullable();
             $table->string('position')->nullable();
             $table->string('email')->nullable();

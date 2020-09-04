@@ -55,99 +55,109 @@
 $suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
 @endphp
 @section('content')
-{{-- card --}}
-<div class="card">
-    <form action="{{ isset($contract) ? route('contract.update', $contract) : route('contract.store') }}" method="POST">
-        @csrf
-        @if(isset($contract))
-        @method('patch')
-        @endif
-        <input type="hidden" name="awards_id" value="{{$award->id}}">
-        <div class="card-body">
-            <div class="form-group">
-                <label for="name">Contract Number:</label>
-                <input type="text" class="form-control" name="number" value="{{$contract->number ?? ''}}" required />
-            </div>
-
-            <div class="form-group">
-                <label for="name">Contract Title:</label>
-                <input type="text" class="form-control" name="contract_title"
-                    value="{{$contract->contract_title ?? ''}}" required />
-            </div>
-
-            <div class="form-group">
-                <label for="name">Contract Scope:</label>
-                <textarea class="form-control" name="contract_scope"
-                    rows="5">{{$contract->contract_scope ?? ''}}</textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="">Supplier Name:</label>
-                <select class="form-control" name="suppliers_id" id="supplier">
-                    <option value="">Choose supplier</option>
-                    @foreach ($suppliers as $supp)
-                    <option value="{{$supp->offerer_id}}" @if(isset($contract)) @if($contract->suppliers_id ==
-                        $supp->offerer_id) selected @endif @endif >{{$supp->offerer->legal_name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+        <!--begin::Card-->
+        <div class="card">
+            <form action="{{ isset($contract) ? route('contract.update', $contract) : route('contract.store') }}"
+                method="POST">
+                @csrf
+                @if(isset($contract))
+                @method('patch')
+                @endif
+                <input type="hidden" name="awards_id" value="{{ $award->id }}">
+                <div class="card-body">
                     <div class="form-group">
-                        <label for="price_local_currency">Price in Local Currency:</label>
-                        <input type="text" class="form-control"
-                            value="{{number_format($contract->price_local_currency ?? '0')}}"
-                            name="price_local_currency" required />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="price_usd_currency">Price in USD Currency:</label>
-                        <input type="text" class="form-control"
-                            value="{{number_format($contract->price_usd_currency ?? '0')}}" name="price_usd_currency"
+                        <label for="name">Contract Number</label>
+                        <input type="text" class="form-control" name="number" value="{{ $contract->number ?? '' }}"
                             required />
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
+
                     <div class="form-group">
-                        <label for="start">Start Date:</label>
+                        <label for="name">Contract Title</label>
+                        <input type="text" class="form-control" name="contract_title"
+                            value="{{ $contract->contract_title ?? '' }}" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Contract Scope</label>
+                        <textarea class="form-control" name="contract_scope"
+                            rows="5">{{ $contract->contract_scope ?? '' }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Supplier Name</label>
+                        <select class="form-control" name="suppliers_id" id="supplier">
+                            <option value="">Choose supplier</option>
+                            @foreach ($suppliers as $supp)
+                            <option value="{{ $supp->offerer_id }}" @if(isset($contract)) @if($contract->suppliers_id ==
+                                $supp->offerer_id) selected @endif @endif >{{ $supp->offerer->legal_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="price_local_currency">Price in Local Currency</label>
+                                <input type="text" class="form-control"
+                                    value="{{ number_format($contract->price_local_currency ?? '0') }}"
+                                    name="price_local_currency" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="price_usd_currency">Price in USD Currency</label>
+                                <input type="text" class="form-control"
+                                    value="{{ number_format($contract->price_usd_currency ?? '0') }}"
+                                    name="price_usd_currency" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="start">Start Date</label>
+                                <input type="date" class="form-control"
+                                    value="{{ Carbon\Carbon::parse($contract->start_date ?? date('Y-m-d'))->format('Y-m-d') }}"
+                                    name="start_date" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="end">End Date</label>
+                                <input type="date" class="form-control"
+                                    value="{{ Carbon\Carbon::parse($contract->end_date ?? date('Y-m-d'))->format('Y-m-d') }}"
+                                    name="end_date" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="max_extend_date">Max Extended Date</label>
                         <input type="date" class="form-control"
-                            value="{{ Carbon\Carbon::parse($contract->start_date ?? date('Y-m-d'))->format('Y-m-d') }}"
-                            name="start_date" required />
+                            value="{{ Carbon\Carbon::parse($contract->max_entended_date ?? date('Y-m-d'))->format('Y-m-d') }}"
+                            name="max_extend_date" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <div class="typeahead">
+                            <input class="form-control" value="{{ $contract->status->status_name ?? '' }}"
+                                id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%" required>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="end">End Date:</label>
-                        <input type="date" class="form-control"
-                            value="{{Carbon\Carbon::parse($contract->end_date ?? date('Y-m-d'))->format('Y-m-d') }}"
-                            name="end_date" required />
+                <div class="card-footer">
+                    <div class="text-right">
+                        <button type="reset" class="btn btn-secondary"
+                            onclick="javascript:history.back()">Cancel</button>
+                        <button type="submit"
+                            class="btn btn-primary ml-2">{{ isset($contract) ? 'Update' : 'Create' }}</button>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="max_extend_date">Max Extended Date:</label>
-                <input type="date" class="form-control"
-                    value="{{Carbon\Carbon::parse($contract->max_entended_date ?? date('Y-m-d'))->format('Y-m-d') }}"
-                    name="max_extend_date" required />
-            </div>
-            <div class="form-group">
-                <label>Status:</label>
-                <div class="typeahead">
-                    <input class="form-control" value="{{$contract->status->status_name ?? ''}}" id="status_id"
-                        name="status_id" type="text" dir="ltr" style="width: 100%">
-                </div>
-            </div>
+            </form>
         </div>
-        <div class="card-footer">
-            <div class="float-right">
-                <button type="reset" class="btn btn-secondary" onclick="javascript:history.back()">Cancel</button>
-                <button type="submit" class="btn btn-primary ml-2">{{ isset($contract) ? 'Update' : 'Create' }}</button>
-            </div>
-        </div>
-    </form>
+        <!--end::Card-->
+    </div>
+    <!--end::Container-->
 </div>
-{{-- End card --}}
 @endsection

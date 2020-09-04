@@ -16,11 +16,11 @@ class CreateAwardsTable extends Migration
         Schema::create('awards', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('tender_id');
-            $table->foreign('tender_id')->references('id')->on('tenders');
+            $table->foreign('tender_id')->references('id')->on('tenders')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('contract_method_id');
-            $table->foreign('contract_method_id')->references('id')->on('contract_methods');
+            $table->foreign('contract_method_id')->references('id')->on('contract_methods')->onUpdate('cascade')->onDelete('cascade');
             $table->string('process_number');
             $table->integer('participants_number');
             $table->double('contract_estimate_cost');

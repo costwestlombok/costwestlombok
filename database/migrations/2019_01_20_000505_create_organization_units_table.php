@@ -18,7 +18,7 @@ class CreateOrganizationUnitsTable extends Migration
             $table->uuid('id')->primary();
             $table->string('unit_name');
             $table->uuid('entity_id');
-            $table->foreign('entity_id')->references('id')->on('organizations');
+            $table->foreign('entity_id')->references('id')->on('organizations')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

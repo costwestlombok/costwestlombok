@@ -16,9 +16,9 @@ class CreateAdvancesTable extends Migration
         Schema::create('advances', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('project_id');
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('project_id')->references('id')->on('projects')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
             $table->float('programmed_percent')->nullable();
             $table->float('real_percent')->nullable();
             $table->decimal('scheduled_financing')->nullable();

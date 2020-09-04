@@ -75,8 +75,8 @@ class ContractController extends Controller
         }
         Contract::create($data);
         Session::put('success', 'Data saved successfully!');
-
-        return redirect('contract/' . $request->awards_id);
+        $tender = \App\Award::find($request->awards_id)->tender;
+        return redirect('tender/' . $tender->id . '/award');
     }
 
     /**
@@ -144,7 +144,7 @@ class ContractController extends Controller
         $id = $contract->award->tender->id;
         $contract->delete();
         Session::put('success', 'Data deleted successfully!');
-        return redirect('tender-award/' . $id);
+        return redirect('tender/' . $id . '/award');
     }
 
     public function completion(Completion $completion)

@@ -295,11 +295,30 @@ class TenderController extends Controller
 
     public function index_tender(Project $project)
     {
-        $tenders = Tender::where('project_id', $project->id)->paginate(8);
+        if (request()->get('query_tender')) {
+            $tenders = Tender::where('project_id', $project->id)->where('project_process_name', 'like', '%'.request()->get('query_tender').'%')->paginate(10);
+        } else {
+            $tenders = Tender::where('project_id', $project->id)->paginate(10);
+        }
         return view('metronic.tender.index', compact('tenders', 'project'));
     }
     public function create_tender(Project $project)
     {
         return view('metronic.tender.edit', compact('project'));
+    }
+
+    public function award(Tender $tender)
+    {
+        if (request()->get('query_award')) {
+            $awards = $tender->awards()->where('process_number', 'like', '%'.request()->get('query_award').'%')->paginate(10);
+        } else {
+            $awards = $tender->awards()->paginate(10);
+        }
+        return view('metronic.award.index', compact('tender', 'awards'));
+    }
+
+    public function awardCreate(Tender $tender)
+    {
+        return view('metronic.award.edit', compact('tender'));
     }
 }

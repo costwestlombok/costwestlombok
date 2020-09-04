@@ -16,13 +16,13 @@ class CreateTendersTable extends Migration
         Schema::create('tenders', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('project_id');
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('project_id')->references('id')->on('projects')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('contract_type_id');
-            $table->foreign('contract_type_id')->references('id')->on('contract_types');
+            $table->foreign('contract_type_id')->references('id')->on('contract_types')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('tender_method_id');
-            $table->foreign('tender_method_id')->references('id')->on('tender_methods');
+            $table->foreign('tender_method_id')->references('id')->on('tender_methods')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('official_id');
-            $table->foreign('official_id')->references('id')->on('officials');
+            $table->foreign('official_id')->references('id')->on('officials')->onUpdate('cascade')->onDelete('cascade');
             $table->string('process_number')->nullable();
             $table->text('project_process_name')->nullable();
             $table->date('start_date')->nullable();
@@ -39,9 +39,9 @@ class CreateTendersTable extends Migration
             $table->string('clarification')->nullable(); //file?
             $table->string('acceptance_certificate')->nullable(); //file?
             $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('tender_status_id');
-            $table->foreign('tender_status_id')->references('id')->on('tender_statuses');
+            $table->foreign('tender_status_id')->references('id')->on('tender_statuses')->onUpdate('cascade')->onDelete('cascade');
             $table->date('date_of_publication')->nullable();
             $table->timestamps();
         });

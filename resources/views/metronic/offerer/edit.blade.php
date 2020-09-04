@@ -20,14 +20,14 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">Offerer Name:</label>
+                                <label for="name">Offerer Name</label>
                                 <input type="text" class="form-control" name="offerer_name"
                                     value="{{$offerer->offerer_name ?? ''}}" required />
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">Legal Name:</label>
+                                <label for="name">Legal Name</label>
                                 <input type="text" class="form-control" name="legal_name"
                                     value="{{$offerer->legal_name ?? ''}}" />
                             </div>
@@ -36,14 +36,14 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">Phone:</label>
+                                <label for="name">Phone</label>
                                 <input type="text" class="form-control" name="phone" value="{{$offerer->phone ?? ''}}"
                                     required />
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">Website:</label>
+                                <label for="name">Website</label>
                                 <input type="text" class="form-control" name="website"
                                     value="{{$offerer->website ?? ''}}" />
                             </div>
@@ -52,14 +52,14 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">Address:</label>
+                                <label for="name">Address</label>
                                 <textarea name="address" id="" rows="5" class="form-control"
                                     required>{{$offerer->address ?? ''}}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">Description:</label>
+                                <label for="name">Description</label>
                                 <textarea name="description" id="" rows="5"
                                     class="form-control">{{$offerer->description ?? ''}}</textarea>
                             </div>

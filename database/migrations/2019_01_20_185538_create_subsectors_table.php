@@ -16,7 +16,7 @@ class CreateSubsectorsTable extends Migration
         Schema::create('subsectors', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('sector_id');
-            $table->foreign('sector_id')->references('id')->on('sectors');
+            $table->foreign('sector_id')->references('id')->on('sectors')->onUpdate('cascade')->onDelete('cascade');
             $table->string('subsector_name');
             $table->timestamps();
         });

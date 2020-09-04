@@ -77,7 +77,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">Position:</label>
+                                <label for="name">Position</label>
                                 <input type="text" class="form-control" value="{{$official->position ?? ''}}"
                                     name="position" />
                             </div>
@@ -86,14 +86,14 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">Email:</label>
+                                <label for="name">Email</label>
                                 <input type="text" class="form-control" value="{{$official->email ?? ''}}"
                                     name="email" />
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">Phone:</label>
+                                <label for="name">Phone</label>
                                 <input type="text" class="form-control" name="phone"
                                     value="{{$official->phone ?? ''}}" />
                             </div>

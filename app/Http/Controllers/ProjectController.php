@@ -44,34 +44,24 @@ class ProjectController extends Controller
     public function create()
     {
         $map = new Googlemaps();
-        $config['center'] = "-8.6825504,116.1286378";
-        $config['map_width'] = "100%";
-        $config['map_height'] = "423px";
-        $config['geocodeCaching'] = true;
-        $config['zoomControlPosition'] = "BOTTOM_RIGHT"; //zoom control position
-        $config['zoom'] = "14"; //zoom value
-        $marker = array();
-        $marker['position'] = '-8.6825504,116.1286378';
-        $marker['draggable'] = true;
-        $marker['ondragend'] = 'document.getElementById("initial_lat").value =event.latLng.lat()
-                document.getElementById("initial_lon").value =event.latLng.lng();';
-        $marker['icon'] = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
-        $marker1 = array();
-        $marker1['position'] = '-8.6825557,116.1308265';
-        $marker1['draggable'] = true;
-        $marker1['ondragend'] = 'document.getElementById("final_lat").value =event.latLng.lat()
-                document.getElementById("final_lon").value =event.latLng.lng();';
-        $marker1['icon'] = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
-        $map->add_marker($marker);
-        $map->add_marker($marker1);
-        $map->initialize($config);
-
+        $map->add_marker([
+            'position' => '-8.683070211544514,116.13077257514645',
+            'draggable' => TRUE,
+            'ondragend' => 'document.getElementById("initial_lat").value =event.latLng.lat(); document.getElementById("initial_lon").value = event.latLng.lng();',
+            'icon' => 'http://maps.google.com/mapfiles/kml/paddle/A.png',
+        ]);
+        $map->add_marker([
+            'position' => '-8.679305276105104,116.13759645742493',
+            'draggable' => TRUE,
+            'ondragend' => 'document.getElementById("final_lat").value =event.latLng.lat(); document.getElementById("final_lon").value = event.latLng.lng();',
+            'icon' => 'http://maps.google.com/mapfiles/kml/paddle/B.png',
+        ]);
+        $map->initialize([
+            'center' => "-8.683070211544514,116.13077257514645",
+            'places' => TRUE
+        ]);
         $map = $map->create_map();
-
-        return view('metronic.project.edit', [
-            'map' => $map,
-        ]
-        );
+        return view('metronic.project.edit', compact('map'));
     }
 
     /**
@@ -98,7 +88,6 @@ class ProjectController extends Controller
             ]);
             $data['role_id'] = $r->id;
         }
-
         Project::create($data);
         Session::put("success", "Data saved successfully!");
         return redirect('/project');
@@ -125,32 +114,19 @@ class ProjectController extends Controller
         $rf = $progress->map(function ($dt) {
             return doubleval($dt->real_financing);
         });
-        // return $rf;
         $map = new Googlemaps();
-        $config['center'] = "-8.6825504,116.1286378";
-        $config['map_width'] = "100%";
-        $config['map_height'] = "423px";
-        $config['geocodeCaching'] = true;
-        $config['zoomControlPosition'] = "BOTTOM_RIGHT"; //zoom control position
-        $config['zoom'] = "14"; //zoom value
-        $marker = array();
-        $marker['position'] = $project->initial_lat . ',' . $project->initial_lon;
-        $marker['draggable'] = true;
-        $marker['ondragend'] = 'document.getElementById("initial_lat").value =event.latLng.lat()
-                document.getElementById("initial_lon").value =event.latLng.lng();';
-        $marker['icon'] = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
-        $marker1 = array();
-        $marker1['position'] = $project->final_lat . ',' . $project->final_lon;
-        $marker1['draggable'] = true;
-        $marker1['ondragend'] = 'document.getElementById("final_lat").value =event.latLng.lat()
-                document.getElementById("final_lon").value =event.latLng.lng();';
-        $marker1['icon'] = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
-        $map->add_marker($marker);
-        $map->add_marker($marker1);
-        $map->initialize($config);
-
+        $map->add_marker([
+            'position' => $project->initial_lat . ',' . $project->initial_lon,
+            'icon' => 'http://maps.google.com/mapfiles/kml/paddle/A.png',
+        ]);
+        $map->add_marker([
+            'position' => $project->final_lat . ',' . $project->final_lon,
+            'icon' => 'http://maps.google.com/mapfiles/kml/paddle/B.png',
+        ]);
+        $map->initialize([
+            'center' => $project->initial_lat . ',' . $project->initial_lon,
+        ]);
         $map = $map->create_map();
-
         return view('metronic.project.show', compact('project', 'pp', 'rp', 'sf', 'rf', 'date', 'map'));
     }
 
@@ -164,36 +140,24 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         $map = new Googlemaps();
-        $config['center'] = "-8.6825504,116.1286378";
-        $config['map_width'] = "100%";
-        $config['map_height'] = "423px";
-        $config['geocodeCaching'] = true;
-        $config['zoomControlPosition'] = "BOTTOM_RIGHT"; //zoom control position
-        $config['zoom'] = "14"; //zoom value
-        $marker = array();
-        $marker['position'] = $project->initial_lat . ',' . $project->initial_lon;
-        $marker['draggable'] = true;
-        $marker['ondragend'] = 'document.getElementById("initial_lat").value =event.latLng.lat()
-                document.getElementById("initial_lon").value =event.latLng.lng();';
-        $marker['icon'] = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
-        $marker1 = array();
-        $marker1['position'] = $project->final_lat . ',' . $project->final_lon;
-        $marker1['draggable'] = true;
-        $marker1['ondragend'] = 'document.getElementById("final_lat").value =event.latLng.lat()
-                document.getElementById("final_lon").value =event.latLng.lng();';
-        $marker1['icon'] = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
-        $map->add_marker($marker);
-        $map->add_marker($marker1);
-        $map->initialize($config);
-
-        $map = $map->create_map();
-
-        return view('metronic.project.edit', [
-
-            'map' => $map,
-            'project' => $project,
-
+        $map->add_marker([
+            'position' => $project->initial_lat . ',' . $project->initial_lon,
+            'draggable' => TRUE,
+            'ondragend' => 'document.getElementById("initial_lat").value =event.latLng.lat(); document.getElementById("initial_lon").value = event.latLng.lng();',
+            'icon' => 'http://maps.google.com/mapfiles/kml/paddle/A.png',
         ]);
+        $map->add_marker([
+            'position' => $project->final_lat . ',' . $project->final_lon,
+            'draggable' => TRUE,
+            'ondragend' => 'document.getElementById("final_lat").value =event.latLng.lat(); document.getElementById("final_lon").value = event.latLng.lng();',
+            'icon' => 'http://maps.google.com/mapfiles/kml/paddle/B.png',
+        ]);
+        $map->initialize([
+            'center' => $project->initial_lat . ',' . $project->initial_lon,
+            'places' => TRUE
+        ]);
+        $map = $map->create_map();
+        return view('metronic.project.edit', compact('map', 'project'));
     }
 
     /**

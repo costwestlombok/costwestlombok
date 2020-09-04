@@ -10,7 +10,9 @@
 <script src="{{ asset('metronic/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 <script src="/metronic/assets/js/pages/crud/forms/widgets/form-repeater.js"></script>
 <!--end::Page Vendors-->
-<script>var COST_URL = "{{ url('api/tender-offerer') }}";</script>
+<script>
+    var COST_URL = "{{ url('api/tender-offerer') }}";
+</script>
 <script>
     var KTSelect2 = function () {
         // Private functions
@@ -197,32 +199,32 @@
         </div>
     </div>
     <form action="{{ url('/tender-offerer') }}" method="POST">
-    @csrf
-    <input type="hidden" name="tender_id" value="{{$tender->id}}">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="name">Offerer Name:</label>
-                    <select name="offerer_id" id="offerer" class="form-control" required style="width: 100%">
-                        <option value="">Choose Offerer</option>
-                        @foreach ($offerers as $offerer)
+        @csrf
+        <input type="hidden" name="tender_id" value="{{$tender->id}}">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="name">Offerer Name</label>
+                        <select name="offerer_id" id="offerer" class="form-control" required style="width: 100%">
+                            <option value="">Choose Offerer</option>
+                            @foreach ($offerers as $offerer)
                             <option value="{{$offerer->id}}">{{$offerer->offerer_name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>    
-        </div>
-    </div>
-    <div class="card-footer">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="float-right">
-                    <button type="submit" class="btn font-weight-bold btn-success mr-2">Submit</button>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="float-right">
+                        <button type="submit" class="btn font-weight-bold btn-success mr-2">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 <br>

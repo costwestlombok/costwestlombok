@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="name">Status Name:</label>
+                                <label for="name">Status Name</label>
                                 <input type="text" class="form-control" value="{{ $status->status_name ?? '' }}"
                                     name="status_name" required />
                             </div>

@@ -16,7 +16,7 @@ class CreateAdvanceImagesTable extends Migration
         Schema::create('advance_images', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('advance_id');
-            $table->foreign('advance_id')->references('id')->on('advances');
+            $table->foreign('advance_id')->references('id')->on('advances')->onUpdate('cascade')->onDelete('cascade');
             $table->string('path');
             $table->string('image');
             $table->date('date_of_publication')->nullable();

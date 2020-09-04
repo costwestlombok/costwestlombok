@@ -20,7 +20,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="name">Unit Name:</label>
+                                <label for="name">Unit Name</label>
                                 <input type="text" class="form-control"
                                     value="{{ $organization_unit->unit_name ?? '' }}" name="unit_name" required />
                             </div>

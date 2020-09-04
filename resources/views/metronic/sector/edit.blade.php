@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="name">sector Name:</label>
+                                <label for="name">sector Name</label>
                                 <input type="text" class="form-control" value="{{ $sector->sector_name ?? '' }}"
                                     name="sector_name" required />
                             </div>

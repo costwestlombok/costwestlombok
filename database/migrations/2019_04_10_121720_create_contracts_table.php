@@ -16,7 +16,7 @@ class CreateContractsTable extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('awards_id');
-            $table->foreign('awards_id')->references('id')->on('awards');
+            $table->foreign('awards_id')->references('id')->on('awards')->onUpdate('cascade')->onDelete('cascade');
             $table->string('number')->nullable();
             $table->datetime('start_date')->nullable();
             $table->datetime('end_date')->nullable();
@@ -27,9 +27,9 @@ class CreateContractsTable extends Migration
             $table->double('price_local_currency')->nullable();
             $table->double('price_usd_currency')->nullable();
             $table->uuid('suppliers_id');
-            $table->foreign('suppliers_id')->references('id')->on('offerers');
+            $table->foreign('suppliers_id')->references('id')->on('offerers')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

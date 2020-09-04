@@ -57,7 +57,6 @@
 </script>
 @endsection
 @section('content')
-{{-- card --}}
 <div class="container">
     <div class="card card-custom">
         <div class="card-body p-0">
@@ -98,48 +97,48 @@
                             @if(isset($award))
                             @method('patch')
                             @endif
-                            <input type="hidden" name="tender_id" value="{{$tender->id}}">
+                            <input type="hidden" name="tender_id" value="{{ $tender->id }}">
                             <!--begin: Wizard Step 1-->
                             <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
 
                                 <h4 class="mb-10 font-weight-bold text-dark">Enter the Details of your award</h4>
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label for="name">Prosess Number:</label>
+                                    <label for="name">Prosess Number</label>
                                     <input type="text" class="form-control" name="process_number"
-                                        value="{{$award->process_number ?? ''}}" required />
+                                        value="{{ $award->process_number ?? '' }}" required />
                                 </div>
                                 <!--end::Input-->
                                 <!--begin::Input-->
                                 <div class="form-group">
-                                    <label for="name">Particpants Number:</label>
+                                    <label for="name">Particpants Number</label>
                                     <input type="number" class="form-control" name="participants_number"
-                                        value="{{$award->participants_number ?? ''}}" />
+                                        value="{{ $award->participants_number ?? '' }}" />
                                 </div>
                                 <!--end::Input-->
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="name">Cost Estimation:</label>
+                                            <label for="name">Cost Estimation</label>
                                             <input type="text" class="form-control" name="contract_estimate_cost"
                                                 value="{{ number_format($award->contract_estimate_cost ?? '0') }}" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="name">Cost:</label>
+                                            <label for="name">Cost</label>
                                             <input type="text" class="form-control" name="cost"
-                                                value="{{number_format($award->cost ?? '0')}}" />
+                                                value="{{ number_format($award->cost ?? '0') }}" />
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group fv-plugins-icon-container">
                                     <div class="form-group">
-                                        <label for="name">Contract Method:</label>
+                                        <label for="name">Contract Method</label>
                                         <div class="typeahead">
                                             <input class="form-control"
-                                                value="{{$award->contract_method->method_name ?? ''}}"
+                                                value="{{ $award->contract_method->method_name ?? '' }}"
                                                 id="contract_method_id" name="contract_method_id" type="text" dir="ltr"
                                                 style="width: 100%">
                                         </div>
@@ -147,10 +146,11 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Status:</label>
+                                    <label>Status</label>
                                     <div class="typeahead">
-                                        <input class="form-control" value="{{$award->status->status_name ?? ''}}"
-                                            id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%">
+                                        <input class="form-control" value="{{ $award->status->status_name ?? '' }}"
+                                            id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%"
+                                            required>
                                     </div>
                                 </div>
                             </div>
@@ -160,43 +160,47 @@
                                 <div class="my-5">
                                     <!--begin::Input-->
                                     <div class="form-group">
-                                        <label for="name">File Opening Act:</label>
+                                        <label for="name">File Opening Act</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="opening_act"
                                                 id="opening_act">
-                                            <label class="custom-file-label" for="opening_act">{{$award->opening_act ? 'Upload file to change document' : 'Choose file'}}</label>
+                                            <label class="custom-file-label"
+                                                for="opening_act">{{ isset($award) ? ($award->opening_act ? 'Upload file to change document' : 'Choose file') : 'Choose file' }}</label>
                                         </div>
                                     </div>
                                     <!--end::Input-->
                                     <!--begin::Input-->
 
                                     <div class="form-group">
-                                        <label for="name">File Recommendation Report Act:</label>
+                                        <label for="name">File Recommendation Report Act</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="recomendation_report_act"
                                                 id="recomendation_report_act">
-                                            <label class="custom-file-label" for="recomendation_report_act">{{$award->recomendation_report_act ? 'Upload file to change document' : 'Choose file'}}</label>
+                                            <label class="custom-file-label"
+                                                for="recomendation_report_act">{{  isset($award) ? ($award->recomendation_report_act ? 'Upload file to change document' : 'Choose file') : 'Choose file' }}</label>
                                         </div>
                                     </div>
                                     <!--end::Input-->
                                     <div class="form-group">
-                                        <label for="name">File Resolution:</label>
+                                        <label for="name">File Resolution</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="award_resolution"
                                                 id="award_resolution">
-                                            <label class="custom-file-label" for="award_resolution">{{$award->award_resolution ? 'Upload file to change document' : 'Choose file'}}</label>
+                                            <label class="custom-file-label"
+                                                for="award_resolution">{{ isset($award) ? ($award->award_resolution ? 'Upload file to change document' : 'Choose file') : 'Choose file' }}</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">File Others:</label>
+                                        <label for="name">File Others</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="others" id="others">
-                                            <label class="custom-file-label" for="others">{{$award->others ? 'Upload file to change document' : 'Choose file'}}</label>
+                                            <label class="custom-file-label"
+                                                for="others">{{ isset($award) ? ($award->others ? 'Upload file to change document' : 'Choose file') : 'Choose file' }}</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">Publishid At:</label>
+                                        <label for="name">Publishid At</label>
                                         <input type="date" class="form-control" name="published_at" id="published_at"
                                             value="{{ Carbon\Carbon::parse($award->published_at ?? date('Y-m-d'))->format('Y-m-d') }}">
                                     </div>
@@ -231,5 +235,4 @@
         </div>
     </div>
 </div>
-{{-- End card --}}
 @endsection

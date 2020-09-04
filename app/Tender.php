@@ -14,46 +14,46 @@ class Tender extends Model
 
     public function project()
     {
-        return $this->belongsTo('App\Project', 'project_id', 'id');
+        return $this->belongsTo(Project::class);
     }
 
     public function contract_type()
     {
-        return $this->belongsTo('App\ContractType', 'contract_type_id', 'id');
+        return $this->belongsTo(ContractType::class);
     }
 
     public function tender_method()
     {
-        return $this->belongsTo('App\TenderMethod', 'tender_method_id', 'id');
+        return $this->belongsTo(TenderMethod::class);
     }
 
     public function official()
     {
-        return $this->belongsTo('App\Official', 'official_id', 'id');
+        return $this->belongsTo(Official::class);
     }
 
     public function status()
     {
-        return $this->belongsTo('App\Status', 'status_id', 'id');
+        return $this->belongsTo(Status::class);
     }
 
     public function tender_status()
     {
-        return $this->belongsTo('App\TenderStatus', 'tender_status_id', 'id');
+        return $this->belongsTo(TenderStatus::class);
     }
 
     public function offerer()
     {
-        return $this->belongsToMany('App\Offerer', 'tender_offerers', 'offerer_id', 'tender_id');
+        return $this->belongsToMany(Offerer::class, 'tender_offerers', 'offerer_id', 'tender_id');
     }
 
     public function tender_offerer()
     {
-        return $this->hasMany('App\TenderOfferer', 'tender_id', 'id');
+        return $this->hasMany(TenderOfferer::class);
     }
 
-    public function award()
+    public function awards()
     {
-        return $this->hasMany('App\Award', 'tender_id', 'id');
+        return $this->hasMany(Award::class);
     }
 }

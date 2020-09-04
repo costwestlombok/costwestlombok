@@ -17,3 +17,7 @@
 table.dataTable > tbody > tr.child ul.dtr-details {
     width: 100%;
 }
+
+.border-radius {
+    border-radius: 0.85rem;
+}

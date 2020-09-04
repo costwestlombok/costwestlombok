@@ -28,13 +28,13 @@ class CreateEngagesTable extends Migration
             $table->integer('duration')->nullable();
 
             $table->uuid('awards_id');
-            $table->foreign('awards_id')->references('id')->on('awards');
+            $table->foreign('awards_id')->references('id')->on('awards')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('organizations_id');
-            $table->foreign('organizations_id')->references('id')->on('organizations');
+            $table->foreign('organizations_id')->references('id')->on('organizations')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('offerers_id');
-            $table->foreign('offerers_id')->references('id')->on('offerers');
+            $table->foreign('offerers_id')->references('id')->on('offerers')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('statuses_id');
-            $table->foreign('statuses_id')->references('id')->on('statuses');
+            $table->foreign('statuses_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('user_creation')->nullable();
             $table->integer('user_publication')->nullable();
             $table->datetime('published_at')->nullable();

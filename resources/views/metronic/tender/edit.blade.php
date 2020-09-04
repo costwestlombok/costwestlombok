@@ -146,18 +146,39 @@
 @endsection
 @section('content')
 @php
-        $organizations = App\Organization::all();
-        $statuses = App\Status::all();
-        $projects = App\Project::all();
-        $contract_types = App\ContractType::all();
-        $tender_methods = App\TenderMethod::all();
-        $tender_statuses = App\TenderStatus::all();
-        if(isset($tender)){
-            $units = App\OrganizationUnit::where('entity_id', $tender->official->unit->org->id)->get();
-            $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)->get();
-        }
+$organizations = App\Organization::all();
+$statuses = App\Status::all();
+$projects = App\Project::all();
+$contract_types = App\ContractType::all();
+$tender_methods = App\TenderMethod::all();
+$tender_statuses = App\TenderStatus::all();
+if(isset($tender)){
+$units = App\OrganizationUnit::where('entity_id', $tender->official->unit->org->id)->get();
+$officials = App\Official::where('entity_unit_id', $tender->official->unit->id)->get();
+}
 @endphp
-{{-- card --}}
+<div class="subheader py-2 py-lg-4  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Details-->
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <!--begin::Title-->
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                {{ isset($tender) ? 'Edit' : 'Add' }} Tender </h5>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+            <!--end::Separator-->
+            <!--begin::Search Form-->
+            <div class="d-flex align-items-center" id="kt_subheader_search">
+                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
+                    {{ isset($tender) ? 'Edit tender details and save changes' : 'Enter tender details and submit' }}
+                </span>
+            </div>
+            <!--end::Search Form-->
+        </div>
+        <!--end::Details-->
+    </div>
+</div>
 <div class="container">
     <div class="card card-custom">
         <div class="card-body p-0">
@@ -201,7 +222,8 @@
                     <div class="col-xl-12 col-xxl-7">
                         <!--begin: Wizard Form-->
                         <form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form" method="post"
-                            action="{{ isset($tender) ? route('tender.update', $tender) : route('tender.store') }}" enctype="multipart/form-data">
+                            action="{{ isset($tender) ? route('tender.update', $tender) : route('tender.store') }}"
+                            enctype="multipart/form-data">
                             @csrf
                             @if(isset($tender))
                             @method('patch')
@@ -213,46 +235,59 @@
                                 <h4 class="mb-10 font-weight-bold text-dark">Enter the Details of your tender</h4>
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label for="name">Prosess Number:</label>
-                                    <input type="text" class="form-control" name="process_number" value="{{$tender->process_number ?? ''}}"/>
+                                    <label for="name">Prosess Number</label>
+                                    <input type="text" class="form-control" name="process_number"
+                                        value="{{$tender->process_number ?? ''}}" />
                                 </div>
                                 <!--end::Input-->
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label for="name">Process Name:</label>
-                                    <input type="text" class="form-control" name="project_process_name" value="{{$tender->project_process_name ?? ''}}"/>
+                                    <label for="name">Process Name</label>
+                                    <input type="text" class="form-control" name="project_process_name"
+                                        value="{{$tender->project_process_name ?? ''}}" />
                                 </div>
                                 <!--end::Input-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label for="name">Tender Amount:</label>
-                                    <input type="text" class="form-control" name="amount" value="{{ number_format($tender->amount ?? '0') }}"/>
+                                    <label for="name">Tender Amount</label>
+                                    <input type="text" class="form-control" name="amount"
+                                        value="{{ number_format($tender->amount ?? '0') }}" />
                                 </div>
                                 <div class="form-group fv-plugins-icon-container">
                                     <div class="form-group">
-                                        <label for="name">Contract type:</label>
+                                        <label for="name">Contract type</label>
                                         <div class="typeahead">
-                                        <input class="form-control" value="{{$tender->contract_type->type_name ?? ''}}" id="contract_type_id" name="contract_type_id" type="text" dir="ltr" style="width: 100%" >
+                                            <input class="form-control"
+                                                value="{{$tender->contract_type->type_name ?? ''}}"
+                                                id="contract_type_id" name="contract_type_id" type="text" dir="ltr"
+                                                style="width: 100%">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group fv-plugins-icon-container">
                                     <div class="form-group">
-                                        <label for="name">Tender method:</label>
+                                        <label for="name">Tender method</label>
                                         <div class="typeahead">
-                                            <input class="form-control" value="{{$tender->tender_method->method_name ?? ''}}" id="tender_method_id" name="tender_method_id" type="text" dir="ltr" style="width: 100%" >
+                                            <input class="form-control"
+                                                value="{{$tender->tender_method->method_name ?? ''}}"
+                                                id="tender_method_id" name="tender_method_id" type="text" dir="ltr"
+                                                style="width: 100%">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Tender Status:</label>
+                                    <label>Tender Status</label>
                                     <div class="typeahead">
-                                        <input class="form-control" value="{{$tender->tender_status->status_name ?? ''}}" id="tender_status_id" name="tender_status_id" type="text" dir="ltr" style="width: 100%" >
+                                        <input class="form-control"
+                                            value="{{$tender->tender_status->status_name ?? ''}}" id="tender_status_id"
+                                            name="tender_status_id" type="text" dir="ltr" style="width: 100%">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Status:</label>
+                                    <label>Status</label>
                                     <div class="typeahead">
-                                        <input class="form-control" value="{{$tender->status->status_name ?? ''}}" id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%" >
+                                        <input class="form-control" value="{{$tender->status->status_name ?? ''}}"
+                                            id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%"
+                                            required>
                                     </div>
                                 </div>
                             </div>
@@ -287,7 +322,7 @@
                                 </div>
                                 <!--end::Input-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label for="name">Official:</label>
+                                    <label for="name">Official</label>
                                     <select class="form-control" name="official_id" id="official" style="width: 100%;">
                                         @if(isset($tender))
                                         @foreach ($officials as $official)
@@ -299,19 +334,24 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Start Date</label>
-                                    <input type="date" name="start_date" class="form-control" value="{{ date_format(Carbon\Carbon::parse($tender->start_date ?? date('Y-m-d')), 'Y-m-d') }}">
+                                    <input type="date" name="start_date" class="form-control"
+                                        value="{{ date_format(Carbon\Carbon::parse($tender->start_date ?? date('Y-m-d')), 'Y-m-d') }}">
                                 </div>
                                 <div class="form-group">
                                     <label>End Date</label>
-                                    <input type="date" name="end_date" class="form-control" value="{{ date_format(Carbon\Carbon::parse($tender->end_date ?? date('Y-m-d')), 'Y-m-d') }}">
+                                    <input type="date" name="end_date" class="form-control"
+                                        value="{{ date_format(Carbon\Carbon::parse($tender->end_date ?? date('Y-m-d')), 'Y-m-d') }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Max Extended Date</label>
-                                    <input type="date" name="max_extended_process" class="form-control" value="{{ date_format(Carbon\Carbon::parse($tender->max_extended_process ?? date('Y-m-d')), 'Y-m-d') }}">
+                                    <input type="date" name="max_extended_process" class="form-control"
+                                        value="{{ date_format(Carbon\Carbon::parse($tender->max_extended_process ?? date('Y-m-d')), 'Y-m-d') }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Date of Publication:</label>
-                                    <input type="date" class="form-control" name="date_of_publication" id="date_of_publication" value="{{ date_format(Carbon\Carbon::parse($tender->date_of_publication ?? date('Y-m-d')), 'Y-m-d') }}">
+                                    <label for="name">Date of Publication</label>
+                                    <input type="date" class="form-control" name="date_of_publication"
+                                        id="date_of_publication"
+                                        value="{{ date_format(Carbon\Carbon::parse($tender->date_of_publication ?? date('Y-m-d')), 'Y-m-d') }}">
                                 </div>
                             </div>
                             <!--end: Wizard Step 2-->
@@ -320,58 +360,70 @@
                                 <div class="my-5">
                                     <!--begin::Input-->
                                     <div class="form-group">
-                                        <label for="name">File International Invitation:</label>
+                                        <label for="name">File International Invitation</label>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="international_invitation" id="international_invitation">
-                                            <label class="custom-file-label" for="international_invitation"> {{$tender->international_invitation ? 'Upload file to change document' : 'Choose file'}}</label>
+                                            <input type="file" class="custom-file-input" name="international_invitation"
+                                                id="international_invitation">
+                                            <label class="custom-file-label" for="international_invitation">
+                                                {{ isset($tender) ? ($tender->international_invitation ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                     <!--end::Input-->
                                     <!--begin::Input-->
-                                   
+
                                     <div class="form-group">
-                                        <label for="name">File Basement:</label>
+                                        <label for="name">File Basement</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="basement" id="basement">
-                                            <label class="custom-file-label" for="basement">{{$tender->basement ? 'Upload file to change document' : 'Choose file'}}</label>
+                                            <label class="custom-file-label"
+                                                for="basement">{{ isset($tender) ? ($tender->basement ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                     <!--end::Input-->
                                     <div class="form-group">
-                                        <label for="name">File Resolution:</label>
+                                        <label for="name">File Resolution</label>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="resolution" id="resolution">
-                                            <label class="custom-file-label" for="resolution">{{$tender->resolution ? 'Upload file to change document' : 'Choose file'}}</label>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="name">File Convocation:</label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="convocation" id="convocation">
-                                            <label class="custom-file-label" for="convocation">{{$tender->convocation ? 'Upload file to change document' : 'Choose file'}}</label>
+                                            <input type="file" class="custom-file-input" name="resolution"
+                                                id="resolution">
+                                            <label class="custom-file-label"
+                                                for="resolution">{{ isset($tender) ? ($tender->resolution ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">File TDR:</label>
+                                        <label for="name">File Convocation</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="convocation"
+                                                id="convocation">
+                                            <label class="custom-file-label"
+                                                for="convocation">{{ isset($tender) ? ($tender->convocation ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="name">File TDR</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="tdr" id="tdr">
-                                            <label class="custom-file-label" for="tdr">{{$tender->tdr ? 'Upload file to change document' : 'Choose file'}}</label>
+                                            <label class="custom-file-label"
+                                                for="tdr">{{ isset($tender) ? ($tender->tdr ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">File Clarification:</label>
+                                        <label for="name">File Clarification</label>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="clarification" id="clarification">
-                                            <label class="custom-file-label" for="clarification">{{$tender->clarification ? 'Upload file to change document' : 'Choose file'}}</label>
+                                            <input type="file" class="custom-file-input" name="clarification"
+                                                id="clarification">
+                                            <label class="custom-file-label"
+                                                for="clarification">{{ isset($tender) ? ($tender->clarification ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">File Acceptance Certificate:</label>
+                                        <label for="name">File Acceptance Certificate</label>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="acceptance_certificate" id="acceptance_certificate">
-                                            <label class="custom-file-label" for="acceptance_certificate">{{$tender->acceptance_certificate ? 'Upload file to change document' : 'Choose file'}}</label>
+                                            <input type="file" class="custom-file-input" name="acceptance_certificate"
+                                                id="acceptance_certificate">
+                                            <label class="custom-file-label"
+                                                for="acceptance_certificate">{{ isset($tender) ? ($tender->acceptance_certificate ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -405,5 +457,4 @@
         </div>
     </div>
 </div>
-{{-- End card --}}
 @endsection

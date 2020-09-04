@@ -53,6 +53,26 @@ Route::get('/project-file/{project}', 'ProjectController@project_file');
 Route::post('/project-file', 'ProjectController@store_file');
 Route::delete('/project/file/destroy/{projectdocument}', 'ProjectController@project_file_delete');
 
+Route::get('project/{project}/tender', 'TenderController@index_tender')->name('project.tender.index');
+Route::get('project/{project}/tender/create', 'TenderController@create_tender')->name('project.tender.create');
+Route::get('project/{project}/file', 'ProjectController@project_file')->name('project.file.index');
+// Route::get('project/{project}/file/create', 'TenderController@create_tender')->name('project.file.create');
+Route::get('tender/{tender}/award', 'TenderController@award')->name('tender.award.index');
+Route::get('tender/{tender}/award/create', 'TenderController@awardCreate')->name('tender.award.create');
+
+// contract
+Route::get('contract/{contract}/ammendment', 'ContractController@ammendment')->name('contract.ammendment.index');
+Route::get('contract/{contract}/ammendment/create', 'ContractController@ammendmentCreate')->name('contract.ammendment.create');
+
+Route::get('contract/{contract}/execution', 'ContractController@execution')->name('contract.execution.index');
+Route::get('contract/{contract}/execution/create', 'ContractController@executionCreate')->name('contract.execution.create');
+
+Route::get('contract/{contract}/completion', 'ContractController@completion')->name('contract.completion.index');
+Route::get('contract/{contract}/completion/create', 'ContractController@completionCreate')->name('contract.completion.create');
+Route::resource('completion', 'CompletionController');
+
+Route::resource('contract', 'ContractController');
+
 //budget
 Route::get('/project-budget/{project}', 'BudgetController@index');
 Route::get('/project-budget/{project}/create', 'BudgetController@create');
@@ -103,7 +123,6 @@ Route::resource('award', 'AwardController');
 Route::get('tender-award/{tender}', 'AwardController@award');
 Route::get('award-create/{tender}', 'AwardController@create_award');
 
-Route::resource('contract', 'ContractController');
 Route::get('contract-create/{award}', 'ContractController@create_contract');
 // Route::get('contract/{contract}/{award}/edit', 'ContractController@edit');
 
@@ -114,6 +133,7 @@ Route::get('/contract-completion/{completion}/edit', 'ContractController@complet
 Route::patch('/contract-completion/{completion}/update', 'ContractController@completion_update');
 Route::post('/contract-completion', 'ContractController@completion_store');
 Route::get('/contract-completion/{completion}/delete', 'ContractController@completion_destroy');
+
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 Auth::routes();
 
@@ -128,6 +148,7 @@ Route::get('contract-ammendment/{contract}/create', 'AmmendmentController@create
 Route::resource('execution', 'ExecutionController');
 Route::get('contract-execution/{execution}', 'ExecutionController@execution');
 Route::get('contract-execution/{contract}/create', 'ExecutionController@create_execution');
+
 //disbursment
 Route::get('/disbursment/{execution}/create', 'ExecutionController@disbursment');
 Route::get('/disbursment/{disbursment}/edit', 'ExecutionController@disbursment_edit');

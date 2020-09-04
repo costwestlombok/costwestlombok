@@ -16,7 +16,7 @@ class CreateAmmendmentsTable extends Migration
         Schema::create('ammendments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('engage_id');
-            $table->foreign('engage_id')->references('id')->on('contracts');
+            $table->foreign('engage_id')->references('id')->on('contracts')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('modification_number')->nullable();
             $table->string('modification_type')->nullable();
             $table->text('justification')->nullable();
@@ -24,7 +24,7 @@ class CreateAmmendmentsTable extends Migration
             $table->double('current_price')->nullable();
             $table->string('current_contract_scope')->nullable();
             $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
             $table->datetime('date_of_publication')->nullable();
             $table->timestamps();
         });
