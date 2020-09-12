@@ -32,14 +32,17 @@
                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                                             viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                <rect x="0" y="0" width="24" height="24" />
                                                 <path
-                                                    d="M13.5,21 L13.5,18 C13.5,17.4477153 13.0522847,17 12.5,17 L11.5,17 C10.9477153,17 10.5,17.4477153 10.5,18 L10.5,21 L5,21 L5,4 C5,2.8954305 5.8954305,2 7,2 L17,2 C18.1045695,2 19,2.8954305 19,4 L19,21 L13.5,21 Z M9,4 C8.44771525,4 8,4.44771525 8,5 L8,6 C8,6.55228475 8.44771525,7 9,7 L10,7 C10.5522847,7 11,6.55228475 11,6 L11,5 C11,4.44771525 10.5522847,4 10,4 L9,4 Z M14,4 C13.4477153,4 13,4.44771525 13,5 L13,6 C13,6.55228475 13.4477153,7 14,7 L15,7 C15.5522847,7 16,6.55228475 16,6 L16,5 C16,4.44771525 15.5522847,4 15,4 L14,4 Z M9,8 C8.44771525,8 8,8.44771525 8,9 L8,10 C8,10.5522847 8.44771525,11 9,11 L10,11 C10.5522847,11 11,10.5522847 11,10 L11,9 C11,8.44771525 10.5522847,8 10,8 L9,8 Z M9,12 C8.44771525,12 8,12.4477153 8,13 L8,14 C8,14.5522847 8.44771525,15 9,15 L10,15 C10.5522847,15 11,14.5522847 11,14 L11,13 C11,12.4477153 10.5522847,12 10,12 L9,12 Z M14,12 C13.4477153,12 13,12.4477153 13,13 L13,14 C13,14.5522847 13.4477153,15 14,15 L15,15 C15.5522847,15 16,14.5522847 16,14 L16,13 C16,12.4477153 15.5522847,12 15,12 L14,12 Z"
-                                                    fill="#000000"></path>
-                                                <rect fill="#FFFFFF" x="13" y="8" width="3" height="3" rx="1"></rect>
+                                                    d="M8,3 L8,3.5 C8,4.32842712 8.67157288,5 9.5,5 L14.5,5 C15.3284271,5 16,4.32842712 16,3.5 L16,3 L18,3 C19.1045695,3 20,3.8954305 20,5 L20,21 C20,22.1045695 19.1045695,23 18,23 L6,23 C4.8954305,23 4,22.1045695 4,21 L4,5 C4,3.8954305 4.8954305,3 6,3 L8,3 Z"
+                                                    fill="#000000" opacity="0.3" />
                                                 <path
-                                                    d="M4,21 L20,21 C20.5522847,21 21,21.4477153 21,22 L21,22.4 C21,22.7313708 20.7313708,23 20.4,23 L3.6,23 C3.26862915,23 3,22.7313708 3,22.4 L3,22 C3,21.4477153 3.44771525,21 4,21 Z"
-                                                    fill="#000000" opacity="0.3"></path>
+                                                    d="M11,2 C11,1.44771525 11.4477153,1 12,1 C12.5522847,1 13,1.44771525 13,2 L14.5,2 C14.7761424,2 15,2.22385763 15,2.5 L15,3.5 C15,3.77614237 14.7761424,4 14.5,4 L9.5,4 C9.22385763,4 9,3.77614237 9,3.5 L9,2.5 C9,2.22385763 9.22385763,2 9.5,2 L11,2 Z"
+                                                    fill="#000000" />
+                                                <rect fill="#000000" opacity="0.3" x="7" y="10" width="5" height="2"
+                                                    rx="1" />
+                                                <rect fill="#000000" opacity="0.3" x="7" y="14" width="9" height="2"
+                                                    rx="1" />
                                             </g>
                                         </svg>
                                     </span>
@@ -53,16 +56,11 @@
                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                                             viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                <rect x="0" y="0" width="24" height="24" />
                                                 <path
-                                                    d="M3.51471863,18.6568542 L13.4142136,8.75735931 C13.8047379,8.36683502 14.4379028,8.36683502 14.8284271,8.75735931 L16.2426407,10.1715729 C16.633165,10.5620972 16.633165,11.1952621 16.2426407,11.5857864 L6.34314575,21.4852814 C5.95262146,21.8758057 5.31945648,21.8758057 4.92893219,21.4852814 L3.51471863,20.0710678 C3.12419433,19.6805435 3.12419433,19.0473785 3.51471863,18.6568542 Z"
-                                                    fill="#000000" opacity="0.3"></path>
-                                                <path
-                                                    d="M9.87867966,6.63603897 L13.4142136,3.10050506 C13.8047379,2.70998077 14.4379028,2.70998077 14.8284271,3.10050506 L21.8994949,10.1715729 C22.2900192,10.5620972 22.2900192,11.1952621 21.8994949,11.5857864 L18.363961,15.1213203 C17.9734367,15.5118446 17.3402718,15.5118446 16.9497475,15.1213203 L9.87867966,8.05025253 C9.48815536,7.65972824 9.48815536,7.02656326 9.87867966,6.63603897 Z"
-                                                    fill="#000000"></path>
-                                                <path
-                                                    d="M17.3033009,4.86827202 L18.0104076,4.16116524 C18.2056698,3.96590309 18.5222523,3.96590309 18.7175144,4.16116524 L20.8388348,6.28248558 C21.0340969,6.47774772 21.0340969,6.79433021 20.8388348,6.98959236 L20.131728,7.69669914 C19.9364658,7.89196129 19.6198833,7.89196129 19.4246212,7.69669914 L17.3033009,5.5753788 C17.1080387,5.38011665 17.1080387,5.06353416 17.3033009,4.86827202 Z"
-                                                    fill="#000000" opacity="0.3"></path>
+                                                    d="M14,16 L12,16 L12,12.5 C12,11.6715729 11.3284271,11 10.5,11 C9.67157288,11 9,11.6715729 9,12.5 L9,17.5 C9,19.4329966 10.5670034,21 12.5,21 C14.4329966,21 16,19.4329966 16,17.5 L16,7.5 C16,5.56700338 14.4329966,4 12.5,4 L12,4 C10.3431458,4 9,5.34314575 9,7 L7,7 C7,4.23857625 9.23857625,2 12,2 L12.5,2 C15.5375661,2 18,4.46243388 18,7.5 L18,17.5 C18,20.5375661 15.5375661,23 12.5,23 C9.46243388,23 7,20.5375661 7,17.5 L7,12.5 C7,10.5670034 8.56700338,9 10.5,9 C12.4329966,9 14,10.5670034 14,12.5 L14,16 Z"
+                                                    fill="#000000" fill-rule="nonzero"
+                                                    transform="translate(12.500000, 12.500000) rotate(-315.000000) translate(-12.500000, -12.500000) " />
                                             </g>
                                         </svg>
                                     </span>
@@ -76,17 +74,15 @@
                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                                             viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"></rect>
-                                                <path
-                                                    d="M8,3 L8,3.5 C8,4.32842712 8.67157288,5 9.5,5 L14.5,5 C15.3284271,5 16,4.32842712 16,3.5 L16,3 L18,3 C19.1045695,3 20,3.8954305 20,5 L20,21 C20,22.1045695 19.1045695,23 18,23 L6,23 C4.8954305,23 4,22.1045695 4,21 L4,5 C4,3.8954305 4.8954305,3 6,3 L8,3 Z"
-                                                    fill="#000000" opacity="0.3"></path>
-                                                <path
-                                                    d="M11,2 C11,1.44771525 11.4477153,1 12,1 C12.5522847,1 13,1.44771525 13,2 L14.5,2 C14.7761424,2 15,2.22385763 15,2.5 L15,3.5 C15,3.77614237 14.7761424,4 14.5,4 L9.5,4 C9.22385763,4 9,3.77614237 9,3.5 L9,2.5 C9,2.22385763 9.22385763,2 9.5,2 L11,2 Z"
-                                                    fill="#000000"></path>
-                                                <rect fill="#000000" opacity="0.3" x="7" y="10" width="5" height="2"
-                                                    rx="1"></rect>
-                                                <rect fill="#000000" opacity="0.3" x="7" y="14" width="9" height="2"
-                                                    rx="1"></rect>
+                                                <rect x="0" y="0" width="24" height="24" />
+                                                <g transform="translate(12.500000, 12.000000) rotate(-315.000000) translate(-12.500000, -12.000000) translate(6.000000, 1.000000)"
+                                                    fill="#000000" opacity="0.3">
+                                                    <path
+                                                        d="M0.353553391,7.14644661 L3.35355339,7.14644661 C3.4100716,7.14644661 3.46549471,7.14175791 3.51945496,7.13274826 C3.92739876,8.3050906 5.04222146,9.14644661 6.35355339,9.14644661 C8.01040764,9.14644661 9.35355339,7.80330086 9.35355339,6.14644661 C9.35355339,4.48959236 8.01040764,3.14644661 6.35355339,3.14644661 C5.04222146,3.14644661 3.92739876,3.98780262 3.51945496,5.16014496 C3.46549471,5.15113531 3.4100716,5.14644661 3.35355339,5.14644661 L0.436511831,5.14644661 C0.912589923,2.30873327 3.3805571,0.146446609 6.35355339,0.146446609 C9.66726189,0.146446609 12.3535534,2.83273811 12.3535534,6.14644661 L12.3535534,19.1464466 C12.3535534,20.2510161 11.4581229,21.1464466 10.3535534,21.1464466 L2.35355339,21.1464466 C1.24898389,21.1464466 0.353553391,20.2510161 0.353553391,19.1464466 L0.353553391,7.14644661 Z"
+                                                        transform="translate(6.353553, 10.646447) rotate(-360.000000) translate(-6.353553, -10.646447) " />
+                                                    <rect x="2.35355339" y="13.1464466" width="8" height="2" rx="1" />
+                                                    <rect x="3.35355339" y="17.1464466" width="6" height="2" rx="1" />
+                                                </g>
                                             </g>
                                         </svg>
                                     </span>
@@ -185,96 +181,94 @@
         <!--begin::Blog-->
         <div class="d-flex flex-wrap">
             <!--begin: Item-->
-            <div class="mr-12 d-flex flex-column mb-7">
-                <span class="font-weight-bolder mb-4">Budget</span>
-                <span class="font-weight-bolder font-size-h5 pt-1">
-                    <span class="font-weight-bold text-dark-50">Rp
-                    </span>{{ number_format($project->budget) }}</span>
-            </div>
-            <!--end::Item-->
-            <!--begin::Item-->
-            <div class="mr-12 d-flex flex-column mb-7">
-                <span class="font-weight-bolder mb-4">SEFIN Code</span>
-                <span class="font-weight-bolder font-size-h5 pt-1">
-                    <span class="font-weight-bold text-dark-50"></span>{{ $project->code_sefin }}</span>
-            </div>
-            <!--end::Item-->
-            <!--begin::Item-->
-            <div class="mr-12 d-flex flex-column mb-7">
-                <span class="font-weight-bolder mb-4">Duration</span>
-                <span class="font-weight-bolder font-size-h5 pt-1">
-                    <span class="font-weight-bold text-dark-50">{{ $project->duration }}</span> days</span>
-            </div>
-            <!--end::Item-->
-            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
-            <!--begin::Item-->
-            <div class="d-flex flex-column flex-lg-fill float-left mb-7">
-                <span class="font-weight-bolder mb-4">
-                    <a href="{{ route('project.tender.index', $project) }}" class="text-dark">Tender</a>
+            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                <span class="mr-4">
+                    <i class="flaticon-price-tag icon-2x"></i>
                 </span>
-                <div class="d-flex align-items-center flex-lg-fill">
-                    <span class="mr-4">
-                        <i class="icon-2x text-dark-50 flaticon-notepad"></i>
+                <div class="d-flex flex-column text-dark-75">
+                    <span class="font-weight-bolder font-size-sm">Budget</span>
+                    <span class="font-weight-bolder font-size-h5">
+                        <span class="text-dark-50 font-weight-bold">Rp</span>
+                        {{ number_format($project->budget) }}
                     </span>
-                    <div class="d-flex flex-column flex-lg-fill">
-                        <a href="{{ route('project.tender.index', $project) }}"><span
-                                class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->tenders->count()) }}
-                                Tender</span></a>
-                        @if(Auth::check())
-                        <a href="{{ route('project.tender.create', $project) }}"
-                            class="text-primary font-weight-bolder">Add New Tender</a>
-                        @endif
-                    </div>
                 </div>
-
             </div>
-            <!--end::Item-->
-            <!--begin::Item-->
-            <div class="d-flex flex-column flex-lg-fill float-left mb-7">
-                <span class="font-weight-bolder mb-4">
-                    <a href="{{ route('project.file.index', $project) }}" class="text-dark">Files</a>
+            <!--end: Item-->
+            <!--begin: Item-->
+            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                <span class="mr-4">
+                    <i class="fas fa-qrcode icon-2x"></i>
                 </span>
-                <div class="d-flex align-items-center flex-lg-fill">
-                    <span class="mr-4">
-                        <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
+                <div class="d-flex flex-column text-dark-75">
+                    <span class="font-weight-bolder font-size-sm">SEFIN Code</span>
+                    <span class="font-weight-bolder font-size-h5">
+                        {{ $project->code_sefin }}
                     </span>
-                    <div class="d-flex flex-column flex-lg-fill">
-                        <a href="{{ route('project.file.index', $project) }}"><span
-                                class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->file->count()) }}
-                                Files</span></a>
-                        @if(Auth::check())
-                        <a href="{{ route('project.file.index', $project) }}"
-                            class="text-primary font-weight-bolder">Add
-                            New File</a>
-                        @endif
-                    </div>
                 </div>
-
             </div>
-            <!--end::Item-->
-            <!--begin::Item-->
-            <div class="d-flex flex-column flex-lg-fill float-left mb-7">
-                <span class="font-weight-bolder mb-4">
-                    <a href="{{ url('project-budget/'.$project->id) }}" class="text-dark">Budget</a>
+            <!--end: Item-->
+            <!--begin: Item-->
+            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                <span class="mr-4">
+                    <i class="flaticon2-calendar-9 icon-2x"></i>
                 </span>
-                <div class="d-flex align-items-center flex-lg-fill">
-                    <span class="mr-4">
-                        <i class="icon-2x text-dark-50 flaticon-piggy-bank"></i>
+                <div class="d-flex flex-column text-dark-75">
+                    <span class="font-weight-bolder font-size-sm">Duration</span>
+                    <span class="font-weight-bolder font-size-h5">
+                        {{ number_format($project->duration) }}
+                        <span class="text-dark-50 font-weight-bold"> days</span>
                     </span>
-                    <div class="d-flex flex-column flex-lg-fill">
-                        <a href="#"><span
-                                class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->project_budget->count()) }}
-                                Budget</span></a>
-                        @if(Auth::check())
-                        <a href="{{ url('project-budget/'.$project->id) }}" class="text-primary font-weight-bolder">Add
-                            New
-                            Budget</a>
-                        @endif
-                    </div>
                 </div>
-
             </div>
-            <!--end::Item-->
+            <!--end: Item-->
+            <!--begin: Item-->
+            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                <span class="mr-4">
+                    <i class="flaticon2-file icon-2x"></i>
+                </span>
+                <div class="d-flex flex-column flex-lg-fill">
+                    <a href="{{ route('project.tender.index', $project) }}"
+                        class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->tenders->count()) }}
+                        Tender</a>
+                    @if(Auth::check())
+                    <a href="{{ route('project.tender.create', $project) }}" class="text-primary font-weight-bolder">Add
+                        New Tender</a>
+                    @endif
+                </div>
+            </div>
+            <!--end: Item-->
+            <!--begin: Item-->
+            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                <span class="mr-4">
+                    <i class="flaticon2-clip-symbol icon-2x"></i>
+                </span>
+                <div class="d-flex flex-column flex-lg-fill">
+                    <a href="{{ route('project.file.index', $project) }}"
+                        class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->file->count()) }}
+                        Files</a>
+                    @if(Auth::check())
+                    <a href="{{ route('project.file.index', $project) }}" class="text-primary font-weight-bolder">Add
+                        New File</a>
+                    @endif
+                </div>
+            </div>
+            <!--end: Item-->
+            <!--begin: Item-->
+            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                <span class="mr-4">
+                    <i class="flaticon-price-tag icon-2x"></i>
+                </span>
+                <div class="d-flex flex-column flex-lg-fill">
+                    <a href="{{ url('project-budget/'.$project->id) }}"
+                        class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->project_budget->count()) }}
+                        Budget</a>
+                    @if(Auth::check())
+                    <a href="{{ url('project-budget/'.$project->id) }}" class="text-primary font-weight-bolder">Add New
+                        Budget</a>
+                    @endif
+                </div>
+            </div>
+            <!--end: Item-->
         </div>
         <!--end::Blog-->
     </div>

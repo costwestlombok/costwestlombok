@@ -155,98 +155,107 @@
 </script>
 @endsection
 @section('content')
-<!--begin::Info-->
-<div class="d-flex align-items-center flex-wrap mr-1">
-    <!--begin::Page Heading-->
-    <div class="d-flex align-items-baseline flex-wrap mr-5">
-        <!--begin::Page Title-->
-        <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">Project Source</h2>
-        <!--end::Page Title-->
-        <!--begin::Breadcrumb-->
-        <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
-            <li class="breadcrumb-item">
-                <a href="{{ url('/dashboard') }}" class="text-muted">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="{{ url('/project') }}" class="text-muted">Project</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="{{ url('project-budget/'.$budget->project->id) }}" class="text-muted">Budget</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="" class="text-muted">Source</a>
-            </li>
-        </ul>
-        <!--end::Breadcrumb-->
-    </div>
-    <!--end::Page Heading-->
-</div>
-<br>
-<!--end::Info-->
-
-<!--begin::Card-->
-<div class="card card-custom">
-    <div class="card-header">
-        <div class="card-title">
-            <h3 class="card-label">Choose Source</h3>
+<!--begin::Subheader-->
+<div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
+    <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Details-->
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <!--begin::Title-->
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Source</h5>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0 mr-5">
+                <li class="breadcrumb-item">
+                    <a href="{{ url('dashboard') }}" class="text-muted">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ url('project') }}" class="text-muted">Project</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ url('project-budget/'.$budget->project->id) }}" class="text-muted">Budget</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Award
+                </li>
+            </ul>
+            <!--end::Breadcrumb-->
         </div>
+        <!--end::Details-->
     </div>
-    <form action="{{ url('budget-source') }}" method="POST">
-        @csrf
-        <input type="hidden" name="budget_id" value="{{$budget->id}}">
-        <input type="hidden" name="project_id" value="{{$budget->project->id}}">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="name">Source Name</label>
-                        <div class="typeahead">
-                            <input class="form-control" id="source_id" name="source_id" type="text" dir="ltr"
-                                style="width: 100%">
+</div>
+<!--end::Subheader-->
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">Add Source</h3>
+                </div>
+            </div>
+            <form action="{{ url('budget-source') }}" method="POST">
+                @csrf
+                <input type="hidden" name="budget_id" value="{{$budget->id}}">
+                <input type="hidden" name="project_id" value="{{$budget->project->id}}">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Source Name</label>
+                                <div class="typeahead">
+                                    <input class="form-control" id="source_id" name="source_id" type="text" dir="ltr"
+                                        style="width: 100%">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Amount</label>
+                                <input type="text" class="form-control" name="amount">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="name">Amount</label>
-                        <input type="text" class="form-control" name="amount">
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="float-right">
+                                <button type="submit" class="btn font-weight-bold btn-success mr-2">Submit</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-        <div class="card-footer">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="float-right">
-                        <button type="submit" class="btn font-weight-bold btn-success mr-2">Submit</button>
-                    </div>
+        <br>
+        <!--end::Card-->
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">Source List</h3>
                 </div>
             </div>
+            <div class="card-body">
+                <!--begin: Datatable-->
+                <table class="table" id="kt_datatable" style="margin-top: 13px !important">
+                    <thead>
+                        <tr>
+                            <th class="text-center column-fit">#</th>
+                            <th>Source Name</th>
+                            <th>Amount</th>
+                            <th class="column-fit">Created at</th>
+                            <th class="text-right column-fit">Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+                <!--end: Datatable-->
+            </div>
         </div>
-    </form>
-</div>
-<br>
-<!--end::Card-->
-<!--begin::Card-->
-<div class="card card-custom">
-    <div class="card-header">
-        <div class="card-title">
-            <h3 class="card-label">Source List</h3>
-        </div>
+        <!--end::Card-->
     </div>
-    <div class="card-body">
-        <!--begin: Datatable-->
-        <table class="table" id="kt_datatable" style="margin-top: 13px !important">
-            <thead>
-                <tr>
-                    <th class="text-center column-fit">#</th>
-                    <th>Source Name</th>
-                    <th>Amount</th>
-                    <th class="column-fit">Created at</th>
-                    <th class="text-right column-fit">Actions</th>
-                </tr>
-            </thead>
-        </table>
-        <!--end: Datatable-->
-    </div>
+    <!--end::Container-->
 </div>
-<!--end::Card-->
 @endsection

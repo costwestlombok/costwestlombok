@@ -25,8 +25,12 @@ class ContractController extends Controller
      */
     public function index()
     {
-        $contracts = Contract::paginate(8);
-        return view('metronic.contract.index', ['contracts' => $contracts]);
+        if (request()->get('query_contract')) {
+            $contracts = Contract::where('contract_title', 'like', '%'.request()->get('query_contract').'%')->latest()->paginate(10);
+        } else {
+            $contracts = Contract::latest()->paginate(10);
+        }
+        return view('metronic.contract.index', compact('contracts'));
     }
 
     /**

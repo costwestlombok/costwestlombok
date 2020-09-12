@@ -39,7 +39,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bold text-center">Projects<br />{{App\Project::count()}}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bold text-center">Projects<br />{{ App\Project::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -69,7 +69,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Tender<br />{{App\Tender::count()}}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Tender<br />{{ App\Tender::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -97,7 +97,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Bid/Awards<br />{{App\Award::count()}}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Bid/Awards<br />{{ App\Award::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -129,7 +129,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Contracts<br />{{App\Contract::count()}}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Contracts<br />{{ App\Contract::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -157,7 +157,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Offerer<br />{{App\Offerer::count()}}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Offerer<br />{{ App\Offerer::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -185,7 +185,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Completion<br />{{App\Completion::count()}}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Completion<br />{{ App\Completion::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -213,7 +213,7 @@
                             class="d-flex align-items-start justify-content-start flex-grow-1 bg-light-warning p-8 card-rounded flex-grow-1 position-relative">
                             <div class="d-flex flex-column align-items-start flex-grow-1 h-100">
                                 <div class="p-1 flex-grow-1">
-                                    <h4 class="text-warning font-weight-bolder">{{App\Project::count()}} Projects</h4>
+                                    <h4 class="text-warning font-weight-bolder">{{ App\Project::count() }} Projects</h4>
                                     <p class="text-dark-50 font-weight-bold mt-3">Total projects</p>
                                 </div>
                                 <a href="{{ route('project.create') }}"
@@ -284,29 +284,31 @@
                                     @foreach ($projects as $item)
                                     <tr class="font-size-sm">
                                         <td class="text-center">
-                                            {{$loop->iteration}}
+                                            {{ $loop->iteration }}
                                         </td>
                                         <td>
-                                            {{$item->project_title}}
+                                            <a href="{{ route('project.show', $item) }}">
+                                            {{ $item->project_title }}
+                                            </a>
                                         </td>
                                         <td class="text-right">
-                                            <code>Rp {{number_format($item->budget)}}</code>
+                                            <code>Rp {{ number_format($item->budget) }}</code>
                                         </td>
                                         <td class="text-center">
                                             <span
-                                                class="label label-lg label-light-success label-inline">{{$item->status->status_name}}</span>
+                                                class="label label-lg label-light-success label-inline">{{ $item->status->status_name }}</span>
                                         </td>
                                         <td>
                                             <div class="d-flex flex-column w-100 mr-2">
                                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                                     <span
-                                                        class="text-muted mr-2 font-size-sm font-weight-bold">{{number_format($item->latest_progress->real_percent ?? '0')}}%</span>
+                                                        class="text-muted mr-2 font-size-sm font-weight-bold">{{ number_format($item->latest_progress->real_percent ?? '0') }}%</span>
                                                     <span class="text-muted font-size-sm font-weight-bold">Real
                                                         Physical</span>
                                                 </div>
                                                 <div class="progress progress-xs w-100">
                                                     <div class="progress-bar bg-danger" role="progressbar"
-                                                        style="width: {{number_format($item->latest_progress->real_percent ?? '0')}}%;"
+                                                        style="width: {{ number_format($item->latest_progress->real_percent ?? '0') }}%;"
                                                         aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
@@ -454,20 +456,20 @@
                                     <tr>
                                         <td class="pl-0 py-5">
                                             <p class="text-muted font-weight-bold">
-                                                {{$loop->iteration}}
+                                                {{ $loop->iteration }}
                                             </p>
                                         </td>
                                         <td class="pl-0">
                                             <a href="{{ route('offerer.edit', $a) }}"
-                                                class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$a->legal_name}}</a>
+                                                class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">{{ $a->legal_name }}</a>
                                             <span
-                                                class="text-muted font-weight-bold d-block">{{$a->offerer_name}}</span>
+                                                class="text-muted font-weight-bold d-block">{{ $a->offerer_name }}</span>
                                         </td>
                                         <td class="text-right">
-                                            <span class="text-muted font-weight-bold">{{$a->phone}}</span>
+                                            <span class="text-muted font-weight-bold">{{ $a->phone }}</span>
                                         </td>
                                         <td class="text-right">
-                                            <span class="text-muted font-weight-bold">{{$a->contract->count()}}
+                                            <span class="text-muted font-weight-bold">{{ $a->contract->count() }}
                                                 Contracts</span>
                                         </td>
                                         <td class="text-right pr-0">

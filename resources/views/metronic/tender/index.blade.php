@@ -33,6 +33,24 @@
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
                 Tender </h5>
             <!--end::Title-->
+            @if(isset($project))
+            <!--begin::Separator-->
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0 mr-5">
+                <li class="breadcrumb-item">
+                    <a href="{{ url('dashboard') }}" class="text-muted">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('project.show', $project) }}" class="text-muted">Project</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Tender
+                </li>
+            </ul>
+            <!--end::Breadcrumb-->
+            @endif
             <!--begin::Separator-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
             <!--end::Separator-->
@@ -191,7 +209,7 @@
                                                 </a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="#" data-id="{{ $tender->id }}" class="navi-link">
+                                                <a href="#" data-id="{{ $tender->id }}" class="button navi-link">
                                                     <span class="svg-icon menu-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -242,7 +260,7 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="flaticon-coins icon-2x text-muted font-weight-bold"></i>
+                                    <i class="flaticon-price-tag icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column text-dark-75">
                                     <span class="font-weight-bolder font-size-sm">Amount</span>
@@ -255,7 +273,7 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="flaticon-confetti icon-2x text-muted font-weight-bold"></i>
+                                    <i class="flaticon-add-label-button icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column text-dark-75">
                                     <span class="font-weight-bolder font-size-sm">Status</span>
@@ -268,7 +286,7 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="icon-xl fas fa-gavel"></i>
+                                    <i class="fas fa-gavel icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column flex-lg-fill">
                                     <a href="{{ route('tender.award.index', $tender) }}"
@@ -285,10 +303,10 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="flaticon-network icon-2x text-muted font-weight-bold"></i>
+                                    <i class="flaticon2-group icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column flex-lg-fill">
-                                    <a href="{{ route('tender.award.index', $tender) }}"
+                                    <a href="{{ url('tender-offerer/'.$tender->id) }}"
                                         class="text-dark-75 font-weight-bolder font-size-sm">{{ $tender->tender_offerer->count() }}
                                         Offerer</a>
                                     @if(Auth::check())

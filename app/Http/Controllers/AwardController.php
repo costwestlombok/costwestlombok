@@ -25,8 +25,11 @@ class AwardController extends Controller
      */
     public function index()
     {
-        //
-        $awards = Award::paginate(9);
+        if (request()->get('query_award')) {
+            $awards = Award::where('process_number', 'like', '%'.request()->get('query_award').'%')->latest()->paginate(10);
+        } else {
+            $awards = Award::latest()->paginate(10);
+        }
         return view('metronic.award.index', compact('awards'));
     }
 

@@ -5,21 +5,21 @@
 <script>
     jQuery(document).ready(function () {
         $(document).on('click', '.button', function (e) {
-                e.preventDefault();
-                var id = $(this).data('id');
-                var link = $(this).attr('href');
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won\'t be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes, delete it!"
-                }).then(function(result) {
-                    if (result.value) {
-                        window.location.href = "/api/contract/"+ id +"/delete"; 
-                    }
-                });
+            e.preventDefault();
+            var id = $(this).data('id');
+            var link = $(this).attr('href');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won\'t be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!"
+            }).then(function(result) {
+                if (result.value) {
+                    window.location.href = "/api/contract/"+ id +"/delete"; 
+                }
             });
+        });
     });
 </script>
 @endsection
@@ -79,14 +79,15 @@
                                 <!--begin::Name-->
                                 <a href="javascript:void(0)"
                                     class="d-flex align-items-center text-dark text-hover-primary font-size-h5 font-weight-bold mr-3">{{ $contract->contract_title }}
-                                    <!--end::Name-->
-                                    <!--begin::Contacts-->
-                                    <div class="my-2">
-                                        <a href="javascript:void(0)"
-                                            class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
-                                            Contract Number <strong>{{ $contract->number }}</strong></a>
-                                    </div>
-                                    <!--end::Contacts-->
+                                </a>
+                                <!--end::Name-->
+                                <!--begin::Contacts-->
+                                <div class="my-2">
+                                    <a href="javascript:void(0)"
+                                        class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                                        Contract Number <strong>{{ $contract->number }}</strong></a>
+                                </div>
+                                <!--end::Contacts-->
                             </div>
                             <!--begin::User-->
                             @if(Auth::check())
@@ -156,36 +157,6 @@
                         <!--begin::Content-->
                         <p class="mb-7 mt-3">Contract Scope <strong>{{ $contract->contract_scope }}</strong></p>
                         <div class="d-flex align-items-center flex-wrap mt-14">
-                            <!--begin: Item-->
-                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
-                                <span class="mr-4">
-                                    <i class="flaticon-coins icon-2x text-muted font-weight-bold"></i>
-                                </span>
-                                <div class="d-flex flex-column text-dark-75">
-                                    <span class="font-weight-bolder font-size-sm">Price Local
-                                        Currency</span>
-                                    <span class="font-weight-bolder font-size-h5">
-                                        <span class="text-dark-50 font-weight-bold">Rp
-                                        </span>{{ number_format($contract->price_local_currency) }}</span>
-                                </div>
-                            </div>
-                            <!--end: Item-->
-                            <!--begin: Item-->
-                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
-                                <span class="mr-4">
-                                    <i class="flaticon-confetti icon-2x text-muted font-weight-bold"></i>
-                                </span>
-                                <div class="d-flex flex-column text-dark-75">
-                                    <span class="font-weight-bolder font-size-sm">Price USD Currency</span>
-                                    <span class="font-weight-bolder font-size-h5">
-                                        <span
-                                            class="text-dark-50 font-weight-bold">$</span>{{ number_format($contract->price_usd_currency) }}</span>
-                                </div>
-                            </div>
-                            <!--end: Item-->
-                        </div>
-
-                        <div class="d-flex align-items-center flex-wrap">
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="d-block font-weight-bold mb-4">Start Date</span>
                                 <span
@@ -201,42 +172,69 @@
                                 <span
                                     class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($contract->max_extended_date)->format('D, d M Y') }}</span>
                             </div>
-                            <div
-                                class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200 ml-12 mr-12">
+                        </div>
+
+                        <div class="d-flex align-items-center flex-wrap">
+                            <!--begin: Item-->
+                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                                <span class="mr-4">
+                                    <i class="flaticon2-tag icon-2x"></i>
+                                </span>
+                                <div class="d-flex flex-column text-dark-75">
+                                    <span class="font-weight-bolder font-size-sm">Price Local
+                                        Currency</span>
+                                    <span class="font-weight-bolder font-size-h5">
+                                        <span class="text-dark-50 font-weight-bold">Rp
+                                        </span>{{ number_format($contract->price_local_currency) }}</span>
+                                </div>
                             </div>
-                            <div class="mr-12 d-flex flex-column mb-7 mr-12">
-                                <span class="d-block font-weight-bold">Ammendements</span>
-                                <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
-                                    <span class="mr-4">
-                                        <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
-                                    </span>
-                                    <div class="d-flex flex-column flex-lg-fill">
+                            <!--end: Item-->
+                            <!--begin: Item-->
+                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                                <span class="mr-4">
+                                    <i class="flaticon-price-tag icon-2x"></i>
+                                </span>
+                                <div class="d-flex flex-column text-dark-75">
+                                    <span class="font-weight-bolder font-size-sm">Price USD Currency</span>
+                                    <span class="font-weight-bolder font-size-h5">
                                         <span
-                                            class="text-dark-75 font-weight-bolder font-size-sm">{{ $contract->ammendment->count() }}
-                                            Ammendements</span>
-                                        <a href="{{ url('contract-ammendment/'.$contract->id) }}"
-                                            class="text-primary font-weight-bolder">View</a>
-                                    </div>
+                                            class="text-dark-50 font-weight-bold">$</span>{{ number_format($contract->price_usd_currency) }}</span>
                                 </div>
                             </div>
-                            <div class="mr-12 d-flex flex-column mb-7 mr-12">
-                                <span class="d-block font-weight-bold">Executions</span>
-                                <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
-                                    <span class="mr-4">
-                                        <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
-                                    </span>
-                                    <div class="d-flex flex-column flex-lg-fill">
-                                        <span class="text-dark-75 font-weight-bolder font-size-sm">Executions</span>
-                                        @if($contract->execution)
-                                        <a href="{{ url('contract-execution/'.$contract->execution->id) }}"
-                                            class="text-primary font-weight-bolder">View</a>
-                                        @else
-                                        <a href="{{ url('contract-execution/'.$contract->id.'/create') }}"
-                                            class="text-primary font-weight-bolder">Create</a>
-                                        @endif
-                                    </div>
+                            <!--end: Item-->
+                            <!--begin: Item-->
+                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                                <span class="mr-4">
+                                    <i class="flaticon2-information icon-2x"></i>
+                                </span>
+                                <div class="d-flex flex-column flex-lg-fill">
+                                    <a href="{{ url('contract-ammendment/'.$contract->id) }}"
+                                        class="text-dark-75 font-weight-bolder font-size-sm">{{ $contract->ammendment->count() }}
+                                        Ammendements</a>
+                                    @if(Auth::check())
+                                    <a href="{{ url('contract-ammendment/'.$contract->id) }}"
+                                        class="text-primary font-weight-bolder">View Ammendements</a>
+                                    @endif
                                 </div>
                             </div>
+                            <!--end: Item-->
+                            <!--begin: Item-->
+                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                                <span class="mr-4">
+                                    <i class="flaticon2-rocket icon-2x"></i>
+                                </span>
+                                <div class="d-flex flex-column flex-lg-fill">
+                                    <span class="text-dark-75 font-weight-bolder font-size-sm">Executions</span>
+                                    @if($contract->execution)
+                                    <a href="{{ url('contract-execution/'.$contract->execution->id) }}"
+                                        class="text-primary font-weight-bolder">View</a>
+                                    @else
+                                    <a href="{{ url('contract-execution/'.$contract->id.'/create') }}"
+                                        class="text-primary font-weight-bolder">Create</a>
+                                    @endif
+                                </div>
+                            </div>
+                            <!--end: Item-->
                         </div>
                         <!--end::Content-->
                     </div>

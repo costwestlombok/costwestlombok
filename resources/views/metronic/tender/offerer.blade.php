@@ -76,7 +76,7 @@
                         render: function (data, type, full, meta) {
                             return '\
                             <div class="text-right nowrap">\
-                            <a href="#"  data-id="'+full.id+'" class="button btn btn-sm btn-clean btn-icon" data-id='+  full.id +' title="Delete"><i class="fas fa-trash"></i></a>\
+                            <a href="#"  data-id="'+ full.id + '" class="button btn btn-sm btn-clean btn-icon" data-id=' + full.id + ' title="Delete"><i class="fas fa-trash"></i></a>\
                             </div>\
                 		';
                         },
@@ -114,71 +114,70 @@
     jQuery(document).ready(function () {
         KTDatatablesDataSourceAjaxServer.init();
         KTSelect2.init();
-        
+
         $(document).on('click', '.button', function (e) {
-                e.preventDefault();
-                var id = $(this).data('id');
-                var link = $(this).attr('href');
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won\'t be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes, delete it!"
-                }).then(function(result) {
-                    if (result.value) {
-                        $.ajax({
-                            type: "GET",
-                            url: "/tender-offerer/"+ id +"/delete",
-                            success: function (data) {
-                                toastr.success("Data deleted successfully!");
-                                var table = $('#kt_datatable').DataTable(); 
-                                table.ajax.reload( null, false );
-                            }         
-                        });
-                    }
-                });
+            e.preventDefault();
+            var id = $(this).data('id');
+            var link = $(this).attr('href');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won\'t be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!"
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/tender-offerer/" + id + "/delete",
+                        success: function (data) {
+                            toastr.success("Data deleted successfully!");
+                            var table = $('#kt_datatable').DataTable();
+                            table.ajax.reload(null, false);
+                        }
+                    });
+                }
             });
+        });
     });
 </script>
 @endsection
 @section('content')
-<!--begin::Info-->
-<div class="d-flex align-items-center flex-wrap mr-1">
-    <!--begin::Page Heading-->
-    <div class="d-flex align-items-baseline flex-wrap mr-5">
-        <!--begin::Page Title-->
-        <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">Offerer</h2>
-        <!--end::Page Title-->
-        <!--begin::Breadcrumb-->
-        <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
-            <li class="breadcrumb-item">
-                <a href="{{ url('/dashboard') }}" class="text-muted">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="{{ url('/project') }}" class="text-muted">Project</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="{{ url('project-tender/'.$tender->project->id) }}" class="text-muted">Tender</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="" class="text-muted">Offerer</a>
-            </li>
-        </ul>
-        <!--end::Breadcrumb-->
-    </div>
-    <!--end::Page Heading-->
-</div>
-<br>
-<!--end::Info-->
-
-<!--begin::Card-->
-<div class="card card-custom">
-    <div class="card-header">
-        <div class="card-title">
-            <h3 class="card-label">Choose Offerer</h3>
+<!--begin::Subheader-->
+<div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
+    <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Details-->
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <!--begin::Title-->
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                Offerer </h5>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0 mr-5">
+                <li class="breadcrumb-item">
+                    <a href="{{ url('dashboard') }}" class="text-muted">Dashboard</a>
+                </li>
+                @if(isset($tender))
+                <li class="breadcrumb-item">
+                    <a href="{{ route('project.show', $tender->project) }}" class="text-muted">Project</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('project.tender.index', $tender->project) }}" class="text-muted">Tender</a>
+                </li>
+                @endif
+                <li class="breadcrumb-item">
+                    Offerer
+                </li>
+            </ul>
+            <!--end::Breadcrumb-->
         </div>
-        <div class="card-toolbar">
+        <!--end::Details-->
+        @if(isset($tender))
+        <!--begin::Toolbar-->
+        <div class="d-flex align-items-right">
             <!--begin::Button-->
             <a href="{{ route('offerer.create') }}" class="btn btn-primary font-weight-bolder">
                 <span class="svg-icon svg-icon-md">
@@ -194,63 +193,82 @@
                         </g>
                     </svg>
                     <!--end::Svg Icon-->
-                </span>New Offerer</a>
+                </span>Add Offerer</a>
             <!--end::Button-->
         </div>
-    </div>
-    <form action="{{ url('/tender-offerer') }}" method="POST">
-        @csrf
-        <input type="hidden" name="tender_id" value="{{$tender->id}}">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="name">Offerer Name</label>
-                        <select name="offerer_id" id="offerer" class="form-control" required style="width: 100%">
-                            <option value="">Choose Offerer</option>
-                            @foreach ($offerers as $offerer)
-                            <option value="{{$offerer->id}}">{{$offerer->offerer_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="float-right">
-                        <button type="submit" class="btn font-weight-bold btn-success mr-2">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-<br>
-<!--end::Card-->
-<!--begin::Card-->
-<div class="card card-custom">
-    <div class="card-header">
-        <div class="card-title">
-            <h3 class="card-label">Offerer List</h3>
-        </div>
-    </div>
-    <div class="card-body">
-        <!--begin: Datatable-->
-        <table class="table" id="kt_datatable" style="margin-top: 13px !important">
-            <thead>
-                <tr>
-                    <th class="text-center column-fit">#</th>
-                    <th>Offerer Name</th>
-                    <th>Contract</th>
-                    <th class="column-fit">Created at</th>
-                    <th class="text-right column-fit">Actions</th>
-                </tr>
-            </thead>
-        </table>
-        <!--end: Datatable-->
+        <!--end::Toolbar-->
+        @endif
     </div>
 </div>
-<!--end::Card-->
+<!--end::Subheader-->
+
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">Choose Offerer</h3>
+                </div>
+            </div>
+            <form action="{{ url('/tender-offerer') }}" method="POST">
+                @csrf
+                <input type="hidden" name="tender_id" value="{{$tender->id}}">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Offerer Name</label>
+                                <select name="offerer_id" id="offerer" class="form-control" required
+                                    style="width: 100%">
+                                    <option value="">Choose Offerer</option>
+                                    @foreach ($offerers as $offerer)
+                                    <option value="{{$offerer->id}}">{{$offerer->offerer_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="float-right">
+                                <button type="submit" class="btn font-weight-bold btn-success mr-2">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <br>
+        <!--end::Card-->
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">Offerer List</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <!--begin: Datatable-->
+                <table class="table" id="kt_datatable" style="margin-top: 13px !important">
+                    <thead>
+                        <tr>
+                            <th class="text-center column-fit">#</th>
+                            <th>Offerer Name</th>
+                            <th>Contract</th>
+                            <th class="column-fit">Created at</th>
+                            <th class="text-right column-fit">Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+                <!--end: Datatable-->
+            </div>
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--end::Container-->
+</div>
 @endsection

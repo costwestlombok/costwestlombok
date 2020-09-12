@@ -21,7 +21,7 @@ class ProgressController extends Controller
      */
     public function index()
     {
-        $advances = Advance::orderBy('date_of_advance', 'DESC')->paginate(8);
+        $advances = Advance::orderBy('date_of_advance', 'DESC')->latest()->paginate(10);
         return view('metronic.progress.index', compact('advances'));
     }
 

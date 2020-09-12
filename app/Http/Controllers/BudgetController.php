@@ -15,7 +15,7 @@ class BudgetController extends Controller
 {
     public function index(Project $project)
     {
-        $budgets = Budget::where('project_id', $project->id)->paginate(8);
+        $budgets = Budget::where('project_id', $project->id)->latest()->paginate(10);
         return view('metronic.budget.index', compact('budgets', 'project'));
     }
 

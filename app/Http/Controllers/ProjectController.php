@@ -29,9 +29,9 @@ class ProjectController extends Controller
     public function index()
     {
         if (request()->get('query')) {
-            $projects = Project::where('project_title', 'like', '%'.request()->get('query').'%')->paginate(10);
+            $projects = Project::where('project_title', 'like', '%'.request()->get('query').'%')->latest()->paginate(10);
         } else {
-            $projects = Project::paginate(10);
+            $projects = Project::latest()->paginate(10);
         }
         return view('metronic.project.index', ['projects' => $projects]);
     }
@@ -208,10 +208,11 @@ class ProjectController extends Controller
     public function store_file(Request $request)
     {
         $data = $request->except('file');
-        $data['document_type'] = $request->file('file')->getClientOriginalExtension();
-        $file = $request->file('file')->store('project_files');
-
-        $data['document_path'] = $file;
+        if ($request->hasFile('photo')) {
+            $data['document_type'] = $request->file('file')->getClientOriginalExtension();
+            $file = $request->file('file')->store('project_files');
+            $data['document_path'] = $file;
+        }
         ProjectDocument::create($data);
         Session::put('success', 'Data saved successfully!');
 

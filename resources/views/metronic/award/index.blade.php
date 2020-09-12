@@ -33,6 +33,7 @@
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
                 Award </h5>
             <!--end::Title-->
+            @if(isset($tender))
             <!--begin::Separator-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
             <!--end::Separator-->
@@ -41,19 +42,18 @@
                 <li class="breadcrumb-item">
                     <a href="{{ url('dashboard') }}" class="text-muted">Dashboard</a>
                 </li>
-                @if(isset($tender))
                 <li class="breadcrumb-item">
                     <a href="{{ route('project.show', $tender->project) }}" class="text-muted">Project</a>
                 </li>
                 <li class="breadcrumb-item">
                     <a href="{{ route('project.tender.index', $tender->project) }}" class="text-muted">Tender</a>
                 </li>
-                @endif
                 <li class="breadcrumb-item">
                     Award
                 </li>
             </ul>
             <!--end::Breadcrumb-->
+            @endif
             <!--begin::Separator-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
             <!--end::Separator-->
@@ -255,7 +255,7 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="flaticon-coins icon-2x text-muted font-weight-bold"></i>
+                                    <i class="flaticon2-tag icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column text-dark-75">
                                     <span class="font-weight-bolder font-size-sm">Estimated Cost</span>
@@ -268,7 +268,7 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="flaticon-coins icon-2x text-muted font-weight-bold"></i>
+                                    <i class="flaticon-price-tag icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column text-dark-75">
                                     <span class="font-weight-bolder font-size-sm">Cost</span>
@@ -281,7 +281,7 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <div class="mr-4 flex-shrink-0 text-center">
-                                    <i class="icon-2x text-dark-50 flaticon-network"></i>
+                                    <i class="flaticon2-group icon-2x"></i>
                                 </div>
                                 <div class="d-flex flex-column text-dark-75">
                                     <span class="font-weight-bolder font-size-sm">
@@ -297,7 +297,7 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="flaticon-clipboard icon-2x text-muted font-weight-bold"></i>
+                                    <i class="fas fa-file-signature icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column flex-lg-fill">
                                     <span class="text-dark-75 font-weight-bolder font-size-sm">
