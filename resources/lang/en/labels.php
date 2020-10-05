@@ -1,5 +1,35 @@
 <?php
 
 return  [
-	'project' => 'Proyect',
+	'project' => 'Project',
+	'indonesian' => 'Indonesian',
+	'english' => 'English',
+	'search' => 'Search',
+
+	'airport' => 'airport',
+	'building' => 'building',
+	'energy' => 'energy',
+	'port' => 'port',
+	'road' => 'road',
+	'telecommunication' => 'telecommunication',
+
+	'dashboard' => 'Dashboard',
+	'principal' => 'Principal',
+	'agency' => 'Agency',
+	'catalog' => 'Catalog',
+	'organization' => 'Organization',
+	'organization_unit' => 'Organization Unit',
+	'official' => 'Official',
+	'role' => 'Role',
+	'sector' => 'Sector',
+	'subsector' => 'Subsector',
+	'source' => 'Source/Funding',
+	'project_purpose' => 'Project Purpose',
+	'contract_type' => 'Contract Type',
+	'offerer' => 'Offerer',
+	'contact' => 'Contact',
+	'tender_method' => 'Tender Method',
+	'contract_method' => 'Contract Method',
+	'warranty_type' => 'Warranty Type',
+	'status' => 'Status',
 ];

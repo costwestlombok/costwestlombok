@@ -1,6 +1,5 @@
 <?php
 
-use App\Banner;
 use App\Official;
 use App\Organization;
 use App\OrganizationUnit;
@@ -13,10 +12,6 @@ use App\User;
 use App\ContractType;
 use App\Offerer;
 use Illuminate\Database\Seeder;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Http\UploadedFile;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -41,14 +36,10 @@ class DatabaseSeeder extends Seeder
         // OrganizationUnit::truncate();
         // Organization::truncate();
         // Official::truncate();
-        Banner::truncate();
         DB::statement("SET foreign_key_checks=1");
-
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        $file = new Filesystem;
-        $file->cleanDirectory('storage/app/public');
         
-        Storage::disk('public')->makeDirectory('banners');
+        $this->call(BannerSeeder::class);
+        // $this->call(AgencySeeder::class);
 
         User::create([
             'name' => 'Administrator',
@@ -126,33 +117,5 @@ class DatabaseSeeder extends Seeder
         //     'address' => 'Bureau Administratif et Financier. Lottissement 19/20 Aissat - Idir Cheraga - W Alger',
         //     'website' => 'https://www.astaldi.com/',
         // ]);
-
-        // banner
-        $path = $this->uploadImage('images/banners/1.png', 960, 450, 'banners/cost_');
-        Banner::create([
-            'order' => 1,
-            'url' => 'http://infrastructuretransparency.org/',
-            'image' => $path,
-        ]);
-        $path = $this->uploadImage('images/banners/1.png', 960, 450, 'banners/cost_');
-        Banner::create([
-            'order' => 2,
-            'image' => $path,
-        ]);
-        $path = $this->uploadImage('images/banners/1.png', 960, 450, 'banners/cost_');
-        Banner::create([
-            'order' => 3,
-            'image' => $path,
-        ]);
-    }
-
-    public function uploadImage($image_path, $width, $height, $path_save)
-    {
-        $image = Image::make(public_path($image_path));
-        $path = $path_save . date('YmdHis') . round(microtime(true) * 1000) . '.jpg';
-        $image->fit($width, $height, function($constraint){
-            $constraint->upsize();
-        })->save(storage_path('app/public/') . $path);
-        return $path;
     }
 }

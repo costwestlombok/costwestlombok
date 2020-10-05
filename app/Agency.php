@@ -11,4 +11,14 @@ class Agency extends Model
     protected $keyType = 'uuid';
     protected $guarded = [];
     public $incrementing = false;
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'agency_projects', 'project_id', 'agency_id');
+    }
 }

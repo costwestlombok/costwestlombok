@@ -254,7 +254,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `project_sources` WRITE;
 /*!40000 ALTER TABLE `project_sources` DISABLE KEYS */;
-INSERT INTO `project_sources` (`id`, `project_id`, `source_id`, `budget_id`, `ammount`, `created_at`, `updated_at`) VALUES ('7efaf1d0-d137-11ea-8df5-fb718c7ace47','48f459d0-cbfc-11ea-a339-fdf607ea2f33','7ef9d900-d137-11ea-b388-9f7deea8bb3a','182ff6e0-d07f-11ea-9512-e106d10ccac5',402519670,'2020-07-29 01:04:47','2020-07-29 01:04:47'),('f92e0cb0-d137-11ea-a9b7-07a9e97ed00e','48f459d0-cbfc-11ea-a339-fdf607ea2f33','4a862720-cb40-11ea-b0cc-fde750a3ad30','182ff6e0-d07f-11ea-9512-e106d10ccac5',402519670,'2020-07-29 01:08:12','2020-07-29 01:08:12');
+INSERT INTO `project_sources` (`id`, `project_id`, `source_id`, `budget_id`, `amount`, `created_at`, `updated_at`) VALUES ('7efaf1d0-d137-11ea-8df5-fb718c7ace47','48f459d0-cbfc-11ea-a339-fdf607ea2f33','7ef9d900-d137-11ea-b388-9f7deea8bb3a','182ff6e0-d07f-11ea-9512-e106d10ccac5',402519670,'2020-07-29 01:04:47','2020-07-29 01:04:47'),('f92e0cb0-d137-11ea-a9b7-07a9e97ed00e','48f459d0-cbfc-11ea-a339-fdf607ea2f33','4a862720-cb40-11ea-b0cc-fde750a3ad30','182ff6e0-d07f-11ea-9512-e106d10ccac5',402519670,'2020-07-29 01:08:12','2020-07-29 01:08:12');
 /*!40000 ALTER TABLE `project_sources` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,7 +393,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `warranties` WRITE;
 /*!40000 ALTER TABLE `warranties` DISABLE KEYS */;
-INSERT INTO `warranties` (`id`, `ammount`, `expiration_date`, `executions_id`, `warranty_types_id`, `status_id`, `date_of_publication`, `created_at`, `updated_at`) VALUES ('80253c00-cfc9-11ea-8165-19f91be57911',1,'2020-08-08 00:00:00','f5939a40-cfaf-11ea-9395-f7deb390df8e','8024aa70-cfc9-11ea-88cb-b71e60618fcc','d2dab4d0-cbc8-11ea-8d36-6ffcafeab669','2020-08-08 00:00:00','2020-07-27 05:24:53','2020-07-27 05:24:53');
+INSERT INTO `warranties` (`id`, `amount`, `expiration_date`, `executions_id`, `warranty_types_id`, `status_id`, `date_of_publication`, `created_at`, `updated_at`) VALUES ('80253c00-cfc9-11ea-8165-19f91be57911',1,'2020-08-08 00:00:00','f5939a40-cfaf-11ea-9395-f7deb390df8e','8024aa70-cfc9-11ea-88cb-b71e60618fcc','d2dab4d0-cbc8-11ea-8d36-6ffcafeab669','2020-08-08 00:00:00','2020-07-27 05:24:53','2020-07-27 05:24:53');
 /*!40000 ALTER TABLE `warranties` ENABLE KEYS */;
 UNLOCK TABLES;
 

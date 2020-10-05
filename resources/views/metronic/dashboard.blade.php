@@ -50,10 +50,10 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">AIRPORT</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ strtoupper(__('labels.airport')) }}</span>
                                     <span
                                         class="d-block {{ request()->get('type') == 'airport' ? '' : 'text-muted' }} font-size-sm text-center">0
-                                        Projects</span>
+                                        {{ __('labels.project') }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -82,10 +82,10 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">BUILDING</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ strtoupper(__('labels.building')) }}</span>
                                     <span
                                         class="d-block {{ request()->get('type') == 'building' ? '' : 'text-muted' }} font-size-sm text-center">0
-                                        Projects</span>
+                                        {{ __('labels.project') }}</span>
 
                                 </a>
                             </li>
@@ -118,10 +118,10 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">ENERGY</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ strtoupper(__('labels.energy')) }}</span>
                                     <span
                                         class="d-block {{ request()->get('type') == 'energy' ? '' : 'text-muted' }} font-size-sm text-center">0
-                                        Projects</span>
+                                        {{ __('labels.project') }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -151,10 +151,11 @@
                                             <!--end::Svg Icon-->
                                         </span>
                                     </span>
-                                    <span class="nav-text font-size-lg py-2 font-weight-bolder text-center">PORT</span>
+                                    <span
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ strtoupper(__('labels.port')) }}</span>
                                     <span
                                         class="d-block {{ request()->get('type') == 'port' ? '' : 'text-muted' }} font-size-sm text-center">0
-                                        Projects</span>
+                                        {{ __('labels.project') }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -180,10 +181,11 @@
                                             <!--end::Svg Icon-->
                                         </span>
                                     </span>
-                                    <span class="nav-text font-size-lg py-2 font-weight-bolder text-center">ROAD</span>
+                                    <span
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ strtoupper(__('labels.road')) }}</span>
                                     <span
                                         class="d-block {{ !request()->get('type') || request()->get('type') == 'road' ? '' : 'text-muted' }} font-size-sm text-center">{{ number_format(App\Project::count()) }}
-                                        Projects</span>
+                                        {{ __('labels.project') }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -211,10 +213,10 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">TELECOMMUNICATION</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ strtoupper(__('labels.telecommunication')) }}</span>
                                     <span
                                         class="d-block {{ request()->get('type') == 'telecommunication' ? '' : 'text-muted' }} font-size-sm text-center">0
-                                        Projects</span>
+                                        {{ __('labels.project') }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->

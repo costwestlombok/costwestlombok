@@ -230,6 +230,7 @@ return [
         'Uuid' => Webpatser\Uuid\Uuid::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Helper' => App\Helpers\Helper::class,
 
     ],
 

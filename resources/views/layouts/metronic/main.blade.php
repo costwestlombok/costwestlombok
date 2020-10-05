@@ -80,13 +80,34 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="menu-text">Dashboard</span>
+                                <span class="menu-text">{{ __('labels.dashboard') }}</span>
                             </a>
                         </li>
                         @if(Auth::user())
                         <li class="menu-section">
-                            <h4 class="menu-text">Principal</h4>
+                            <h4 class="menu-text">{{ strtoupper(__('labels.principal')) }}</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                        </li>
+                        <li class="menu-item {{ request()->segment(1) == 'agency' ? 'menu-item-active' : '' }}"
+                            aria-haspopup="true">
+                            <a href="{{ route('agency.index') }}" class="menu-link ">
+                                <span class="svg-icon menu-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24" />
+                                            <path
+                                                d="M13.5,21 L13.5,18 C13.5,17.4477153 13.0522847,17 12.5,17 L11.5,17 C10.9477153,17 10.5,17.4477153 10.5,18 L10.5,21 L5,21 L5,4 C5,2.8954305 5.8954305,2 7,2 L17,2 C18.1045695,2 19,2.8954305 19,4 L19,21 L13.5,21 Z M9,4 C8.44771525,4 8,4.44771525 8,5 L8,6 C8,6.55228475 8.44771525,7 9,7 L10,7 C10.5522847,7 11,6.55228475 11,6 L11,5 C11,4.44771525 10.5522847,4 10,4 L9,4 Z M14,4 C13.4477153,4 13,4.44771525 13,5 L13,6 C13,6.55228475 13.4477153,7 14,7 L15,7 C15.5522847,7 16,6.55228475 16,6 L16,5 C16,4.44771525 15.5522847,4 15,4 L14,4 Z M9,8 C8.44771525,8 8,8.44771525 8,9 L8,10 C8,10.5522847 8.44771525,11 9,11 L10,11 C10.5522847,11 11,10.5522847 11,10 L11,9 C11,8.44771525 10.5522847,8 10,8 L9,8 Z M9,12 C8.44771525,12 8,12.4477153 8,13 L8,14 C8,14.5522847 8.44771525,15 9,15 L10,15 C10.5522847,15 11,14.5522847 11,14 L11,13 C11,12.4477153 10.5522847,12 10,12 L9,12 Z M14,12 C13.4477153,12 13,12.4477153 13,13 L13,14 C13,14.5522847 13.4477153,15 14,15 L15,15 C15.5522847,15 16,14.5522847 16,14 L16,13 C16,12.4477153 15.5522847,12 15,12 L14,12 Z"
+                                                fill="#000000" />
+                                            <rect fill="#FFFFFF" x="13" y="8" width="3" height="3" rx="1" />
+                                            <path
+                                                d="M4,21 L20,21 C20.5522847,21 21,21.4477153 21,22 L21,22.4 C21,22.7313708 20.7313708,23 20.4,23 L3.6,23 C3.26862915,23 3,22.7313708 3,22.4 L3,22 C3,21.4477153 3.44771525,21 4,21 Z"
+                                                fill="#000000" opacity="0.3" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span class="menu-text">{{ __('labels.agency') }}</span>
+                            </a>
                         </li>
                         <li class="menu-item menu-item-submenu{{ request()->segment(1) == 'catalog' ? ' menu-item-open' : '' }}"
                             aria-haspopup="true" data-menu-toggle="hover">
@@ -105,7 +126,7 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="menu-text">Catalog</span>
+                                <span class="menu-text">{{ __('labels.catalog') }}</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu">
@@ -117,7 +138,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Organization</span>
+                                            <span class="menu-text">{{ __('labels.organization') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'organization_unit' ? ' menu-item-active' : '' }}"
@@ -126,7 +147,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Organization Unit</span>
+                                            <span class="menu-text">{{ __('labels.organization_unit') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'official' ? ' menu-item-active' : '' }}"
@@ -135,7 +156,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Official</span>
+                                            <span class="menu-text">{{ __('labels.official') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'role' ? ' menu-item-active' : '' }}"
@@ -144,7 +165,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Role</span>
+                                            <span class="menu-text">{{ __('labels.role') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'sector' ? ' menu-item-active' : '' }}"
@@ -153,7 +174,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Sector</span>
+                                            <span class="menu-text">{{ __('labels.sector') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'subsector' ? ' menu-item-active' : '' }}"
@@ -162,7 +183,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Subsector</span>
+                                            <span class="menu-text">{{ __('labels.subsector') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'source' ? ' menu-item-active' : '' }}"
@@ -171,7 +192,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Source / Funding</span>
+                                            <span class="menu-text">{{ __('labels.source') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'purpose' ? ' menu-item-active' : '' }}"
@@ -180,7 +201,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Project Purpose</span>
+                                            <span class="menu-text">{{ __('labels.purpose') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'contract_type' ? ' menu-item-active' : '' }}"
@@ -189,7 +210,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Contract Type</span>
+                                            <span class="menu-text">{{ __('labels.contract_type') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'offerer' ? ' menu-item-active' : '' }}"
@@ -198,7 +219,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Offerer</span>
+                                            <span class="menu-text">{{ __('labels.offerer') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'contact' ? ' menu-item-active' : '' }}"
@@ -207,7 +228,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Contact</span>
+                                            <span class="menu-text">{{ __('labels.contact') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'tender_method' ? ' menu-item-active' : '' }}"
@@ -216,7 +237,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Tender Method</span>
+                                            <span class="menu-text">{{ __('labels.tender_method') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'contract_method' ? ' menu-item-active' : '' }}"
@@ -225,7 +246,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Contract Method</span>
+                                            <span class="menu-text">{{ __('labels.contract_method') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'warranty-type' ? ' menu-item-active' : '' }}"
@@ -234,7 +255,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Warranty Type</span>
+                                            <span class="menu-text">{{ __('labels.warranty_type') }}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item{{ request()->segment(2) == 'status' ? ' menu-item-active' : '' }}"
@@ -243,7 +264,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Status</span>
+                                            <span class="menu-text">{{ __('labels.status') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -454,7 +475,8 @@
                                         </span>
                                     </div>
                                     <input type="text" name="query" value="{{ request()->get('query') }}"
-                                        class="form-control h-45px" placeholder="Search..." />
+                                        class="form-control h-45px"
+                                        placeholder="{{ __('labels.search') }} {{ __('labels.project') }}..." />
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="quick-search-close ki ki-close icon-sm text-muted"></i>
@@ -496,6 +518,140 @@
                             <!--end::Toggle-->
                         </div>
                         <!--end::Tablet & Mobile Search-->
+                        <!--begin::Create-->
+
+                        <div class="dropdown">
+                            <!--begin::Toggle-->
+                            <div class="topbar-item mr-4" data-toggle="dropdown" data-offset="10px,0px"
+                                aria-expanded="false">
+                                <div class="btn btn-icon btn-sm btn-clean btn-text-dark-75">
+                                    <span class="svg-icon svg-icon-xl">
+                                        @if(app()->getLocale() == 'id')
+                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
+                                            xml:space="preserve">
+                                            <circle style="fill:#F0F0F0;" cx="256" cy="256" r="256" />
+                                            <path style="fill:#A2001D;"
+                                                d="M0,256C0,114.616,114.616,0,256,0s256,114.616,256,256" />
+                                        </svg>
+                                        @else
+                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
+                                            xml:space="preserve">
+                                            <circle style="fill:#F0F0F0;" cx="256" cy="256" r="256" />
+                                            <g>
+                                                <path style="fill:#0052B4;"
+                                                    d="M52.92,100.142c-20.109,26.163-35.272,56.318-44.101,89.077h133.178L52.92,100.142z" />
+                                                <path style="fill:#0052B4;"
+                                                    d="M503.181,189.219c-8.829-32.758-23.993-62.913-44.101-89.076l-89.075,89.076H503.181z" />
+                                                <path style="fill:#0052B4;"
+                                                    d="M8.819,322.784c8.83,32.758,23.993,62.913,44.101,89.075l89.074-89.075L8.819,322.784L8.819,322.784z" />
+                                                <path style="fill:#0052B4;"
+                                                    d="M411.858,52.921c-26.163-20.109-56.317-35.272-89.076-44.102v133.177L411.858,52.921z" />
+                                                <path style="fill:#0052B4;"
+                                                    d="M100.142,459.079c26.163,20.109,56.318,35.272,89.076,44.102V370.005L100.142,459.079z" />
+                                                <path style="fill:#0052B4;"
+                                                    d="M189.217,8.819c-32.758,8.83-62.913,23.993-89.075,44.101l89.075,89.075V8.819z" />
+                                                <path style="fill:#0052B4;"
+                                                    d="M322.783,503.181c32.758-8.83,62.913-23.993,89.075-44.101l-89.075-89.075V503.181z" />
+                                                <path style="fill:#0052B4;"
+                                                    d="M370.005,322.784l89.075,89.076c20.108-26.162,35.272-56.318,44.101-89.076H370.005z" />
+                                            </g>
+                                            <g>
+                                                <path style="fill:#D80027;"
+                                                    d="M509.833,222.609h-220.44h-0.001V2.167C278.461,0.744,267.317,0,256,0c-11.319,0-22.461,0.744-33.391,2.167v220.44v0.001H2.167C0.744,233.539,0,244.683,0,256c0,11.319,0.744,22.461,2.167,33.391h220.44h0.001v220.442C233.539,511.256,244.681,512,256,512c11.317,0,22.461-0.743,33.391-2.167v-220.44v-0.001h220.442C511.256,278.461,512,267.319,512,256C512,244.683,511.256,233.539,509.833,222.609z" />
+                                                <path style="fill:#D80027;"
+                                                    d="M322.783,322.784L322.783,322.784L437.019,437.02c5.254-5.252,10.266-10.743,15.048-16.435l-97.802-97.802h-31.482V322.784z" />
+                                                <path style="fill:#D80027;"
+                                                    d="M189.217,322.784h-0.002L74.98,437.019c5.252,5.254,10.743,10.266,16.435,15.048l97.802-97.804V322.784z" />
+                                                <path style="fill:#D80027;"
+                                                    d="M189.217,189.219v-0.002L74.981,74.98c-5.254,5.252-10.266,10.743-15.048,16.435l97.803,97.803H189.217z" />
+                                                <path style="fill:#D80027;"
+                                                    d="M322.783,189.219L322.783,189.219L437.02,74.981c-5.252-5.254-10.743-10.266-16.435-15.04l-97.802,97.803V189.219z" />
+                                            </g>
+                                        </svg>
+                                        @endif
+                                    </span>
+                                </div>
+                            </div>
+                            <!--end::Toggle-->
+
+                            <!--begin::Dropdown-->
+                            <div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-md"
+                                style="">
+                                <!--begin::Navigation-->
+                                <ul class="navi navi-hover py-5">
+                                    <li class="navi-item">
+                                        <a href="{{ route('localization.switch', 'id') }}" class="navi-link">
+                                            <span class="navi-icon">
+                                                <span class="svg-icon">
+                                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
+                                                        xml:space="preserve">
+                                                        <circle style="fill:#F0F0F0;" cx="256" cy="256" r="256" />
+                                                        <path style="fill:#A2001D;"
+                                                            d="M0,256C0,114.616,114.616,0,256,0s256,114.616,256,256" />
+                                                    </svg>
+                                                </span>
+                                            </span>
+                                            <span class="navi-text ml-2">{{ __('labels.indonesian') }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="navi-item">
+                                        <a href="{{ route('localization.switch', 'en') }}" class="navi-link">
+                                            <span class="navi-icon">
+                                                <span class="svg-icon">
+                                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
+                                                        xml:space="preserve">
+                                                        <circle style="fill:#F0F0F0;" cx="256" cy="256" r="256" />
+                                                        <g>
+                                                            <path style="fill:#0052B4;"
+                                                                d="M52.92,100.142c-20.109,26.163-35.272,56.318-44.101,89.077h133.178L52.92,100.142z" />
+                                                            <path style="fill:#0052B4;"
+                                                                d="M503.181,189.219c-8.829-32.758-23.993-62.913-44.101-89.076l-89.075,89.076H503.181z" />
+                                                            <path style="fill:#0052B4;"
+                                                                d="M8.819,322.784c8.83,32.758,23.993,62.913,44.101,89.075l89.074-89.075L8.819,322.784L8.819,322.784z" />
+                                                            <path style="fill:#0052B4;"
+                                                                d="M411.858,52.921c-26.163-20.109-56.317-35.272-89.076-44.102v133.177L411.858,52.921z" />
+                                                            <path style="fill:#0052B4;"
+                                                                d="M100.142,459.079c26.163,20.109,56.318,35.272,89.076,44.102V370.005L100.142,459.079z" />
+                                                            <path style="fill:#0052B4;"
+                                                                d="M189.217,8.819c-32.758,8.83-62.913,23.993-89.075,44.101l89.075,89.075V8.819z" />
+                                                            <path style="fill:#0052B4;"
+                                                                d="M322.783,503.181c32.758-8.83,62.913-23.993,89.075-44.101l-89.075-89.075V503.181z" />
+                                                            <path style="fill:#0052B4;"
+                                                                d="M370.005,322.784l89.075,89.076c20.108-26.162,35.272-56.318,44.101-89.076H370.005z" />
+                                                        </g>
+                                                        <g>
+                                                            <path style="fill:#D80027;"
+                                                                d="M509.833,222.609h-220.44h-0.001V2.167C278.461,0.744,267.317,0,256,0c-11.319,0-22.461,0.744-33.391,2.167v220.44v0.001H2.167C0.744,233.539,0,244.683,0,256c0,11.319,0.744,22.461,2.167,33.391h220.44h0.001v220.442C233.539,511.256,244.681,512,256,512c11.317,0,22.461-0.743,33.391-2.167v-220.44v-0.001h220.442C511.256,278.461,512,267.319,512,256C512,244.683,511.256,233.539,509.833,222.609z" />
+                                                            <path style="fill:#D80027;"
+                                                                d="M322.783,322.784L322.783,322.784L437.019,437.02c5.254-5.252,10.266-10.743,15.048-16.435l-97.802-97.802h-31.482V322.784z" />
+                                                            <path style="fill:#D80027;"
+                                                                d="M189.217,322.784h-0.002L74.98,437.019c5.252,5.254,10.743,10.266,16.435,15.048l97.802-97.804V322.784z" />
+                                                            <path style="fill:#D80027;"
+                                                                d="M189.217,189.219v-0.002L74.981,74.98c-5.254,5.252-10.266,10.743-15.048,16.435l97.803,97.803H189.217z" />
+                                                            <path style="fill:#D80027;"
+                                                                d="M322.783,189.219L322.783,189.219L437.02,74.981c-5.252-5.254-10.743-10.266-16.435-15.04l-97.802,97.803V189.219z" />
+                                                        </g>
+                                                    </svg>
+                                                </span>
+                                            </span>
+                                            <span class="navi-text ml-2">{{ __('labels.english') }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!--end::Navigation-->
+                            </div>
+                            <!--end::Dropdown-->
+                        </div>
+
+                        <!--end::Create-->
                         <!--begin::User-->
                         <div class="topbar-item">
                             @if(Auth::guest())

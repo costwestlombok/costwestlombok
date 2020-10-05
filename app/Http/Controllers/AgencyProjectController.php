@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Agency;
+use App\AgencyProject;
 use Illuminate\Http\Request;
 
-class AgencyController extends Controller
+class AgencyProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class AgencyController extends Controller
      */
     public function index()
     {
-        $agencies = Agency::latest()->get();
-        return view('metronic.agency', compact('agencies'));
+        //
     }
 
     /**
@@ -36,17 +35,16 @@ class AgencyController extends Controller
      */
     public function store(Request $request)
     {
-        Agency::create($request->all());
-        return back();
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Agency  $agency
+     * @param  \App\AgencyProject  $agencyProject
      * @return \Illuminate\Http\Response
      */
-    public function show(Agency $agency)
+    public function show(AgencyProject $agencyProject)
     {
         //
     }
@@ -54,10 +52,10 @@ class AgencyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Agency  $agency
+     * @param  \App\AgencyProject  $agencyProject
      * @return \Illuminate\Http\Response
      */
-    public function edit(Agency $agency)
+    public function edit(AgencyProject $agencyProject)
     {
         //
     }
@@ -66,30 +64,22 @@ class AgencyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Agency  $agency
+     * @param  \App\AgencyProject  $agencyProject
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Agency $agency)
+    public function update(Request $request, AgencyProject $agencyProject)
     {
-        $agency->update($request->all());
-        return back();
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Agency  $agency
+     * @param  \App\AgencyProject  $agencyProject
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Agency $agency)
+    public function destroy(AgencyProject $agencyProject)
     {
-        $agency->delete();
-        return back();
-    }
-
-    public function user(Request $request, Agency $agency)
-    {
-        $agency->update($request->all());
-        return back();
+        //
     }
 }

@@ -1,0 +1,35 @@
+<?php
+
+return  [
+	'project' => 'Proyek',
+	'indonesian' => 'Indonesia',
+	'english' => 'Inggris',
+	'search' => 'Cari',
+
+	'airport' => 'bandara',
+	'building' => 'bangunan',
+	'energy' => 'energi',
+	'port' => 'pelabuhan',
+	'road' => 'jalan',
+	'telecommunication' => 'telekomunikasi',
+
+	'dashboard' => 'Beranda',
+	'principal' => 'Utama',
+	'agency' => 'OPD',
+	'catalog' => 'Katalog',
+	'organization' => 'Organisasi',
+	'organization_unit' => 'Unit Organisasi',
+	'official' => 'Penjabat',
+	'role' => 'Wewenang',
+	'sector' => 'Sektor',
+	'subsector' => 'Subsektor',
+	'source' => 'Pendanaan',
+	'project_purpose' => 'Tujuan Proyek',
+	'contract_type' => 'Jenis Kontrak',
+	'offerer' => 'Penawar',
+	'contact' => 'Kontak',
+	'tender_method' => 'Metode Tender',
+	'contract_method' => 'Metode Kontrak',
+	'warranty_type' => 'Jenis Garansi',
+	'status' => 'Status',
+];

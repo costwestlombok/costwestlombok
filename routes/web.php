@@ -11,6 +11,7 @@
 |
  */
 
+Route::get('lang/{language}', 'LocalizationController@switch')->name('localization.switch');
 Route::get('/', 'FrontController@index');
 
 Route::get('home', function () {
@@ -183,3 +184,6 @@ Route::get('/get-status', 'StatusController@get_data');
 Route::get('/get-role', 'RoleController@get_data');
 Route::get('/get-warranty-type', 'WarrantyTypeController@get_data');
 Route::get('/get-source', 'SourceController@get_data');
+
+Route::put('agency/{agency}/user', 'AgencyController@user')->name('agency.user');
+Route::resource('agency', 'AgencyController');
