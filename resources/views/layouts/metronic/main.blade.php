@@ -271,7 +271,7 @@
                             </div>
                         </li>
                         <li class="menu-section">
-                            <h4 class="menu-text">Project Management</h4>
+                            <h4 class="menu-text">{{ __('labels.project_management') }}</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                         </li>
                         <li class="menu-item{{ request()->segment(1) == 'project' ? ' menu-item-active' : '' }}"
@@ -288,7 +288,7 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="menu-text">Project</span>
+                                <span class="menu-text">{{ __('labels.project') }}</span>
                             </a>
                         </li>
                         <li class="menu-item{{ request()->segment(1) == 'tender' ? ' menu-item-active' : '' }}"
@@ -309,7 +309,7 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="menu-text">Tender</span>
+                                <span class="menu-text">{{ __('labels.tender') }}</span>
                             </a>
                         </li>
                         <li class="menu-item{{ request()->segment(1) == 'award' ? ' menu-item-active' : '' }}"
@@ -332,7 +332,7 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="menu-text">Bid/Award Evaluation</span>
+                                <span class="menu-text">{{ __('labels.award') }}</span>
                             </a>
                         </li>
                         <li class="menu-item{{ request()->segment(1) == 'contract' ? ' menu-item-active' : '' }}"
@@ -356,12 +356,12 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="menu-text">Contract</span>
+                                <span class="menu-text">{{ __('labels.contract') }}</span>
                             </a>
                         </li>
                         @endif
                         <li class="menu-section">
-                            <h4 class="menu-text">Auth</h4>
+                            <h4 class="menu-text">{{ __('labels.auth') }}</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                         </li>
                         <li class="menu-item" aria-haspopup="true">
@@ -386,7 +386,7 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="menu-text">Login</span>
+                                <span class="menu-text">{{ __('labels.login') }}</span>
                             </a>
                             @else
                             <a href="{{ route('logout') }}" class="menu-link">
@@ -403,7 +403,7 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="menu-text">Logout</span>
+                                <span class="menu-text">{{ __('labels.logout') }}</span>
                             </a>
                             @endif
                         </li>
@@ -713,7 +713,7 @@
                     <!--begin::Copyright-->
                     <div class="text-dark order-2 order-md-1">
                         <span class="text-muted font-weight-bold mr-2">2020©</span>
-                        <a href="{{ url('/') }}" class="text-dark-75 text-hover-primary">CoST West Lombok</a>
+                        <a href="{{ url('/') }}" class="text-dark-75 text-hover-primary">{{ __('labels.title') }}</a>
                     </div>
                     <!--end::Copyright-->
                 </div>

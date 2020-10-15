@@ -1,6 +1,13 @@
 <?php
 
 return  [
+	'title' => 'CoST West Lombok',
+	'welcome' => 'Welcome to CoST',
+	'welcome_sub' => 'CoST Infrasturcture Transparency Initiative West Lombok, Indonesia.',
+	'privacy' => 'Privacy',
+	'sign_in' => 'Sign In',
+	'sign_in_sub' => 'Enter your username and password',
+
 	'project' => 'Project',
 	'indonesian' => 'Indonesian',
 	'english' => 'English',
@@ -13,7 +20,11 @@ return  [
 	'road' => 'road',
 	'telecommunication' => 'telecommunication',
 
+	// menu
 	'dashboard' => 'Dashboard',
+	'auth' => 'Auth',
+	'login' => 'Login',
+	'logout' => 'Logout',
 	'principal' => 'Principal',
 	'agency' => 'Agency',
 	'catalog' => 'Catalog',
@@ -32,4 +43,13 @@ return  [
 	'contract_method' => 'Contract Method',
 	'warranty_type' => 'Warranty Type',
 	'status' => 'Status',
+	'project_management' => 'Project Management',
+	'tender' => 'Tender',
+	'award' => 'Bid/Award Evaluation',
+	'contract' => 'Contract',
+
+	// landing
+	'latest' => 'Latest Project',
+	'latest_sub' => '5 of the latest project',
+	'view_all' => 'View All',
 ];

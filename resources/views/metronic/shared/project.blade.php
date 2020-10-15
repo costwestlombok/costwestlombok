@@ -46,7 +46,7 @@
                                             </g>
                                         </svg>
                                     </span>
-                                    <span class="navi-text ml-2"> Tender</span>
+                                    <span class="navi-text ml-2"> {{ __('labels.tender') }}</span>
                                 </a>
                             </li>
                             <li class="navi-item">
@@ -64,7 +64,7 @@
                                             </g>
                                         </svg>
                                     </span>
-                                    <span class="navi-text ml-2"> Documents</span>
+                                    <span class="navi-text ml-2"> {{ __('labels.tender') }}</span>
                                 </a>
                             </li>
                             <li class="navi-item">

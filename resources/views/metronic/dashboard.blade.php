@@ -245,15 +245,15 @@
                 <div class="d-flex align-items-center mt-5 mb-10">
                     <!--begin::Text-->
                     <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                        <a href="#" class="text-dark text-hover-primary mb-1 font-size-h5 text-dark">Latest
-                            Project</a>
-                        <span class="text-muted">5 of the latest project in this system</span>
+                        <a href="#"
+                            class="text-dark text-hover-primary mb-1 font-size-h5 text-dark">{{ __('labels.latest') }}</a>
+                        <span class="text-muted">{{ __('labels.latest_sub') }}</span>
                     </div>
                     <!--end::Text-->
                     <!--begin::Dropdown-->
-                    <a href="{{ route('project.index') }}" class="btn btn-link btn-link-primary font-weight-bold">View
-                        All
-                        <span class="svg-icon svg-icon-lg svg-icon-primary">
+                    <a href="{{ route('project.index') }}"
+                        class="btn btn-link btn-link-primary font-weight-bold">{{ __('labels.view_all') }}<span
+                            class="svg-icon svg-icon-lg svg-icon-primary">
                             <!--begin::Svg Icon | path:/metronic/theme/html/demo5/dist/assets/media/svg/icons/Navigation/Arrow-right.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
