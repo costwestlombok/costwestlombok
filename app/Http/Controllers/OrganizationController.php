@@ -95,14 +95,6 @@ class OrganizationController extends Controller
             ->make(true);
     }
 
-    public function deleteApi(Organization $organization)
-    {
-        $organization->delete();
-        Session::put("success", "Data deleted successfully!");
-
-        return redirect()->route('organization.index');
-    }
-
     public function get_entity()
     {
         $data = Organization::select('name')->get()->pluck('name');

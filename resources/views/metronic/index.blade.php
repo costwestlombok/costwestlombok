@@ -39,7 +39,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bold text-center">Projects<br />{{ App\Project::count() }}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bold text-center">{{ __('labels.project') }}<br />{{ App\Project::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -69,7 +69,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Tender<br />{{ App\Tender::count() }}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.tender') }}<br />{{ App\Tender::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -97,7 +97,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Bid/Awards<br />{{ App\Award::count() }}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.award') }}<br />{{ App\Award::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -129,7 +129,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Contracts<br />{{ App\Contract::count() }}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.contract') }}<br />{{ App\Contract::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -157,7 +157,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Offerer<br />{{ App\Offerer::count() }}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.offerer') }}<br />{{ App\Offerer::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -185,7 +185,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">Completion<br />{{ App\Completion::count() }}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.completion') }}<br />{{ App\Completion::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -213,11 +213,13 @@
                             class="d-flex align-items-start justify-content-start flex-grow-1 bg-light-warning p-8 card-rounded flex-grow-1 position-relative">
                             <div class="d-flex flex-column align-items-start flex-grow-1 h-100">
                                 <div class="p-1 flex-grow-1">
-                                    <h4 class="text-warning font-weight-bolder">{{ App\Project::count() }} Projects</h4>
-                                    <p class="text-dark-50 font-weight-bold mt-3">Total projects</p>
+                                    <h4 class="text-warning font-weight-bolder">{{ App\Project::count() }}
+                                        {{ __('labels.project') }}</h4>
+                                    <p class="text-dark-50 font-weight-bold mt-3">Total {{ __('labels.project') }}</p>
                                 </div>
                                 <a href="{{ route('project.create') }}"
-                                    class="btn btn-link btn-link-warning font-weight-bold">Create Project
+                                    class="btn btn-link btn-link-warning font-weight-bold">{{ __('labels.create') }}
+                                    {{ __('labels.project') }}
                                     <span class="svg-icon svg-icon-lg svg-icon-warning">
                                         <!--begin::Svg Icon | path:/metronic/assets/media/svg/icons/Navigation/Arrow-right.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -255,13 +257,15 @@
                     <!--begin::Header-->
                     <div class="card-header border-0 py-5">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label font-weight-bolder text-dark">Latest Projects</span>
-                            <span class="text-muted mt-3 font-weight-bold font-size-sm">List of five latest
-                                projects</span>
+                            <span
+                                class="card-label font-weight-bolder text-dark">{{ __('labels.latest_project') }}</span>
+                            <span
+                                class="text-muted mt-3 font-weight-bold font-size-sm">{{ __('labels.latest_project_sub') }}</span>
                         </h3>
                         <div class="card-toolbar">
                             <a href="{{ url('/project/create') }}"
-                                class="btn btn-light-success font-weight-bolder font-size-sm">New Project</a>
+                                class="btn btn-light-success font-weight-bolder font-size-sm">{{ __('labels.add') }}
+                                {{ __('labels.project') }}</a>
                         </div>
                     </div>
                     <!--end::Header-->
@@ -273,11 +277,12 @@
                                 <thead>
                                     <tr class="text-left">
                                         <th class="text-center" style="width: 10px">#</th>
-                                        <th class="pr-0" style="min-width: 300px">Project Title</th>
-                                        <th class="text-center" style="min-width: 150px">Budget</th>
+                                        <th class="pr-0" style="min-width: 300px">{{ __('labels.project_title') }}</th>
+                                        <th class="text-center" style="min-width: 150px">{{ __('labels.budget') }}</th>
                                         <th class="text-center" style="min-width: 100px">Status</th>
-                                        <th style="min-width: 150px">Progress</th>
-                                        <th class="pr-0 text-right" style="min-width: 100px">Action</th>
+                                        <th style="min-width: 150px">{{ __('labels.progress') }}</th>
+                                        <th class="pr-0 text-right" style="min-width: 100px">{{ __('labels.action') }}
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -288,7 +293,7 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('project.show', $item) }}">
-                                            {{ $item->project_title }}
+                                                {{ $item->project_title }}
                                             </a>
                                         </td>
                                         <td class="text-right">
@@ -303,8 +308,8 @@
                                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                                     <span
                                                         class="text-muted mr-2 font-size-sm font-weight-bold">{{ number_format($item->latest_progress->real_percent ?? '0') }}%</span>
-                                                    <span class="text-muted font-size-sm font-weight-bold">Real
-                                                        Physical</span>
+                                                    <span
+                                                        class="text-muted font-size-sm font-weight-bold">{{ __('labels.real_physical') }}</span>
                                                 </div>
                                                 <div class="progress progress-xs w-100">
                                                     <div class="progress-bar bg-danger" role="progressbar"
@@ -315,7 +320,7 @@
                                         </td>
                                         <td class="pr-0 text-right nowrap">
                                             <a href="{{ route('project.edit', $item) }}"
-                                                class="btn btn-xs btn-clean btn-icon" title="Edit">
+                                                class="btn btn-xs btn-clean btn-icon" title="{{ __('labels.edit') }}">
                                                 <i class="fas fa-pen"></i>
                                             </a>
                                             <button data-toggle="modal" data-target="#delete-{{ $item->id }}"
@@ -339,10 +344,10 @@
                 <div class="card card-custom card-stretch gutter-b bg-light-success">
                     <!--begin::Header-->
                     <div class="card-header border-0">
-                        <h3 class="card-title font-weight-bolder text-dark">Officials</h3>
+                        <h3 class="card-title font-weight-bolder text-dark">{{ __('labels.official') }}</h3>
                         <div class="card-toolbar">
                             <a href="{{ route('official.create') }}" class="btn btn-danger btn-sm font-weight-bolder">
-                                Create
+                                {{ __('labels.create') }}
                             </a>
                         </div>
                     </div>
@@ -361,7 +366,7 @@
                             <!--end::Text-->
                             <!--begin::Dropdown-->
                             <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title=""
-                                data-placement="left" data-original-title="Edit">
+                                data-placement="left" data-original-title="{{ __('labels.edit') }}">
                                 <a href="{{ route('official.edit', $a) }}"
                                     class="btn btn-clean btn-hover-warning btn-sm btn-icon">
                                     <i class="fas fa-pen"></i>
@@ -383,10 +388,10 @@
                 <div class="card card-custom card-stretch gutter-b bg-light-info">
                     <!--begin::Header-->
                     <div class="card-header border-0">
-                        <h3 class="card-title font-weight-bolder text-dark">Sources</h3>
+                        <h3 class="card-title font-weight-bolder text-dark">{{ __('labels.source') }}</h3>
                         <div class="card-toolbar">
                             <a href="{{ route('source.create') }}" class="btn btn-danger btn-sm font-weight-bolder">
-                                Create
+                                {{ __('labels.create') }}
                             </a>
                         </div>
                     </div>
@@ -405,7 +410,7 @@
                             <!--end::Text-->
                             <!--begin::Dropdown-->
                             <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title=""
-                                data-placement="left" data-original-title="Edit">
+                                data-placement="left" data-original-title="{{ __('labels.edit') }}">
                                 <a href="{{ route('source.edit', $a) }}"
                                     class="btn btn-clean btn-hover-danger btn-sm btn-icon">
                                     <i class="fas fa-pen"></i>
@@ -426,14 +431,14 @@
                     <!--begin::Header-->
                     <div class="card-header border-0 pt-5">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label font-weight-bolder text-dark">Offerer List</span>
-                            <span class="text-muted mt-3 font-weight-bold font-size-sm">List of supplier that might be
-                                use in
-                                contracts</span>
+                            <span class="card-label font-weight-bolder text-dark">{{ __('labels.offerer') }}</span>
+                            <span
+                                class="text-muted mt-3 font-weight-bold font-size-sm">{{ __('labels.offerer_sub') }}</span>
                         </h3>
                         <div class="card-toolbar">
                             <a href="{{ route('offerer.create') }}"
-                                class="btn btn-light-success font-weight-bolder font-size-sm">New Offerer</a>
+                                class="btn btn-light-success font-weight-bolder font-size-sm">{{ __('labels.add') }}
+                                {{ __('labels.offerer') }}</a>
                         </div>
                     </div>
                     <!--end::Header-->
@@ -470,7 +475,7 @@
                                         </td>
                                         <td class="text-right">
                                             <span class="text-muted font-weight-bold">{{ $a->contract->count() }}
-                                                Contracts</span>
+                                                {{ __('labels.contract') }}</span>
                                         </td>
                                         <td class="text-right pr-0">
                                             <a href="{{ route('offerer.edit', $a) }}"

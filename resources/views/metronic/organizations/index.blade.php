@@ -56,7 +56,7 @@
                 columnDefs: [
                     {
                         targets: 4,
-                        title: 'Actions',
+                        title: "{{ __('labels.action') }}",
                         orderable: false,
                         render: function (data, type, full, meta) {
                             return '\
@@ -64,9 +64,7 @@
                 			<a href="/catalog/organization/'+ full.id + '/edit" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
                 				<i class="fas fa-pen"></i>\
                 			</a>\
-                			<a onclick="return confirm(\'Are you sure?\')" href="/api/organization/'+ full.id + '/delete" class="btn btn-sm btn-clean btn-icon" title="Delete">\
-                				<i class="fas fa-trash"></i>\
-                			</a>\
+                            <a href="javascript:;" class="button btn btn-sm btn-clean btn-icon" data-id='+  full.id +' title="Delete"><i class="fas fa-trash"></i></a>\
                             </div>\
                 		';
                         },
@@ -88,9 +86,9 @@
                         className: 'text-center'
                     },
                 ],
-                // "language": {
-                //     "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json"
-                // },
+                "language": {
+                    "url": "{{ app()->getLocale() == 'id' ? 'https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json' : '' }}"
+                },
             });
         };
 
@@ -107,6 +105,31 @@
 
     jQuery(document).ready(function () {
         KTDatatablesDataSourceAjaxServer.init();
+        $(document).on('click', '.button', function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var link = $(this).attr('href');
+            Swal.fire({
+                title: "{{ __('labels.delete_sub') }}",
+                text: "{!! __('labels.delete_text') !!}",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "{{ __('labels.delete_confirm') }}",
+                cancelButtonText: "{{ __('labels.cancel') }}"
+            }).then(function(result) {
+                if (result.value) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/organization/"+ id +"/delete",
+                        success: function (data) {
+                            toastr.success("{{ __('labels.delete_success') }}");
+                            var table = $('#kt_datatable').DataTable(); 
+                            table.ajax.reload( null, false );
+                        }         
+                    });
+                }
+            });
+        });
     });
 </script>
 @endsection
@@ -118,7 +141,7 @@
         <div class="card card-custom">
             <div class="card-header">
                 <div class="card-title">
-                    <h3 class="card-label">Organization</h3>
+                    <h3 class="card-label">{{ __('labels.organization') }}</h3>
                 </div>
                 <div class="card-toolbar">
                     <!--begin::Button-->
@@ -136,7 +159,7 @@
                                 </g>
                             </svg>
                             <!--end::Svg Icon-->
-                        </span>New Record</a>
+                        </span>{{ __('labels.create') }} {{ __('labels.organization') }}</a>
                     <!--end::Button-->
                 </div>
             </div>
@@ -146,10 +169,10 @@
                     <thead>
                         <tr>
                             <th class="text-center column-fit">#</th>
-                            <th>Organization Name</th>
-                            <th class="text-center column-fit">Units</th>
-                            <th class="column-fit">Created at</th>
-                            <th class="text-right column-fit">Actions</th>
+                            <th>{{ __('labels.organization_name') }}</th>
+                            <th class="text-center column-fit">{{ __('labels.organization_unit') }}</th>
+                            <th class="column-fit">{{ __('labels.created_at') }}</th>
+                            <th class="text-right column-fit">{{ __('labels.action') }}</th>
                         </tr>
                     </thead>
                 </table>

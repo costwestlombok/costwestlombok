@@ -129,11 +129,16 @@ class OrganizationUnitController extends Controller
                 return $unit->official->count();
             })
             ->orderColumn('official_count', function ($query, $order) {
-                $query->withCount('official')
+                $query->withCount('official')->orderBy('official_count', $order);
                 // sortBy(function ($organization) {
                 //     return $organization->unit->count();
                 // }, $order);
-                    ->orderBy('official_count', $order);
+            })
+            ->addColumn('organization_name', function ($unit) {
+                return $unit->org->name;
+            })
+            ->orderColumn('organization_name', function ($query, $order) {
+                $query->join('organizations', 'organizations.id', '=', 'organization_units.entity_id')->orderBy('organizations.name', $order);
             })
             ->make(true);
     }

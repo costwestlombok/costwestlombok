@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('organization', 'OrganizationController@api');
-Route::get('organization/{organization}/delete', 'OrganizationController@deleteApi');
+Route::get('organization/{organization}/delete', 'OrganizationController@destroy');
 
 Route::get('organization_unit', 'OrganizationUnitController@api');
 Route::get('organization_unit/{organizationUnit}/delete', 'OrganizationUnitController@destroy');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Agency;
 use Illuminate\Http\Request;
+use Session;
 
 class AgencyController extends Controller
 {
@@ -89,7 +90,25 @@ class AgencyController extends Controller
 
     public function user(Request $request, Agency $agency)
     {
-        $agency->update($request->all());
+        // check username
+        $is_username_taken = \App\User::where('username', $request->username)->exists();
+        if ($is_username_taken) {
+            Session::put('fail', __('labels.username_taken'));
+            return back()->withInput();
+        }
+        $r = $request->all();
+        unset($r['_token']);
+        if ($agency->user) {
+            if ($request->password) {
+                $r['password'] = bcrypt($r['password']);
+            } else {
+                unset($r['password']);
+            }
+            $agency->user()->update($r);
+        } else {
+            $r['password'] = bcrypt($r['password']);
+            $agency->user()->create($r);
+        }
         return back();
     }
 }

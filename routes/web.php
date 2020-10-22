@@ -70,7 +70,7 @@ Route::get('contract/{contract}/execution/create', 'ContractController@execution
 
 Route::get('contract/{contract}/completion', 'ContractController@completion')->name('contract.completion.index');
 Route::get('contract/{contract}/completion/create', 'ContractController@completionCreate')->name('contract.completion.create');
-Route::resource('completion', 'CompletionController');
+// Route::resource('completion', 'CompletionController');
 
 Route::resource('contract', 'ContractController');
 
@@ -185,5 +185,5 @@ Route::get('/get-role', 'RoleController@get_data');
 Route::get('/get-warranty-type', 'WarrantyTypeController@get_data');
 Route::get('/get-source', 'SourceController@get_data');
 
-Route::put('agency/{agency}/user', 'AgencyController@user')->name('agency.user');
+Route::post('agency/{agency}/user', 'AgencyController@user')->name('agency.user');
 Route::resource('agency', 'AgencyController');

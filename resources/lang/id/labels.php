@@ -22,7 +22,7 @@ return  [
 
 	// menu
 	'dashboard' => 'Beranda',
-	'auth' => 'Otentikasi',
+	'auth' => 'tentikasi',
 	'login' => 'Masuk',
 	'logout' => 'Keluar',
 	'principal' => 'Utama',
@@ -35,7 +35,7 @@ return  [
 	'sector' => 'Sektor',
 	'subsector' => 'Subsektor',
 	'source' => 'Pendanaan',
-	'project_purpose' => 'Tujuan Proyek',
+	'purpose' => 'Tujuan Proyek',
 	'contract_type' => 'Jenis Kontrak',
 	'offerer' => 'Penawar',
 	'contact' => 'Kontak',
@@ -54,5 +54,54 @@ return  [
 	'view_all' => 'Lihat Semua',
 
 	// shared/project
-	
+	'document' => 'Dokumen',
+	'budget' => 'Anggaran',
+	'edit' => 'Ubah',
+	'delete' => 'Hapus',
+	'project_code' => 'Kode Proyek',
+	'start_date' => 'Tanggal Mulai',
+	'due_date' => 'Tanggal Berakhir',
+	'progress' => 'Kemajuan',
+	'real_physical' => 'Fisik',
+	'last_update' => 'Pembaharuan terbaru',
+	'add_progress' => 'Buat Kemajuan',
+	'sefin_code' => 'Kode SEFIN',
+	'duration' => 'Durasi',
+	'days' => 'hari',
+	'add' => 'Buat',
+	'details' => 'detail',
+
+	// dashboard
+	'completion' => 'Penyelesaian',
+	'create' => 'Buat',
+	'latest_project' => 'Proyek Terbaru',
+	'latest_project_sub' => 'Daftar proyek terbaru',
+	'project_title' => 'Nama Proyek',
+	'action' => 'Aksi',
+	'offerer_sub' => 'Daftar penawar yang mungkin digunakan dalam kontrak',
+
+	// agency
+	'name' => 'Nama',
+	'created_at' => 'Dibuat pada',
+	'save' => 'Simpan',
+	'save_changes' => 'Simpan perubahan',
+	'close' => 'Tutup',
+	'delete' => 'Hapus',
+	'delete_sub' => 'Apakah anda yakin?',
+	'password_help' => 'Kosongkan apabila tidak mengubah password',
+	'user' => 'Pengguna',
+	'username_taken' => 'Username already taken',
+
+	// organization
+	'delete_text' => "Anda tidak akan dapat mengembalikan ini!",
+	'delete_confirm' => 'Hapus!',
+	'cancel' => 'Batal',
+	'delete_success' => 'Data berhasil dihapus!',
+	'organization_name' => 'Nama Organisasi',
+	'organization_legal_name' => 'Nama Legal Organisasi',
+	'description' => 'Deskripsi',
+	'address' => 'Alamat',
+	'phone' => 'Telepon',
+	'website' => 'Situs Web',
+	'postal_code' => 'Kode Pos',
 ];

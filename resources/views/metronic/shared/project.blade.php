@@ -9,7 +9,8 @@
                 <!--begin: Title-->
                 <a href="{{ route('project.show', $project) }}"
                     class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">{{ $project->project_title }}</a>
-                <span class="text-muted font-weight-bold">Project Code : {{ $project->project_code }}</span>
+                <span class="text-muted font-weight-bold">{{ __('labels.project_code') }}:
+                    {{ $project->project_code }}</span>
                 <span class="text-muted font-weight-bold">{{ $project->subsector->sector->sector_name }} -
                     {{ $project->subsector->subsector_name }}</span>
                 <!--end::Title-->
@@ -64,7 +65,7 @@
                                             </g>
                                         </svg>
                                     </span>
-                                    <span class="navi-text ml-2"> {{ __('labels.tender') }}</span>
+                                    <span class="navi-text ml-2"> {{ __('labels.document') }}</span>
                                 </a>
                             </li>
                             <li class="navi-item">
@@ -86,7 +87,7 @@
                                             </g>
                                         </svg>
                                     </span>
-                                    <span class="navi-text ml-2"> Budget</span>
+                                    <span class="navi-text ml-2"> {{ __('labels.budget') }}</span>
                                 </a>
                             </li>
                             @if(Auth::check())
@@ -108,7 +109,7 @@
                                             </g>
                                         </svg>
                                     </span>
-                                    <span class="navi-text ml-2"> Edit</span>
+                                    <span class="navi-text ml-2"> {{ __('labels.edit') }}</span>
                                 </a>
                             </li>
                             <li class="navi-item">
@@ -128,7 +129,7 @@
                                             </g>
                                         </svg>
                                     </span>
-                                    <span class="navi-text ml-2"> Delete</span>
+                                    <span class="navi-text ml-2"> {{ __('labels.delete') }}</span>
                                 </a>
                             </li>
                             @endif
@@ -143,23 +144,23 @@
         <!--begin::Content-->
         <div class="d-flex flex-wrap mt-14">
             <div class="mr-12 d-flex flex-column mb-7">
-                <span class="d-block font-weight-bold mb-4">Start Date</span>
+                <span class="d-block font-weight-bold mb-4">{{ __('labels.start_date') }}</span>
                 <span
-                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->start_date)->format('D, d M Y') }}</span>
+                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->start_date)->translatedFormat('l, d M Y') }}</span>
             </div>
             <div class="mr-12 d-flex flex-column mb-7">
-                <span class="d-block font-weight-bold mb-4">Due Date</span>
+                <span class="d-block font-weight-bold mb-4">{{ __('labels.due_date') }}</span>
                 <span
-                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->end_date)->format('D, d M Y') }}</span>
+                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->end_date)->translatedFormat('l, d M Y') }}</span>
             </div>
             <!--begin::Progress-->
             <div class="flex-row-fluid mb-7">
-                <span class="d-block font-weight-bold mb-4">Progress - Real Physical <span
-                        class="text-muted font-weight-bold">(Last update :
-                        {{ date('D, d M Y', strtotime($project->latest_progress->date_of_advance ?? date('D, d M Y'))) }})</span>
+                <span class="d-block font-weight-bold mb-4">{{ __('labels.progress_real_physical') }} <span
+                        class="text-muted font-weight-bold">({{ __('labels.last_update') }}:
+                        {{ Carbon\Carbon::parse($project->latest_progress->date_of_advance ?? now())->translatedFormat('l, d M Y') }})</span>
                     @if(Auth::check())
                     <div class="float-right">
-                        <a href="{{ url('project-progress/'.$project->id) }}">Add New Progress</a>
+                        <a href="{{ url('project-progress/'.$project->id) }}">{{ __('labels.add_progress') }}</a>
                     </div>
                     @endif
                     <div class="d-flex align-items-center pt-2">
@@ -186,7 +187,7 @@
                     <i class="flaticon-price-tag icon-2x"></i>
                 </span>
                 <div class="d-flex flex-column text-dark-75">
-                    <span class="font-weight-bolder font-size-sm">Budget</span>
+                    <span class="font-weight-bolder font-size-sm">{{ __('labels.budget') }}</span>
                     <span class="font-weight-bolder font-size-h5">
                         <span class="text-dark-50 font-weight-bold">Rp</span>
                         {{ number_format($project->budget) }}
@@ -200,7 +201,7 @@
                     <i class="fas fa-qrcode icon-2x"></i>
                 </span>
                 <div class="d-flex flex-column text-dark-75">
-                    <span class="font-weight-bolder font-size-sm">SEFIN Code</span>
+                    <span class="font-weight-bolder font-size-sm">{{ __('labels.sefin_code') }}</span>
                     <span class="font-weight-bolder font-size-h5">
                         {{ $project->code_sefin }}
                     </span>
@@ -213,10 +214,10 @@
                     <i class="flaticon2-calendar-9 icon-2x"></i>
                 </span>
                 <div class="d-flex flex-column text-dark-75">
-                    <span class="font-weight-bolder font-size-sm">Duration</span>
+                    <span class="font-weight-bolder font-size-sm">{{ __('labels.duration') }}</span>
                     <span class="font-weight-bolder font-size-h5">
                         {{ number_format($project->duration) }}
-                        <span class="text-dark-50 font-weight-bold"> days</span>
+                        <span class="text-dark-50 font-weight-bold"> {{ __('labels.days') }}</span>
                     </span>
                 </div>
             </div>
@@ -229,10 +230,10 @@
                 <div class="d-flex flex-column flex-lg-fill">
                     <a href="{{ route('project.tender.index', $project) }}"
                         class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->tenders->count()) }}
-                        Tender</a>
+                        {{ __('labels.tender') }}</a>
                     @if(Auth::check())
-                    <a href="{{ route('project.tender.create', $project) }}" class="text-primary font-weight-bolder">Add
-                        New Tender</a>
+                    <a href="{{ route('project.tender.create', $project) }}"
+                        class="text-primary font-weight-bolder">{{ __('labels.add') }} {{ __('labels.tender') }}</a>
                     @endif
                 </div>
             </div>
@@ -245,10 +246,10 @@
                 <div class="d-flex flex-column flex-lg-fill">
                     <a href="{{ route('project.file.index', $project) }}"
                         class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->file->count()) }}
-                        Files</a>
+                        {{ __('labels.document') }}</a>
                     @if(Auth::check())
-                    <a href="{{ route('project.file.index', $project) }}" class="text-primary font-weight-bolder">Add
-                        New File</a>
+                    <a href="{{ route('project.file.index', $project) }}"
+                        class="text-primary font-weight-bolder">{{ __('labels.add') }} {{ __('labels.document') }}</a>
                     @endif
                 </div>
             </div>
@@ -261,10 +262,10 @@
                 <div class="d-flex flex-column flex-lg-fill">
                     <a href="{{ url('project-budget/'.$project->id) }}"
                         class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->project_budget->count()) }}
-                        Budget</a>
+                        {{ __('labels.budget') }}</a>
                     @if(Auth::check())
-                    <a href="{{ url('project-budget/'.$project->id) }}" class="text-primary font-weight-bolder">Add New
-                        Budget</a>
+                    <a href="{{ url('project-budget/'.$project->id) }}"
+                        class="text-primary font-weight-bolder">{{ __('labels.add') }} {{ __('labels.budget') }}</a>
                     @endif
                 </div>
             </div>
@@ -276,7 +277,7 @@
     <!--begin::Footer-->
     <div class="card-footer d-flex align-items-center">
         <a href="{{ route('project.show', $project) }}"
-            class="btn btn-primary btn-sm text-uppercase font-weight-bolder mt-5 mt-sm-0 mr-auto mr-sm-0 ml-sm-auto">details</a>
+            class="btn btn-primary btn-sm text-uppercase font-weight-bolder mt-5 mt-sm-0 mr-auto mr-sm-0 ml-sm-auto">{{ __('labels.details') }}</a>
     </div>
     <!--end::Footer-->
 </div>

@@ -20,12 +20,12 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="name">Unit Name</label>
+                                <label for="name">{{ __('labels.name') }}</label>
                                 <input type="text" class="form-control"
                                     value="{{ $organization_unit->unit_name ?? '' }}" name="unit_name" required />
                             </div>
                             <div class="form-group">
-                                <label for="price">Organization: </label>
+                                <label for="price">{{ __('labels.organization') }}</label>
                                 <select class="form-control" name="entity_id" required>
                                     <option value="">Choose an Organization</option>
                                     @foreach( $organizations as $org )
@@ -41,9 +41,9 @@
                 <div class="card-footer">
                     <div class="text-right">
                         <button type="reset" class="btn btn-secondary"
-                            onclick="javascript:history.back()">Cancel</button>
+                            onclick="javascript:history.back()">{{ __('labels.cancel') }}</button>
                         <button type="submit"
-                            class="btn btn-primary ml-2">{{ isset($organization_unit) ? 'Update' : 'Create' }}</button>
+                            class="btn btn-primary ml-2">{{ isset($organization_unit) ? __('labels.save_changes') : __('labels.save') }}</button>
                     </div>
                 </div>
             </form>

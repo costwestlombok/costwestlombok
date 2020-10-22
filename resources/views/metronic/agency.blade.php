@@ -74,7 +74,7 @@
                                 </g>
                             </svg>
                             <!--end::Svg Icon-->
-                        </span>Buat OPD
+                        </span>{{ __('labels.create') }} OPD
                     </button>
                     <!--end::Button-->
                 </div>
@@ -86,10 +86,10 @@
                         <tr>
                             <th class="text-center column-fit">#</th>
                             <th>OPD</th>
-                            <th>Name</th>
-                            <th>Projects</th>
-                            <th class="column-fit">Dibuat pada</th>
-                            <th class="text-right column-fit">Aksi</th>
+                            <th>{{ __('labels.name') }}</th>
+                            <th>{{ __('labels.project') }}</th>
+                            <th class="column-fit">{{ __('labels.created_at') }}</th>
+                            <th class="text-right column-fit">{{ __('labels.action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -133,7 +133,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Buat OPD</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('labels.create') }} OPD</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
@@ -144,14 +144,14 @@
                         <input type="text" name="name" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label>Nama</label>
+                        <label>{{ __('labels.name') }}</label>
                         <input type="text" name="full_name" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold"
-                        data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Simpan</button>
+                        data-dismiss="modal">{{ __('labels.close') }}</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">{{ __('labels.save') }}</button>
                 </div>
             </div>
         </div>
@@ -166,7 +166,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Buat OPD</h5>
+                    <h5 class="modal-title">{{ __('labels.edit') }} OPD</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
@@ -177,14 +177,15 @@
                         <input type="text" name="name" value="{{ $a->name }}" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label>Nama</label>
+                        <label>{{ __('labels.name') }}</label>
                         <input type="text" name="full_name" value="{{ $a->full_name }}" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold"
-                        data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Simpan perubahan</button>
+                        data-dismiss="modal">{{ __('labels.close') }}</button>
+                    <button type="submit"
+                        class="btn btn-primary font-weight-bold">{{ __('labels.save_changes') }}</button>
                 </div>
             </div>
         </div>
@@ -198,12 +199,13 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h5>Hapus OPD</h5>
-                    <p>Apakah anda yakin menghapus OPD {{ $a->name }}?</p>
+                    <h5>{{ __('labels.delete') }} OPD</h5>
+                    <p>{{ __('labels.delete_sub') }}</p>
                     <div class="float-right">
                         <button type="button" class="btn btn-light-primary font-weight-bold"
-                            data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary font-weight-bold ml-1">Hapus</button>
+                            data-dismiss="modal">{{ __('labels.close') }}</button>
+                        <button type="submit"
+                            class="btn btn-primary font-weight-bold ml-1">{{ __('labels.delete') }}</button>
                     </div>
                 </div>
             </div>
@@ -211,32 +213,47 @@
     </div>
 </form>
 <form action="{{ route('agency.user', $a) }}" method="post">
+    <input type="hidden" name="type" value="agency">
     @csrf
-    @method('put')
     <div class="modal fade" id="account-{{ $a->id }}" data-backdrop="static" tabindex="-1" role="dialog"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Buat OPD</h5>
+                    <h5 class="modal-title">{{ __($a->user ? 'labels.edit' : 'labels.create') }} {{ __('labels.user') }}
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>OPD</label>
-                        <input type="text" name="name" value="{{ $a->name }}" class="form-control" required>
+                        <label>{{ __('labels.name') }}</label>
+                        <input type="text" name="name" value="{{ $a->user->name ?? '' }}" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label>Nama</label>
-                        <input type="text" name="full_name" value="{{ $a->full_name }}" class="form-control" required>
+                        <label>Username</label>
+                        <input type="text" name="username" value="{{ $a->user->username ?? '' }}" class="form-control"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" value="{{ $a->user->email ?? '' }}" class="form-control"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="text" name="password" class="form-control" {{ $a->user ? '' : 'required' }}>
+                        @if($a->user)
+                        <span class="form-text text-muted">{{ __('labels.password_help') }}</span>
+                        @endif
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold"
                         data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Simpan perubahan</button>
+                    <button type="submit"
+                        class="btn btn-primary font-weight-bold">{{ __($a->user ? 'labels.save_changes' : 'labels.save') }}</button>
                 </div>
             </div>
         </div>

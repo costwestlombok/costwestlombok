@@ -40,6 +40,9 @@
                         data: 'unit_name'
                     },
                     {
+                        data: 'organization_name'
+                    },
+                    {
                         data: 'official_count',
                         searchable: false
                     },
@@ -52,11 +55,11 @@
                         searchable: false
                     },
                 ],
-                order: [[3, "desc"]],
+                order: [[4, "desc"]],
                 columnDefs: [
                     {
-                        targets: 4,
-                        title: 'Actions',
+                        targets: 5,
+                        title: "{{ __('labels.action') }}",
                         orderable: false,
                         render: function (data, type, full, meta) {
                             return '\
@@ -70,7 +73,7 @@
                         },
                     },
                     {
-                        targets: 3,
+                        targets: 4,
                         render: function (data, type, full, meta) {
                             return '<div class="text-right nowrap">\
                                 <code>' + data + '</code>\
@@ -78,7 +81,7 @@
                         },
                     },
                     {
-                        targets: 2,
+                        targets: 3,
                         className: 'text-center'
                     },
                     {
@@ -86,9 +89,9 @@
                         className: 'text-center'
                     },
                 ],
-                // "language": {
-                //     "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json"
-                // },
+                "language": {
+                    "url": "{{ app()->getLocale() == 'id' ? 'https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json' : '' }}"
+                },
             });
         };
 
@@ -105,31 +108,31 @@
 
     jQuery(document).ready(function () {
         KTDatatablesDataSourceAjaxServer.init();
-        
         $(document).on('click', '.button', function (e) {
-                e.preventDefault();
-                var id = $(this).data('id');
-                var link = $(this).attr('href');
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won\'t be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes, delete it!"
-                }).then(function(result) {
-                    if (result.value) {
-                        $.ajax({
-                            type: "GET",
-                            url: "/api/organization_unit/"+ id +"/delete",
-                            success: function (data) {
-                                toastr.success("Data deleted successfully!");
-                                var table = $('#kt_datatable').DataTable(); 
-                                table.ajax.reload( null, false );
-                            }         
-                        });
-                    }
-                });
+            e.preventDefault();
+            var id = $(this).data('id');
+            var link = $(this).attr('href');
+            Swal.fire({
+                title: "{{ __('labels.delete_sub') }}",
+                text: "{!! __('labels.delete_text') !!}",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "{{ __('labels.delete_confirm') }}",
+                cancelButtonText: "{{ __('labels.cancel') }}"
+            }).then(function(result) {
+                if (result.value) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/organization_unit/"+ id +"/delete",
+                        success: function (data) {
+                            toastr.success("{{ __('labels.delete_success') }}");
+                            var table = $('#kt_datatable').DataTable(); 
+                            table.ajax.reload( null, false );
+                        }         
+                    });
+                }
             });
+        });
     });
 </script>
 @endsection
@@ -141,7 +144,7 @@
         <div class="card card-custom">
             <div class="card-header">
                 <div class="card-title">
-                    <h3 class="card-label">Organization Unit</h3>
+                    <h3 class="card-label">{{ __('labels.organization_unit') }}</h3>
                 </div>
                 <div class="card-toolbar">
                     <!--begin::Button-->
@@ -159,7 +162,7 @@
                                 </g>
                             </svg>
                             <!--end::Svg Icon-->
-                        </span>New Record</a>
+                        </span>{{ __('labels.create') }} {{ __('labels.organization_unit') }}</a>
                     <!--end::Button-->
                 </div>
             </div>
@@ -169,10 +172,11 @@
                     <thead>
                         <tr>
                             <th class="text-center column-fit">#</th>
-                            <th>Unit Name</th>
-                            <th class="text-center column-fit">Officials</th>
-                            <th class="column-fit">Created at</th>
-                            <th class="text-right column-fit">Actions</th>
+                            <th>{{ __('labels.name') }}</th>
+                            <th>{{ __('labels.organization') }}</th>
+                            <th class="text-center column-fit">{{ __('labels.official') }}</th>
+                            <th class="column-fit">{{ __('labels.created_at') }}</th>
+                            <th class="text-right column-fit">{{ __('labels.action') }}</th>
                         </tr>
                     </thead>
                 </table>
