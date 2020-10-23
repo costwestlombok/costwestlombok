@@ -50,7 +50,7 @@ class ContractTypeController extends Controller
 
         $data = $request->all();
         ContractType::create($data);
-        Session::put("success", "Data saved successfully!");
+        Session::put("success", trans('labels.saved'));
         return redirect('/catalog/contract_type');
     }
 
@@ -93,7 +93,7 @@ class ContractTypeController extends Controller
 
         $data = $request->all();
         $contract_type->update($data);
-        Session::put("success", "Data updated successfully!");
+        Session::put("success", trans('labels.updated'));
         return redirect('/catalog/contract_type');
     }
 

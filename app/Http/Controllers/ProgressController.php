@@ -71,7 +71,7 @@ class ProgressController extends Controller
         }
 
         Advance::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
         return redirect('project-progress/' . $request->project_id);
     }
 
@@ -140,7 +140,7 @@ class ProgressController extends Controller
         }
 
         $progress->update($data);
-        Session::put('success', 'Data updated successfully!');
+        Session::put('success', trans('labels.updated'));
         return redirect('project-progress/' . $progress->project_id);
     }
 
@@ -159,7 +159,7 @@ class ProgressController extends Controller
             Storage::delete($progress->advance_doc);
         }
         $progress->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
         return back();
     }
 
@@ -195,7 +195,7 @@ class ProgressController extends Controller
         // return $advance_image;
         Storage::delete($advance_image->path);
         $advance_image->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
 
         return back();
     }

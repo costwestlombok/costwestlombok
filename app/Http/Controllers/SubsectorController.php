@@ -50,7 +50,7 @@ class SubsectorController extends Controller
         ]);
         $data = $request->all();
         Subsector::create($data);
-        Session::put("success", "Data saved successfully!");
+        Session::put("success", trans('labels.saved'));
         return redirect('/catalog/subsector');
     }
 
@@ -91,7 +91,7 @@ class SubsectorController extends Controller
         ]);
         $data = $request->all();
         $subsector->update($data);
-        Session::put("success", "Data saved successfully!");
+        Session::put("success", trans('labels.saved'));
         return redirect('/catalog/subsector');
     }
 

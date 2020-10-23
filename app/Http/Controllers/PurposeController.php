@@ -50,7 +50,7 @@ class PurposeController extends Controller
 
         $data = $request->all();
         Purpose::create($data);
-        Session::put("success", "Data saved successfully!");
+        Session::put("success", trans('labels.saved'));
         return redirect('/catalog/purpose');
     }
 
@@ -90,7 +90,7 @@ class PurposeController extends Controller
         $purpose->purpose_name = $request->get('purpose_name');
         $purpose->save();
 
-        Session::put("success", "Data updated successfully!");
+        Session::put("success", trans('labels.updated'));
         return redirect('/catalog/purpose');
     }
 

@@ -1,140 +1,77 @@
 @extends('layouts.metronic')
-@section('style')
-<!--begin::Page Vendors Styles(used by this page)-->
-<link href="{{ asset('metronic/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
-    type="text/css" />
-<!--end::Page Vendors Styles-->
-@endsection
 @section('script')
-<!--begin::Page Vendors(used by this page)-->
-<script src="{{ asset('metronic/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-<!--end::Page Vendors-->
 <script>
     var COST_URL = "{{ url('api/official') }}";
 </script>
 <script>
-    "use strict";
-    var KTDatatablesDataSourceAjaxServer = function () {
-
-        var initTable1 = function () {
-            var table = $('#kt_datatable');
-
-            // begin first table
-            table.DataTable({
-                responsive: true,
-                searchDelay: 500,
-                processing: true,
-                serverSide: true,
-                ajax: COST_URL,
-                columns: [
-                    {
-                        data: "id",
-                        className: "right-align",
-                        render: function (data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        },
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'name'
-                    },
-                    {
-                        data: 'unit'
-                    },
-                    {
-                        data: 'position'
-                    },
-                    {
-                        data: 'created_at',
-                        searchable: false
-                    },
-                    {
-                        data: 'id',
-                        searchable: false
-                    },
-                ],
-                order: [[4, "desc"]],
-                columnDefs: [
-                    {
-                        targets: 5,
-                        title: "{{ __('labels.action') }}",
-                        orderable: false,
-                        render: function (data, type, full, meta) {
-                            return '\
-                            <div class="text-right nowrap">\
-                			<a href="/catalog/official/'+ full.id + '/edit" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
-                				<i class="fas fa-pen"></i>\
-                            <a href="#"  data-id="'+full.id+'" class="button btn btn-sm btn-clean btn-icon" data-id='+  full.id +' title="Delete"><i class="fas fa-trash"></i></a>\
-                            </div>\
-                		';
-                        },
-                    },
-                    {
-                        targets: 4,
-                        render: function (data, type, full, meta) {
-                            return '<div class="text-right nowrap">\
-                                <code>' + data + '</code>\
-                            </div>';
-                        },
-                    },
-                    {
-                        targets: 3,
-                        className: 'text-center'
-                    },
-                    {
-                        targets: 2,
-                        className: 'text-center'
-                    },
-                    {
-                        targets: 0,
-                        className: 'text-center'
-                    },
-                ],
-                // "language": {
-                //     "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json"
-                // },
-            });
-        };
-
-        return {
-
-            //main function to initiate the module
-            init: function () {
-                initTable1();
-            },
-
-        };
-
-    }();
-
     jQuery(document).ready(function () {
-        KTDatatablesDataSourceAjaxServer.init();
-        
-        $(document).on('click', '.button', function (e) {
-                e.preventDefault();
-                var id = $(this).data('id');
-                var link = $(this).attr('href');
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won\'t be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes, delete it!"
-                }).then(function(result) {
-                    if (result.value) {
-                        $.ajax({
-                            type: "GET",
-                            url: "/api/official/"+ id +"/delete",
-                            success: function (data) {
-                                toastr.success("Data deleted successfully!");
-                                var table = $('#kt_datatable').DataTable(); 
-                                table.ajax.reload( null, false );
-                            }         
-                        });
-                    }
-                });
-            });
+        $('#kt_datatable').DataTable({
+            responsive: true,
+            searchDelay: 500,
+            processing: true,
+            serverSide: true,
+            ajax: COST_URL,
+            columns: [
+                {
+                    data: "id",
+                    className: "right-align",
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    },
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'name'
+                },
+                {
+                    data: 'unit'
+                },
+                {
+                    data: 'position'
+                },
+                {
+                    data: 'created_at',
+                    searchable: false
+                },
+                {
+                    data: 'id',
+                    searchable: false
+                },
+            ],
+            order: [[4, "desc"]],
+            columnDefs: [
+                {
+                    targets: 5,
+                    title: "{{ __('labels.action') }}",
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '\
+                        <div class="text-right nowrap">\
+                            <a href="/catalog/official/' + full.id + '/edit" class="btn btn-xs btn-clean btn-icon">\
+                                <i class="fas fa-pen"></i>\
+                            </a>\
+                            <a href=\'javascript:deleteFn("official", "' + full.id + '");\' class="button btn btn-xs btn-clean btn-icon">\
+                                <i class="fas fa-trash"></i>\
+                            </a>\
+                        </div>\
+                        ';
+                    },
+                },
+                {
+                    targets: 4,
+                    render: function (data, type, full, meta) {
+                        return '<div class="text-right nowrap">\
+                            <code>' + data + '</code>\
+                        </div>';
+                    },
+                },
+                {
+                    targets: 0,
+                    className: 'text-center'
+                },
+            ],
+        });
     });
 </script>
 @endsection
@@ -146,7 +83,7 @@
         <div class="card card-custom">
             <div class="card-header">
                 <div class="card-title">
-                    <h3 class="card-label">Official</h3>
+                    <h3 class="card-label">{{ __('labels.official') }}</h3>
                 </div>
                 <div class="card-toolbar">
                     <!--begin::Button-->
@@ -164,7 +101,7 @@
                                 </g>
                             </svg>
                             <!--end::Svg Icon-->
-                        </span>New Record</a>
+                        </span>{{ __('labels.create') }} {{ __('labels.official') }}</a>
                     <!--end::Button-->
                 </div>
             </div>
@@ -174,11 +111,11 @@
                     <thead>
                         <tr>
                             <th class="text-center column-fit">#</th>
-                            <th>Name</th>
-                            <th>Unit</th>
-                            <th class="text-center column-fit">Position</th>
-                            <th class="column-fit">Created at</th>
-                            <th class="text-right column-fit">Actions</th>
+                            <th>{{ __('labels.name') }}</th>
+                            <th>{{ __('labels.organization_unit') }}</th>
+                            <th class="column-fit">{{ __('labels.position') }}</th>
+                            <th class="column-fit">{{ __('labels.created_at') }}</th>
+                            <th class="text-right column-fit">{{ __('labels.action') }}</th>
                         </tr>
                     </thead>
                 </table>

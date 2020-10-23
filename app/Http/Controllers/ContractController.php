@@ -78,7 +78,7 @@ class ContractController extends Controller
             $data['status_id'] = $tm->id;
         }
         Contract::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
         $tender = \App\Award::find($request->awards_id)->tender;
         return redirect('tender/' . $tender->id . '/award');
     }
@@ -133,7 +133,7 @@ class ContractController extends Controller
             $data['status_id'] = $tm->id;
         }
         $contract->update($data);
-        Session::put('success', 'Data updated successfully!');
+        Session::put('success', trans('labels.updated'));
         return redirect('contract/' . $contract->id);
     }
 
@@ -147,7 +147,7 @@ class ContractController extends Controller
     {
         $id = $contract->award->tender->id;
         $contract->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
         return redirect('tender/' . $id . '/award');
     }
 
@@ -173,7 +173,7 @@ class ContractController extends Controller
         // return $data;
         $data['final_cost'] = str_replace(",", "", $request->final_cost);
         $c = Completion::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
 
         return redirect('contract-completion/' . $c->id);
     }
@@ -184,7 +184,7 @@ class ContractController extends Controller
         // return $data;
         $data['final_cost'] = str_replace(",", "", $request->final_cost);
         $completion->update($data);
-        Session::put('success', 'Data updated successfully!');
+        Session::put('success', trans('labels.updated'));
 
         return redirect('contract-completion/' . $completion->id);
     }
@@ -193,7 +193,7 @@ class ContractController extends Controller
     {
         $id = $completion->contract->id;
         $completion->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
 
         return redirect('contract/' . $id);
     }

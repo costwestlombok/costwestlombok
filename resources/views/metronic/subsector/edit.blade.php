@@ -23,9 +23,9 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="price">Sector </label>
+                                <label for="price">{{ __('labels.sector') }}</label>
                                 <select class="form-control" name="sector_id" required>
-                                    <option value="">Choose an sector</option>
+                                    <option value="">{{ __('labels.choose_sector') }}</option>
                                     @foreach( $sectors as $sector )
                                     <option value='{{ $sector->id }}' @if(isset($subsector->sector_id))
                                         @if($subsector->sector_id == $sector->id) selected @endif
@@ -35,7 +35,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="name">Subsector Name</label>
+                                <label for="name">{{ __('labels.name') }}</label>
                                 <input type="text" class="form-control" value="{{ $subsector->subsector_name ?? '' }}"
                                     name="subsector_name" required />
                             </div>
@@ -46,9 +46,9 @@
                 <div class="card-footer">
                     <div class="text-right">
                         <button type="reset" class="btn btn-secondary"
-                            onclick="javascript:history.back()">Cancel</button>
+                            onclick="javascript:history.back()">{{ __('labels.cancel') }}</button>
                         <button type="submit"
-                            class="btn btn-primary ml-2">{{ isset($subsector) ? 'Update' : 'Create' }}</button>
+                            class="btn btn-primary ml-2">{{ isset($subsector) ? __('labels.save_changes') : __('labels.save') }}</button>
                     </div>
                 </div>
             </form>

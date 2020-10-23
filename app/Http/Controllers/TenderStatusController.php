@@ -47,7 +47,7 @@ class TenderStatusController extends Controller
             'status_name' => 'required',
         ]);
         TenderStatus::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
 
         return back();
     }
@@ -89,7 +89,7 @@ class TenderStatusController extends Controller
         ]);
         $data = $request->all();
         $tenderStatus->update($data);
-        Session::put('success', 'Data updated successfully!');
+        Session::put('success', trans('labels.updated'));
         return redirect('/catalog/tender-status');
     }
 
@@ -102,7 +102,7 @@ class TenderStatusController extends Controller
     public function destroy(TenderStatus $tenderStatus)
     {
         $tenderStatus->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
 
         return back();
     }

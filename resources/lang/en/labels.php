@@ -20,6 +20,11 @@ return  [
 	'road' => 'road',
 	'telecommunication' => 'telecommunication',
 
+	// controller
+	'saved' => 'Data saved successfully!',
+	'updated' => 'Data updated successfully!',
+	'deleted' => 'Data deleted successfully!',
+
 	// menu
 	'dashboard' => 'Dashboard',
 	'auth' => 'Auth',
@@ -104,4 +109,68 @@ return  [
 	'phone' => 'Phone',
 	'website' => 'Website',
 	'postal_code' => 'Postal Code',
+
+	// organization unit
+	'choose_organization' => 'Choose an Organization',
+
+	// official
+	'position' => 'Position',
+	'official_name' => 'Official Name',
+	'choose_organization_unit' => 'Choose an Organization Unit',
+
+	// sector
+
+	// subsector
+	'choose_sector' => 'Choose a Sector',
+
+	// source
+	'acronym' => 'Acronym',
+
+	// offerer
+	'legal_name' => 'Legal Name',
+
+	// project
+	'displaying' => 'Displaying',
+	'of' => 'of',
+	'records' => 'records',
+	
+	// project > show
+	'no_sector' => 'No Sector',
+	'no_subsector' => 'No Subector',
+	'back' => 'Back',
+	'progress_percent' => 'Progress Percent',
+	'progress_financial' => 'Progress Financial',
+	'location' => 'Location',
+
+	// project > edit
+	'next' => 'Next',
+	'previous' => 'Previous',
+	'choose_official' => 'Choose an Official',
+	'choose_subsector' => 'Choose a Subsector',
+	'choose_purpose' => 'Choose a Project Purpose',
+	'choose_status' => 'Choose a Status',
+	'project_add_sub' => 'Enter project details and submit',
+	'project_edit_sub' => 'Edit project details and save changes',
+
+	'project_description' => 'Project Description',
+	'project_description_sub' => 'Enter the Details of your Project',
+	'project_name' => 'Project Name',
+	'project_description' => 'Project Description',
+	'environment_impact_description' => 'Environment Impact Description',
+	'settlement_description' => 'Settlement Description',
+
+	'management' => 'Management',
+	'management_sub' => 'Project Management',
+
+	'location_sub' => 'Select Initial Locatioan and End Location',
+	'enter_location' => 'Enter a Location',
+	'initial_latitude' => 'Initial Latitude',
+	'initial_longitude' => 'Initial Longitude',
+	'final_latitude' => 'Final Latitude',
+	'final_longitude' => 'Final Longitude',
+
+	'date_and_status' => 'Date and Status',
+	'end_date' => 'End Date',
+	'approved_date' => 'Approved Date',
+	'publication_date' => 'Publication Date',
 ];

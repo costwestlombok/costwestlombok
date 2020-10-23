@@ -11,8 +11,10 @@
                     class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">{{ $project->project_title }}</a>
                 <span class="text-muted font-weight-bold">{{ __('labels.project_code') }}:
                     {{ $project->project_code }}</span>
-                <span class="text-muted font-weight-bold">{{ $project->subsector->sector->sector_name }} -
-                    {{ $project->subsector->subsector_name }}</span>
+                <span
+                    class="text-muted font-weight-bold">{{ $project->subsector->sector->sector_name ?? __('labels.no_sector') }}
+                    -
+                    {{ $project->subsector->subsector_name ?? __('labels.no_subsector') }}</span>
                 <!--end::Title-->
             </div>
             <!--end::Info-->
@@ -113,7 +115,7 @@
                                 </a>
                             </li>
                             <li class="navi-item">
-                                <a href="#" data-id="{{ $project->id }}" class="navi-link">
+                                <a href="javascript:deleteFn('project', '{{ $project->id }}')" class="navi-link">
                                     <span class="svg-icon menu-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -155,7 +157,8 @@
             </div>
             <!--begin::Progress-->
             <div class="flex-row-fluid mb-7">
-                <span class="d-block font-weight-bold mb-4">{{ __('labels.progress_real_physical') }} <span
+                <span class="d-block font-weight-bold mb-4">{{ __('labels.progress') }} -
+                    {{ __('labels.real_physical') }} <span
                         class="text-muted font-weight-bold">({{ __('labels.last_update') }}:
                         {{ Carbon\Carbon::parse($project->latest_progress->date_of_advance ?? now())->translatedFormat('l, d M Y') }})</span>
                     @if(Auth::check())
@@ -203,7 +206,7 @@
                 <div class="d-flex flex-column text-dark-75">
                     <span class="font-weight-bolder font-size-sm">{{ __('labels.sefin_code') }}</span>
                     <span class="font-weight-bolder font-size-h5">
-                        {{ $project->code_sefin }}
+                        {{ $project->code_sefin ?? '-' }}
                     </span>
                 </div>
             </div>

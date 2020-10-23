@@ -61,7 +61,7 @@ class ExecutionController extends Controller
             $data['status_id'] = $tm->id;
         }
         $execution = Execution::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
 
         return redirect('contract-execution/' . $execution->id);
     }
@@ -111,7 +111,7 @@ class ExecutionController extends Controller
             $data['status_id'] = $tm->id;
         }
         $execution->update($data);
-        Session::put('success', 'Data update successfully!');
+        Session::put('success', trans('labels.updated'));
 
         return redirect('contract-execution/' . $execution->id);
     }
@@ -126,7 +126,7 @@ class ExecutionController extends Controller
     {
         $id = $execution->engage->id;
         $execution->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
         return redirect('contract/' . $id);
     }
 
@@ -157,7 +157,7 @@ class ExecutionController extends Controller
             $data['status_id'] = $tm->id;
         }
         Disbursment::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
         return redirect('contract-execution/' . $request->executions_id);
     }
 
@@ -176,14 +176,14 @@ class ExecutionController extends Controller
             $data['status_id'] = $tm->id;
         }
         $disbursment->update($data);
-        Session::put('success', 'Data updated successfully!');
+        Session::put('success', trans('labels.updated'));
         return redirect('contract-execution/' . $request->executions_id);
     }
 
     public function disbursment_destroy(Disbursment $disbursment)
     {
         $disbursment->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
         return back();
     }
 
@@ -229,7 +229,7 @@ class ExecutionController extends Controller
             $data['warranty_types_id'] = $wt->id;
         }
         Warranty::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
         return redirect('warranty/' . $request->executions_id);
     }
 
@@ -259,14 +259,14 @@ class ExecutionController extends Controller
             $data['warranty_types_id'] = $wt->id;
         }
         $warranty->update($data);
-        Session::put('success', 'Data updated successfully!');
+        Session::put('success', trans('labels.updated'));
         return redirect('warranty/' . $request->executions_id);
     }
 
     public function destroy_warranty(Warranty $warranty)
     {
         $warranty->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
         return back();
     }
 

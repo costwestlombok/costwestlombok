@@ -54,7 +54,7 @@ class StatusController extends Controller
 
         $status->save();
 
-        Session::put("success", "Data saved successfully!");
+        Session::put("success", trans('labels.saved'));
         return redirect('/catalog/status');
     }
 
@@ -99,7 +99,7 @@ class StatusController extends Controller
         $status->status_name = $request->get('status_name');
         $status->save();
 
-        Session::put("success", "Data updated successfully!");
+        Session::put("success", trans('labels.updated'));
         return redirect('/catalog/status');
     }
 

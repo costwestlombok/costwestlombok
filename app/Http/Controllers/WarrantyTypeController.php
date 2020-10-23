@@ -54,7 +54,7 @@ class WarrantyTypeController extends Controller
         ]);
 
         $warranty_type->save();
-        Session::put("success", "Data saved successfully!");
+        Session::put("success", trans('labels.saved'));
         return redirect('/catalog/warranty-type');
     }
 
@@ -98,7 +98,7 @@ class WarrantyTypeController extends Controller
         $warranty_type = WarrantyType::find($id);
         $warranty_type->name = $request->get('name');
         $warranty_type->save();
-        Session::put("success", "Data updated successfully!");
+        Session::put("success", trans('labels.updated'));
         return redirect('/catalog/warranty-type');
     }
 

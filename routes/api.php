@@ -71,6 +71,7 @@ Route::get('project-document', 'ProjectController@api');
 Route::get('budget-source', 'BudgetController@api');
 Route::get('advance-image', 'ProgressController@api');
 Route::get('contact', 'ContactController@api');
+Route::get('contact/{contact}/delete', 'ContactController@destroy');
 
 Route::get('project/{project}/delete', 'ProjectController@destroy');
 Route::get('project-file/{projectdocument}/delete', 'ProjectController@project_file_delete');

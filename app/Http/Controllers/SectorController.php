@@ -50,7 +50,7 @@ class SectorController extends Controller
 
         $data = $request->all();
         Sector::create($data);
-        Session::put("success", "Data saved successfully!");
+        Session::put("success", trans('labels.saved'));
         return redirect('/catalog/sector');
     }
 
@@ -91,7 +91,7 @@ class SectorController extends Controller
 
         $data = $request->all();
         $sector->update($data);
-        Session::put("success", "Data updated successfully!");
+        Session::put("success", trans('labels.updated'));
         return redirect('/catalog/sector');
     }
 

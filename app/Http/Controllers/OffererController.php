@@ -59,7 +59,7 @@ class OffererController extends Controller
         $dc['email'] = " ";
         Contact::create($dc);
 
-        Session::put("success", "Data saved successfully!");
+        Session::put("success", trans('labels.saved'));
         return redirect()->route('offerer.index');
     }
 
@@ -100,7 +100,7 @@ class OffererController extends Controller
         ]);
         $data = $request->all();
         $offerer->update($data);
-        Session::put("success", "Data updated successfully!");
+        Session::put("success", trans('labels.updated'));
         return redirect()->route('offerer.index');
     }
 

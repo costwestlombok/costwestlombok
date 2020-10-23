@@ -52,7 +52,7 @@ class OrganizationUnitController extends Controller
         ]);
         $data = $request->all();
         OrganizationUnit::create($data);
-        Session::put("success", "Data saved successfully!");
+        Session::put("success", trans('labels.saved'));
         return redirect('catalog/organization_unit');
     }
 
@@ -94,7 +94,7 @@ class OrganizationUnitController extends Controller
         ]);
         $data = $request->all();
         $organizationUnit->update($data);
-        Session::put("success", "Data updated successfully!");
+        Session::put("success", trans('labels.updated'));
 
         return redirect('catalog/organization_unit');
 

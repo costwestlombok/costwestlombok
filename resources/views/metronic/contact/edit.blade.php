@@ -20,12 +20,12 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="name">Name</label>
+                                <label for="name">{{ __('labels.name') }}</label>
                                 <input type="text" name="name" value="{{$contact->name ?? ''}}" class="form-control"
                                     required>
                             </div>
                             <div class="form-group">
-                                <label for="name">Position</label>
+                                <label for="name">{{ __('labels.position') }}</label>
                                 <input type="text" name="position" value="{{$contact->position ?? ''}}"
                                     class="form-control" required>
                             </div>
@@ -35,12 +35,12 @@
                                     required>
                             </div>
                             <div class="form-group">
-                                <label for="name">Phone</label>
+                                <label for="name">{{ __('labels.phone') }}</label>
                                 <input type="text" name="phone" value="{{$contact->phone ?? ''}}" class="form-control"
                                     required>
                             </div>
                             <div class="form-group">
-                                <label for="name">Address</label>
+                                <label for="name">{{ __('labels.address') }}</label>
                                 <textarea name="address" rows="3" class="form-control"
                                     required>{{$contact->address ?? ''}}</textarea>
                             </div>
@@ -50,9 +50,9 @@
                 <div class="card-footer">
                     <div class="text-right">
                         <button type="reset" class="btn btn-secondary"
-                            onclick="javascript:history.back()">Cancel</button>
+                            onclick="javascript:history.back()">{{ __('labels.cancel') }}</button>
                         <button type="submit"
-                            class="btn btn-primary ml-2">{{ isset($contact) ? 'Update' : 'Create' }}</button>
+                            class="btn btn-primary ml-2">{{ isset($contact) ? __('labels.save_changes') : __('labels.save') }}</button>
                     </div>
                 </div>
             </form>

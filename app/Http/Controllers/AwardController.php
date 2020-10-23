@@ -96,7 +96,7 @@ class AwardController extends Controller
             $data['status_id'] = $tm->id;
         }
         Award::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
 
         return redirect('tender/' . $request->tender_id . '/award');
     }
@@ -186,7 +186,7 @@ class AwardController extends Controller
             $data['status_id'] = $tm->id;
         }
         $award->update($data);
-        Session::put('success', 'Data updated successfully!');
+        Session::put('success', trans('labels.updated'));
 
         return redirect('tender-award/' . $request->tender_id);
     }
@@ -212,7 +212,7 @@ class AwardController extends Controller
             Storage::delete($award->others);
         }
         $award->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
         return back();
     }
 

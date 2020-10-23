@@ -41,9 +41,9 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>Organization</label>
+                                <label>{{ __('labels.organization') }}</label>
                                 <select class="form-control" id="entity" required>
-                                    <option value="" selected="selected">Choose an Organization</option>
+                                    <option value="">{{ __('labels.choose_organization') }}</option>
                                     @foreach( $organizations as $org )
                                     <option value='{{ $org->id }}' @if(isset($official->unit->entity_id))
                                         @if($official->unit->entity_id == $org->id) selected @endif
@@ -54,9 +54,9 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>Organization Unit</label>
+                                <label>{{ __('labels.organization_unit') }}</label>
                                 <select class="form-control" name="entity_unit_id" id="unit" required>
-                                    <option value="">Choose a unit</option>
+                                    <option value="">{{ __('labels.choose_organization_unit') }}</option>
                                     @if(isset($units))
                                     @foreach( $units as $unit )
                                     <option value='{{ $unit->id }}' @if($official->entity_unit_id == $unit->id)
@@ -70,14 +70,14 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">Official Name</label>
+                                <label for="name">{{ __('labels.official_name') }}</label>
                                 <input type="text" class="form-control" value="{{$official->name ?? ''}}" name="name"
                                     required />
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">Position</label>
+                                <label for="name">{{ __('labels.position') }}</label>
                                 <input type="text" class="form-control" value="{{$official->position ?? ''}}"
                                     name="position" />
                             </div>
@@ -93,7 +93,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">Phone</label>
+                                <label for="name">{{ __('labels.phone') }}</label>
                                 <input type="text" class="form-control" name="phone"
                                     value="{{$official->phone ?? ''}}" />
                             </div>
@@ -103,9 +103,9 @@
                 <div class="card-footer">
                     <div class="text-right">
                         <button type="reset" class="btn btn-secondary"
-                            onclick="javascript:history.back()">Cancel</button>
+                            onclick="javascript:history.back()">{{ __('labels.cancel') }}</button>
                         <button type="submit"
-                            class="btn btn-primary ml-2">{{ isset($official) ? 'Update' : 'Create' }}</button>
+                            class="btn btn-primary ml-2">{{ isset($official) ? __('labels.save_changes') : __('labels.save') }}</button>
                     </div>
                 </div>
             </form>

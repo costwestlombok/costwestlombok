@@ -20,7 +20,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="name">Method Name</label>
+                                <label for="name">{{ __('labels.name') }}</label>
                                 <input type="text" class="form-control"
                                     value="{{ $contract_method->method_name ?? '' }}" name="method_name" required />
                             </div>
@@ -30,9 +30,9 @@
                 <div class="card-footer">
                     <div class="text-right">
                         <button type="reset" class="btn btn-secondary"
-                            onclick="javascript:history.back()">Cancel</button>
+                            onclick="javascript:history.back()">{{ __('labels.cancel') }}</button>
                         <button type="submit"
-                            class="btn btn-primary ml-2">{{ isset($contract_method) ? 'Update' : 'Create' }}</button>
+                            class="btn btn-primary ml-2">{{ isset($contract_method) ? __('labels.save_changes') : __('labels.save') }}</button>
                     </div>
                 </div>
             </form>

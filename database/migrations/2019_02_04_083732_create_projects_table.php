@@ -15,16 +15,16 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('subsector_id');
-            $table->foreign('subsector_id')->references('id')->on('subsectors')->onUpdate('cascade')->onDelete('cascade');
-            $table->uuid('official_id');
-            $table->foreign('official_id')->references('id')->on('officials')->onUpdate('cascade')->onDelete('cascade');
-            $table->uuid('purpose_id');
-            $table->foreign('purpose_id')->references('id')->on('purposes')->onUpdate('cascade')->onDelete('cascade');
+            $table->uuid('subsector_id')->nullable();
+            $table->foreign('subsector_id')->references('id')->on('subsectors')->onUpdate('cascade')->onDelete('set null');
+            $table->uuid('official_id')->nullable();
+            $table->foreign('official_id')->references('id')->on('officials')->onUpdate('cascade')->onDelete('set null');
+            $table->uuid('purpose_id')->nullable();
+            $table->foreign('purpose_id')->references('id')->on('purposes')->onUpdate('cascade')->onDelete('set null');
             $table->uuid('role_id')->nullable();
-            $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
-            $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('set null');
+            $table->uuid('status_id')->nullable();
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('set null');
             $table->string('project_code')->nullable();
             $table->string('project_title')->nullable();
             $table->text('project_description')->nullable();

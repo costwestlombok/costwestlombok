@@ -14,25 +14,25 @@
         var demos = function () {
             // basic
             $('#entity').select2({
-                placeholder: "Choose an organization"
+                placeholder: "{{ __('labels.choose_organization') }}"
             });
             $('#unit').select2({
-                placeholder: "Choose a unit"
+                placeholder: "{{ __('labels.choose_organization_unit') }}"
             });
             $('#official').select2({
-                placeholder: "Choose an official"
+                placeholder: "{{ __('labels.choose_official') }}"
             });
             $('#sector').select2({
-                placeholder: "Choose a sector"
+                placeholder: "{{ __('labels.choose_sector') }}"
             });
             $('#subsector').select2({
-                placeholder: "Choose a subsector"
+                placeholder: "{{ __('labels.choose_subsector') }}"
             });
             $('#purpose').select2({
-                placeholder: "Choose a purpose"
+                placeholder: "{{ __('labels.choose_purpose') }}"
             });
             $('#status').select2({
-                placeholder: "Choose a status"
+                placeholder: "{{ __('labels.choose_status') }}"
             });
         }
         return {
@@ -122,9 +122,9 @@ $sectors = App\Sector::all();
 $organizations = App\Organization::all();
 $statuses = App\Status::all();
 if(isset($project)){
-$units = App\OrganizationUnit::where('entity_id', $project->official->unit->org->id)->get();
-$officials = App\Official::where('entity_unit_id', $project->official->unit->id)->get();
-$subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)->get();
+$units = App\OrganizationUnit::where('entity_id', $project->official->unit->org->id ?? null)->get();
+$officials = App\Official::where('entity_unit_id', $project->official->unit->id ?? null)->get();
+$subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id ?? null)->get();
 }
 @endphp
 <div class="subheader py-2 py-lg-4  subheader-transparent " id="kt_subheader">
@@ -133,7 +133,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Title-->
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                {{ isset($project) ? 'Edit' : 'Add' }} Project </h5>
+                {{ isset($project) ? __('labels.edit') : __('labels.create') }} {{ __('labels.project') }} </h5>
             <!--end::Title-->
             <!--begin::Separator-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
@@ -141,7 +141,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
             <!--begin::Search Form-->
             <div class="d-flex align-items-center" id="kt_subheader_search">
                 <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
-                    {{ isset($project) ? 'Edit project details and save changes' : 'Enter project details and submit' }}
+                    {{ isset($project) ? __('labels.project_edit_sub') : __('labels.project_add_sub') }}
                 </span>
             </div>
             <!--end::Search Form-->
@@ -162,7 +162,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                             <div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
                                 <div class="wizard-label">
                                     <h3 class="wizard-title">
-                                        <span>1.</span>Project Description</h3>
+                                        <span>1.</span>{{ __('labels.project_description') }}</h3>
                                     <div class="wizard-bar"></div>
                                 </div>
                             </div>
@@ -171,7 +171,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                             <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
                                 <div class="wizard-label">
                                     <h3 class="wizard-title">
-                                        <span>2.</span>Management</h3>
+                                        <span>2.</span>{{ __('labels.management') }}</h3>
                                     <div class="wizard-bar"></div>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                             <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
                                 <div class="wizard-label">
                                     <h3 class="wizard-title">
-                                        <span>3.</span>Location</h3>
+                                        <span>3.</span>{{ __('labels.location') }}</h3>
                                     <div class="wizard-bar"></div>
                                 </div>
                             </div>
@@ -189,7 +189,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                             <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
                                 <div class="wizard-label">
                                     <h3 class="wizard-title">
-                                        <span>4.</span>Date and Status</h3>
+                                        <span>4.</span>{{ __('labels.date_and_status') }}</h3>
                                     <div class="wizard-bar"></div>
                                 </div>
                             </div>
@@ -209,33 +209,32 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                 @endif
                                 <!--begin: Wizard Step 1-->
                                 <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-
-                                    <h4 class="mb-10 font-weight-bold text-dark">Enter the Details of your Project
-                                    </h4>
+                                    <h4 class="mb-10 font-weight-bold text-dark">
+                                        {{ __('labels.project_description_sub') }}</h4>
                                     <!--begin::Input-->
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Project Code </label>
+                                        <label for="name">{{ __('labels.project_code') }}</label>
                                         <input type="text" class="form-control" name="project_code"
                                             value="{{ $project->project_code ?? ''}}" required />
                                     </div>
                                     <!--end::Input-->
                                     <!--begin::Input-->
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Project Name</label>
+                                        <label for="name">{{ __('labels.project_name') }}</label>
                                         <input type="text" class="form-control" name="project_title"
                                             value="{{$project->project_title ?? ''}}" required />
                                     </div>
                                     <!--end::Input-->
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Project Description</label>
+                                        <label for="name">{{ __('labels.project_description') }}</label>
                                         <textarea name="project_description" id="project_description" rows="3"
                                             class="form-control">{{$project->project_description ?? ''}}</textarea>
                                     </div>
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label>Purpose</label>
+                                        <label>{{ __('labels.purpose') }}</label>
                                         <select class="form-control" name="purpose_id" id="purpose" style="width: 100%;"
                                             required>
-                                            <option value="">Choose purposes</option>
+                                            <option value="">{{ __('labels.choose_purpose') }}</option>
                                             @foreach ($purposes as $purpose)
                                             <option value="{{$purpose->id}}" @if(isset($project)) @if($project->
                                                 purpose_id
@@ -245,22 +244,22 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                         </select>
                                     </div>
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Budget</label>
+                                        <label for="name">{{ __('labels.budget') }}</label>
                                         <input type="text" class="form-control" name="budget" id="budget"
                                             value="{{ number_format($project->budget ?? '0') }}" required>
                                     </div>
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">SEFIN code</label>
+                                        <label for="name">{{ __('labels.sefin_code') }}</label>
                                         <input type="text" class="form-control" name="code_sefin"
                                             value="{{$project->code_sefin ?? ''}}" id="code_sefin">
                                     </div>
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Environment impact description</label>
+                                        <label for="name">{{ __('labels.environment_impact_description') }}</label>
                                         <textarea name="environment_desc" id="environment_desc" class="form-control"
                                             rows="3">{{$project->environment_desc ?? ''}}</textarea>
                                     </div>
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Settlement description</label>
+                                        <label for="name">{{ __('labels.settlement_description') }}</label>
                                         <textarea name="settlement_desc" id="settlement_desc" class="form-control"
                                             rows="3">{{$project->settlement_desc ?? ''}}</textarea>
                                     </div>
@@ -268,10 +267,11 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                 <!--end: Wizard Step 1-->
                                 <!--begin: Wizard Step 2-->
                                 <div class="pb-5" data-wizard-type="step-content">
+                                    <h4 class="mb-10 font-weight-bold text-dark">{{ __('labels.management_sub') }}</h4>
                                     <!--begin::Input-->
                                     <div class="form-group fv-plugins-icon-container">
                                         <div class="form-group">
-                                            <label for="name">Role</label>
+                                            <label for="name">{{ __('labels.role') }}</label>
                                             <div class="typeahead">
                                                 <input class="form-control" value="{{$project->role->role_name ?? ''}}"
                                                     id="role_id" name="role_id" type="text" dir="ltr"
@@ -280,12 +280,12 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                         </div>
                                     </div>
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label>Organization/Entity</label>
+                                        <label>{{ __('labels.organization') }}</label>
                                         <select class="form-control" name="" id="entity" style="width: 100%;">
-                                            <option value="0">Choose an organization/entity</option>
+                                            <option value="">{{ __('labels.choose_organization') }}</option>
                                             @foreach ($organizations as $org)
                                             <option value="{{$org->id}}" @if(isset($project)) @if($org->id ==
-                                                $project->official->unit->org->id) selected @endif
+                                                ($project->official->unit->org->id ?? null)) selected @endif
                                                 @endif>{{$org->name}}
                                             </option>
                                             @endforeach
@@ -294,9 +294,9 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                     <!--end::Input-->
                                     <!--begin::Input-->
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Unit</label>
+                                        <label for="name">{{ __('labels.organization_unit') }}</label>
                                         <select class="form-control" name="" id="unit" style="width: 100%;">
-                                            <option value="">Choose a unit</option>
+                                            <option value="">{{ __('labels.choose_organization_unit') }}</option>
                                             @if(isset($project))
                                             @foreach ($units as $unit)
                                             <option value="{{$unit->id}}" @if($unit->id ==
@@ -308,7 +308,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                     </div>
                                     <!--end::Input-->
                                     <div class="form-group fv-plugins-icon-container">
-                                        <label for="name">Official</label>
+                                        <label for="name">{{ __('labels.official') }}</label>
                                         <select class="form-control" name="official_id" id="official"
                                             style="width: 100%;">
                                             @if(isset($project))
@@ -323,13 +323,13 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                     <div class="row">
                                         <div class="col-xl-6">
                                             <div class="form-group fv-plugins-icon-container">
-                                                <label for="name">Sector</label>
+                                                <label for="name">{{ __('labels.sector') }}</label>
                                                 <select class="form-control" name="" id="sector" style="width: 100%;">
-                                                    <option value="">Choose sector</option>
+                                                    <option value="">{{ __('labels.choose_sector') }}</option>
                                                     @foreach ($sectors as $sector)
                                                     <option value="{{$sector->id}}" @if(isset($project)) @if($sector->id
                                                         ==
-                                                        $project->subsector->sector->id) selected @endif
+                                                        ($project->subsector->sector->id ?? null)) selected @endif
                                                         @endif>{{$sector->sector_name}}</option>
                                                     @endforeach
                                                 </select>
@@ -337,7 +337,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                         </div>
                                         <div class="col-xl-6">
                                             <div class="form-group fv-plugins-icon-container">
-                                                <label for="name">Sub sector</label>
+                                                <label for="name">{{ __('labels.subsector') }}</label>
                                                 <select class="form-control" name="subsector_id" id="subsector"
                                                     style="width: 100%;">
                                                     @if(isset($project))
@@ -355,9 +355,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                 <!--end: Wizard Step 2-->
                                 <!--begin: Wizard Step 3-->
                                 <div class="pb-5" data-wizard-type="step-content">
-                                    <h4 class="mb-10 font-weight-bold text-dark">Select Initial Locatioan and End
-                                        Location
-                                    </h4>
+                                    <h4 class="mb-10 font-weight-bold text-dark">{{ __('labels.location_sub') }}</h4>
                                     <!--begin::Select-->
                                     <div class="form-group fv-plugins-icon-container">
 
@@ -378,7 +376,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="name">Initial Lat</label>
+                                                <label for="name">{{ __('labels.initial_latitude') }}</label>
                                                 <input type="text" class="form-control" name="initial_lat"
                                                     id="initial_lat"
                                                     value="{{$project->initial_lat ?? -8.683070211544514}}">
@@ -386,7 +384,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="name">Inital Lon</label>
+                                                <label for="name">{{ __('labels.initial_longitude') }}</label>
                                                 <input type="text" class="form-control" name="initial_lon"
                                                     id="initial_lon"
                                                     value="{{$project->initial_lon ?? 116.13077257514645}}">
@@ -397,14 +395,14 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="name">Final Lat</label>
+                                                <label for="name">{{ __('labels.final_latitude') }}</label>
                                                 <input type="text" class="form-control" name="final_lat" id="final_lat"
                                                     value="{{$project->final_lat ?? -8.679305276105104}}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="name">Final Lon</label>
+                                                <label for="name">{{ __('labels.final_longitude') }}</label>
                                                 <input type="text" class="form-control" name="final_lon" id="final_lon"
                                                     value="{{$project->final_lon ?? 116.13759645742493}}">
                                             </div>
@@ -414,38 +412,39 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                 <!--end: Wizard Step 3-->
                                 <!--begin: Wizard Step 4-->
                                 <div class="pb-5" data-wizard-type="step-content">
+                                    <h4 class="mb-10 font-weight-bold text-dark">{{ __('labels.date_and_status') }}</h4>
                                     <div class="my-5">
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label for="name">Start Date</label>
+                                            <label for="name">{{ __('labels.start_date') }}</label>
                                             <input type="date" class="form-control" name="start_date" id="start_date"
                                                 value="{{ date_format(Carbon\Carbon::parse($project->start_date ?? date('Y-m-d')), 'Y-m-d') }}">
                                         </div>
                                         <!--end::Input-->
                                         <!--begin::Input-->
                                         <div class="form-group">
-                                            <label for="name">End Date</label>
+                                            <label for="name">{{ __('labels.end_date') }}</label>
                                             <input type="date" class="form-control" name="end_date" id="end_date"
                                                 value="{{ date_format(Carbon\Carbon::parse($project->end_date ?? date('Y-m-d')), 'Y-m-d') }}">
                                         </div>
                                         <!--end::Input-->
                                         <div class="form-group">
-                                            <label for="name">Approved Date</label>
+                                            <label for="name">{{ __('labels.approved_date') }}</label>
                                             <input type="date" class="form-control" name="date_of_approved"
                                                 id="date_of_approved"
                                                 value="{{ date_format(Carbon\Carbon::parse($project->date_of_approved ?? date('Y-m-d')), 'Y-m-d') }}">
                                         </div>
                                         <div class="form-group">
-                                            <label for="name">Publication Date</label>
+                                            <label for="name">{{ __('labels.publication_date') }}</label>
                                             <input type="date" class="form-control" name="date_of_publication"
                                                 id="date_of_publication"
                                                 value="{{ date_format(Carbon\Carbon::parse($project->date_of_publication ?? date('Y-m-d')), 'Y-m-d') }}">
                                         </div>
                                         <div class="form-group">
-                                            <label>Status</label>
+                                            <label>{{ __('labels.status') }}</label>
                                             <select class="form-control" name="status_id" id="status"
                                                 style="width: 100%;">
-                                                <option value="">Choose status</option>
+                                                <option value="">{{ __('labels.choose_status') }}</option>
                                                 @foreach ($statuses as $status)
                                                 <option value="{{$status->id}}" @if(isset($project)) @if($status->id
                                                     ==
@@ -462,15 +461,15 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id)
                                     <div class="mr-2">
                                         <button type="button"
                                             class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
-                                            data-wizard-type="action-prev">Previous</button>
+                                            data-wizard-type="action-prev">{{ __('labels.previous') }}</button>
                                     </div>
                                     <div>
                                         <button type="submit"
                                             class="btn btn-success font-weight-bold text-uppercase px-9 py-4"
-                                            data-wizard-type="action-submit">Submit</button>
+                                            data-wizard-type="action-submit">{{ isset($project) ? __('labels.save_changes') : __('labels.save') }}</button>
                                         <button type="button"
                                             class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                            data-wizard-type="action-next">Next</button>
+                                            data-wizard-type="action-next">{{ __('labels.next') }}</button>
                                     </div>
                                 </div>
                                 <!--end: Wizard Actions-->

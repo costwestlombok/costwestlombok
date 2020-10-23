@@ -141,7 +141,7 @@ class TenderController extends Controller
         $data['duration'] = $start->diffInDays($end);
         $data['amount'] = str_replace(",", "", $request->amount);
         Tender::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
 
         return redirect('tender/' . $request->project_id);
     }
@@ -252,7 +252,7 @@ class TenderController extends Controller
 
         $data['amount'] = str_replace(",", "", $request->amount);
         $tender->update($data);
-        Session::put("success", "Data saved successfully");
+        Session::put("success", trans('labels.updated'));
         return redirect('tender/' . $request->project_id);
     }
 
@@ -289,7 +289,7 @@ class TenderController extends Controller
             Storage::delete($tender->acceptance_certificate);
         }
         $tender->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
         return back();
     }
 

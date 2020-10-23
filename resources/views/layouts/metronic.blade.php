@@ -18,6 +18,8 @@
 	<!--end::Global Theme Styles-->
 
 	<!--begin::Layout Themes(used by all pages)-->
+	<link href="{{ asset('metronic/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
+		type="text/css" />
 	<!--end::Layout Themes-->
 
 	<link rel="shortcut icon" href="/metronic/assets/media/logos/favicon.ico" />
@@ -119,6 +121,7 @@
 	<script src="/metronic/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.6"></script>
 	<script src="/metronic/assets/js/scripts.bundle.js?v=7.0.6"></script>
 	<!--end::Global Theme Bundle-->
+	<script src="{{ asset('metronic/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 	<script src="{{ asset('metronic/assets/js/pages/features/miscellaneous/sweetalert2.js') }}"></script>
 	<script src="{{ asset('metronic/assets/js/pages/features/miscellaneous/toastr.js') }}"></script>
 	@if(Session::has('success'))
@@ -131,6 +134,48 @@
 		toastr.error('{!! Session::pull("fail") !!}');
 	</script>
 	@endif
+	<script>
+		jQuery(document).ready(function () {
+			$.extend(true, $.fn.dataTable.defaults, {
+				"language": {
+					"url": "{{ app()->getLocale() == 'id' ? 'https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json' : '' }}"
+				},
+			});
+		});
+		function deleteFn(tag, id) {
+            Swal.fire({
+                title: "{{ __('labels.delete_sub') }}",
+                text: "{!! __('labels.delete_text') !!}",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "{{ __('labels.delete_confirm') }}",
+                cancelButtonText: "{{ __('labels.cancel') }}"
+            }).then(function(result) {
+                if (result.value) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/" + tag + "/" + id + "/delete",
+                        success: function (data) {
+                            toastr.success("{{ __('labels.delete_success') }}");
+							if ($('#kt_datatable').length) {
+								var table = $('#kt_datatable').DataTable(); 
+                            	table.ajax.reload(null, false);
+							} else {
+								var urlArray = location.pathname.split('/');
+								if (urlArray[1] == 'project') {
+									if (urlArray[2]) {
+										location.href = '/project';
+									} else {
+										location.reload();
+									}
+								}
+							}
+                        }         
+                    });
+                }
+            });
+        };
+	</script>
 	@yield('script')
 </body>
 <!--end::Body-->

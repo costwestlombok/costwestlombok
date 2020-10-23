@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="name">Status Name</label>
+                                <label for="name">{{ __('labels.status') }}</label>
                                 <input type="text" class="form-control" value="{{ $status->status_name ?? '' }}"
                                     name="status_name" required />
                             </div>
@@ -29,9 +29,9 @@
                 <div class="card-footer">
                     <div class="text-right">
                         <button type="reset" class="btn btn-secondary"
-                            onclick="javascript:history.back()">Cancel</button>
+                            onclick="javascript:history.back()">{{ __('labels.cancel') }}</button>
                         <button type="submit"
-                            class="btn btn-primary ml-2">{{ isset($status) ? 'Update' : 'Create' }}</button>
+                            class="btn btn-primary ml-2">{{ isset($status) ? __('labels.save_changes') : __('labels.save') }}</button>
                     </div>
                 </div>
             </form>

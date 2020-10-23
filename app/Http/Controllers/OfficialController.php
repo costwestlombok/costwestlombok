@@ -50,7 +50,7 @@ class OfficialController extends Controller
 
         $data = $request->all();
         Official::create($data);
-        Session::put("success", "Data saved successfully!");
+        Session::put("success", trans('labels.saved'));
         return redirect('/catalog/official');
     }
 
@@ -91,7 +91,7 @@ class OfficialController extends Controller
         ]);
         $data = $request->all();
         $official->update($data);
-        Session::put("success", "Data updated successfully!");
+        Session::put("success", trans('labels.updated'));
 
         return redirect('/catalog/official');
     }

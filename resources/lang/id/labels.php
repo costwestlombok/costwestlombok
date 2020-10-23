@@ -20,6 +20,11 @@ return  [
 	'road' => 'jalan',
 	'telecommunication' => 'telekomunikasi',
 
+	// controller
+	'saved' => 'Data berhasil disimpan!',
+	'updated' => 'Data berhasil diubah!',
+	'deleted' => 'Data berhasil dihapus!',
+
 	// menu
 	'dashboard' => 'Beranda',
 	'auth' => 'tentikasi',
@@ -98,10 +103,74 @@ return  [
 	'cancel' => 'Batal',
 	'delete_success' => 'Data berhasil dihapus!',
 	'organization_name' => 'Nama Organisasi',
-	'organization_legal_name' => 'Nama Legal Organisasi',
+	'organization_legal_name' => 'Nama Resmi Organisasi',
 	'description' => 'Deskripsi',
 	'address' => 'Alamat',
 	'phone' => 'Telepon',
 	'website' => 'Situs Web',
 	'postal_code' => 'Kode Pos',
+
+	// organization unit
+	'choose_organization' => 'Pilih Organisasi',
+
+	// official
+	'position' => 'Posisi',
+	'official_name' => 'Nama Penjabat',
+	'choose_organization_unit' => 'Pilih Unit Organisasi',
+
+	// sector
+
+	// subsector
+	'choose_sector' => 'Pilih Sektor',
+
+	// source
+	'acronym' => 'Akronim',
+
+	// offerer
+	'legal_name' => 'Nama Resmi',
+
+	// project
+	'displaying' => 'Menampilkan',
+	'of' => 'dari',
+	'records' => 'entri',
+	
+	// project > show
+	'no_sector' => 'Tidak ada Sektor',
+	'no_subsector' => 'Tidak ada Subektor',
+	'back' => 'Kembali',
+	'progress_percent' => 'Persentase Kemajuan',
+	'progress_financial' => 'Kemajuan Keuangan',
+	'location' => 'Lokasi',
+
+	// project > edit
+	'next' => 'Selanjutnya',
+	'previous' => 'Sebelumnya',
+	'choose_official' => 'Pilih Penjabat',
+	'choose_subsector' => 'Pilih Subsektor',
+	'choose_purpose' => 'Pilih Tujuan Proyek',
+	'choose_status' => 'Pilih Status',
+	'project_add_sub' => 'Buat detail proyek dan simpan',
+	'project_edit_sub' => 'Ubah detail proyek dan simpan perubahan',
+
+	'project_description' => 'Deskripsi Proyek',
+	'project_description_sub' => 'Masukkan Detail Proyek Anda',
+	'project_name' => 'Nama Proyek',
+	'project_description' => 'Deskripsi Proyek',
+	'environment_impact_description' => 'Deskripsi Dampak Lingkungan',
+	'settlement_description' => 'Deskripsi Penyelesaian',
+
+	'management' => 'Manajemen',
+	'management_sub' => 'Manajemen Proyek',
+
+	'location_sub' => 'Pilih Lokasi Awal dan Lokasi Akhir',
+	'enter_location' => 'Masukkan Lokasi',
+	'initial_latitude' => 'Latitude Awal',
+	'initial_longitude' => 'Longitude Awal',
+	'final_latitude' => 'Latitude Akhir',
+	'final_longitude' => 'Longitude Akhir',
+
+	'date_and_status' => 'Tanggal dan Status',
+	'end_date' => 'Tanggal Berakhir',
+	'approved_date' => 'Tanggal Disetujui',
+	'publication_date' => 'Tanggal Publikasi',
 ];

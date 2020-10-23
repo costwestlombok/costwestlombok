@@ -48,12 +48,9 @@ class TenderMethodController extends Controller
             'method_name' => 'required',
         ]);
 
-        $sector = new TenderMethod([
-            'method_name' => $request->get('method_name'),
-        ]);
-        $sector->save();
+        TenderMethod::create($request->all());
 
-        Session::put("success", "Data saved successfully!");
+        Session::put("success", trans('labels.saved'));
         return redirect('/catalog/tender_method');
     }
 
@@ -95,7 +92,7 @@ class TenderMethodController extends Controller
         $method = TenderMethod::find($id);
         $method->method_name = $request->get('method_name');
         $method->save();
-        Session::put("success", "Data updated successfully!");
+        Session::put("success", trans('labels.updated'));
         return redirect('/catalog/tender_method');
     }
 

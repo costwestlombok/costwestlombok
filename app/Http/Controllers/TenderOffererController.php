@@ -53,7 +53,7 @@ class TenderOffererController extends Controller
         $data = $request->all();
         // return $data;
         TenderOfferer::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
         return back();
     }
 
@@ -101,7 +101,7 @@ class TenderOffererController extends Controller
     {
         $to = TenderOfferer::find($id);
         $to->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
         return back();
     }
 

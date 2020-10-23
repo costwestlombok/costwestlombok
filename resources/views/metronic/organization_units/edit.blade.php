@@ -27,7 +27,7 @@
                             <div class="form-group">
                                 <label for="price">{{ __('labels.organization') }}</label>
                                 <select class="form-control" name="entity_id" required>
-                                    <option value="">Choose an Organization</option>
+                                    <option value="">{{ __('labels.choose_organization') }}</option>
                                     @foreach( $organizations as $org )
                                     <option value='{{ $org->id }}' @if(isset($organization_unit->entity_id))
                                         @if($organization_unit->entity_id == $org->id) selected @endif

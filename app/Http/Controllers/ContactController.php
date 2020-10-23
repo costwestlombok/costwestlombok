@@ -46,7 +46,7 @@ class ContactController extends Controller
     {
         $data = $request->all();
         Contact::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
         return redirect('catalog/contact');
     }
 
@@ -83,7 +83,7 @@ class ContactController extends Controller
     {
         $data = $request->all();
         $contact->update($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
         return redirect('/catalog/contact');
     }
 
@@ -93,12 +93,10 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Contact $contact)
     {
-        $sector = Sector::find($id);
-        $sector->delete();
-
-        return redirect('/sector')->with('success', 'Sector has been destroyed');
+        $contact->delete();
+        return redirect('/catalog/contact')->with('success', 'Sector has been destroyed');
     }
 
     public function api()

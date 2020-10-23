@@ -65,7 +65,7 @@ class AmmendmentController extends Controller
             $data['status_id'] = $tm->id;
         }
         Ammendment::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
 
         return redirect('contract-ammendment/' . $request->engage_id);
     }
@@ -120,7 +120,7 @@ class AmmendmentController extends Controller
             $data['status_id'] = $tm->id;
         }
         $ammendment->update($data);
-        Session::put('success', 'Data updated successfully!');
+        Session::put('success', trans('labels.updated'));
         return redirect('contract-ammendment/' . $request->engage_id);
     }
 
@@ -136,7 +136,7 @@ class AmmendmentController extends Controller
             Storage::delete($ammendment->adendum);
         }
         $ammendment->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
         return back();
     }
 

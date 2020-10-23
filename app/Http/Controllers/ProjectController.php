@@ -73,23 +73,25 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        unset($data['map_search']);
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
         $data['duration'] = $start->diffInDays($end);
         $data['budget'] = str_replace(",", "", $request->budget);
 
-        $role = Role::where('role_name', $request->role_id)->first();
-
-        if ($role) {
-            $data['role_id'] = $role->id;
-        } else {
-            $r = Role::create([
-                'role_name' => $request->role_id,
-            ]);
-            $data['role_id'] = $r->id;
+        if ($data['role_id']) {
+            $role = Role::where('role_name', $request->role_id)->first();
+            if ($role) {
+                $data['role_id'] = $role->id;
+            } else {
+                $r = Role::create([
+                    'role_name' => $request->role_id,
+                ]);
+                $data['role_id'] = $r->id;
+            } 
         }
         Project::create($data);
-        Session::put("success", "Data saved successfully!");
+        Session::put("success", trans('labels.saved'));
         return redirect('/project');
     }
 
@@ -140,7 +142,7 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         $map = new Googlemaps();
-        $map->add_marker([
+         $map->add_marker([
             'position' => $project->initial_lat . ',' . $project->initial_lon,
             'draggable' => TRUE,
             'ondragend' => 'document.getElementById("initial_lat").value =event.latLng.lat(); document.getElementById("initial_lon").value = event.latLng.lng();',
@@ -154,7 +156,8 @@ class ProjectController extends Controller
         ]);
         $map->initialize([
             'center' => $project->initial_lat . ',' . $project->initial_lon,
-            'places' => TRUE
+            'places' => TRUE,
+            // 'placesAutocompleteOnChange' => 'alert(\'You selected a place\');',
         ]);
         $map = $map->create_map();
         return view('metronic.project.edit', compact('map', 'project'));
@@ -170,19 +173,23 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $data = $request->all();
+        unset($data['map_search']);
         $data['budget'] = str_replace(",", "", $request->budget);
         $role = Role::where('role_name', $request->role_id)->first();
 
-        if ($role) {
-            $data['role_id'] = $role->id;
-        } else {
-            $r = Role::create([
-                'role_name' => $request->role_id,
-            ]);
-            $data['role_id'] = $r->id;
+        if ($data['role_id']) {
+            $role = Role::where('role_name', $request->role_id)->first();
+            if ($role) {
+                $data['role_id'] = $role->id;
+            } else {
+                $r = Role::create([
+                    'role_name' => $request->role_id,
+                ]);
+                $data['role_id'] = $r->id;
+            } 
         }
         $project->update($data);
-        Session::put('success', 'Data updated successfully!');
+        Session::put('success', trans('labels.updated'));
 
         return redirect('/project');
     }
@@ -196,8 +203,8 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
-        Session::put('success', 'Data deleted successfully!');
-        return back();
+        Session::put('success', trans('labels.deleted'));
+        return redirect('/project');
     }
 
     public function project_file(Project $project)
@@ -214,7 +221,7 @@ class ProjectController extends Controller
             $data['document_path'] = $file;
         }
         ProjectDocument::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
 
         return back();
     }
@@ -223,7 +230,7 @@ class ProjectController extends Controller
     {
         Storage::delete($projectdocument->document_path);
         $projectdocument->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
         return back();
     }
 

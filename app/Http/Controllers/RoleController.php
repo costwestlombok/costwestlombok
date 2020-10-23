@@ -49,7 +49,7 @@ class RoleController extends Controller
         ]);
         $data = $request->all();
         Role::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
         return redirect('/catalog/role');
     }
 
@@ -89,8 +89,8 @@ class RoleController extends Controller
         ]);
         $data = $request->all();
         $role->update($data);
-        Session::put('success', 'Data updated successfully!');
-        return back();
+        Session::put('success', trans('labels.updated'));
+        return redirect('/catalog/role');
     }
 
     /**

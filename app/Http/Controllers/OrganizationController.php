@@ -28,7 +28,7 @@ class OrganizationController extends Controller
     public function store(Request $request)
     {
         Organization::create($request->all());
-        Session::put("success", "Data saved successfully!");
+        Session::put("success", trans('labels.saved'));
 
         return redirect()->route('organization.index');
     }
@@ -59,7 +59,7 @@ class OrganizationController extends Controller
     public function update(Request $request, Organization $organization)
     {
         $organization->update($request->all());
-        Session::put("success", "Data updated successfully!");
+        Session::put("success", trans('labels.updated'));
 
         return redirect()->route('organization.index');
     }

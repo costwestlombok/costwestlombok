@@ -301,7 +301,7 @@
                                         </td>
                                         <td class="text-center">
                                             <span
-                                                class="label label-lg label-light-success label-inline">{{ $item->status->status_name }}</span>
+                                                class="label label-lg label-light-success label-inline">{{ $item->status->status_name ?? '-' }}</span>
                                         </td>
                                         <td>
                                             <div class="d-flex flex-column w-100 mr-2">

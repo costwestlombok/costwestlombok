@@ -34,7 +34,7 @@ class BudgetController extends Controller
         $data['duration'] = $start->diffInDays($end);
 
         Budget::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
         return redirect('project-budget/' . $request->project_id);
     }
 
@@ -53,14 +53,14 @@ class BudgetController extends Controller
         $data['duration'] = $start->diffInDays($end);
 
         $budget->update($data);
-        Session::put('success', 'Data updated successfully!');
+        Session::put('success', trans('labels.updated'));
         return redirect('project-budget/' . $request->project_id);
     }
 
     public function destroy(Budget $budget)
     {
         $budget->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
         return back();
     }
 
@@ -89,14 +89,14 @@ class BudgetController extends Controller
         }
         $data['amount'] = str_replace(",", "", $request->amount);
         ProjectSource::create($data);
-        Session::put('success', 'Data saved successfully!');
+        Session::put('success', trans('labels.saved'));
         return back();
     }
 
     public function destroy_source(ProjectSource $project_source)
     {
         $project_source->delete();
-        Session::put('success', 'Data deleted successfully!');
+        Session::put('success', trans('labels.deleted'));
         return back();
     }
 

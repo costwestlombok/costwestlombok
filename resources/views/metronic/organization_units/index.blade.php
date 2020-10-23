@@ -1,137 +1,81 @@
 @extends('layouts.metronic')
-@section('style')
-<!--begin::Page Vendors Styles(used by this page)-->
-<link href="{{ asset('metronic/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
-    type="text/css" />
-<!--end::Page Vendors Styles-->
-@endsection
 @section('script')
-<!--begin::Page Vendors(used by this page)-->
-<script src="{{ asset('metronic/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-<!--end::Page Vendors-->
 <script>
     var COST_URL = "{{ url('api/organization_unit') }}";
 </script>
 <script>
-    "use strict";
-    var KTDatatablesDataSourceAjaxServer = function () {
-
-        var initTable1 = function () {
-            var table = $('#kt_datatable');
-
-            // begin first table
-            table.DataTable({
-                responsive: true,
-                searchDelay: 500,
-                processing: true,
-                serverSide: true,
-                ajax: COST_URL,
-                columns: [
-                    {
-                        data: "id",
-                        className: "right-align",
-                        render: function (data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        },
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'unit_name'
-                    },
-                    {
-                        data: 'organization_name'
-                    },
-                    {
-                        data: 'official_count',
-                        searchable: false
-                    },
-                    {
-                        data: 'created_at',
-                        searchable: false
-                    },
-                    {
-                        data: 'id',
-                        searchable: false
-                    },
-                ],
-                order: [[4, "desc"]],
-                columnDefs: [
-                    {
-                        targets: 5,
-                        title: "{{ __('labels.action') }}",
-                        orderable: false,
-                        render: function (data, type, full, meta) {
-                            return '\
-                            <div class="text-right nowrap">\
-                			<a href="/catalog/organization_unit/'+ full.id + '/edit" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
-                				<i class="fas fa-pen"></i>\
-                			</a>\
-                            <a href="#"  data-id="'+full.id+'" class="button btn btn-sm btn-clean btn-icon" data-id='+  full.id +' title="Delete"><i class="fas fa-trash"></i></a>\
-                            </div>\
-                		';
-                        },
-                    },
-                    {
-                        targets: 4,
-                        render: function (data, type, full, meta) {
-                            return '<div class="text-right nowrap">\
-                                <code>' + data + '</code>\
-                            </div>';
-                        },
-                    },
-                    {
-                        targets: 3,
-                        className: 'text-center'
-                    },
-                    {
-                        targets: 0,
-                        className: 'text-center'
-                    },
-                ],
-                "language": {
-                    "url": "{{ app()->getLocale() == 'id' ? 'https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json' : '' }}"
-                },
-            });
-        };
-
-        return {
-
-            //main function to initiate the module
-            init: function () {
-                initTable1();
-            },
-
-        };
-
-    }();
-
     jQuery(document).ready(function () {
-        KTDatatablesDataSourceAjaxServer.init();
-        $(document).on('click', '.button', function (e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            var link = $(this).attr('href');
-            Swal.fire({
-                title: "{{ __('labels.delete_sub') }}",
-                text: "{!! __('labels.delete_text') !!}",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "{{ __('labels.delete_confirm') }}",
-                cancelButtonText: "{{ __('labels.cancel') }}"
-            }).then(function(result) {
-                if (result.value) {
-                    $.ajax({
-                        type: "GET",
-                        url: "/api/organization_unit/"+ id +"/delete",
-                        success: function (data) {
-                            toastr.success("{{ __('labels.delete_success') }}");
-                            var table = $('#kt_datatable').DataTable(); 
-                            table.ajax.reload( null, false );
-                        }         
-                    });
-                }
-            });
+        $('#kt_datatable').DataTable({
+            responsive: true,
+            searchDelay: 500,
+            processing: true,
+            serverSide: true,
+            ajax: COST_URL,
+            columns: [
+                {
+                    data: "id",
+                    className: "right-align",
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    },
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'unit_name'
+                },
+                {
+                    data: 'organization_name'
+                },
+                {
+                    data: 'official_count',
+                    searchable: false
+                },
+                {
+                    data: 'created_at',
+                    searchable: false
+                },
+                {
+                    data: 'id',
+                    searchable: false
+                },
+            ],
+            order: [[4, "desc"]],
+            columnDefs: [
+                {
+                    targets: 5,
+                    title: "{{ __('labels.action') }}",
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '\
+                        <div class="text-right nowrap">\
+                            <a href="/catalog/organization_unit/' + full.id + '/edit" class="btn btn-xs btn-clean btn-icon">\
+                                <i class="fas fa-pen"></i>\
+                            </a>\
+                            <a href=\'javascript:deleteFn("organization_unit", "' + full.id + '");\' class="button btn btn-xs btn-clean btn-icon">\
+                                <i class="fas fa-trash"></i>\
+                            </a>\
+                        </div>\
+                        ';
+                    },
+                },
+                {
+                    targets: 4,
+                    render: function (data, type, full, meta) {
+                        return '<div class="text-right nowrap">\
+                            <code>' + data + '</code>\
+                        </div>';
+                    },
+                },
+                {
+                    targets: 3,
+                    className: 'text-center'
+                },
+                {
+                    targets: 0,
+                    className: 'text-center'
+                },
+            ],
         });
     });
 </script>

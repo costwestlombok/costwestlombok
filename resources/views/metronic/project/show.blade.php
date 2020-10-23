@@ -82,31 +82,6 @@
     }();
     jQuery(document).ready(function () {
         KTApexChartsDemo.init();
-
-        $(document).on('click', '.button', function (e) {
-                e.preventDefault();
-                var id = $(this).data('id');
-                var link = $(this).attr('href');
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won\'t be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes, delete it!"
-                }).then(function(result) {
-                    if (result.value) {
-                        $.ajax({
-                            type: "GET",
-                            url: "/project/"+ id +"/delete",
-                            success: function (data) {
-                                toastr.success("Data deleted successfully!");
-                                var table = $('#kt_datatable').DataTable(); 
-                                table.ajax.reload( null, false );
-                            }         
-                        });
-                    }
-                });
-            });
     });
 </script>
 @endsection
@@ -118,14 +93,14 @@
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Title-->
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                Detail Project </h5>
+                Detail {{ __('labels.project') }} </h5>
             <!--end::Title-->
         </div>
         <!--end::Details-->
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
             <!--begin::Button-->
-            <a href="javascript:history.back()" class="btn btn-default font-weight-bold">Back </a>
+            <a href="javascript:history.back()" class="btn btn-default font-weight-bold">{{ __('labels.back') }} </a>
             <!--end::Button-->
         </div>
         <!--end::Toolbar-->
@@ -148,13 +123,14 @@
                             <!--begin::Info-->
                             <div class="d-flex flex-column mr-auto">
                                 <!--begin: Title-->
-                                <a href="#"
-                                    class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">{{ str_limit($project->project_title, $limit = 100, $end = '...') }}</a>
-                                <span class="text-muted font-weight-bold">Project Code :
+                                <a href="{{ route('project.show', $project) }}"
+                                    class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">{{ $project->project_title }}</a>
+                                <span class="text-muted font-weight-bold">{{ __('labels.project_code') }}:
                                     {{ $project->project_code }}</span>
-                                <span class="text-muted font-weight-bold">{{ $project->subsector->sector->sector_name }}
+                                <span
+                                    class="text-muted font-weight-bold">{{ $project->subsector->sector->sector_name ?? __('labels.no_sector') }}
                                     -
-                                    {{ $project->subsector->subsector_name }}</span>
+                                    {{ $project->subsector->subsector_name ?? __('labels.no_subsector') }}</span>
                                 <!--end::Title-->
                             </div>
                             <!--end::Info-->
@@ -191,7 +167,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> Tender</span>
+                                                    <span class="navi-text ml-2"> {{ __('labels.tender') }}</span>
                                                 </a>
                                             </li>
                                             <li class="navi-item">
@@ -210,7 +186,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> Documents</span>
+                                                    <span class="navi-text ml-2"> {{ __('labels.document') }}</span>
                                                 </a>
                                             </li>
                                             <li class="navi-item">
@@ -235,7 +211,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> Budget</span>
+                                                    <span class="navi-text ml-2"> {{ __('labels.budget') }}</span>
                                                 </a>
                                             </li>
                                             @if(Auth::check())
@@ -258,11 +234,12 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> Edit</span>
+                                                    <span class="navi-text ml-2"> {{ __('labels.edit') }}</span>
                                                 </a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="#" data-id="{{ $project->id }}" class="button navi-link">
+                                                <a href="javascript:deleteFn('project', '{{ $project->id }}')"
+                                                    class="navi-link">
                                                     <span class="svg-icon menu-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -279,7 +256,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> Delete</span>
+                                                    <span class="navi-text ml-2"> {{ __('labels.delete') }}</span>
                                                 </a>
                                             </li>
                                             @endif
@@ -294,54 +271,52 @@
                         <!--begin::Content-->
                         <div class="d-flex flex-wrap mt-14">
                             <div class="mr-12 d-flex flex-column mb-7">
-                                <span class="d-block font-weight-bold mb-4">Start Date</span>
+                                <span class="d-block font-weight-bold mb-4">{{ __('labels.start_date') }}</span>
                                 <span
-                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->start_date)->format('D, d M Y') }}</span>
+                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->start_date)->translatedFormat('l, d M Y') }}</span>
                             </div>
                             <div class="mr-12 d-flex flex-column mb-7">
-                                <span class="d-block font-weight-bold mb-4">Due Date</span>
+                                <span class="d-block font-weight-bold mb-4">{{ __('labels.due_date') }}</span>
                                 <span
-                                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->end_date)->format('D, d M Y') }}</span>
+                                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->end_date)->translatedFormat('l, d M Y') }}</span>
                             </div>
                             <!--begin::Progress-->
                             <div class="flex-row-fluid mb-7">
-                                <span class="d-block font-weight-bold mb-4">Progress - Real Physical
-                                    @if($project->latest_progress)
-                                    <span class="text-muted font-weight-bold">
-                                        (Last update :
-                                        {{ date('D, d M Y', strtotime($project->latest_progress->date_of_advance)) }} )
-                                    </span>
-                                    @endif
+                                <span class="d-block font-weight-bold mb-4">{{ __('labels.progress') }} -
+                                    {{ __('labels.real_physical') }} <span
+                                        class="text-muted font-weight-bold">({{ __('labels.last_update') }}:
+                                        {{ Carbon\Carbon::parse($project->latest_progress->date_of_advance ?? now())->translatedFormat('l, d M Y') }})</span>
                                     @if(Auth::check())
                                     <div class="float-right">
-                                        <a href="{{ url('project-progress/'.$project->id) }}">Add New Progress</a>
+                                        <a
+                                            href="{{ url('project-progress/'.$project->id) }}">{{ __('labels.add_progress') }}</a>
                                     </div>
                                     @endif
                                     <div class="d-flex align-items-center pt-2">
                                         <div class="progress progress-xs mt-2 mb-2 w-100">
                                             <div class="progress-bar bg-warning" role="progressbar"
-                                                style="width: {{ number_format($project->latest_progress ? $project->latest_progress->real_percent : 0) }}%;"
+                                                style="width: {{ number_format($project->latest_progress->real_percent ?? '0') }}%;"
                                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                         <span
-                                            class="ml-3 font-weight-bolder">{{ number_format($project->latest_progress ? $project->latest_progress->real_percent : 0) }}%</span>
+                                            class="ml-3 font-weight-bolder">{{ number_format($project->latest_progress->real_percent ?? '0') }}%</span>
                                     </div>
                             </div>
                             <!--end::Progress-->
                         </div>
                         <!--end::Content-->
                         <!--begin::Text-->
-                        <p class="mb-7 mt-3">{!! $project->project_description !!}</p>
+                        <p class="mb-7 mt-3 text-truncate">{{ $project->project_description }}</p>
                         <!--end::Text-->
                         <!--begin::Blog-->
                         <div class="d-flex flex-wrap">
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="flaticon-price-tag icon-2x text-muted font-weight-bold"></i>
+                                    <i class="flaticon-price-tag icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column text-dark-75">
-                                    <span class="font-weight-bolder font-size-sm">Budget</span>
+                                    <span class="font-weight-bolder font-size-sm">{{ __('labels.budget') }}</span>
                                     <span class="font-weight-bolder font-size-h5">
                                         <span class="text-dark-50 font-weight-bold">Rp</span>
                                         {{ number_format($project->budget) }}
@@ -352,12 +327,12 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="flaticon2-writing icon-2x text-muted font-weight-bold"></i>
+                                    <i class="fas fa-qrcode icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column text-dark-75">
-                                    <span class="font-weight-bolder font-size-sm">SEFIN Code</span>
+                                    <span class="font-weight-bolder font-size-sm">{{ __('labels.sefin_code') }}</span>
                                     <span class="font-weight-bolder font-size-h5">
-                                        {{ $project->code_sefin }}
+                                        {{ $project->code_sefin ?? '-' }}
                                     </span>
                                 </div>
                             </div>
@@ -365,13 +340,13 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="flaticon2-calendar-9 icon-2x text-muted font-weight-bold"></i>
+                                    <i class="flaticon2-calendar-9 icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column text-dark-75">
-                                    <span class="font-weight-bolder font-size-sm">Duration</span>
+                                    <span class="font-weight-bolder font-size-sm">{{ __('labels.duration') }}</span>
                                     <span class="font-weight-bolder font-size-h5">
-                                        {{ $project->duration }}
-                                        <span class="text-dark-50 font-weight-bold"> days</span>
+                                        {{ number_format($project->duration) }}
+                                        <span class="text-dark-50 font-weight-bold"> {{ __('labels.days') }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -379,15 +354,16 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="flaticon2-list-3 icon-2x text-muted font-weight-bold"></i>
+                                    <i class="flaticon2-file icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column flex-lg-fill">
                                     <a href="{{ route('project.tender.index', $project) }}"
                                         class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->tenders->count()) }}
-                                        Tender</a>
+                                        {{ __('labels.tender') }}</a>
                                     @if(Auth::check())
                                     <a href="{{ route('project.tender.create', $project) }}"
-                                        class="text-primary font-weight-bolder">Add New Tender</a>
+                                        class="text-primary font-weight-bolder">{{ __('labels.add') }}
+                                        {{ __('labels.tender') }}</a>
                                     @endif
                                 </div>
                             </div>
@@ -395,15 +371,16 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="flaticon2-clip-symbol icon-2x text-muted font-weight-bold"></i>
+                                    <i class="flaticon2-clip-symbol icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column flex-lg-fill">
                                     <a href="{{ route('project.file.index', $project) }}"
                                         class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->file->count()) }}
-                                        Files</a>
+                                        {{ __('labels.document') }}</a>
                                     @if(Auth::check())
                                     <a href="{{ route('project.file.index', $project) }}"
-                                        class="text-primary font-weight-bolder">Add New File</a>
+                                        class="text-primary font-weight-bolder">{{ __('labels.add') }}
+                                        {{ __('labels.document') }}</a>
                                     @endif
                                 </div>
                             </div>
@@ -411,39 +388,40 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="flaticon-price-tag icon-2x text-muted font-weight-bold"></i>
+                                    <i class="flaticon-price-tag icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column flex-lg-fill">
                                     <a href="{{ url('project-budget/'.$project->id) }}"
                                         class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->project_budget->count()) }}
-                                        Budget</a>
+                                        {{ __('labels.budget') }}</a>
                                     @if(Auth::check())
                                     <a href="{{ url('project-budget/'.$project->id) }}"
-                                        class="text-primary font-weight-bolder">Add New Budget</a>
+                                        class="text-primary font-weight-bolder">{{ __('labels.add') }}
+                                        {{ __('labels.budget') }}</a>
                                     @endif
                                 </div>
                             </div>
                             <!--end: Item-->
                         </div>
+                        <!--end::Blog-->
                         <hr>
                         <div class="row mt-5 mb-5">
                             <div class="col-md-6">
-                                <h3 class="card-label mt-5 mb-5">Progress Percent (%)</h3>
+                                <h3 class="card-label mt-5 mb-5">{{ __('labels.progress_percent') }} (%)</h3>
                                 <div id="chart_1"></div>
                             </div>
                             <div class="col-md-6">
-                                <h3 class="card-label mt-5 mb-5">Progress Financial</h3>
+                                <h3 class="card-label mt-5 mb-5">{{ __('labels.progress_financial') }}</h3>
                                 <div id="chart_2"></div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <h3 class="card-label mt-5 mb-5">Location</h3>
+                                <h3 class="card-label mt-5 mb-5">{{ __('labels.location') }}</h3>
                                 {!! $map['js'] !!}
                                 {!! $map['html'] !!}
                             </div>
                         </div>
-                        <!--end::Blog-->
                     </div>
                     <!--end::Body-->
                 </div>

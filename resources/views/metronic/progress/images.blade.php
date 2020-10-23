@@ -1,10 +1,7 @@
 @extends('layouts.metronic')
 @section('style')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<!--begin::Page Vendors Styles(used by this page)-->
-<link href="{{ asset('metronic/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
-    type="text/css" />
-<!--end::Page Vendors Styles-->
+
 @endsection
 @section('script')
 <!--begin::Page Vendors(used by this page)-->
@@ -16,7 +13,6 @@
     var IMAGE_URL = "{{url('advance-images/'.$advance->id)}}";
 </script>
 <script>
-
     "use strict";
 
     var KTDropzoneDemo = function () {
