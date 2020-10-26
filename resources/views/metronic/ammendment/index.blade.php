@@ -49,18 +49,16 @@
                     title: "{{ __('labels.action') }}",
                     orderable: false,
                     render: function (data, type, full, meta) {
-                        @if(Auth::check())
-                        return '\
-                            <div class="text-right nowrap">\
-                            <a href="/ammendment/' + full.id + '/edit" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
+                        return '@if(Auth::check())\
+                        <div class="text-right nowrap">\
+                            <a href="/ammendment/' + full.id + '/edit" class="btn btn-xs btn-clean btn-icon">\
                                 <i class="fas fa-pen"></i>\
                             </a>\
-                            <a href="#"  data-id="' + full.id + '" class="button btn btn-sm btn-clean btn-icon" data-id=' + full.id + ' title="Delete"><i class="fas fa-trash"></i></a>\
-                            </div>\
-                        ';
-                        @else
-                        return '';
-                        @endif
+                            <a href=\'javascript:deleteFn("ammendment", "' + full.id + '");\' class="button btn btn-xs btn-clean btn-icon">\
+                                <i class="fas fa-trash"></i>\
+                            </a>\
+                        </div>\
+                        @endif';
                     },
                 },
                 {
@@ -75,9 +73,12 @@
                     targets: 3,
                     orderable: false,
                     render: function (data, type, full, meta) {
-                        return '<div class="text-center nowrap">\
-                            <a href="/storage/' + data + '" target="_blank">View file</a>\
-                        </div>';
+                        if (data) {
+                            return '<div class="text-center nowrap">\
+                                <a href="/storage/' + data + '" target="_blank">View file</a>\
+                            </div>';
+                        }
+                        return '';
                     },
                 },
                 {
@@ -85,9 +86,6 @@
                     className: 'text-center'
                 },
             ],
-            // "language": {
-            //     "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json"
-            // },
         });
     });
 </script>
@@ -99,7 +97,7 @@
         <!--begin::Details-->
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Contract Ammendment</h5>
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">{{ __('labels.contract_ammendment') }}</h5>
             <!--end::Title-->
             <!--begin::Separator-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
@@ -107,24 +105,26 @@
             <!--begin::Breadcrumb-->
             <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
                 <li class="breadcrumb-item">
-                    <a href="{{ url('dashboard') }}" class="text-muted">Dashboard</a>
+                    <a href="{{ url('dashboard') }}" class="text-muted">{{ __('labels.dashboard') }}</a>
                 </li>
                 <li class="breadcrumb-item">
                     <a href="{{ route('project.show', $contract->award->tender->project) }}"
-                        class="text-muted">Project</a>
+                        class="text-muted">{{ __('labels.project') }}</a>
                 </li>
                 <li class="breadcrumb-item">
                     <a href="{{ route('project.tender.index', $contract->award->tender->project) }}"
-                        class="text-muted">Tender</a>
+                        class="text-muted">{{ __('labels.tender') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('tender.award.index', $contract->award->tender) }}" class="text-muted">Award</a>
+                    <a href="{{ route('tender.award.index', $contract->award->tender) }}"
+                        class="text-muted">{{ __('labels.award') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('contract.show', $contract) }}" class="text-muted">Contract</a>
+                    <a href="{{ route('award.contract.index', $contract->award) }}"
+                        class="text-muted">{{ __('labels.contract') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    Contract Ammendments
+                    {{ __('labels.contract_ammendment') }}
                 </li>
             </ul>
             <!--end::Breadcrumb-->
@@ -141,12 +141,12 @@
         <div class="card card-custom">
             <div class="card-header">
                 <div class="card-title">
-                    <h3 class="card-label">Ammendment List</h3>
+                    <h3 class="card-label">{{ __('labels.ammendment') }}</h3>
                 </div>
                 @if(Auth::check())
                 <div class="card-toolbar">
                     <!--begin::Button-->
-                    <a href="{{ url('contract-ammendment/'.$contract->id.'/create') }}"
+                    <a href="{{ route('contract.ammendment.create', $contract) }}"
                         class="btn btn-primary font-weight-bolder">
                         <span class="svg-icon svg-icon-md">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
@@ -161,7 +161,7 @@
                                 </g>
                             </svg>
                             <!--end::Svg Icon-->
-                        </span>New Record</a>
+                        </span>{{ __('labels.create') }} {{ __('labels.ammendment') }}</a>
                     <!--end::Button-->
                 </div>
                 @endif
@@ -172,12 +172,12 @@
                     <thead>
                         <tr>
                             <th class="text-center column-fit">#</th>
-                            <th>Justification</th>
-                            <th>Contract Scope</th>
-                            <th>Adendum</th>
-                            <th>Contract Price</th>
-                            <th class="column-fit">Created at</th>
-                            <th class="text-right column-fit">Actions</th>
+                            <th>{{ __('labels.justification') }}</th>
+                            <th>{{ __('labels.contract_scope') }}</th>
+                            <th>{{ __('labels.addendum') }}</th>
+                            <th>{{ __('labels.contract_price') }}</th>
+                            <th class="column-fit">{{ __('labels.created_at') }}</th>
+                            <th class="text-right column-fit">{{ __('labels.action') }}</th>
                         </tr>
                     </thead>
                 </table>

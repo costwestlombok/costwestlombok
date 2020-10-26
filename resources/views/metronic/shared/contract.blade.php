@@ -35,7 +35,7 @@
                                 <!--begin::Navigation-->
                                 <ul class="navi navi-hover">
                                     <li class="navi-item">
-                                        <a href="{{ url('contract/'.$contract->id.'/edit') }}" class="navi-link">
+                                        <a href="{{ route('contract.edit', $contract) }}" class="navi-link">
                                             <span class="svg-icon menu-icon">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -138,11 +138,11 @@
                             <i class="flaticon2-information icon-2x"></i>
                         </span>
                         <div class="d-flex flex-column flex-lg-fill">
-                            <a href="{{ url('contract-ammendment/'.$contract->id) }}"
+                            <a href="{{ route('contract.ammendment.index', $contract) }}"
                                 class="text-dark-75 font-weight-bolder font-size-sm">{{ $contract->ammendment->count() }}
                                 {{ __('labels.ammendment') }}</a>
                             @if(Auth::check())
-                            <a href="{{ url('contract-ammendment/'.$contract->id) }}"
+                            <a href="{{ route('contract.ammendment.index', $contract) }}"
                                 class="text-primary font-weight-bolder">{{ __('labels.view_detail') }}</a>
                             @endif
                         </div>
@@ -155,13 +155,17 @@
                         </span>
                         <div class="d-flex flex-column flex-lg-fill">
                             <span
-                                class="text-dark-75 font-weight-bolder font-size-sm">{{ __('labels.execution') }}</span>
+                                class="text-dark-75 font-weight-bolder font-size-sm">{{ $contract->execution ? 1 : 0 }}
+                                {{ __('labels.execution') }}</span>
                             @if($contract->execution)
-                            <a href="{{ url('contract-execution/'.$contract->execution->id) }}"
+                            <a href="{{ route('contract.execution.index', $contract) }}"
                                 class="text-primary font-weight-bolder">{{ __('labels.view_detail') }}</a>
                             @else
-                            <a href="{{ url('contract-execution/'.$contract->id.'/create') }}"
-                                class="text-primary font-weight-bolder">{{ __('labels.create') }}</a>
+                            @if(Auth::check())
+                            <a href="{{ route('contract.execution.create', $contract) }}"
+                                class="text-primary font-weight-bolder">{{ __('labels.create') }}
+                                {{ __('labels.execution') }}</a>
+                            @endif
                             @endif
                         </div>
                     </div>

@@ -209,4 +209,25 @@ class ContractController extends Controller
     {
         return view('metronic.contract.edit', compact('award'));
     }
+
+    public function ammendment(Contract $contract)
+    {
+        return view('metronic.ammendment.index', compact('contract'));
+    }
+
+    public function ammendmentCreate(Contract $contract)
+    {
+        return view('metronic.ammendment.edit', compact('contract'));
+    }
+
+    public function execution(Contract $contract)
+    {
+        $execution = $contract->execution;
+        return view('metronic.execution.index', compact('execution', 'contract'));
+    }
+
+    public function executionCreate(Contract $contract)
+    {
+        return view('metronic.execution.edit', compact('contract'));
+    }
 }

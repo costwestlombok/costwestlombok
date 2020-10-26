@@ -23,8 +23,8 @@ class CreateAmmendmentsTable extends Migration
             $table->string('adendum')->nullable();
             $table->double('current_price')->nullable();
             $table->string('current_contract_scope')->nullable();
-            $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
+            $table->uuid('status_id')->nullable();
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('set null');
             $table->datetime('date_of_publication')->nullable();
             $table->timestamps();
         });

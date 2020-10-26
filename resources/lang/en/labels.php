@@ -231,4 +231,20 @@ return  [
 
 	'contract_title' => 'Contract Title',
 	'choose_offerer' => 'Choose an Offerer',
+
+	// ammendment
+	'contract_ammendment' => 'Contract Ammendment',
+	'addendum' => 'Addendum',
+	'contract_price' => 'Contract Price',
+	'modification_number' => 'Modification Number',
+	'modification_type' => 'Modification Type',
+	'current_price' => 'Current Price',
+	'current_contract_scope' => 'Current Contract Scope',
+	'addendum_file' => 'Addendum File',
+
+	// execution
+	'choose_contact' => 'Choose a Contact',
+	'price' => 'Price',
+	'program' => 'Program',
+	'contract_state' => 'Contract State',
 ];

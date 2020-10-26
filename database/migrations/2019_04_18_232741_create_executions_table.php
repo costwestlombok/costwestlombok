@@ -23,9 +23,9 @@ class CreateExecutionsTable extends Migration
             $table->uuid('engage_id');
             $table->foreign('engage_id')->references('id')->on('contracts')->onUpdate('cascade')->onDelete('cascade');
             $table->uuid('contact_id')->nullable();
-            $table->foreign('contact_id')->references('id')->on('contacts')->onUpdate('cascade')->onDelete('cascade');
-            $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('contact_id')->references('id')->on('contacts')->onUpdate('cascade')->onDelete('set null');
+            $table->uuid('status_id')->nullable();
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('set null');
             $table->datetime('date_of_publication')->nullable();
             $table->timestamps();
         });

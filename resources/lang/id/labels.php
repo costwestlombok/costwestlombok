@@ -239,4 +239,20 @@ return  [
 	'final_cost' => 'Biaya Akhir',
 	'final_date' => 'Tanggal Akhir',
 	'justification' => 'Justifikasi',
+
+	// ammendment
+	'contract_ammendment' => 'Amandemen Kontrak',
+	'addendum' => 'Adendum',
+	'contract_price' => 'Harga Kontrak',
+	'modification_number' => 'Nomor Modifikasi',
+	'modification_type' => 'Jenis Modifikasi',
+	'current_price' => 'Harga Sekarang',
+	'current_contract_scope' => 'Lingkup Kontrak Sekarang',
+	'addendum_file' => 'Berkas Adendum',
+
+	// execution
+	'choose_contact' => 'Pilih Kontak',
+	'price' => 'Harga',
+	'program' => 'Program',
+	'contract_state' => 'Negara Kontrak',
 ];

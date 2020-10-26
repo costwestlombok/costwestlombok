@@ -8,7 +8,7 @@
         var demos = function () {
             // basic
             $('#contact').select2({
-                placeholder: "Choose a contact"
+                placeholder: "{{ __('labels.choose_contact') }}"
         });
         }
         return {
@@ -70,28 +70,28 @@ $contacts = App\Contact::all();
                 <input type="hidden" name="engage_id" value="{{ $contract->id }}">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="name">Start Date</label>
+                        <label for="name">{{ __('labels.start_date') }}</label>
                         <input type="date" name="start_date" class="form-control"
                             value="{{ Carbon\Carbon::parse($execution->start_date ?? date('Y-m-d'))->format('Y-m-d') }}"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="name">Price</label>
+                        <label for="name">{{ __('labels.price') }}</label>
                         <input type="text" name="varprice" value="{{ $execution->varprice ?? '' }}"
                             class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="name">Program</label>
+                        <label for="name">{{ __('labels.program') }}</label>
                         <input type="text" class="form-control" value="{{ $execution->program ?? '' }}"
                             name="program" />
                     </div>
                     <div class="form-group">
-                        <label for="name">Contract State</label>
+                        <label for="name">{{ __('labels.contract_state') }}</label>
                         <textarea name="contract_state" rows="10"
                             class="form-control">{{ $execution->contract_state ?? '' }}</textarea>
                     </div>
                     <div class="form-group">
-                        <label for="current_price">Contact</label>
+                        <label for="current_price">{{ __('labels.contact') }}</label>
                         <select name="contact_id" class="form-control" id="contact">
                             @foreach ($contacts as $contact)
                             <option value="{{ $contact->id }}"
@@ -101,26 +101,26 @@ $contacts = App\Contact::all();
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="">Date of Publication</label>
+                        <label for="">{{ __('labels.publication_date') }}</label>
                         <input type="date" name="date_of_publication"
                             value="{{ Carbon\Carbon::parse($execution->date_of_publication ?? date('Y-m-d'))->format('Y-m-d') }}"
                             class="form-control">
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Status</label>
+                        <label>{{ __('labels.status') }}</label>
                         <div class="typeahead">
                             <input class="form-control" value="{{ $execution->status->status_name ?? '' }}"
-                                id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%" required>
+                                id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%">
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="text-right">
                         <button type="reset" class="btn btn-secondary"
-                            onclick="javascript:history.back()">Cancel</button>
+                            onclick="javascript:history.back()">{{ __('labels.cancel') }}</button>
                         <button type="submit"
-                            class="btn btn-primary ml-2">{{ isset($execution) ? 'Update' : 'Create' }}</button>
+                            class="btn btn-primary ml-2">{{ isset($execution) ? __('labels.save_changes') : __('labels.save') }}</button>
                     </div>
                 </div>
             </form>

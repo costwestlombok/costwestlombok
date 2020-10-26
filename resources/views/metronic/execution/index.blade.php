@@ -297,7 +297,8 @@
                         <p class="text-dark-75 mb-1">Name</p>
                     </div>
                     <div class="py-2 w-75">
-                        <span class="mb-10 mt-5 font-weight-bold">{{ $execution->engage->supplier->legal_name }}</span>
+                        <span
+                            class="mb-10 mt-5 font-weight-bold">{{ $execution->engage->supplier->legal_name ?? '-' }}</span>
                     </div>
                 </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
@@ -305,7 +306,8 @@
                         <p class="text-dark-75 mb-1">Phone Number</p>
                     </div>
                     <div class="py-2 w-75">
-                        <span class="mb-10 mt-5 font-weight-bold">{{ $execution->engage->supplier->phone }}</span>
+                        <span
+                            class="mb-10 mt-5 font-weight-bold">{{ $execution->engage->supplier->phone ?? '-' }}</span>
                     </div>
                 </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
@@ -313,7 +315,8 @@
                         <p class="text-dark-75 mb-1">Website</p>
                     </div>
                     <div class="py-2 w-75">
-                        <span class="mb-10 mt-5 font-weight-bold">{{ $execution->engage->supplier->website }}</span>
+                        <span
+                            class="mb-10 mt-5 font-weight-bold">{{ $execution->engage->supplier->website ?? '-' }}</span>
                     </div>
                 </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
@@ -321,7 +324,8 @@
                         <p class="text-dark-75 mb-1">Address</p>
                     </div>
                     <div class="py-2 w-75">
-                        <span class="mb-10 mt-5 font-weight-bold">{{ $execution->engage->supplier->address }}</span>
+                        <span
+                            class="mb-10 mt-5 font-weight-bold">{{ $execution->engage->supplier->address ?? '-' }}</span>
                     </div>
                 </div>
                 <hr>

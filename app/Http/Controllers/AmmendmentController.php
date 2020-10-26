@@ -55,19 +55,20 @@ class AmmendmentController extends Controller
         if ($request['adendum']) {
             $data['adendum'] = $request->file('adendum')->store('adendum');
         }
-        $status = Status::where('status_name', $request->status_id)->first();
-        if ($status) {
-            $data['status_id'] = $status->id;
-        } else {
-            $tm = Status::create([
-                'status_name' => $request->status_id,
-            ]);
-            $data['status_id'] = $tm->id;
+        if ($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
         }
         Ammendment::create($data);
         Session::put('success', trans('labels.saved'));
-
-        return redirect('contract-ammendment/' . $request->engage_id);
+        return redirect('contract/' . $request->engage_id . '/ammendment');
     }
 
     /**
@@ -110,18 +111,22 @@ class AmmendmentController extends Controller
             }
             $data['adendum'] = $request->file('adendum')->store('adendum');
         }
-        $status = Status::where('status_name', $request->status_id)->first();
-        if ($status) {
-            $data['status_id'] = $status->id;
+        if ($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
         } else {
-            $tm = Status::create([
-                'status_name' => $request->status_id,
-            ]);
-            $data['status_id'] = $tm->id;
+            $data['status_id'] = null;
         }
         $ammendment->update($data);
         Session::put('success', trans('labels.updated'));
-        return redirect('contract-ammendment/' . $request->engage_id);
+        return redirect('contract/' . $request->engage_id . '/ammendment');
     }
 
     /**

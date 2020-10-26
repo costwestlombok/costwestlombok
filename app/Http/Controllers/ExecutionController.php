@@ -50,15 +50,17 @@ class ExecutionController extends Controller
         $data = $request->all();
         // return $data;
         $data['varprice'] = str_replace(",", "", $request->varprice);
-        $status = Status::where('status_name', $request->status_id)->first();
 
-        if ($status) {
-            $data['status_id'] = $status->id;
-        } else {
-            $tm = Status::create([
-                'status_name' => $request->status_id,
-            ]);
-            $data['status_id'] = $tm->id;
+        if ($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
         }
         $execution = Execution::create($data);
         Session::put('success', trans('labels.saved'));
@@ -100,20 +102,24 @@ class ExecutionController extends Controller
     {
         $data = $request->all();
         $data['varprice'] = str_replace(",", "", $request->varprice);
-        $status = Status::where('status_name', $request->status_id)->first();
 
-        if ($status) {
-            $data['status_id'] = $status->id;
+        if ($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
         } else {
-            $tm = Status::create([
-                'status_name' => $request->status_id,
-            ]);
-            $data['status_id'] = $tm->id;
+            $data['status_id'] = null;
         }
         $execution->update($data);
         Session::put('success', trans('labels.updated'));
 
-        return redirect('contract-execution/' . $execution->id);
+        return redirect('contract/' . $execution->engage->id . '/execution');
     }
 
     /**
@@ -158,7 +164,7 @@ class ExecutionController extends Controller
         }
         Disbursment::create($data);
         Session::put('success', trans('labels.saved'));
-        return redirect('contract-execution/' . $request->executions_id);
+        return redirect('contract/' . $execution->id . '/execution');
     }
 
     public function disbursment_update(Request $request, Disbursment $disbursment)
