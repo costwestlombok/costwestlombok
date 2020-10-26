@@ -21,35 +21,35 @@
                         <input type="hidden" value="{{ $contract->id }}" name="contracts_id">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Final Scope</label>
+                                <label for="name">{{ __('labels.final_scope') }}</label>
                                 <input type="text" name="final_scope" class="form-control"
                                     value="{{ $completion->final_scope ?? '' }}" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Final Cost</label>
+                                <label for="name">{{ __('labels.final_cost') }}</label>
                                 <input type="text" name="final_cost" class="form-control"
                                     value="{{ number_format($completion->final_cost ?? 0) }}" required>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="name">Final Date</label>
+                                <label for="name">{{ __('labels.final_date') }}</label>
                                 <input type="date" name="date" class="form-control"
                                     value="{{ Carbon\Carbon::parse($contract->date ?? date('Y-m-d'))->format('Y-m-d') }}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Justification</label>
+                                <label for="name">{{ __('labels.justification') }}</label>
                                 <textarea name="justification" rows="5"
                                     class="form-control">{{ $completion->justification ?? '' }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Description</label>
+                                <label for="name">{{ __('labels.description') }}</label>
                                 <textarea name="description" rows="5"
                                     class="form-control">{{ $completion->description ?? '' }}</textarea>
                             </div>
@@ -59,9 +59,9 @@
                 <div class="card-footer">
                     <div class="text-right">
                         <button type="reset" class="btn btn-secondary"
-                            onclick="javascript:history.back()">Cancel</button>
+                            onclick="javascript:history.back()">{{ __('labels.cancel') }}</button>
                         <button type="submit"
-                            class="btn btn-primary ml-2">{{ isset($completion) ? 'Update' : 'Create' }}</button>
+                            class="btn btn-primary ml-2">{{ isset($completion) ? __('labels.save_changes') : __('labels.save') }}</button>
                     </div>
                 </div>
             </form>

@@ -68,14 +68,16 @@ class ContractController extends Controller
         $data['price_local_currency'] = str_replace(",", "", $request->price_local_currency);
         $data['price_usd_currency'] = str_replace(",", "", $request->price_usd_currency);
 
-        $status = Status::where('status_name', $request->status_id)->first();
-        if ($status) {
-            $data['status_id'] = $status->id;
-        } else {
-            $tm = Status::create([
-                'status_name' => $request->status_id,
-            ]);
-            $data['status_id'] = $tm->id;
+        if ($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
         }
         Contract::create($data);
         Session::put('success', trans('labels.saved'));
@@ -123,14 +125,18 @@ class ContractController extends Controller
         $data['price_local_currency'] = str_replace(",", "", $request->price_local_currency);
         $data['price_usd_currency'] = str_replace(",", "", $request->price_usd_currency);
 
-        $status = Status::where('status_name', $request->status_id)->first();
-        if ($status) {
-            $data['status_id'] = $status->id;
+        if ($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
         } else {
-            $tm = Status::create([
-                'status_name' => $request->status_id,
-            ]);
-            $data['status_id'] = $tm->id;
+            $data['status_id'] = null;
         }
         $contract->update($data);
         Session::put('success', trans('labels.updated'));
@@ -151,9 +157,10 @@ class ContractController extends Controller
         return redirect('tender/' . $id . '/award');
     }
 
-    public function completion(Completion $completion)
+    public function completion(Contract $contract)
     {
-        return view('metronic.completion.show', compact('completion'));
+        $completion = $contract->completion;
+        return view('metronic.completion.show', compact('completion', 'contract'));
     }
 
     public function completion_create(Contract $contract)

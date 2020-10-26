@@ -232,8 +232,8 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id 
                                     </div>
                                     <div class="form-group fv-plugins-icon-container">
                                         <label>{{ __('labels.purpose') }}</label>
-                                        <select class="form-control" name="purpose_id" id="purpose" style="width: 100%;"
-                                            required>
+                                        <select class="form-control" name="purpose_id" id="purpose"
+                                            style="width: 100%;">
                                             <option value="">{{ __('labels.choose_purpose') }}</option>
                                             @foreach ($purposes as $purpose)
                                             <option value="{{$purpose->id}}" @if(isset($project)) @if($project->
@@ -473,7 +473,6 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id 
                                     </div>
                                 </div>
                                 <!--end: Wizard Actions-->
-
                             </form>
                             <!--end: Wizard Form-->
                         </div>

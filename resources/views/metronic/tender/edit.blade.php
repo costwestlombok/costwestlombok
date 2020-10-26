@@ -11,13 +11,13 @@
         var demos = function () {
             // basic
             $('#entity').select2({
-                placeholder: "Choose an organization"
+                placeholder: "{{ __('labels.choose_organization') }}"
             });
             $('#unit').select2({
-                placeholder: "Choose a unit"
+                placeholder: "{{ __('labels.choose_organization_unit') }}"
             });
             $('#official').select2({
-                placeholder: "Choose an official"
+                placeholder: "{{ __('labels.choose_official') }}"
             });
         }
         return {
@@ -153,8 +153,8 @@ $contract_types = App\ContractType::all();
 $tender_methods = App\TenderMethod::all();
 $tender_statuses = App\TenderStatus::all();
 if(isset($tender)){
-$units = App\OrganizationUnit::where('entity_id', $tender->official->unit->org->id)->get();
-$officials = App\Official::where('entity_unit_id', $tender->official->unit->id)->get();
+$units = App\OrganizationUnit::where('entity_id', $tender->official->unit->org->id ?? null)->get();
+$officials = App\Official::where('entity_unit_id', $tender->official->unit->id ?? null)->get();
 }
 @endphp
 <div class="subheader py-2 py-lg-4  subheader-transparent " id="kt_subheader">
@@ -163,7 +163,7 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Title-->
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                {{ isset($tender) ? 'Edit' : 'Add' }} Tender </h5>
+                {{ isset($tender) ? __('labels.edit') : __('labels.create') }} {{ __('labels.tender') }} </h5>
             <!--end::Title-->
             <!--begin::Separator-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
@@ -171,7 +171,7 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
             <!--begin::Search Form-->
             <div class="d-flex align-items-center" id="kt_subheader_search">
                 <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
-                    {{ isset($tender) ? 'Edit tender details and save changes' : 'Enter tender details and submit' }}
+                    {{ isset($tender) ? __('labels.tender_edit_sub') : __('labels.tender_add_sub') }}
                 </span>
             </div>
             <!--end::Search Form-->
@@ -191,7 +191,7 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
                         <div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
                             <div class="wizard-label">
                                 <h3 class="wizard-title">
-                                    <span>1.</span>Tender Description</h3>
+                                    <span>1.</span>{{ __('labels.tender_description') }}</h3>
                                 <div class="wizard-bar"></div>
                             </div>
                         </div>
@@ -200,7 +200,7 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
                         <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
                             <div class="wizard-label">
                                 <h3 class="wizard-title">
-                                    <span>2.</span>Management and Date</h3>
+                                    <span>2.</span>{{ __('labels.management_and_date') }}</h3>
                                 <div class="wizard-bar"></div>
                             </div>
                         </div>
@@ -209,7 +209,7 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
                         <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
                             <div class="wizard-label">
                                 <h3 class="wizard-title">
-                                    <span>3.</span>File</h3>
+                                    <span>3.</span>{{ __('labels.file') }}</h3>
                                 <div class="wizard-bar"></div>
                             </div>
                         </div>
@@ -231,30 +231,30 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
                             <input type="hidden" name="project_id" value="{{$project->id}}">
                             <!--begin: Wizard Step 1-->
                             <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-
-                                <h4 class="mb-10 font-weight-bold text-dark">Enter the Details of your tender</h4>
+                                <h4 class="mb-10 font-weight-bold text-dark">{{ __('labels.tender_description_sub') }}
+                                </h4>
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label for="name">Prosess Number</label>
+                                    <label for="name">{{ __('labels.process_number') }}</label>
                                     <input type="text" class="form-control" name="process_number"
                                         value="{{$tender->process_number ?? ''}}" />
                                 </div>
                                 <!--end::Input-->
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label for="name">Process Name</label>
+                                    <label for="name">{{ __('labels.process_name') }}</label>
                                     <input type="text" class="form-control" name="project_process_name"
                                         value="{{$tender->project_process_name ?? ''}}" />
                                 </div>
                                 <!--end::Input-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label for="name">Tender Amount</label>
+                                    <label for="name">{{ __('labels.tender_amount') }}</label>
                                     <input type="text" class="form-control" name="amount"
                                         value="{{ number_format($tender->amount ?? '0') }}" />
                                 </div>
                                 <div class="form-group fv-plugins-icon-container">
                                     <div class="form-group">
-                                        <label for="name">Contract type</label>
+                                        <label for="name">{{ __('labels.contract_type') }}</label>
                                         <div class="typeahead">
                                             <input class="form-control"
                                                 value="{{$tender->contract_type->type_name ?? ''}}"
@@ -265,7 +265,7 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
                                 </div>
                                 <div class="form-group fv-plugins-icon-container">
                                     <div class="form-group">
-                                        <label for="name">Tender method</label>
+                                        <label for="name">{{ __('labels.tender_method') }}</label>
                                         <div class="typeahead">
                                             <input class="form-control"
                                                 value="{{$tender->tender_method->method_name ?? ''}}"
@@ -275,7 +275,7 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Tender Status</label>
+                                    <label>{{ __('labels.tender_status') }}</label>
                                     <div class="typeahead">
                                         <input class="form-control"
                                             value="{{$tender->tender_status->status_name ?? ''}}" id="tender_status_id"
@@ -283,25 +283,26 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Status</label>
+                                    <label>{{ __('labels.status') }}</label>
                                     <div class="typeahead">
                                         <input class="form-control" value="{{$tender->status->status_name ?? ''}}"
-                                            id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%"
-                                            required>
+                                            id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%">
                                     </div>
                                 </div>
                             </div>
                             <!--end: Wizard Step 1-->
                             <!--begin: Wizard Step 2-->
                             <div class="pb-5" data-wizard-type="step-content">
+                                <h4 class="mb-10 font-weight-bold text-dark">{{ __('labels.management_and_date') }}</h4>
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label>Organization/Entity</label>
+                                    <label>{{ __('labels.organization') }}</label>
                                     <select class="form-control" name="" id="entity" style="width: 100%;">
-                                        <option value="0">Choose an organization/entity</option>
+                                        <option value="">{{ __('labels.choose_organization') }}</option>
                                         @foreach ($organizations as $org)
                                         <option value="{{$org->id}}" @if(isset($tender)) @if($org->id ==
-                                            $tender->official->unit->org->id) selected @endif @endif>{{$org->name}}
+                                            ($tender->official->unit->org->id ?? null)) selected @endif
+                                            @endif>{{$org->name}}
                                         </option>
                                         @endforeach
                                     </select>
@@ -309,12 +310,13 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
                                 <!--end::Input-->
                                 <!--begin::Input-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label for="name">Unit</label>
+                                    <label for="name">{{ __('labels.organization_unit') }}</label>
                                     <select class="form-control" name="" id="unit" style="width: 100%;">
-                                        <option value="">Choose a unit</option>
+                                        <option value="">{{ __('labels.choose_organization_unit') }}</option>
                                         @if(isset($tender))
                                         @foreach ($units as $unit)
-                                        <option value="{{$unit->id}}" @if($unit->id == $tender->official->unit->id)
+                                        <option value="{{$unit->id}}" @if($unit->id == ($tender->official->unit->id ??
+                                            null))
                                             selected @endif>{{$unit->unit_name}}</option>
                                         @endforeach
                                         @endif
@@ -322,7 +324,7 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
                                 </div>
                                 <!--end::Input-->
                                 <div class="form-group fv-plugins-icon-container">
-                                    <label for="name">Official</label>
+                                    <label for="name">{{ __('labels.official') }}</label>
                                     <select class="form-control" name="official_id" id="official" style="width: 100%;">
                                         @if(isset($tender))
                                         @foreach ($officials as $official)
@@ -333,22 +335,22 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Start Date</label>
+                                    <label>{{ __('labels.start_date') }}</label>
                                     <input type="date" name="start_date" class="form-control"
                                         value="{{ date_format(Carbon\Carbon::parse($tender->start_date ?? date('Y-m-d')), 'Y-m-d') }}">
                                 </div>
                                 <div class="form-group">
-                                    <label>End Date</label>
+                                    <label>{{ __('labels.end_date') }}</label>
                                     <input type="date" name="end_date" class="form-control"
                                         value="{{ date_format(Carbon\Carbon::parse($tender->end_date ?? date('Y-m-d')), 'Y-m-d') }}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Max Extended Date</label>
+                                    <label>{{ __('labels.max_extended_date') }}</label>
                                     <input type="date" name="max_extended_process" class="form-control"
                                         value="{{ date_format(Carbon\Carbon::parse($tender->max_extended_process ?? date('Y-m-d')), 'Y-m-d') }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Date of Publication</label>
+                                    <label for="name">{{ __('labels.publication_date') }}</label>
                                     <input type="date" class="form-control" name="date_of_publication"
                                         id="date_of_publication"
                                         value="{{ date_format(Carbon\Carbon::parse($tender->date_of_publication ?? date('Y-m-d')), 'Y-m-d') }}">
@@ -357,73 +359,67 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
                             <!--end: Wizard Step 2-->
                             <!--begin: Wizard Step 3-->
                             <div class="pb-5" data-wizard-type="step-content">
+                                <h4 class="mb-10 font-weight-bold text-dark">{{ __('labels.file') }}</h4>
                                 <div class="my-5">
-                                    <!--begin::Input-->
                                     <div class="form-group">
-                                        <label for="name">File International Invitation</label>
+                                        <label for="name">{{ __('labels.file_international_invitation') }}</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="international_invitation"
                                                 id="international_invitation">
                                             <label class="custom-file-label" for="international_invitation">
-                                                {{ isset($tender) ? ($tender->international_invitation ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
+                                                {{ isset($tender) ? ($tender->international_invitation ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file')}}</label>
                                         </div>
                                     </div>
-                                    <!--end::Input-->
-                                    <!--begin::Input-->
-
                                     <div class="form-group">
-                                        <label for="name">File Basement</label>
+                                        <label for="name">{{ __('labels.file_basement') }}</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="basement" id="basement">
                                             <label class="custom-file-label"
-                                                for="basement">{{ isset($tender) ? ($tender->basement ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
+                                                for="basement">{{ isset($tender) ? ($tender->basement ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file')}}</label>
                                         </div>
                                     </div>
-                                    <!--end::Input-->
                                     <div class="form-group">
-                                        <label for="name">File Resolution</label>
+                                        <label for="name">{{ __('labels.file_resolution') }}</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="resolution"
                                                 id="resolution">
                                             <label class="custom-file-label"
-                                                for="resolution">{{ isset($tender) ? ($tender->resolution ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
+                                                for="resolution">{{ isset($tender) ? ($tender->resolution ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file')}}</label>
                                         </div>
                                     </div>
-
                                     <div class="form-group">
-                                        <label for="name">File Convocation</label>
+                                        <label for="name">{{ __('labels.file_convocation') }}</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="convocation"
                                                 id="convocation">
                                             <label class="custom-file-label"
-                                                for="convocation">{{ isset($tender) ? ($tender->convocation ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
+                                                for="convocation">{{ isset($tender) ? ($tender->convocation ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file')}}</label>
                                         </div>
                                     </div>
-
                                     <div class="form-group">
-                                        <label for="name">File TDR</label>
+                                        <label for="name">{{ __('labels.file_tdr') }}</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="tdr" id="tdr">
                                             <label class="custom-file-label"
-                                                for="tdr">{{ isset($tender) ? ($tender->tdr ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
+                                                for="tdr">{{ isset($tender) ? ($tender->tdr ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file')}}</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">File Clarification</label>
+                                        <label for="name">{{ __('labels.file_clarification') }}</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="clarification"
                                                 id="clarification">
                                             <label class="custom-file-label"
-                                                for="clarification">{{ isset($tender) ? ($tender->clarification ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
+                                                for="clarification">{{ isset($tender) ? ($tender->clarification ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file')}}</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">File Acceptance Certificate</label>
+                                        <label for="name">{{ __('labels.file_acceptance_certificate') }}</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="acceptance_certificate"
                                                 id="acceptance_certificate">
                                             <label class="custom-file-label"
-                                                for="acceptance_certificate">{{ isset($tender) ? ($tender->acceptance_certificate ? 'Upload file to change document' : 'Choose file') : 'Choose file'}}</label>
+                                                for="acceptance_certificate">{{ isset($tender) ? ($tender->acceptance_certificate ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file')}}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -434,19 +430,18 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id)-
                                 <div class="mr-2">
                                     <button type="button"
                                         class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
-                                        data-wizard-type="action-prev">Previous</button>
+                                        data-wizard-type="action-prev">{{ __('labels.previous') }}</button>
                                 </div>
                                 <div>
                                     <button type="submit"
                                         class="btn btn-success font-weight-bold text-uppercase px-9 py-4"
-                                        data-wizard-type="action-submit">Submit</button>
+                                        data-wizard-type="action-submit">{{ isset($tender) ? __('labels.save_changes') : __('labels.save') }}</button>
                                     <button type="button"
                                         class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                        data-wizard-type="action-next">Next</button>
+                                        data-wizard-type="action-next">{{ __('labels.next') }}</button>
                                 </div>
                             </div>
                             <!--end: Wizard Actions-->
-
                         </form>
                         <!--end: Wizard Form-->
                     </div>

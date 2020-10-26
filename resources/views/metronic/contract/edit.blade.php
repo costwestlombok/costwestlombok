@@ -9,7 +9,7 @@
         var demos = function () {
             // basic
             $('#supplier').select2({
-                placeholder: "Choose an supplier"
+                placeholder: "{{ __('labels.choose_offerer') }}"
             });
         }
         return {
@@ -69,27 +69,27 @@ $suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
                 <input type="hidden" name="awards_id" value="{{ $award->id }}">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="name">Contract Number</label>
+                        <label for="name">{{ __('labels.contract_number') }}</label>
                         <input type="text" class="form-control" name="number" value="{{ $contract->number ?? '' }}"
                             required />
                     </div>
 
                     <div class="form-group">
-                        <label for="name">Contract Title</label>
+                        <label for="name">{{ __('labels.contract_title') }}</label>
                         <input type="text" class="form-control" name="contract_title"
                             value="{{ $contract->contract_title ?? '' }}" required />
                     </div>
 
                     <div class="form-group">
-                        <label for="name">Contract Scope</label>
+                        <label for="name">{{ __('labels.contract_scope') }}</label>
                         <textarea class="form-control" name="contract_scope"
                             rows="5">{{ $contract->contract_scope ?? '' }}</textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="">Supplier Name</label>
+                        <label for="">{{ __('labels.offerer') }}</label>
                         <select class="form-control" name="suppliers_id" id="supplier">
-                            <option value="">Choose supplier</option>
+                            <option value="">{{ __('labels.choose_offerer') }}</option>
                             @foreach ($suppliers as $supp)
                             <option value="{{ $supp->offerer_id }}" @if(isset($contract)) @if($contract->suppliers_id ==
                                 $supp->offerer_id) selected @endif @endif >{{ $supp->offerer->legal_name }}</option>
@@ -99,7 +99,7 @@ $suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="price_local_currency">Price in Local Currency</label>
+                                <label for="price_local_currency">{{ __('labels.price_local_currency') }}</label>
                                 <input type="text" class="form-control"
                                     value="{{ number_format($contract->price_local_currency ?? '0') }}"
                                     name="price_local_currency" required />
@@ -107,7 +107,7 @@ $suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="price_usd_currency">Price in USD Currency</label>
+                                <label for="price_usd_currency">{{ __('labels.price_usd_currency') }}</label>
                                 <input type="text" class="form-control"
                                     value="{{ number_format($contract->price_usd_currency ?? '0') }}"
                                     name="price_usd_currency" required />
@@ -117,7 +117,7 @@ $suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="start">Start Date</label>
+                                <label for="start">{{ __('labels.start_date') }}</label>
                                 <input type="date" class="form-control"
                                     value="{{ Carbon\Carbon::parse($contract->start_date ?? date('Y-m-d'))->format('Y-m-d') }}"
                                     name="start_date" required />
@@ -125,7 +125,7 @@ $suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="end">End Date</label>
+                                <label for="end">{{ __('labels.end_date') }}</label>
                                 <input type="date" class="form-control"
                                     value="{{ Carbon\Carbon::parse($contract->end_date ?? date('Y-m-d'))->format('Y-m-d') }}"
                                     name="end_date" required />
@@ -133,25 +133,25 @@ $suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="max_extend_date">Max Extended Date</label>
+                        <label for="max_extend_date">{{ __('labels.max_extended_date') }}</label>
                         <input type="date" class="form-control"
                             value="{{ Carbon\Carbon::parse($contract->max_entended_date ?? date('Y-m-d'))->format('Y-m-d') }}"
                             name="max_extend_date" required />
                     </div>
                     <div class="form-group">
-                        <label>Status</label>
+                        <label>{{ __('labels.status') }}</label>
                         <div class="typeahead">
                             <input class="form-control" value="{{ $contract->status->status_name ?? '' }}"
-                                id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%" required>
+                                id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%">
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="text-right">
                         <button type="reset" class="btn btn-secondary"
-                            onclick="javascript:history.back()">Cancel</button>
+                            onclick="javascript:history.back()">{{ __('labels.cancel') }}</button>
                         <button type="submit"
-                            class="btn btn-primary ml-2">{{ isset($contract) ? 'Update' : 'Create' }}</button>
+                            class="btn btn-primary ml-2">{{ isset($contract) ? __('labels.save_changes') : __('labels.save') }}</button>
                     </div>
                 </div>
             </form>

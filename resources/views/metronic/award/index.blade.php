@@ -1,28 +1,4 @@
 @extends('layouts.metronic')
-@section('style')
-@endsection
-@section('script')
-<script>
-    jQuery(document).ready(function () {
-        $(document).on('click', '.button', function (e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            var link = $(this).attr('href');
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won\'t be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, delete it!"
-            }).then(function (result) {
-                if (result.value) {
-                    window.location.href = "/api/award/" + id + "/delete";
-                }
-            });
-        });
-    });
-</script>
-@endsection
 @section('content')
 <!--begin::Subheader-->
 <div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
@@ -31,7 +7,7 @@
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Title-->
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                Award </h5>
+                {{ __('labels.award') }} </h5>
             <!--end::Title-->
             @if(isset($tender))
             <!--begin::Separator-->
@@ -40,16 +16,18 @@
             <!--begin::Breadcrumb-->
             <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0 mr-5">
                 <li class="breadcrumb-item">
-                    <a href="{{ url('dashboard') }}" class="text-muted">Dashboard</a>
+                    <a href="{{ url('dashboard') }}" class="text-muted">{{ __('labels.dashboard') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('project.show', $tender->project) }}" class="text-muted">Project</a>
+                    <a href="{{ route('project.show', $tender->project) }}"
+                        class="text-muted">{{ __('labels.project') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('project.tender.index', $tender->project) }}" class="text-muted">Tender</a>
+                    <a href="{{ route('project.tender.index', $tender->project) }}"
+                        class="text-muted">{{ __('labels.tender') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    Award
+                    {{ __('labels.award') }}
                 </li>
             </ul>
             <!--end::Breadcrumb-->
@@ -65,7 +43,8 @@
                     method="GET">
                     <div class="input-group input-group-sm input-group-solid" style="max-width: 175px">
                         <input type="text" name="query_award" value="{{ request()->get('query_award') }}"
-                            class="form-control" id="kt_subheader_search_form" placeholder="Search...">
+                            class="form-control" id="kt_subheader_search_form"
+                            placeholder="{{ __('labels.search') }}...">
                         <div class="input-group-append">
                             <span class="input-group-text">
                                 <span class="svg-icon">
@@ -110,7 +89,7 @@
                         </g>
                     </svg>
                     <!--end::Svg Icon-->
-                </span>Add Award</a>
+                </span>{{ __('labels.create') }} {{ __('labels.award') }}</a>
             <!--end::Button-->
         </div>
         <!--end::Toolbar-->
@@ -141,7 +120,7 @@
                                 <!--begin::Contacts-->
                                 <div class="my-2">
                                     <span class="text-muted font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
-                                        Award Process Number</span>
+                                        {{ __('labels.award_process_number') }}</span>
                                 </div>
                                 <!--end::Contacts-->
                             </div>
@@ -157,7 +136,7 @@
                                         <!--begin::Navigation-->
                                         <ul class="navi navi-hover">
                                             <li class="navi-item">
-                                                <a href="{{ empty($award->contract) ? route('contract-create/'.$award->id) : url('contract/'.$award->contract->id) }}"
+                                                <a href="{{ empty($award->contract) ? route('award.contract.create', $award->id) : route('award.contract.index', $award->id) }}"
                                                     class="navi-link">
                                                     <span class="svg-icon menu-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -187,7 +166,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> Contract</span>
+                                                    <span class="navi-text ml-2"> {{ __('labels.contract') }}</span>
                                                 </a>
                                             </li>
                                             @if(Auth::check())
@@ -210,11 +189,12 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> Edit</span>
+                                                    <span class="navi-text ml-2"> {{ __('labels.edit') }}</span>
                                                 </a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="#" data-id="{{ $award->id }}" class="navi-link">
+                                                <a href="javascript:deleteFn('award', '{{ $award->id }}')"
+                                                    class="navi-link">
                                                     <span class="svg-icon menu-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -231,7 +211,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> Delete</span>
+                                                    <span class="navi-text ml-2"> {{ __('labels.delete') }}</span>
                                                 </a>
                                             </li>
                                             @endif
@@ -246,9 +226,9 @@
                         <!--begin::Content-->
                         <div class="d-flex align-items-center flex-wrap mt-14">
                             <div class="mr-12 d-flex flex-column mb-7">
-                                <span class="d-block font-weight-bold mb-4">Publication Date</span>
+                                <span class="d-block font-weight-bold mb-4">{{ __('labels.publication_date') }}</span>
                                 <span
-                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($award->published_at)->format('l, d F Y') }}</span>
+                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($award->published_at)->translatedFormat('l, d F Y') }}</span>
                             </div>
                         </div>
                         <div class="d-flex flex-wrap">
@@ -258,7 +238,8 @@
                                     <i class="flaticon2-tag icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column text-dark-75">
-                                    <span class="font-weight-bolder font-size-sm">Estimated Cost</span>
+                                    <span
+                                        class="font-weight-bolder font-size-sm">{{ __('labels.estimated_cost') }}</span>
                                     <span class="font-weight-bolder font-size-h5">
                                         <span class="text-dark-50 font-weight-bold">Rp
                                         </span>{{ number_format($award->contract_estimate_cost) }}</span>
@@ -271,7 +252,7 @@
                                     <i class="flaticon-price-tag icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column text-dark-75">
-                                    <span class="font-weight-bolder font-size-sm">Cost</span>
+                                    <span class="font-weight-bolder font-size-sm">{{ __('labels.cost') }}</span>
                                     <span class="font-weight-bolder font-size-h5">
                                         <span class="text-dark-50 font-weight-bold">Rp
                                         </span>{{ number_format($award->cost) }}</span>
@@ -285,7 +266,7 @@
                                 </div>
                                 <div class="d-flex flex-column text-dark-75">
                                     <span class="font-weight-bolder font-size-sm">
-                                        {{ number_format($award->participants_number) }} Participants
+                                        {{ number_format($award->participants_number) }} {{ __('labels.participant') }}
                                     </span>
                                     {{-- <a href="javascript:void(0)"
                                         class="text-primary font-weight-bolder subheader-separator subheader-separator-ver">
@@ -301,17 +282,18 @@
                                 </span>
                                 <div class="d-flex flex-column flex-lg-fill">
                                     <span class="text-dark-75 font-weight-bolder font-size-sm">
-                                        {{ !empty($award->contract) ? $award->contract()->count() : 0 }} Contract
+                                        {{ !empty($award->contract) ? $award->contract()->count() : 0 }}
+                                        {{ __('labels.contract') }}
                                     </span>
                                     @if(empty($award->contract))
-                                    <a href="{{ route('contract-create/'.$award->id) }}"
+                                    <a href="{{ route('award.contract.create', $award->id) }}"
                                         class="text-primary font-weight-bolder">
-                                        Add New Contract
+                                        {{ __('labels.create') }} {{ __('labels.contract') }}
                                     </a>
                                     @else
-                                    <a href="{{ url('contract/'.$award->contract->id) }}"
+                                    <a href="{{ route('award.contract.index', $award->id) }}"
                                         class="text-primary font-weight-bolder subheader-separator subheader-separator-ver">
-                                        View Detail
+                                        {{ __('labels.view_detail') }}
                                     </a>
                                     @endif
                                 </div>
@@ -332,37 +314,7 @@
         <!--end::Card-->
         @endforeach
 
-        <!--begin::Pagination-->
-        <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <div class="d-flex flex-wrap mr-3">
-                @if($awards->lastPage() > 1)
-                <a href="{{ $awards->url(1) }}" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                    <i class="ki ki-bold-double-arrow-back icon-xs"></i>
-                </a>
-                <a href="{{ $awards->url(1) }}"
-                    class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($awards->currentPage() == 1) ? ' disabled' : '' }}">
-                    <i class="ki ki-bold-arrow-back icon-xs"></i>
-                </a>
-                @for ($i = 1; $i <= $awards->lastPage(); $i++)
-                    <a href="{{ $awards->url($i) }}"
-                        class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($awards->currentPage() == $i) ? ' active' : '' }}">{{ $i }}</a>
-                    @endfor
-                    <a href="{{ $awards->url($awards->currentPage()+1) }}"
-                        class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($awards->currentPage() == $awards->lastPage()) ? ' disabled' : '' }}">
-                        <i class="ki ki-bold-arrow-next icon-xs"></i>
-                    </a>
-                    <a href="{{ $awards->url($awards->lastPage()) }}"
-                        class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                        <i class="ki ki-bold-double-arrow-next icon-xs"></i>
-                    </a>
-                    @endif
-
-            </div>
-            <div class="d-flex align-items-center">
-                <span class="text-muted">Displaying {{ $awards->count() }} of {{ $awards->total() }} records</span>
-            </div>
-        </div>
-        <!--end::Pagination-->
+        @include('metronic.shared.pagination', ['data' => $awards])
     </div>
     <!--end::Container-->
 </div>

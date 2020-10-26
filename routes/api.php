@@ -80,3 +80,5 @@ Route::get('award/{award}/delete', 'AwardController@destroy');
 Route::get('contract/{contract}/delete', 'ContractController@destroy');
 Route::get('ammendment/{ammendment}/delete', 'AmmendmentController@destroy');
 Route::get('execution/{execution}/delete', 'ExecutionController@destroy');
+
+Route::get('completion/{completion}/delete', 'CompletionController@destroy');

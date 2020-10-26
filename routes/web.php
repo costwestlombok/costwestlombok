@@ -58,6 +58,10 @@ Route::get('project/{project}/tender', 'TenderController@index_tender')->name('p
 Route::get('project/{project}/tender/create', 'TenderController@create_tender')->name('project.tender.create');
 Route::get('project/{project}/file', 'ProjectController@project_file')->name('project.file.index');
 // Route::get('project/{project}/file/create', 'TenderController@create_tender')->name('project.file.create');
+
+Route::get('award/{award}/contract', 'AwardController@contract')->name('award.contract.index');
+Route::get('award/{award}/contract/create', 'AwardController@contractCreate')->name('award.contract.create');
+
 Route::get('tender/{tender}/award', 'TenderController@award')->name('tender.award.index');
 Route::get('tender/{tender}/award/create', 'TenderController@awardCreate')->name('tender.award.create');
 

@@ -173,4 +173,70 @@ return  [
 	'end_date' => 'Tanggal Berakhir',
 	'approved_date' => 'Tanggal Disetujui',
 	'publication_date' => 'Tanggal Publikasi',
+
+	// tender
+	'tender_code' => 'Kode Tender',
+	'extended_date' => 'Tanggal Diperpanjang',
+	'amount' => 'Jumlah',
+	'tender_add_sub' => 'Buat detail tender dan simpan',
+	'tender_edit_sub' => 'Ubah detail tender dan simpan perubahan',
+
+	'tender_description' => 'Deskripsi Tender',
+	'tender_description_sub' => 'Masukkan Detail Tender Anda',
+	'process_number' => 'Nomor Proses',
+	'process_name' => 'Nama Proses',
+	'tender_amount' => 'Jumlah Tender',
+	'tender_status' => 'Status Tender',
+
+	'management_and_date' => 'Manajemen dan Tanggal',
+	'max_extended_date' => 'Tanggal Perpanjangan Maksimal',
+
+	'file' => 'Berkas',
+	'file_international_invitation' => 'Berkas Undangan Internasional',
+	'file_basement' => 'Berkas Basement',
+	'file_resolution' => 'Berkas Resolusi',
+	'file_convocation' => 'Berkas Pertemuan',
+	'file_tdr' => 'Berkas TDR',
+	'file_clarification' => 'Berkas Klarifikasi',
+	'file_acceptance_certificate' => 'Berkas Sertifikat Penerimaan',
+	'choose_file' => 'Pilih Berkas',
+	'change_file_text' => 'Unggah file untuk mengubah berkas',
+
+	// award
+	'award_process_number' => 'Award Process Number',
+	'estimated_cost' => 'Estimasi Biaya',
+	'cost' => 'Biaya',
+	'participant' => 'Partisipan',
+	'view_detail' => 'Lihat Detail',
+
+	'award_description' => 'Deskripsi Award',
+	'award_description_sub' => 'Masukkan Detail Award Anda',
+	'participant_number' => 'Jumlah Partisipan',
+	'cost_estimation' => 'Biaya Estimasi',
+
+	'file_and_publication_date' => 'Berkas dan Tanggal Publikasi',
+	'file_opening_act' => 'Berkas Opening Act',
+	'file_recommendation_report_act' => 'Berkas Recommendation Report Act',
+	'file_other' => 'Berkas Lainnya',
+	'published_at' => 'Diterbitkan pada',
+
+	// contract
+	'contract_number' => 'Nomor Kontrak',
+	'contract_scope' => 'Lingkup Kontrak',
+	'price_local_currency' => 'Harga Lokal',
+	'price_usd_currency' => 'Harga USD',
+	'view' => 'Lihat',
+	'ammendment' => 'Amandemen',
+	'execution' => 'Eksekusi',
+	'contract_detail' => 'Detail Kontrak',
+
+	'contract_title' => 'Judul Kontrak',
+	'choose_offerer' => 'Pilih Penawar',
+
+	// completion
+	'contract_completion' => 'Penyelesaian Kontrak',
+	'final_scope' => 'Lingkup Akhir',
+	'final_cost' => 'Biaya Akhir',
+	'final_date' => 'Tanggal Akhir',
+	'justification' => 'Justifikasi',
 ];

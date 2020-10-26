@@ -173,4 +173,62 @@ return  [
 	'end_date' => 'End Date',
 	'approved_date' => 'Approved Date',
 	'publication_date' => 'Publication Date',
+
+	// tender
+	'tender_code' => 'Tender Code',
+	'extended_date' => 'Tanggal Diperpanjang',
+	'amount' => 'Amount',
+	'tender_add_sub' => 'Enter tender details and submit',
+	'tender_edit_sub' => 'Edit tender details and save changes',
+
+	'tender_description' => 'Tender Description',
+	'tender_description_sub' => 'Enter the Details of your Tender',
+	'process_number' => 'Prosess Number',
+	'process_name' => 'Process Name',
+	'tender_amount' => 'Tender Amount',
+	'tender_status' => 'Tender Status',
+
+	'management_and_date' => 'Management and Date',
+	'max_extended_date' => 'Max Extended Date',
+
+	'file' => 'File',
+	'file_international_invitation' => 'File International Invitation',
+	'file_basement' => 'File Basement',
+	'file_resolution' => 'File Resolution',
+	'file_convocation' => 'File Convocation',
+	'file_tdr' => 'File TDR',
+	'file_clarification' => 'File Clarification',
+	'file_acceptance_certificate' => 'File Acceptance Certificate',
+	'choose_file' => 'Choose File',
+	'change_file_text' => 'Upload file to change document',
+
+	// award
+	'award_process_number' => 'Award Process Number',
+	'estimated_cost' => 'Estimated Cost',
+	'cost' => 'Cost',
+	'participant' => 'Participant',
+	'view_detail' => 'View Detail',
+
+	'award_description' => 'Award Description',
+	'award_description_sub' => 'Enter the Details of your Award',
+	'participant_number' => 'Participant Number',
+	'cost_estimation' => 'Cost Estimation',
+
+	'file_and_publication_date' => 'File and Publication Date',
+	'file_opening_act' => 'File Opening Act',
+	'file_recommendation_report_act' => 'File Recommendation Report Act',
+	'file_other' => 'File Other',
+	'published_at' => 'Published at',
+
+	// contract
+	'contract_number' => 'Contract Number',
+	'contract_scope' => 'Contract Scope',
+	'price_local_currency' => 'Price Local Currency',
+	'price_usd_currency' => 'Price USD Currency',
+	'ammendment' => 'Ammendment',
+	'execution' => 'Execution',
+	'contract_detail' => 'Contract Detail',
+
+	'contract_title' => 'Contract Title',
+	'choose_offerer' => 'Choose an Offerer',
 ];

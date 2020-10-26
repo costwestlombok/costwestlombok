@@ -1,28 +1,4 @@
 @extends('layouts.metronic')
-@section('style')
-@endsection
-@section('script')
-<script>
-    jQuery(document).ready(function () {
-        $(document).on('click', '.button', function (e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            var link = $(this).attr('href');
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won\'t be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, delete it!"
-            }).then(function(result) {
-                if (result.value) {
-                    window.location.href = "/api/tender/"+ id +"/delete"; 
-                }
-            });
-        });
-    });
-</script>
-@endsection
 @section('content')
 <!--begin::Subheader-->
 <div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
@@ -31,7 +7,7 @@
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Title-->
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                Tender </h5>
+                {{ __('labels.tender') }} </h5>
             <!--end::Title-->
             @if(isset($project))
             <!--begin::Separator-->
@@ -40,13 +16,13 @@
             <!--begin::Breadcrumb-->
             <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0 mr-5">
                 <li class="breadcrumb-item">
-                    <a href="{{ url('dashboard') }}" class="text-muted">Dashboard</a>
+                    <a href="{{ url('dashboard') }}" class="text-muted">{{ __('labels.dashboard') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('project.show', $project) }}" class="text-muted">Project</a>
+                    <a href="{{ route('project.show', $project) }}" class="text-muted">{{ __('labels.project') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    Tender
+                    {{ __('labels.tender') }}
                 </li>
             </ul>
             <!--end::Breadcrumb-->
@@ -63,7 +39,8 @@
                     method="GET">
                     <div class="input-group input-group-sm input-group-solid" style="max-width: 175px">
                         <input type="text" name="query_tender" value="{{ request()->get('query_tender') }}"
-                            class="form-control" id="kt_subheader_search_form" placeholder="Search...">
+                            class="form-control" id="kt_subheader_search_form"
+                            placeholder="{{ __('labels.search') }}...">
                         <div class="input-group-append">
                             <span class="input-group-text">
                                 <span class="svg-icon">
@@ -94,7 +71,7 @@
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
             <!--begin::Button-->
-            <a href="javascript:history.back()" class="btn btn-default font-weight-bold">Back </a>
+            <a href="javascript:history.back()" class="btn btn-default font-weight-bold">{{ __('labels.back') }} </a>
             <!--end::Button-->
         </div>
         <!--end::Toolbar-->
@@ -125,7 +102,8 @@
                                 <div class="my-2">
                                     <a href="javascript:void(0)"
                                         class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
-                                        Tender Code <strong>{{ $tender->process_number }}</strong></a>
+                                        {{ __('labels.tender_code') }}
+                                        <strong>{{ $tender->process_number }}</strong></a>
                                 </div>
                                 <!--end::Contacts-->
                             </div>
@@ -161,7 +139,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> Bid/Award</span>
+                                                    <span class="navi-text ml-2"> {{ __('labels.award') }}</span>
                                                 </a>
                                             </li>
                                             <li class="navi-item">
@@ -182,7 +160,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> Offerer</span>
+                                                    <span class="navi-text ml-2"> {{ __('labels.offerer') }}</span>
                                                 </a>
                                             </li>
                                             @if(Auth::check())
@@ -205,11 +183,12 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> Edit</span>
+                                                    <span class="navi-text ml-2"> {{ __('labels.edit') }}</span>
                                                 </a>
                                             </li>
                                             <li class="navi-item">
-                                                <a href="#" data-id="{{ $tender->id }}" class="button navi-link">
+                                                <a href="javascript:deleteFn('tender', '{{ $tender->id }}')"
+                                                    class="navi-link">
                                                     <span class="svg-icon menu-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -226,7 +205,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> Delete</span>
+                                                    <span class="navi-text ml-2"> {{ __('labels.delete') }}</span>
                                                 </a>
                                             </li>
                                             @endif
@@ -241,19 +220,19 @@
                         <!--begin::Content-->
                         <div class="d-flex align-items-center flex-wrap mt-14">
                             <div class="mr-12 d-flex flex-column mb-7">
-                                <span class="d-block font-weight-bold mb-4">Start Date</span>
+                                <span class="d-block font-weight-bold mb-4">{{ __('labels.start_date') }}</span>
                                 <span
-                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($tender->start_date)->format('D, d M Y') }}</span>
+                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($tender->start_date)->translatedFormat('l, d M Y') }}</span>
                             </div>
                             <div class="mr-12 d-flex flex-column mb-7">
-                                <span class="d-block font-weight-bold mb-4">Due Date</span>
+                                <span class="d-block font-weight-bold mb-4">{{ __('labels.due_date') }}</span>
                                 <span
-                                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($tender->end_date)->format('D, d M Y') }}</span>
+                                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($tender->end_date)->translatedFormat('l, d M Y') }}</span>
                             </div>
                             <div class="mr-12 d-flex flex-column mb-7">
-                                <span class="d-block font-weight-bold mb-4">Extended Date</span>
+                                <span class="d-block font-weight-bold mb-4">{{ __('labels.extended_date') }}</span>
                                 <span
-                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($tender->max_extended_date)->format('D, d M Y') }}</span>
+                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($tender->max_extended_date)->translatedFormat('l, d M Y') }}</span>
                             </div>
                         </div>
                         <div class="d-flex flex-wrap">
@@ -263,7 +242,7 @@
                                     <i class="flaticon-price-tag icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column text-dark-75">
-                                    <span class="font-weight-bolder font-size-sm">Amount</span>
+                                    <span class="font-weight-bolder font-size-sm">{{ __('labels.amount') }}</span>
                                     <span class="font-weight-bolder font-size-h5">
                                         <span class="text-dark-50 font-weight-bold">Rp
                                         </span>{{ number_format($tender->amount) }}</span>
@@ -276,10 +255,10 @@
                                     <i class="flaticon-add-label-button icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column text-dark-75">
-                                    <span class="font-weight-bolder font-size-sm">Status</span>
+                                    <span class="font-weight-bolder font-size-sm">{{ __('labels.status') }}</span>
                                     <span class="font-weight-bolder font-size-h5">
                                         <span
-                                            class="text-dark-50 font-weight-bold"></span>{{ $tender->status->status_name }}</span>
+                                            class="text-dark-50 font-weight-bold"></span>{{ $tender->status->status_name ?? '-' }}</span>
                                 </div>
                             </div>
                             <!--end: Item-->
@@ -291,11 +270,11 @@
                                 <div class="d-flex flex-column flex-lg-fill">
                                     <a href="{{ route('tender.award.index', $tender) }}"
                                         class="text-dark-75 font-weight-bolder font-size-sm">{{ $tender->awards->count() }}
-                                        Bid/Award</a>
+                                        {{ __('labels.award') }}</a>
                                     @if(Auth::check())
                                     <a href="{{ url('award-create/'.$tender->id) }}"
-                                        class="text-primary font-weight-bolder">Add New Bid/Award
-                                        Evaluation</a>
+                                        class="text-primary font-weight-bolder">{{ __('labels.create') }}
+                                        {{ __('labels.award') }}</a>
                                     @endif
                                 </div>
                             </div>
@@ -308,10 +287,11 @@
                                 <div class="d-flex flex-column flex-lg-fill">
                                     <a href="{{ url('tender-offerer/'.$tender->id) }}"
                                         class="text-dark-75 font-weight-bolder font-size-sm">{{ $tender->tender_offerer->count() }}
-                                        Offerer</a>
+                                        {{ __('labels.offerer') }}</a>
                                     @if(Auth::check())
                                     <a href="{{ url('tender-offerer/'.$tender->id) }}"
-                                        class="text-primary font-weight-bolder">Add New Offerer</a>
+                                        class="text-primary font-weight-bolder">{{ __('labels.create') }}
+                                        {{ __('labels.offerer') }}</a>
                                     @endif
                                 </div>
                             </div>
@@ -331,37 +311,7 @@
         <!--end::Card-->
         @endforeach
 
-        <!--begin::Pagination-->
-        <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <div class="d-flex flex-wrap mr-3">
-                @if($tenders->lastPage() > 1)
-                <a href="{{ $tenders->url(1) }}" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                    <i class="ki ki-bold-double-arrow-back icon-xs"></i>
-                </a>
-                <a href="{{ $tenders->url(1) }}"
-                    class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($tenders->currentPage() == 1) ? ' disabled' : '' }}">
-                    <i class="ki ki-bold-arrow-back icon-xs"></i>
-                </a>
-                @for($i = 1; $i <= $tenders->lastPage(); $i++)
-                    <a href="{{ $tenders->url($i) }}"
-                        class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($tenders->currentPage() == $i) ? ' active' : '' }}">{{ $i }}
-                    </a>
-                    @endfor
-                    <a href="{{ $tenders->url($tenders->currentPage()+1) }}"
-                        class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($tenders->currentPage() == $tenders->lastPage()) ? ' disabled' : '' }}">
-                        <i class="ki ki-bold-arrow-next icon-xs"></i>
-                    </a>
-                    <a href="{{ $tenders->url($tenders->lastPage()) }}"
-                        class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                        <i class="ki ki-bold-double-arrow-next icon-xs"></i>
-                    </a>
-                    @endif
-            </div>
-            <div class="d-flex align-items-center">
-                <span class="text-muted">Displaying {{ $tenders->count() }} of {{ $tenders->total() }} records</span>
-            </div>
-        </div>
-        <!--end::Pagination-->
+        @include('metronic.shared.pagination', ['data' => $tenders])
     </div>
     <!--end::Container-->
 </div>

@@ -163,12 +163,11 @@
 							} else {
 								var urlArray = location.pathname.split('/');
 								if (urlArray[1] == 'project') {
-									if (urlArray[2]) {
+									if (urlArray[2] && !urlArray[3]) {
 										location.href = '/project';
-									} else {
-										location.reload();
 									}
 								}
+								location.reload();
 							}
                         }         
                     });

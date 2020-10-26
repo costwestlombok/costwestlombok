@@ -32,7 +32,7 @@ class TenderController extends Controller
     public function index()
     {
         //
-        $tenders = Tender::paginate(8);
+        $tenders = Tender::paginate(10);
         return view('metronic.tender.index', compact('tenders'));
     }
 
@@ -95,45 +95,53 @@ class TenderController extends Controller
         if ($request->acceptance_certificate) {
             $data['acceptance_certificate'] = $request->file('acceptance_certificate')->store('tender');
         }
-        $contract_type = ContractType::where('type_name', $request->contract_type_id)->first();
-        $tender_method = TenderMethod::where('method_name', $request->tender_method_id)->first();
-        $tender_status = TenderStatus::where('status_name', $request->tender_status_id)->first();
-        $status = Status::where('status_name', $request->status_id)->first();
 
-        if ($contract_type) {
-            $data['contract_type_id'] = $contract_type->id;
-        } else {
-            $ct = ContractType::create([
-                'type_name' => $request->contract_type_id,
-            ]);
-            $data['contract_type_id'] = $ct->id;
+        if ($request->contract_type_id) {
+            $contract_type = ContractType::where('type_name', $request->contract_type_id)->first();
+            if ($contract_type) {
+                $data['contract_type_id'] = $contract_type->id;
+            } else {
+                $ct = ContractType::create([
+                    'type_name' => $request->contract_type_id,
+                ]);
+                $data['contract_type_id'] = $ct->id;
+            }
         }
 
-        if ($tender_method) {
-            $data['tender_method_id'] = $tender_method->id;
-        } else {
-            $tm = TenderMethod::create([
-                'method_name' => $request->tender_method_id,
-            ]);
-            $data['tender_method_id'] = $tm->id;
+        if ($request->tender_method_id) {
+            $tender_method = TenderMethod::where('method_name', $request->tender_method_id)->first();
+            if ($tender_method) {
+                $data['tender_method_id'] = $tender_method->id;
+            } else {
+                $tm = TenderMethod::create([
+                    'method_name' => $request->tender_method_id,
+                ]);
+                $data['tender_method_id'] = $tm->id;
+            }
         }
 
-        if ($tender_status) {
-            $data['tender_status_id'] = $tender_status->id;
-        } else {
-            $ts = TenderStatus::create([
-                'status_name' => $request->tender_status_id,
-            ]);
-            $data['tender_status_id'] = $ts->id;
+        if ($request->tender_status_id) {
+            $tender_status = TenderStatus::where('status_name', $request->tender_status_id)->first();
+            if ($tender_status) {
+                $data['tender_status_id'] = $tender_status->id;
+            } else {
+                $ts = TenderStatus::create([
+                    'status_name' => $request->tender_status_id,
+                ]);
+                $data['tender_status_id'] = $ts->id;
+            }
         }
 
-        if ($status) {
-            $data['status_id'] = $status->id;
-        } else {
-            $tm = Status::create([
-                'status_name' => $request->status_id,
-            ]);
-            $data['status_id'] = $tm->id;
+        if ($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
         }
 
         $start = Carbon::parse($request->start_date);
@@ -143,7 +151,8 @@ class TenderController extends Controller
         Tender::create($data);
         Session::put('success', trans('labels.saved'));
 
-        return redirect('tender/' . $request->project_id);
+        return redirect('project/' . $request->project_id . '/tender');
+        // return redirect('tender/' . $request->project_id);
     }
 
     /**
@@ -169,8 +178,8 @@ class TenderController extends Controller
         $tender = Tender::find($id);
         $project = Project::where('id', $tender->project_id)->first();
         $organizations = Organization::all();
-        $units = OrganizationUnit::where('entity_id', $tender->official->unit->org->id)->get();
-        $officials = Official::where('entity_unit_id', $tender->official->unit->id)->get();
+        $units = OrganizationUnit::where('entity_id', $tender->official->unit->org->id ?? null)->get();
+        $officials = Official::where('entity_unit_id', $tender->official->unit->id ?? null)->get();
         $statuses = Status::all();
         $projects = Project::all();
         $contract_types = ContractType::all();
@@ -250,10 +259,67 @@ class TenderController extends Controller
             $data['acceptance_certificate'] = $request->file('acceptance_certificate')->store('tender');
         }
 
+        if ($request->contract_type_id) {
+            $contract_type = ContractType::where('type_name', $request->contract_type_id)->first();
+            if ($contract_type) {
+                $data['contract_type_id'] = $contract_type->id;
+            } else {
+                $ct = ContractType::create([
+                    'type_name' => $request->contract_type_id,
+                ]);
+                $data['contract_type_id'] = $ct->id;
+            }
+        } else {
+            $data['contract_type_id'] = null;
+        }
+
+        if ($request->tender_method_id) {
+            $tender_method = TenderMethod::where('method_name', $request->tender_method_id)->first();
+            if ($tender_method) {
+                $data['tender_method_id'] = $tender_method->id;
+            } else {
+                $tm = TenderMethod::create([
+                    'method_name' => $request->tender_method_id,
+                ]);
+                $data['tender_method_id'] = $tm->id;
+            }
+        } else {
+            $data['tender_method_id'] = null;
+        }
+
+        if ($request->tender_status_id) {
+            $tender_status = TenderStatus::where('status_name', $request->tender_status_id)->first();
+            if ($tender_status) {
+                $data['tender_status_id'] = $tender_status->id;
+            } else {
+                $ts = TenderStatus::create([
+                    'status_name' => $request->tender_status_id,
+                ]);
+                $data['tender_status_id'] = $ts->id;
+            }
+        } else {
+            $data['tender_status_id'] = null;
+        }
+
+        if ($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
+        } else {
+            $data['status_id'] = null;
+        }
+
         $data['amount'] = str_replace(",", "", $request->amount);
         $tender->update($data);
         Session::put("success", trans('labels.updated'));
-        return redirect('tender/' . $request->project_id);
+        return redirect('project/' . $request->project_id . '/tender');
+        // return redirect('tender/' . $request->project_id);
     }
 
     /**

@@ -4,136 +4,90 @@
     var COST_URL = "{{ url('api/ammendment/'.$contract->id) }}";
 </script>
 <script>
-    "use strict";
-    var KTDatatablesDataSourceAjaxServer = function () {
-
-        var initTable1 = function () {
-            var table = $('#kt_datatable');
-
-            // begin first table
-            table.DataTable({
-                responsive: true,
-                searchDelay: 500,
-                processing: true,
-                serverSide: true,
-                ajax: COST_URL,
-                columns: [
-                    {
-                        data: "id",
-                        className: "right-align",
-                        render: function (data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        },
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'justification'
-                    },
-                    {
-                        data: 'current_contract_scope'
-                    },
-                    {
-                        data: 'adendum'
-                    },
-                    {
-                        data: 'current_price'
-                    },
-                    {
-                        data: 'created_at',
-                        searchable: false
-                    },
-                    {
-                        data: 'id',
-                        searchable: false
-                    },
-                ],
-                order: [[5, "desc"]],
-                columnDefs: [
-                    {
-                        targets: 6,
-                        title: 'Actions',
-                        orderable: false,
-                        render: function (data, type, full, meta) {
-                            @if(Auth::check())
-                            return '\
-                                <div class="text-right nowrap">\
-                                <a href="/ammendment/' + full.id + '/edit" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
-                                    <i class="fas fa-pen"></i>\
-                                </a>\
-                                <a href="#"  data-id="' + full.id + '" class="button btn btn-sm btn-clean btn-icon" data-id=' + full.id + ' title="Delete"><i class="fas fa-trash"></i></a>\
-                                </div>\
-                            ';
-                            @else
-                            return '';
-                            @endif
-                        },
-                    },
-                    {
-                        targets: 5,
-                        render: function (data, type, full, meta) {
-                            return '<div class="text-right nowrap">\
-                                <code>' + data + '</code>\
-                            </div>';
-                        },
-                    },
-                    {
-                        targets: 3,
-                        orderable: false,
-                        render: function (data, type, full, meta) {
-                            return '<div class="text-center nowrap">\
-                                <a href="/storage/' + data + '" target="_blank">View file</a>\
-                            </div>';
-                        },
-                    },
-                    {
-                        targets: 0,
-                        className: 'text-center'
-                    },
-                ],
-                // "language": {
-                //     "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json"
-                // },
-            });
-        };
-
-        return {
-
-            //main function to initiate the module
-            init: function () {
-                initTable1();
-            },
-
-        };
-
-    }();
-
     jQuery(document).ready(function () {
-        KTDatatablesDataSourceAjaxServer.init();
-        
-        $(document).on('click', '.button', function (e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            var link = $(this).attr('href');
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won\'t be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, delete it!"
-            }).then(function(result) {
-                if (result.value) {
-                    $.ajax({
-                        type: "GET",
-                        url: "/api/ammendment/"+ id +"/delete",
-                        success: function (data) {
-                            toastr.success("Data deleted successfully!");
-                            var table = $('#kt_datatable').DataTable(); 
-                            table.ajax.reload( null, false );
-                        }         
-                    });
-                }
-            });
+        $('#kt_datatable').DataTable({
+            responsive: true,
+            searchDelay: 500,
+            processing: true,
+            serverSide: true,
+            ajax: COST_URL,
+            columns: [
+                {
+                    data: "id",
+                    className: "right-align",
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    },
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'justification'
+                },
+                {
+                    data: 'current_contract_scope'
+                },
+                {
+                    data: 'adendum'
+                },
+                {
+                    data: 'current_price'
+                },
+                {
+                    data: 'created_at',
+                    searchable: false
+                },
+                {
+                    data: 'id',
+                    searchable: false
+                },
+            ],
+            order: [[5, "desc"]],
+            columnDefs: [
+                {
+                    targets: 6,
+                    title: "{{ __('labels.action') }}",
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        @if(Auth::check())
+                        return '\
+                            <div class="text-right nowrap">\
+                            <a href="/ammendment/' + full.id + '/edit" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
+                                <i class="fas fa-pen"></i>\
+                            </a>\
+                            <a href="#"  data-id="' + full.id + '" class="button btn btn-sm btn-clean btn-icon" data-id=' + full.id + ' title="Delete"><i class="fas fa-trash"></i></a>\
+                            </div>\
+                        ';
+                        @else
+                        return '';
+                        @endif
+                    },
+                },
+                {
+                    targets: 5,
+                    render: function (data, type, full, meta) {
+                        return '<div class="text-right nowrap">\
+                            <code>' + data + '</code>\
+                        </div>';
+                    },
+                },
+                {
+                    targets: 3,
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '<div class="text-center nowrap">\
+                            <a href="/storage/' + data + '" target="_blank">View file</a>\
+                        </div>';
+                    },
+                },
+                {
+                    targets: 0,
+                    className: 'text-center'
+                },
+            ],
+            // "language": {
+            //     "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json"
+            // },
         });
     });
 </script>

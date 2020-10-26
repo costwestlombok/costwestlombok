@@ -45,12 +45,16 @@ class ProjectController extends Controller
     {
         $map = new Googlemaps();
         $map->add_marker([
+            'id' => 'A',
+            'title' => 'true',
             'position' => '-8.683070211544514,116.13077257514645',
             'draggable' => TRUE,
             'ondragend' => 'document.getElementById("initial_lat").value =event.latLng.lat(); document.getElementById("initial_lon").value = event.latLng.lng();',
             'icon' => 'http://maps.google.com/mapfiles/kml/paddle/A.png',
         ]);
         $map->add_marker([
+            'id' => 'B',
+            'title' => 'false',
             'position' => '-8.679305276105104,116.13759645742493',
             'draggable' => TRUE,
             'ondragend' => 'document.getElementById("final_lat").value =event.latLng.lat(); document.getElementById("final_lon").value = event.latLng.lng();',
@@ -58,7 +62,22 @@ class ProjectController extends Controller
         ]);
         $map->initialize([
             'center' => "-8.683070211544514,116.13077257514645",
-            'places' => TRUE
+            'places' => TRUE,
+            'onclick' => '
+                if (marker_A.title == "true") {
+                    marker_A.setPosition(event.latLng);
+                    marker_A.setTitle("false");
+                    marker_B.setTitle("true");
+                    document.getElementById("initial_lat").value = event.latLng.lat(); 
+                    document.getElementById("initial_lon").value = event.latLng.lng();
+                } else {
+                    marker_B.setPosition(event.latLng);
+                    marker_B.setTitle("false");
+                    marker_A.setTitle("true");
+                    document.getElementById("final_lat").value = event.latLng.lat(); 
+                    document.getElementById("final_lon").value = event.latLng.lng();
+                }
+            ',
         ]);
         $map = $map->create_map();
         return view('metronic.project.edit', compact('map'));
@@ -143,12 +162,16 @@ class ProjectController extends Controller
         $project = Project::find($id);
         $map = new Googlemaps();
          $map->add_marker([
+            'id' => 'A',
+            'title' => 'true',
             'position' => $project->initial_lat . ',' . $project->initial_lon,
             'draggable' => TRUE,
             'ondragend' => 'document.getElementById("initial_lat").value =event.latLng.lat(); document.getElementById("initial_lon").value = event.latLng.lng();',
             'icon' => 'http://maps.google.com/mapfiles/kml/paddle/A.png',
         ]);
         $map->add_marker([
+            'id' => 'B',
+            'title' => 'false',
             'position' => $project->final_lat . ',' . $project->final_lon,
             'draggable' => TRUE,
             'ondragend' => 'document.getElementById("final_lat").value =event.latLng.lat(); document.getElementById("final_lon").value = event.latLng.lng();',
@@ -157,7 +180,21 @@ class ProjectController extends Controller
         $map->initialize([
             'center' => $project->initial_lat . ',' . $project->initial_lon,
             'places' => TRUE,
-            // 'placesAutocompleteOnChange' => 'alert(\'You selected a place\');',
+            'onclick' => '
+                if (marker_A.title == "true") {
+                    marker_A.setPosition(event.latLng);
+                    marker_A.setTitle("false");
+                    marker_B.setTitle("true");
+                    document.getElementById("initial_lat").value = event.latLng.lat(); 
+                    document.getElementById("initial_lon").value = event.latLng.lng();
+                } else {
+                    marker_B.setPosition(event.latLng);
+                    marker_B.setTitle("false");
+                    marker_A.setTitle("true");
+                    document.getElementById("final_lat").value = event.latLng.lat(); 
+                    document.getElementById("final_lon").value = event.latLng.lng();
+                }
+            ',
         ]);
         $map = $map->create_map();
         return view('metronic.project.edit', compact('map', 'project'));

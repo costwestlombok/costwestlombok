@@ -76,24 +76,27 @@ class AwardController extends Controller
             $data['others'] = $request->file('others')->store('awards');
         }
 
-        $contract_method = ContractMethod::where('method_name', $request->contract_method_id)->first();
-        $status = Status::where('status_name', $request->status_id)->first();
-
-        if ($contract_method) {
-            $data['contract_method_id'] = $contract_method->id;
-        } else {
-            $cm = ContractMethod::create([
-                'method_name' => $request->contract_method_id,
-            ]);
-            $data['contract_method_id'] = $cm->id;
+        if($request->contract_method_id) {
+            $contract_method = ContractMethod::where('method_name', $request->contract_method_id)->first();
+            if ($contract_method) {
+                $data['contract_method_id'] = $contract_method->id;
+            } else {
+                $cm = ContractMethod::create([
+                    'method_name' => $request->contract_method_id,
+                ]);
+                $data['contract_method_id'] = $cm->id;
+            }
         }
-        if ($status) {
-            $data['status_id'] = $status->id;
-        } else {
-            $tm = Status::create([
-                'status_name' => $request->status_id,
-            ]);
-            $data['status_id'] = $tm->id;
+        if($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
         }
         Award::create($data);
         Session::put('success', trans('labels.saved'));
@@ -165,30 +168,37 @@ class AwardController extends Controller
             }
             $data['others'] = $request->file('others')->store('awards');
         }
-
-        $contract_method = ContractMethod::where('method_name', $request->contract_method_id)->first();
-        $status = Status::where('status_name', $request->status_id)->first();
-
-        if ($contract_method) {
-            $data['contract_method_id'] = $contract_method->id;
+        
+        if ($request->contract_method_id) {
+            $contract_method = ContractMethod::where('method_name', $request->contract_method_id)->first();
+            if ($contract_method) {
+                $data['contract_method_id'] = $contract_method->id;
+            } else {
+                $cm = ContractMethod::create([
+                    'method_name' => $request->contract_method_id,
+                ]);
+                $data['contract_method_id'] = $cm->id;
+            }
         } else {
-            $cm = ContractMethod::create([
-                'method_name' => $request->contract_method_id,
-            ]);
-            $data['contract_method_id'] = $cm->id;
+            $data['contract_method_id'] = null;
         }
-        if ($status) {
-            $data['status_id'] = $status->id;
+        if ($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
         } else {
-            $tm = Status::create([
-                'status_name' => $request->status_id,
-            ]);
-            $data['status_id'] = $tm->id;
+            $data['status_id'] = null;
         }
         $award->update($data);
         Session::put('success', trans('labels.updated'));
 
-        return redirect('tender-award/' . $request->tender_id);
+        return redirect('tender/' . $request->tender_id . '/award');
     }
 
     /**
@@ -219,5 +229,14 @@ class AwardController extends Controller
     public function create_award(Tender $tender)
     {
         return view('metronic.award.edit', compact('tender'));
+    }
+
+    public function contract(Award $award) {
+        $contract = $award->contract;
+        return view('metronic.contract.show', compact('contract', 'award'));
+    }
+
+    public function contractCreate(Award $award) {
+        return view('metronic.contract.edit', compact('award'));
     }
 }

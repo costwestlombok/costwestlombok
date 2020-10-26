@@ -1,28 +1,4 @@
 @extends('layouts.metronic')
-@section('style')
-@endsection
-@section('script')
-<script>
-    jQuery(document).ready(function () {
-        $(document).on('click', '.button', function (e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            var link = $(this).attr('href');
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won\'t be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, delete it!"
-            }).then(function (result) {
-                if (result.value) {
-                    window.location.href = "/api/project/" + id + "/delete";
-                }
-            });
-        });
-    });
-</script>
-@endsection
 @section('content')
 <!--begin::Subheader-->
 <div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
@@ -111,67 +87,7 @@
         </div>
         <!--end::Row-->
 
-        <!--begin::Pagination-->
-        <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <div class="d-flex flex-wrap mr-3">
-                @if($projects->lastPage() > 1)
-                <a href="{{ $projects->url(1) }}" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"
-                    {{ ($projects->currentPage() == 1) ? ' disabled' : '' }}>
-                    <i class="ki ki-bold-double-arrow-back icon-xs"></i>
-                </a>
-                <a href="{{ $projects->url($projects->currentPage() - 1) }}"
-                    class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($projects->currentPage() == 1) ? ' disabled' : '' }}">
-                    <i class="ki ki-bold-arrow-back icon-xs"></i>
-                </a>
-                @if($projects->total() >= 4)
-                @if($projects->total() / 2 >= $projects->currentPage() && $projects->currentPage() > 2)
-                <a href="{{ $projects->url($projects->currentPage() - 1) }}"
-                    class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($projects->currentPage() == $projects->currentPage() - 1) ? ' active' : '' }}">{{ $projects->currentPage() - 1 }}</a>
-                <a href="{{ $projects->url($projects->currentPage()) }}"
-                    class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($projects->currentPage() == $projects->currentPage()) ? ' active' : '' }}">{{ $projects->currentPage() }}</a>
-                @else
-                <a href="{{ $projects->url(1) }}"
-                    class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($projects->currentPage() == 1) ? ' active' : '' }}">1</a>
-                <a href="{{ $projects->url(2) }}"
-                    class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($projects->currentPage() == 2) ? ' active' : '' }}">2</a>
-                @endif
-                <a href="javascript:;" class="btn btn-icon btn-sm border-0 mr-2 my-1">...</a>
-                @if($projects->currentPage() > $projects->total() / 2 && $projects->lastPage() - 1 >
-                $projects->currentPage())
-                <a href="{{ $projects->url($projects->currentPage()) }}"
-                    class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($projects->currentPage() == $projects->currentPage()) ? ' active' : '' }}">{{ $projects->currentPage() }}</a>
-                <a href="{{ $projects->url($projects->currentPage() + 1) }}"
-                    class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($projects->currentPage() == $projects->currentPage() + 1) ? ' active' : '' }}">{{ $projects->currentPage() + 1 }}</a>
-                @else
-                <a href="{{ $projects->url($projects->lastPage() - 1) }}"
-                    class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($projects->currentPage() == $projects->lastPage() - 1) ? ' active' : '' }}">{{ $projects->lastPage() - 1 }}</a>
-                <a href="{{ $projects->url($projects->lastPage()) }}"
-                    class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($projects->currentPage() == $projects->lastPage()) ? ' active' : '' }}">{{ $projects->lastPage() }}</a>
-                @endif
-                @else
-                @for ($i=1; $projects->lastPage() >= $i; $i++)
-                <a href="{{ $projects->url($i) }}"
-                    class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($projects->currentPage() == $i) ? ' active' : '' }}">{{$i}}</a>
-                @endfor
-                @endif
-                <a href="{{ $projects->url($projects->currentPage()+1) }}"
-                    class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($projects->currentPage() == $projects->lastPage()) ? ' disabled' : '' }}">
-                    <i class="ki ki-bold-arrow-next icon-xs"></i>
-                </a>
-                <a href="{{ $projects->url($projects->lastPage()) }}"
-                    class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($projects->currentPage() == $projects->lastPage()) ? ' disabled' : '' }}">
-                    <i class="ki ki-bold-double-arrow-next icon-xs"></i>
-                </a>
-                @endif
-            </div>
-            @if($projects->total())
-            <div class="d-flex align-items-center">
-                <span class="text-muted">{{ __('labels.displaying') }} {{$projects->count()}} {{ __('labels.of') }}
-                    {{$projects->total()}} {{ __('labels.records') }}</span>
-            </div>
-            @endif
-        </div>
-        <!--end::Pagination-->
+        @include('metronic.shared.pagination', ['data' => $projects])
     </div>
     <!--end::Container-->
 </div>

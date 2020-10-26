@@ -26,10 +26,10 @@ class CreateContractsTable extends Migration
             $table->text('contract_scope')->nullable();
             $table->double('price_local_currency')->nullable();
             $table->double('price_usd_currency')->nullable();
-            $table->uuid('suppliers_id');
-            $table->foreign('suppliers_id')->references('id')->on('offerers')->onUpdate('cascade')->onDelete('cascade');
-            $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
+            $table->uuid('suppliers_id')->nullable();
+            $table->foreign('suppliers_id')->references('id')->on('offerers')->onUpdate('cascade')->onDelete('set null');
+            $table->uuid('status_id')->nullable();
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });
     }

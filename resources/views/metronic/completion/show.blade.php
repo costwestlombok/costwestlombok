@@ -1,28 +1,4 @@
 @extends('layouts.metronic')
-@section('style')
-@endsection
-@section('script')
-<script>
-    jQuery(document).ready(function () {
-        $(document).on('click', '.button', function (e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            var link = $(this).attr('href');
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won\'t be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, delete it!"
-            }).then(function(result) {
-                if (result.value) {
-                    window.location.href = "/contract-completion/"+ id +"/delete"; 
-                }
-            });
-        });
-    });
-</script>
-@endsection
 @section('content')
 <!--begin::Subheader-->
 <div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
@@ -30,7 +6,7 @@
         <!--begin::Details-->
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Contract Completion</h5>
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">{{ __('labels.contract_completion') }}</h5>
             <!--end::Title-->
             <!--begin::Separator-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
@@ -38,13 +14,26 @@
             <!--begin::Breadcrumb-->
             <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
                 <li class="breadcrumb-item">
-                    <a href="{{ url('/dashboard') }}" class="text-muted">Dashboard</a>
+                    <a href="{{ url('/dashboard') }}" class="text-muted">{{ __('labels.dashboard') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ url('/project') }}" class="text-muted">Project</a>
+                    <a href="{{ route('project.show', $contract->award->tender->project) }}"
+                        class="text-muted">{{ __('labels.project') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    Completion
+                    <a href="{{ route('project.tender.index', $contract->award->tender->project) }}"
+                        class="text-muted">{{ __('labels.tender') }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('tender.award.index', $contract->award->tender) }}"
+                        class="text-muted">{{ __('labels.award') }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('award.contract.index', $contract->award) }}"
+                        class="text-muted">{{ __('labels.contract') }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    {{ __('labels.completion') }}
                 </li>
             </ul>
             <!--end::Breadcrumb-->
@@ -57,6 +46,7 @@
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">
+        @if($completion)
         <!--begin::Card-->
         <div class="card card-custom gutter-b">
             <!--begin::Body-->
@@ -101,11 +91,12 @@
                                                     </g>
                                                 </svg>
                                             </span>
-                                            <span class="navi-text ml-2"> Edit</span>
+                                            <span class="navi-text ml-2"> {{ __('labels.edit') }}</span>
                                         </a>
                                     </li>
                                     <li class="navi-item">
-                                        <a href="#" data-id="{{ $completion->id }}" class="button navi-link">
+                                        <a href="javascript:deleteFn('completion', '{{ $completion->id }}')"
+                                            class="navi-link">
                                             <span class="svg-icon menu-icon">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -121,7 +112,7 @@
                                                     </g>
                                                 </svg>
                                             </span>
-                                            <span class="navi-text ml-2"> Delete</span>
+                                            <span class="navi-text ml-2"> {{ __('labels.delete') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -134,33 +125,36 @@
                 <!--end::Info-->
                 <!--begin::Data-->
                 <div class="d-flex w-100 align-items-center mb-4 mt-5">
-                    <span class="text-dark-75 mr-2 w-25">Final Scope</span>
+                    <span class="text-dark-75 mr-2 w-25">{{ __('labels.final_scope') }}</span>
                     <span class="text-muted font-weight-bold">
                         {{ $completion->final_scope }}</span>
                 </div>
                 <div class="d-flex w-100 align-items-center mb-4">
-                    <span class="text-dark-75 mr-2 w-25">Final Cost</span>
+                    <span class="text-dark-75 mr-2 w-25">{{ __('labels.final_cost') }}</span>
                     <span class="text-muted font-weight-bold">Rp
                         {{ number_format($completion->final_cost) }}</span>
                 </div>
                 <div class="d-flex w-100 align-items-center mb-4">
-                    <span class="text-dark-75 mr-2 w-25">Final Date</span>
+                    <span class="text-dark-75 mr-2 w-25">{{ __('labels.final_date') }}</span>
                     <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
-                        {{ date('D, d M Y', strtotime($completion->date)) }}</span>
+                        {{ Carbon\Carbon::parse($completion->date)->translatedFormat('l, d M Y') }}</span>
                 </div>
                 <div class="d-flex w-100 align-items-center mb-4">
-                    <span class="text-dark-75 mr-2 w-25">Justification</span>
-                    <p class="text-muted font-weight-bold w-75">{!!$completion->justification!!}</p>
+                    <span class="text-dark-75 mr-2 w-25">{{ __('labels.justification') }}</span>
+                    <p class="text-muted font-weight-bold w-75" style="white-space: pre-line">
+                        {!!$completion->justification!!}</p>
                 </div>
                 <div class="d-flex w-100 align-items-center mb-4">
-                    <span class="text-dark-75 mr-2 w-25">Description</span>
-                    <p href="#" class="text-muted font-weight-bold w-75">{{ $completion->description }}</p>
+                    <span class="text-dark-75 mr-2 w-25">{{ __('labels.description') }}</span>
+                    <p href="#" class="text-muted font-weight-bold w-75" style="white-space: pre-line">
+                        {{ $completion->description }}</p>
                 </div>
                 <!--end::Data-->
             </div>
             <!--end::Body-->
         </div>
         <!--end:: Card-->
+        @endif
     </div>
     <!--end::Container-->
 </div>

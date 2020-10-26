@@ -17,10 +17,10 @@ class CreateAwardsTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('tender_id');
             $table->foreign('tender_id')->references('id')->on('tenders')->onUpdate('cascade')->onDelete('cascade');
-            $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
-            $table->uuid('contract_method_id');
-            $table->foreign('contract_method_id')->references('id')->on('contract_methods')->onUpdate('cascade')->onDelete('cascade');
+            $table->uuid('status_id')->nullable();
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('set null');
+            $table->uuid('contract_method_id')->nullable();
+            $table->foreign('contract_method_id')->references('id')->on('contract_methods')->onUpdate('cascade')->onDelete('set null');
             $table->string('process_number');
             $table->integer('participants_number');
             $table->double('contract_estimate_cost');
