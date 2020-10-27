@@ -64,11 +64,13 @@ Route::get('tender-offerer', 'TenderOffererController@api');
 Route::get('ammendment/{contract}', 'AmmendmentController@api');
 Route::get('ammendment/{ammendment}/delete', 'AmmendmentController@destroy');
 
+Route::get('disbursment/{disbursment}/delete', 'ExecutionController@disbursment_destroy');
 Route::get('disbursment/{execution}', 'ExecutionController@api');
 Route::get('warranty/{execution}', 'ExecutionController@api_warranty');
 
 Route::get('project-document', 'ProjectController@api');
 Route::get('budget-source', 'BudgetController@api');
+Route::get('budget/{budget}/source', 'BudgetController@sourceApi');
 Route::get('advance-image', 'ProgressController@api');
 Route::get('contact', 'ContactController@api');
 Route::get('contact/{contact}/delete', 'ContactController@destroy');
@@ -82,3 +84,4 @@ Route::get('ammendment/{ammendment}/delete', 'AmmendmentController@destroy');
 Route::get('execution/{execution}/delete', 'ExecutionController@destroy');
 
 Route::get('completion/{completion}/delete', 'CompletionController@destroy');
+Route::get('advance/{advance}/image', 'ProgressController@imageApi');

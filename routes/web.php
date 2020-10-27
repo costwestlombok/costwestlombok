@@ -65,6 +65,9 @@ Route::get('award/{award}/contract/create', 'AwardController@contractCreate')->n
 Route::get('tender/{tender}/award', 'TenderController@award')->name('tender.award.index');
 Route::get('tender/{tender}/award/create', 'TenderController@awardCreate')->name('tender.award.create');
 
+Route::get('tender/{tender}/offerer', 'TenderController@offerer')->name('tender.offerer.index');
+Route::get('tender/{tender}/offerer/create', 'TenderController@offererCreate')->name('tender.offerer.create');
+
 // contract
 Route::get('contract/{contract}/ammendment', 'ContractController@ammendment')->name('contract.ammendment.index');
 Route::get('contract/{contract}/ammendment/create', 'ContractController@ammendmentCreate')->name('contract.ammendment.create');

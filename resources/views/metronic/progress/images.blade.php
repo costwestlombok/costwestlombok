@@ -9,7 +9,7 @@
 <script src="/metronic/assets/js/pages/crud/forms/widgets/form-repeater.js"></script>
 <!--end::Page Vendors-->
 <script>
-    var COST_URL = "{{ url('api/advance-image') }}";
+    var COST_URL = "{{ url('api/advance/'.$advance->id.'/image') }}";
     var IMAGE_URL = "{{url('advance-images/'.$advance->id)}}";
 </script>
 <script>
@@ -37,89 +37,68 @@
             }
         };
     }();
-    var KTDatatablesDataSourceAjaxServer = function () {
-
-        var initTable1 = function () {
-            var table = $('#kt_datatable');
-
-            // begin first table
-            table.DataTable({
-                responsive: true,
-                searchDelay: 500,
-                processing: true,
-                serverSide: true,
-                ajax: COST_URL,
-                columns: [
-                    {
-                        data: "id",
-                        className: "right-align",
-                        render: function (data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        },
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'image'
-                    },
-                    {
-                        data: 'path'
-                    },
-                    {
-                        data: 'created_at',
-                        searchable: false
-                    },
-                    {
-                        data: 'id',
-                        searchable: false
-                    },
-                ],
-                order: [[3, "desc"]],
-                columnDefs: [
-                    {
-                        targets: 4,
-                        title: 'Actions',
-                        orderable: false,
-                        render: function (data, type, full, meta) {
-                            return '\
-                            <div class="text-right nowrap">\
-                            <a href="#"  data-id="'+full.id+'" class="button btn btn-sm btn-clean btn-icon" data-id='+  full.id +' title="Delete"><i class="fas fa-trash"></i></a>\
-                            </div>\
-                		';
-                        },
-                    },
-                    {
-                        targets: 3,
-                        render: function (data, type, full, meta) {
-                            return '<div class="text-right nowrap">\
-                                <code>' + data + '</code>\
-                            </div>';
-                        },
-                    },
-                    {
-                        targets: 0,
-                        className: 'text-center'
-                    },
-                ],
-                // "language": {
-                //     "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json"
-                // },
-            });
-        };
-
-        return {
-
-            //main function to initiate the module
-            init: function () {
-                initTable1();
-            },
-
-        };
-
-    }();
 
     jQuery(document).ready(function () {
-        KTDatatablesDataSourceAjaxServer.init();
+        $('#kt_datatable').DataTable({
+            responsive: true,
+            searchDelay: 500,
+            processing: true,
+            serverSide: true,
+            ajax: COST_URL,
+            columns: [
+                {
+                    data: "id",
+                    className: "right-align",
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    },
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'image'
+                },
+                {
+                    data: 'path'
+                },
+                {
+                    data: 'created_at',
+                    searchable: false
+                },
+                {
+                    data: 'id',
+                    searchable: false
+                },
+            ],
+            order: [[3, "desc"]],
+            columnDefs: [
+                {
+                    targets: 4,
+                    title: '{{ __("labels.action") }}',
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '\
+                        <div class="text-right nowrap">\
+                        <a href="#"  data-id="'+full.id+'" class="button btn btn-sm btn-clean btn-icon" data-id='+  full.id +' title="Delete"><i class="fas fa-trash"></i></a>\
+                        </div>\
+                    ';
+                    },
+                },
+                {
+                    targets: 3,
+                    render: function (data, type, full, meta) {
+                        return '<div class="text-right nowrap">\
+                            <code>' + data + '</code>\
+                        </div>';
+                    },
+                },
+                {
+                    targets: 0,
+                    className: 'text-center'
+                },
+            ],
+        });
+        
         KTDropzoneDemo.init();
 
         $(document).on('click', '.button', function (e) {
@@ -150,72 +129,87 @@
 </script>
 @endsection
 @section('content')
-<!--begin::Info-->
-<div class="d-flex align-items-center flex-wrap mr-1">
-    <!--begin::Page Heading-->
-    <div class="d-flex align-items-baseline flex-wrap mr-5">
-        <!--begin::Page Title-->
-        <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">Offerer</h2>
-        <!--end::Page Title-->
-        <!--begin::Breadcrumb-->
-        <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
-            <li class="breadcrumb-item">
-                <a href="{{ url('/dashboard') }}" class="text-muted">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="{{ url('/project') }}" class="text-muted">Project</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="" class="text-muted">Advance Images</a>
-            </li>
-        </ul>
-        <!--end::Breadcrumb-->
-    </div>
-    <!--end::Page Heading-->
-</div>
-<br>
-<!--end::Info-->
-
-<!--begin::Card-->
-<div class="card card-custom">
-    <div class="card-header">
-        <div class="card-title">
-            <h3 class="card-label">Upload Images</h3>
+{{-- Project Sub Header --}}
+<div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
+    <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Details-->
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <!--begin::Title-->
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                {{ __('labels.progress') }} </h5>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0 mr-5">
+                <li class="breadcrumb-item">
+                    <a href="{{ url('dashboard') }}" class="text-muted">{{ __('labels.dashboard') }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('project.show', $advance->project) }}"
+                        class="text-muted">{{ __('labels.project') }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ url('project-progress/'. $advance->project->id) }}"
+                        class="text-muted">{{ __('labels.progress') }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    {{ __('labels.image') }}
+                </li>
+            </ul>
+            <!--end::Breadcrumb-->
         </div>
+        <!--end::Details-->
     </div>
-    <div class="card-body">
-        <div class="dropzone dropzone-default dropzone-primary dz-clickable" id="kt_dropzone_2">
-            <div class="dropzone-msg dz-message needsclick">
-                <h3 class="dropzone-msg-title">Drop files here or click to upload.</h3>
-                <span class="dropzone-msg-desc">Upload up to 10 files</span>
+</div>
+{{-- End Project Sub Header --}}
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">{{ __('labels.upload_images') }}</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="dropzone dropzone-default dropzone-primary dz-clickable" id="kt_dropzone_2">
+                    <div class="dropzone-msg dz-message needsclick">
+                        <h3 class="dropzone-msg-title">{{ __('labels.drop_file_text') }}</h3>
+                        <span class="dropzone-msg-desc">{{ __('labels.drop_file_text_sub') }}</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<br>
-<!--end::Card-->
-<!--begin::Card-->
-<div class="card card-custom">
-    <div class="card-header">
-        <div class="card-title">
-            <h3 class="card-label">Advance Image List</h3>
+        <br>
+        <!--end::Card-->
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">{{ __('labels.list_images') }}</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <!--begin: Datatable-->
+                <table class="table" id="kt_datatable" style="margin-top: 13px !important">
+                    <thead>
+                        <tr>
+                            <th class="text-center column-fit">#</th>
+                            <th>{{ __('labels.image_name') }}</th>
+                            <th>{{ __('labels.path') }}</th>
+                            <th class="column-fit">{{ __('labels.created_at') }}</th>
+                            <th class="text-right column-fit">{{ __('labels.action') }}</th>
+                        </tr>
+                    </thead>
+                </table>
+                <!--end: Datatable-->
+            </div>
         </div>
+        <!--end::Card-->
     </div>
-    <div class="card-body">
-        <!--begin: Datatable-->
-        <table class="table" id="kt_datatable" style="margin-top: 13px !important">
-            <thead>
-                <tr>
-                    <th class="text-center column-fit">#</th>
-                    <th>Image Name</th>
-                    <th>Path</th>
-                    <th class="column-fit">Created at</th>
-                    <th class="text-right column-fit">Actions</th>
-                </tr>
-            </thead>
-        </table>
-        <!--end: Datatable-->
-    </div>
+    <!--end::Container-->
 </div>
-<!--end::Card-->
 @endsection

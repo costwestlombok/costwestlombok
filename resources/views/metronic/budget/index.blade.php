@@ -9,11 +9,12 @@
             var id = $(this).data('id');
             var link = $(this).attr('href');
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won\'t be able to revert this!",
+                title: "{{ __('labels.delete_sub') }}",
+                text: "{!! __('labels.delete_text') !!}",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('labels.delete_confirm') }}",
+                cancelButtonText: "{{ __('labels.cancel') }}"
             }).then(function(result) {
                 if (result.value) {
                     window.location.href = "/project-budget/"+ id +"/delete"; 
@@ -31,7 +32,7 @@
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Title-->
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                Budget </h5>
+                {{ __('labels.budget') }} </h5>
             <!--end::Title-->
             <!--begin::Separator-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
@@ -39,15 +40,15 @@
             <!--begin::Breadcrumb-->
             <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0 mr-5">
                 <li class="breadcrumb-item">
-                    <a href="{{ url('dashboard') }}" class="text-muted">Dashboard</a>
+                    <a href="{{ url('dashboard') }}" class="text-muted">{{ __('labels.dashboard') }}</a>
                 </li>
                 @if(isset($project))
                 <li class="breadcrumb-item">
-                    <a href="{{ route('project.show', $project) }}" class="text-muted">Project</a>
+                    <a href="{{ route('project.show', $project) }}" class="text-muted">{{ __('labels.project') }}</a>
                 </li>
                 @endif
                 <li class="breadcrumb-item">
-                    Budget
+                    {{ __('labels.budget') }}
                 </li>
             </ul>
             <!--end::Breadcrumb-->
@@ -72,10 +73,10 @@
                         </g>
                     </svg>
                     <!--end::Svg Icon-->
-                </span>Add Budget
+                </span>{{ __('labels.create') }} {{ __('labels.budget') }}
             </a>
             @else
-            <a href="javascript:history.back()" class="btn btn-default font-weight-bold">Back </a>
+            <a href="javascript:history.back()" class="btn btn-default font-weight-bold">{{ __('labels.back') }} </a>
             @endif
             <!--end::Button-->
         </div>
@@ -131,7 +132,7 @@
                                                     </g>
                                                 </svg>
                                             </span>
-                                            <span class="navi-text ml-2"> Edit</span>
+                                            <span class="navi-text ml-2"> {{ __('labels.edit') }}</span>
                                         </a>
                                     </li>
                                     <li class="navi-item">
@@ -151,7 +152,7 @@
                                                     </g>
                                                 </svg>
                                             </span>
-                                            <span class="navi-text ml-2"> Delete</span>
+                                            <span class="navi-text ml-2"> {{ __('labels.delete') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -169,14 +170,14 @@
 
                 <div class="d-flex align-items-center flex-wrap mt-14">
                     <div class="mr-12 d-flex flex-column mb-7">
-                        <span class="d-block font-weight-bold mb-4">Start Date</span>
+                        <span class="d-block font-weight-bold mb-4">{{ __('labels.start_date') }}</span>
                         <span
-                            class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($budget->start_date)->format('D, d M Y') }}</span>
+                            class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($budget->start_date)->translatedFormat('l, d M Y') }}</span>
                     </div>
                     <div class="mr-12 d-flex flex-column mb-7">
-                        <span class="d-block font-weight-bold mb-4">Due Date</span>
+                        <span class="d-block font-weight-bold mb-4">{{ __('labels.due_date') }}</span>
                         <span
-                            class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($budget->end_date)->format('D, d M Y') }}</span>
+                            class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($budget->end_date)->translatedFormat('l, d M Y') }}</span>
                     </div>
                 </div>
 
@@ -187,7 +188,7 @@
                             <i class="flaticon-price-tag icon-2x"></i>
                         </span>
                         <div class="d-flex flex-column text-dark-75">
-                            <span class="font-weight-bolder font-size-sm">Budget</span>
+                            <span class="font-weight-bolder font-size-sm">{{ __('labels.budget') }}</span>
                             <span class="font-weight-bolder font-size-h5">
                                 <span class="text-dark-50 font-weight-bold">Rp
                                 </span>{{ number_format($budget->amount) }}</span>
@@ -200,10 +201,10 @@
                             <i class="flaticon2-calendar-9 icon-2x"></i>
                         </span>
                         <div class="d-flex flex-column text-dark-75">
-                            <span class="font-weight-bolder font-size-sm">Duration</span>
+                            <span class="font-weight-bolder font-size-sm">{{ __('labels.duration') }}</span>
                             <span class="font-weight-bolder font-size-h5">
                                 {{ number_format($budget->duration) }}
-                                <span class="text-dark-50 font-weight-bold"> days</span>
+                                <span class="text-dark-50 font-weight-bold"> {{ __('labels.days') }}</span>
                             </span>
                         </div>
                     </div>
@@ -216,11 +217,12 @@
                         <div class="d-flex flex-column flex-lg-fill">
                             <a href="{{ url('budget-source/'.$budget->id) }}"
                                 class="text-dark-75 font-weight-bolder font-size-sm">{{ $budget->source->count() }}
-                                Sources
+                                {{ __('labels.source') }}
                             </a>
                             @if(Auth::check())
                             <a href="{{ url('budget-source/'.$budget->id) }}"
-                                class="text-primary font-weight-bolder">Add New Source</a>
+                                class="text-primary font-weight-bolder">{{ __('labels.create') }}
+                                {{ __('labels.source') }}</a>
                             @endif
                         </div>
                     </div>
@@ -231,36 +233,7 @@
         </div>
         <!--end:: Card-->
         @endforeach
-        <!--begin::Pagination-->
-        <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <div class="d-flex flex-wrap mr-3">
-                @if($budgets->lastPage() > 1)
-                <a href="{{ $budgets->url(1) }}" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                    <i class="ki ki-bold-double-arrow-back icon-xs"></i>
-                </a>
-                <a href="{{ $budgets->url(1) }}"
-                    class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($budgets->currentPage() == 1) ? ' disabled' : '' }}">
-                    <i class="ki ki-bold-arrow-back icon-xs"></i>
-                </a>
-                @for ($i = 1; $budgets->lastPage() >= $i; $i++)
-                <a href="{{ $budgets->url($i) }}"
-                    class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($budgets->currentPage() == $i) ? ' active' : '' }}">{{ $i }}</a>
-                @endfor
-                <a href="{{ $budgets->url($budgets->currentPage()+1) }}"
-                    class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($budgets->currentPage() == $budgets->lastPage()) ? ' disabled' : '' }}">
-                    <i class="ki ki-bold-arrow-next icon-xs"></i>
-                </a>
-                <a href="{{ $budgets->url($budgets->lastPage()) }}"
-                    class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                    <i class="ki ki-bold-double-arrow-next icon-xs"></i>
-                </a>
-                @endif
-            </div>
-            <div class="d-flex align-items-center">
-                <span class="text-muted">Displaying {{ $budgets->count() }} of {{ $budgets->total() }} records</span>
-            </div>
-        </div>
-        <!--end::Pagination-->
+        @include('metronic.shared.pagination', ['data' => $budgets])
     </div>
     <!--end::Container-->
 </div>

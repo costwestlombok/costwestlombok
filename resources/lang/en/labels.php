@@ -247,4 +247,43 @@ return  [
 	'price' => 'Price',
 	'program' => 'Program',
 	'contract_state' => 'Contract State',
+	'contract_execution' => 'Contract Execution',
+	'contact_text' => 'Contact Detail of The Service Provider',
+
+	// execution > disbursment
+	'disbursment' => 'Disbursment',
+	'warranty' => 'Warranty',
+	'order' => 'Order',
+	'date' => 'Date',
+
+	// tender > offerer
+	'offerer_list' => 'Offerer List',
+
+	// project > file
+	'document_name' => 'Document Name',
+	'document_list' => 'Document List',
+	'author' => 'Author',
+
+	// budget > source
+	'source_name' => 'Source Name',
+	'source_list' => 'Source List',
+
+	// project > progress
+	'progress_date' => 'Progress Date',
+	'theme_issues_description' => 'Theme/Issues Description',
+	'problem_description' => 'Problem Description',
+	'real_finance' => 'Real Finance',
+	'image' => 'Gambar',
+	'scheduled_finance' => 'Scheduled Finance',
+	'physical_program' => 'Physical Program',
+	'guaranties_file' => 'Guaranties File',
+	'advance_file' => 'Advance File',
+
+	// progress (advance) > image
+	'upload_images'=> 'Upload Images',
+	'drop_file_text' => 'Drop files here or click to upload',
+	'drop_file_text_sub' => 'Upload up to 10 images',
+	'list_images'=> 'List Images',
+	'image_name'=> 'Image Name',
+	'path'=> 'Path',
 ];

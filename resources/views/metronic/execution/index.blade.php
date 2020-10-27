@@ -5,129 +5,80 @@
     var COST_URL = "{{ url('api/disbursment/'.$execution->id) }}";
 </script>
 <script>
-    "use strict";
-    var KTDatatablesDataSourceAjaxServer = function () {
-
-        var initTable1 = function () {
-            var table = $('#kt_datatable');
-
-            // begin first table
-            table.DataTable({
-                responsive: true,
-                searchDelay: 500,
-                processing: true,
-                serverSide: true,
-                ajax: COST_URL,
-                columns: [
-                    {
-                        data: "order",
-                    },
-                    {
-                        data: 'date'
-                    },
-                    {
-                        data: 'amount'
-                    },
-                    {
-                        data: 'description'
-                    },
-                    {
-                        data: 'created_at',
-                        searchable: false
-                    },
-                    {
-                        data: 'id',
-                        searchable: false
-                    },
-                ],
-                order: [[4, "desc"]],
-                columnDefs: [
-                    {
-                        targets: 5,
-                        title: 'Actions',
-                        orderable: false,
-                        render: function (data, type, full, meta) {
-                            @if(Auth::check())
-                            return '\
-                                <div class="text-right nowrap">\
-                                <a href="../disbursment/'+ full.id + '/edit" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
-                                    <i class="fas fa-pen"></i>\
-                                </a>\
-                                <a href="#"  data-id="'+ full.id + '" class="button btn btn-sm btn-clean btn-icon" data-id=' + full.id + ' title="Delete"><i class="fas fa-trash"></i></a>\
-                                </div>\
-                            ';
-                            @else
-                            return '';
-                            @endif
-                        },
-                    },
-                    {
-                        targets: 4,
-                        render: function (data, type, full, meta) {
-                            return '<div class="text-right nowrap">\
-                                <code>' + data + '</code>\
-                            </div>';
-                        },
-                    },
-                    {
-                        targets: 0,
-                        className: 'text-center'
-                    },
-                ],
-                // "language": {
-                //     "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json"
-                // },
-            });
-        };
-
-        return {
-
-            //main function to initiate the module
-            init: function () {
-                initTable1();
-            },
-
-        };
-
-    }();
-
     jQuery(document).ready(function () {
-        KTDatatablesDataSourceAjaxServer.init();
-
-        $(document).on('click', '.button', function (e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            var link = $(this).attr('href');
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won\'t be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, delete it!"
-            }).then(function (result) {
-                if (result.value) {
-                    $.ajax({
-                        type: "GET",
-                        url: "../disbursment/" + id + "/delete",
-                        success: function (data) {
-                            toastr.success("Data deleted successfully!");
-                            var table = $('#kt_datatable').DataTable();
-                            table.ajax.reload(null, false);
-                        }
-                    });
-                }
-            });
+        $('#kt_datatable').DataTable({
+            responsive: true,
+            searchDelay: 500,
+            processing: true,
+            serverSide: true,
+            ajax: COST_URL,
+            columns: [
+                {
+                    data: "order",
+                },
+                {
+                    data: 'date'
+                },
+                {
+                    data: 'amount'
+                },
+                {
+                    data: 'description'
+                },
+                {
+                    data: 'created_at',
+                    searchable: false
+                },
+                {
+                    data: 'id',
+                    searchable: false
+                },
+            ],
+            order: [[4, "desc"]],
+            columnDefs: [
+                {
+                    targets: 5,
+                    title: "{{ __('labels.action') }}",
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '@if(Auth::check())\
+                        <div class="text-right nowrap">\
+                            <a href="/disbursment/' + full.id + '/edit" class="btn btn-xs btn-clean btn-icon">\
+                                <i class="fas fa-pen"></i>\
+                            </a>\
+                            <a href=\'javascript:deleteFn("disbursment", "' + full.id + '");\' class="btn btn-xs btn-clean btn-icon">\
+                                <i class="fas fa-trash"></i>\
+                            </a>\
+                        </div>\
+                        @endif';
+                    },
+                },
+                {
+                    targets: 4,
+                    render: function (data, type, full, meta) {
+                        return '<div class="text-right nowrap">\
+                            <code>' + data + '</code>\
+                        </div>';
+                    },
+                },
+                {
+                    targets: 0,
+                    className: 'text-center'
+                },
+            ],
         });
+
         $(document).on('click', '.button-ex', function (e) {
             e.preventDefault();
             var id = $(this).data('id');
             var link = $(this).attr('href');
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won\'t be able to revert this and it\'s child!",
+                title: "{{ __('labels.delete_sub') }}",
+                text: "{!! __('labels.delete_text') !!}",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('labels.delete_confirm') }}",
+                cancelButtonText: "{{ __('labels.cancel') }}"
             }).then(function (result) {
                 if (result.value) {
                     window.location.href = "/api/execution/"+ id +"/delete";
@@ -145,7 +96,7 @@
         <!--begin::Details-->
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Contract Execution</h5>
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">{{ __('labels.contract_execution') }}</h5>
             <!--end::Title-->
             <!--begin::Separator-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
@@ -153,25 +104,26 @@
             <!--begin::Breadcrumb-->
             <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
                 <li class="breadcrumb-item">
-                    <a href="{{ url('dashboard') }}" class="text-muted">Dashboard</a>
+                    <a href="{{ url('dashboard') }}" class="text-muted">{{ __('labels.dashboard') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('project.show', $execution->engage->award->tender->project) }}"
-                        class="text-muted">Project</a>
+                    <a href="{{ route('project.show', $contract->award->tender->project) }}"
+                        class="text-muted">{{ __('labels.project') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('project.tender.index', $execution->engage->award->tender->project) }}"
-                        class="text-muted">Tender</a>
+                    <a href="{{ route('project.tender.index', $contract->award->tender->project) }}"
+                        class="text-muted">{{ __('labels.tender') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('tender.award.index', $execution->engage->award->tender) }}"
-                        class="text-muted">Award</a>
+                    <a href="{{ route('tender.award.index', $contract->award->tender) }}"
+                        class="text-muted">{{ __('labels.award') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('contract.show', $execution->engage) }}" class="text-muted">Contract</a>
+                    <a href="{{ route('award.contract.index', $contract->award) }}"
+                        class="text-muted">{{ __('labels.contract') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    Contract executions
+                    {{ __('labels.contract_execution') }}
                 </li>
             </ul>
             <!--end::Breadcrumb-->
@@ -188,7 +140,7 @@
         <div class="card card-custom">
             <div class="card-header">
                 <div class="card-title">
-                    <h3 class="card-label">Execution</h3>
+                    <h3 class="card-label">{{ __('labels.execution') }}</h3>
                 </div>
                 @if(Auth::check())
                 <div class="card-toolbar">
@@ -217,11 +169,11 @@
                                                 </g>
                                             </svg>
                                         </span>
-                                        <span class="navi-text ml-2"> Edit</span>
+                                        <span class="navi-text ml-2"> {{ __('labels.edit') }}</span>
                                     </a>
                                 </li>
                                 <li class="navi-item">
-                                    <a href="#" data-id="{{ $execution->id }}" class="button-ex navi-link">
+                                    <a href="javascript:;" data-id="{{ $execution->id }}" class="button-ex navi-link">
                                         <span class="svg-icon menu-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -237,7 +189,7 @@
                                                 </g>
                                             </svg>
                                         </span>
-                                        <span class="navi-text ml-2"> Delete</span>
+                                        <span class="navi-text ml-2"> {{ __('labels.delete') }}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -250,7 +202,7 @@
             <div class="card-body">
                 <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
                     <div class="d-flex flex-column align-items-cente py-2 w-25">
-                        <p class="text-dark-75 mb-1">Start Date </p>
+                        <p class="text-dark-75 mb-1">{{ __('labels.start_date') }} </p>
                     </div>
                     <div class="py-2 w-75">
                         <span class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">
@@ -259,7 +211,7 @@
                 </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
                     <div class="d-flex flex-column align-items-cente py-2 w-25">
-                        <p class="text-dark-75 mb-1">Program </p>
+                        <p class="text-dark-75 mb-1">{{ __('labels.program') }} </p>
                     </div>
                     <div class="py-2 w-75">
                         <span class="mb-10 mt-5 font-weight-bold">{{ $execution->program }}</span>
@@ -267,7 +219,7 @@
                 </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
                     <div class="d-flex flex-column align-items-cente py-2 w-25">
-                        <p class="text-dark-75 mb-1">Contract State </p>
+                        <p class="text-dark-75 mb-1">{{ __('labels.contract_state') }} </p>
                     </div>
                     <div class="py-2 w-75">
                         <span class="mb-10 mt-5 font-weight-bold">{{ $execution->contract_state }}</span>
@@ -275,26 +227,26 @@
                 </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
                     <div class="d-flex flex-column align-items-cente py-2 w-25">
-                        <p class="text-dark-75 mb-1">Warranty </p>
+                        <p class="text-dark-75 mb-1">{{ __('labels.warranty') }} </p>
                     </div>
                     <div class="py-2 w-75">
                         <span class="mb-10 mt-5 font-weight-bold">
                             <div class="d-flex flex-column flex-lg-fill">
                                 <span class="text-dark-75 font-weight-bolder font-size-sm">
-                                    {{ $execution->warranty->count() }} Warranty,
+                                    {{ $execution->warranty->count() }} {{ __('labels.warranty') }},
                                     <a href="{{ url('warranty/'.$execution->id) }}"
                                         class="text-primary font-weight-bolder">
-                                        View
+                                        {{ __('labels.view') }}
                                     </a>
                                 </span>
                             </div>
                         </span>
                     </div>
                 </div>
-                <p class="mt-5 font-size-lg font-weight-bold">Contact Detail of the service provider</p>
+                <p class="mt-5 font-size-lg font-weight-bold">{{ __('labels.contact_text') }}</p>
                 <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
                     <div class="d-flex flex-column align-items-cente py-2 w-25">
-                        <p class="text-dark-75 mb-1">Name</p>
+                        <p class="text-dark-75 mb-1">{{ __('labels.name') }}</p>
                     </div>
                     <div class="py-2 w-75">
                         <span
@@ -303,7 +255,7 @@
                 </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
                     <div class="d-flex flex-column align-items-cente py-2 w-25">
-                        <p class="text-dark-75 mb-1">Phone Number</p>
+                        <p class="text-dark-75 mb-1">{{ __('labels.phone') }}</p>
                     </div>
                     <div class="py-2 w-75">
                         <span
@@ -312,7 +264,7 @@
                 </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
                     <div class="d-flex flex-column align-items-cente py-2 w-25">
-                        <p class="text-dark-75 mb-1">Website</p>
+                        <p class="text-dark-75 mb-1">{{ __('labels.website') }}</p>
                     </div>
                     <div class="py-2 w-75">
                         <span
@@ -321,7 +273,7 @@
                 </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
                     <div class="d-flex flex-column align-items-cente py-2 w-25">
-                        <p class="text-dark-75 mb-1">Address</p>
+                        <p class="text-dark-75 mb-1">{{ __('labels.address') }}</p>
                     </div>
                     <div class="py-2 w-75">
                         <span
@@ -331,7 +283,7 @@
                 <hr>
                 <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
                     <div class="d-flex flex-column align-items-cente py-2 w-25 mb-5">
-                        <p class="text-dark-75 font-size-h4 mb-1">Disbursments</p>
+                        <p class="text-dark-75 font-size-h4 mb-1">{{ __('labels.disbursment') }}</p>
                     </div>
                     @if(Auth::check())
                     <!--begin::Button-->
@@ -350,7 +302,7 @@
                                 </g>
                             </svg>
                             <!--end::Svg Icon-->
-                        </span>New Record</a>
+                        </span>{{ __('labels.create') }} {{ __('labels.disbursment') }}</a>
                     <!--end::Button-->
                     @endif
                 </div>
@@ -358,12 +310,12 @@
                 <table class="table" id="kt_datatable" style="margin-top: 13px !important">
                     <thead>
                         <tr>
-                            <th class="text-center column-fit">Order</th>
-                            <th>Disburmsent Date </th>
-                            <th>Amount</th>
-                            <th>Description</th>
-                            <th class="column-fit">Created at</th>
-                            <th class="text-right column-fit">Actions</th>
+                            <th class="text-center column-fit">{{ __('labels.order') }}</th>
+                            <th>{{ __('labels.date') }} </th>
+                            <th>{{ __('labels.amount') }}</th>
+                            <th>{{ __('labels.description') }}</th>
+                            <th class="column-fit">{{ __('labels.created_at') }}</th>
+                            <th class="text-right column-fit">{{ __('labels.action') }}</th>
                         </tr>
                     </thead>
                 </table>

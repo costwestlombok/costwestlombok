@@ -12,9 +12,9 @@ class Disbursment extends Model
     protected $guarded = [];
     public $incrementing = false;
 
-    public function excecutions()
+    public function execution()
     {
-        return $this->belongsTo('App\Excecution', 'excecutions_id', 'id');
+        return $this->belongsTo('App\Execution', 'executions_id', 'id');
     }
 
     public function status()

@@ -17,8 +17,8 @@ class CreateAdvancesTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('project_id');
             $table->foreign('project_id')->references('id')->on('projects')->onUpdate('cascade')->onDelete('cascade');
-            $table->uuid('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
+            $table->uuid('status_id')->nullable();
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('set null');
             $table->float('programmed_percent')->nullable();
             $table->float('real_percent')->nullable();
             $table->decimal('scheduled_financing')->nullable();

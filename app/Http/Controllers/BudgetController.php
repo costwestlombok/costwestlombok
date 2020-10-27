@@ -114,4 +114,19 @@ class BudgetController extends Controller
             })
             ->make(true);
     }
+
+    public function sourceApi(Budget $budget)
+    {
+        return DataTables::of(ProjectSource::where('budget_id', $budget->id))
+            ->editColumn('created_at', function ($source) {
+                return date('Y-m-d H:i:s', strtotime($source->created_at));
+            })
+            ->addColumn('source_name', function ($source) {
+                return $source->source->source_name;
+            })
+            ->editColumn('amount', function ($source) {
+                return number_format($source->amount);
+            })
+            ->make(true);
+    }
 }

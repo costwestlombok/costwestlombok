@@ -13,7 +13,7 @@
         var demos = function () {
             // basic
             $('#offerer').select2({
-                placeholder: "Choose an offerer"
+                placeholder: "{{ __('labels.choose_offerer') }}"
             });
         }
         return {
@@ -23,90 +23,67 @@
         };
     }();
 
-    "use strict";
-    var KTDatatablesDataSourceAjaxServer = function () {
-
-        var initTable1 = function () {
-            var table = $('#kt_datatable');
-
-            // begin first table
-            table.DataTable({
-                responsive: true,
-                searchDelay: 500,
-                processing: true,
-                serverSide: true,
-                ajax: COST_URL,
-                columns: [
-                    {
-                        data: "id",
-                        className: "right-align",
-                        render: function (data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        },
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'offerer'
-                    },
-                    {
-                        data: 'contract'
-                    },
-                    {
-                        data: 'created_at',
-                        searchable: false
-                    },
-                    {
-                        data: 'id',
-                        searchable: false
-                    },
-                ],
-                order: [[3, "desc"]],
-                columnDefs: [
-                    {
-                        targets: 4,
-                        title: 'Actions',
-                        orderable: false,
-                        render: function (data, type, full, meta) {
-                            return '\
-                            <div class="text-right nowrap">\
-                            <a href="#"  data-id="'+ full.id + '" class="button btn btn-sm btn-clean btn-icon" data-id=' + full.id + ' title="Delete"><i class="fas fa-trash"></i></a>\
-                            </div>\
-                		';
-                        },
-                    },
-                    {
-                        targets: 3,
-                        render: function (data, type, full, meta) {
-                            return '<div class="text-right nowrap">\
-                                <code>' + data + '</code>\
-                            </div>';
-                        },
-                    },
-                    {
-                        targets: 0,
-                        className: 'text-center'
-                    },
-                ],
-                // "language": {
-                //     "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json"
-                // },
-            });
-        };
-
-        return {
-
-            //main function to initiate the module
-            init: function () {
-                initTable1();
-            },
-
-        };
-
-    }();
-
     jQuery(document).ready(function () {
-        KTDatatablesDataSourceAjaxServer.init();
+        $('#kt_datatable').DataTable({
+            responsive: true,
+            searchDelay: 500,
+            processing: true,
+            serverSide: true,
+            ajax: COST_URL,
+            columns: [
+                {
+                    data: "id",
+                    className: "right-align",
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    },
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'offerer'
+                },
+                {
+                    data: 'contract'
+                },
+                {
+                    data: 'created_at',
+                    searchable: false
+                },
+                {
+                    data: 'id',
+                    searchable: false
+                },
+            ],
+            order: [[3, "desc"]],
+            columnDefs: [
+                {
+                    targets: 4,
+                    title: '{{ __("labels.action") }}',
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '\
+                        <div class="text-right nowrap">\
+                        <a href="#" data-id="'+ full.id + '" class="button btn btn-xs btn-clean btn-icon" data-id=' + full.id + ' title="Delete"><i class="fas fa-trash"></i></a>\
+                        </div>\
+                    ';
+                    },
+                },
+                {
+                    targets: 3,
+                    render: function (data, type, full, meta) {
+                        return '<div class="text-right nowrap">\
+                            <code>' + data + '</code>\
+                        </div>';
+                    },
+                },
+                {
+                    targets: 0,
+                    className: 'text-center'
+                },
+            ],
+        });
+
         KTSelect2.init();
 
         $(document).on('click', '.button', function (e) {
@@ -114,18 +91,19 @@
             var id = $(this).data('id');
             var link = $(this).attr('href');
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won\'t be able to revert this!",
+                title: "{{ __('labels.delete_sub') }}",
+                text: "{!! __('labels.delete_text') !!}",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('labels.delete_confirm') }}",
+                cancelButtonText: "{{ __('labels.cancel') }}"
             }).then(function (result) {
                 if (result.value) {
                     $.ajax({
                         type: "GET",
                         url: "/tender-offerer/" + id + "/delete",
                         success: function (data) {
-                            toastr.success("Data deleted successfully!");
+                            toastr.success("{{ __('labels.delete_success') }}");
                             var table = $('#kt_datatable').DataTable();
                             table.ajax.reload(null, false);
                         }
@@ -144,7 +122,7 @@
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Title-->
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                Offerer </h5>
+                {{ __('labels.offerer') }} </h5>
             <!--end::Title-->
             <!--begin::Separator-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
@@ -152,18 +130,20 @@
             <!--begin::Breadcrumb-->
             <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0 mr-5">
                 <li class="breadcrumb-item">
-                    <a href="{{ url('dashboard') }}" class="text-muted">Dashboard</a>
+                    <a href="{{ url('dashboard') }}" class="text-muted">{{ __('labels.dashboard') }}</a>
                 </li>
                 @if(isset($tender))
                 <li class="breadcrumb-item">
-                    <a href="{{ route('project.show', $tender->project) }}" class="text-muted">Project</a>
+                    <a href="{{ route('project.show', $tender->project) }}"
+                        class="text-muted">{{ __('labels.project') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('project.tender.index', $tender->project) }}" class="text-muted">Tender</a>
+                    <a href="{{ route('project.tender.index', $tender->project) }}"
+                        class="text-muted">{{ __('labels.tender') }}</a>
                 </li>
                 @endif
                 <li class="breadcrumb-item">
-                    Offerer
+                    {{ __('labels.offerer') }}
                 </li>
             </ul>
             <!--end::Breadcrumb-->
@@ -187,7 +167,7 @@
                         </g>
                     </svg>
                     <!--end::Svg Icon-->
-                </span>Add Offerer</a>
+                </span>{{ __('labels.create') }} {{ __('labels.offerer') }}</a>
             <!--end::Button-->
         </div>
         <!--end::Toolbar-->
@@ -203,7 +183,7 @@
         <div class="card card-custom">
             <div class="card-header">
                 <div class="card-title">
-                    <h3 class="card-label">Choose Offerer</h3>
+                    <h3 class="card-label">{{ __('labels.choose_offerer') }}</h3>
                 </div>
             </div>
             <form action="{{ url('/tender-offerer') }}" method="POST">
@@ -213,10 +193,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="name">Offerer Name</label>
+                                <label for="name">{{ __('labels.name') }}</label>
                                 <select name="offerer_id" id="offerer" class="form-control" required
                                     style="width: 100%">
-                                    <option value="">Choose Offerer</option>
+                                    <option value="">{{ __('labels.choose_offerer') }}</option>
                                     @foreach ($offerers as $offerer)
                                     <option value="{{$offerer->id}}">{{$offerer->offerer_name}}</option>
                                     @endforeach
@@ -229,7 +209,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="float-right">
-                                <button type="submit" class="btn font-weight-bold btn-success mr-2">Submit</button>
+                                <button type="submit"
+                                    class="btn font-weight-bold btn-success mr-2">{{ __('labels.save') }}</button>
                             </div>
                         </div>
                     </div>
@@ -242,7 +223,7 @@
         <div class="card card-custom">
             <div class="card-header">
                 <div class="card-title">
-                    <h3 class="card-label">Offerer List</h3>
+                    <h3 class="card-label">{{ __('labels.offerer_list') }}</h3>
                 </div>
             </div>
             <div class="card-body">
@@ -251,10 +232,10 @@
                     <thead>
                         <tr>
                             <th class="text-center column-fit">#</th>
-                            <th>Offerer Name</th>
-                            <th>Contract</th>
-                            <th class="column-fit">Created at</th>
-                            <th class="text-right column-fit">Actions</th>
+                            <th>{{ __('labels.name') }}</th>
+                            <th>{{ __('labels.contract') }}</th>
+                            <th class="column-fit">{{ __('labels.created_at') }}</th>
+                            <th class="text-right column-fit">{{ __('labels.action') }}</th>
                         </tr>
                     </thead>
                 </table>

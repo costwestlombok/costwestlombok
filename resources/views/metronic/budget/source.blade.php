@@ -5,7 +5,7 @@
 <script src="/metronic/assets/js/pages/crud/forms/widgets/form-repeater.js"></script>
 <!--end::Page Vendors-->
 <script>
-    var COST_URL = "{{ url('api/budget-source') }}";
+    var COST_URL = "{{ url('api/budget/' . $budget->id . '/source') }}";
 </script>
 <script>
     var KTTypeahead = function () {
@@ -35,90 +35,66 @@
         };
     }();
 
-    "use strict";
-    var KTDatatablesDataSourceAjaxServer = function () {
-
-        var initTable1 = function () {
-            var table = $('#kt_datatable');
-
-            // begin first table
-            table.DataTable({
-                responsive: true,
-                searchDelay: 500,
-                processing: true,
-                serverSide: true,
-                ajax: COST_URL,
-                columns: [
-                    {
-                        data: "id",
-                        className: "right-align",
-                        render: function (data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        },
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'source_name'
-                    },
-                    {
-                        data: 'amount'
-                    },
-                    {
-                        data: 'created_at',
-                        searchable: false
-                    },
-                    {
-                        data: 'id',
-                        searchable: false
-                    },
-                ],
-                order: [[3, "desc"]],
-                columnDefs: [
-                    {
-                        targets: 4,
-                        title: 'Actions',
-                        orderable: false,
-                        render: function (data, type, full, meta) {
-                            return '\
-                            <div class="text-right nowrap">\
-                            <a href="#"  data-id="'+full.id+'" class="button btn btn-sm btn-clean btn-icon" data-id='+  full.id +' title="Delete"><i class="fas fa-trash"></i></a>\
-                            </div>\
-                		';
-                        },
-                    },
-                    {
-                        targets: 3,
-                        render: function (data, type, full, meta) {
-                            return '<div class="text-right nowrap">\
-                                <code>' + data + '</code>\
-                            </div>';
-                        },
-                    },
-                    {
-                        targets: 0,
-                        className: 'text-center'
-                    },
-                ],
-                // "language": {
-                //     "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json"
-                // },
-            });
-        };
-
-        return {
-
-            //main function to initiate the module
-            init: function () {
-                initTable1();
-            },
-
-        };
-
-    }();
-
     jQuery(document).ready(function () {
-        KTDatatablesDataSourceAjaxServer.init();
+        $('#kt_datatable').DataTable({
+            responsive: true,
+            searchDelay: 500,
+            processing: true,
+            serverSide: true,
+            ajax: COST_URL,
+            columns: [
+                {
+                    data: "id",
+                    className: "right-align",
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    },
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'source_name'
+                },
+                {
+                    data: 'amount'
+                },
+                {
+                    data: 'created_at',
+                    searchable: false
+                },
+                {
+                    data: 'id',
+                    searchable: false
+                },
+            ],
+            order: [[3, "desc"]],
+            columnDefs: [
+                {
+                    targets: 4,
+                    title: '{{ __("labels.action") }}',
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '\
+                        <div class="text-right nowrap">\
+                        <a href="#"  data-id="'+full.id+'" class="button btn btn-sm btn-clean btn-icon" data-id='+  full.id +' title="Delete"><i class="fas fa-trash"></i></a>\
+                        </div>\
+                    ';
+                    },
+                },
+                {
+                    targets: 3,
+                    render: function (data, type, full, meta) {
+                        return '<div class="text-right nowrap">\
+                            <code>' + data + '</code>\
+                        </div>';
+                    },
+                },
+                {
+                    targets: 0,
+                    className: 'text-center'
+                },
+            ],
+        });
         KTTypeahead.init();
         
         $(document).on('click', '.button', function (e) {
@@ -126,18 +102,19 @@
                 var id = $(this).data('id');
                 var link = $(this).attr('href');
                 Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won\'t be able to revert this!",
+                    title: "{{ __('labels.delete_sub') }}",
+                    text: "{!! __('labels.delete_text') !!}",
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonText: "Yes, delete it!"
+                    confirmButtonText: "{{ __('labels.delete_confirm') }}",
+                    cancelButtonText: "{{ __('labels.cancel') }}"
                 }).then(function(result) {
                     if (result.value) {
                         $.ajax({
                             type: "GET",
                             url: "/budget-source/"+ id +"/delete",
                             success: function (data) {
-                                toastr.success("Data deleted successfully!");
+                                toastr.success("{{ __('labels.delete_success') }}");
                                 var table = $('#kt_datatable').DataTable(); 
                                 table.ajax.reload( null, false );
                             }         
@@ -155,7 +132,7 @@
         <!--begin::Details-->
         <div class="d-flex align-items-center flex-wrap mr-2">
             <!--begin::Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Source</h5>
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">{{ __('labels.source') }}</h5>
             <!--end::Title-->
             <!--begin::Separator-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
@@ -163,16 +140,17 @@
             <!--begin::Breadcrumb-->
             <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0 mr-5">
                 <li class="breadcrumb-item">
-                    <a href="{{ url('dashboard') }}" class="text-muted">Dashboard</a>
+                    <a href="{{ url('dashboard') }}" class="text-muted">{{ __('labels.dashboard') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ url('project') }}" class="text-muted">Project</a>
+                    <a href="{{ url('project') }}" class="text-muted">{{ __('labels.project') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ url('project-budget/'.$budget->project->id) }}" class="text-muted">Budget</a>
+                    <a href="{{ url('project-budget/'.$budget->project->id) }}"
+                        class="text-muted">{{ __('labels.budget') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    Award
+                    {{ __('labels.source') }}
                 </li>
             </ul>
             <!--end::Breadcrumb-->
@@ -188,7 +166,7 @@
         <div class="card card-custom">
             <div class="card-header">
                 <div class="card-title">
-                    <h3 class="card-label">Add Source</h3>
+                    <h3 class="card-label">{{ __('labels.create') }} {{ __('labels.source') }}</h3>
                 </div>
             </div>
             <form action="{{ url('budget-source') }}" method="POST">
@@ -199,14 +177,14 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="name">Source Name</label>
+                                <label for="name">{{ __('labels.source_name') }}</label>
                                 <div class="typeahead">
                                     <input class="form-control" id="source_id" name="source_id" type="text" dir="ltr"
                                         style="width: 100%">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="name">Amount</label>
+                                <label for="name">{{ __('labels.amount') }}</label>
                                 <input type="text" class="form-control" name="amount">
                             </div>
                         </div>
@@ -216,7 +194,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="float-right">
-                                <button type="submit" class="btn font-weight-bold btn-success mr-2">Submit</button>
+                                <button type="submit"
+                                    class="btn font-weight-bold btn-success mr-2">{{ __('labels.save') }}</button>
                             </div>
                         </div>
                     </div>
@@ -229,7 +208,7 @@
         <div class="card card-custom">
             <div class="card-header">
                 <div class="card-title">
-                    <h3 class="card-label">Source List</h3>
+                    <h3 class="card-label">{{ __('labels.source_list') }}</h3>
                 </div>
             </div>
             <div class="card-body">
@@ -238,10 +217,10 @@
                     <thead>
                         <tr>
                             <th class="text-center column-fit">#</th>
-                            <th>Source Name</th>
-                            <th>Amount</th>
-                            <th class="column-fit">Created at</th>
-                            <th class="text-right column-fit">Actions</th>
+                            <th>{{ __('labels.source_list') }}</th>
+                            <th>{{ __('labels.amount') }}</th>
+                            <th class="column-fit">{{ __('labels.created_at') }}</th>
+                            <th class="text-right column-fit">{{ __('labels.action') }}</th>
                         </tr>
                     </thead>
                 </table>

@@ -59,15 +59,16 @@ class ProgressController extends Controller
         if ($request->advance_doc) {
             $data['advance_doc'] = $request->file('advance_doc')->store('advance');
         }
-        $status = Status::where('status_name', $request->status_id)->first();
-
-        if ($status) {
-            $data['status_id'] = $status->id;
-        } else {
-            $tm = Status::create([
-                'status_name' => $request->status_id,
-            ]);
-            $data['status_id'] = $tm->id;
+        if ($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
         }
 
         Advance::create($data);
@@ -128,15 +129,18 @@ class ProgressController extends Controller
             }
             $data['advance_doc'] = $request->file('advance_doc')->store('advance');
         }
-        $status = Status::where('status_name', $request->status_id)->first();
-
-        if ($status) {
-            $data['status_id'] = $status->id;
+        if ($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
         } else {
-            $tm = Status::create([
-                'status_name' => $request->status_id,
-            ]);
-            $data['status_id'] = $tm->id;
+            $data['status_id'] = null;
         }
 
         $progress->update($data);
@@ -214,6 +218,15 @@ class ProgressController extends Controller
     public function api()
     {
         return DataTables::of(AdvanceImage::query())
+            ->editColumn('created_at', function ($ai) {
+                return date('Y-m-d H:i:s', strtotime($ai->created_at));
+            })
+            ->make(true);
+    }
+
+    public function imageApi(Advance $advance)
+    {
+        return DataTables::of(AdvanceImage::where('advance_id', $advance->id))
             ->editColumn('created_at', function ($ai) {
                 return date('Y-m-d H:i:s', strtotime($ai->created_at));
             })

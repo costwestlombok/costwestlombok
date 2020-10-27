@@ -54,37 +54,37 @@ $contacts = App\Contact::all();
                 <input type="hidden" name="executions_id" value="{{ $execution->id }}">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="name">Order</label>
+                        <label>{{ __('labels.order') }}</label>
                         <input type="number" name="order" value="{{ $disbursment->order ?? '' }}" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="name">Disbursment Date</label>
+                        <label>{{ __('labels.date') }}</label>
                         <input type="date" name="date" class="form-control"
                             value="{{ Carbon\Carbon::parse($execution->date ?? date('Y-m-d'))->format('Y-m-d') }}">
                     </div>
                     <div class="form-group">
-                        <label for="name">Amount</label>
+                        <label>{{ __('labels.amount') }}</label>
                         <input type="text" name="amount" class="form-control" value="{{ $disbursment->amount ?? '' }}">
                     </div>
                     <div class="form-group">
-                        <label for="name">Description</label>
+                        <label>{{ __('labels.description') }}</label>
                         <textarea name="description" rows="5"
                             class="form-control">{{ $disbursment->description ?? '' }}</textarea>
                     </div>
                     <div class="form-group">
-                        <label>Status</label>
+                        <label>{{ __('labels.status') }}</label>
                         <div class="typeahead">
                             <input class="form-control" value="{{ $disbursment->status->status_name ?? '' }}"
-                                id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%" required>
+                                id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%">
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="text-right">
                         <button type="reset" class="btn btn-secondary"
-                            onclick="javascript:history.back()">Cancel</button>
+                            onclick="javascript:history.back()">{{ __('labels.cancel') }}</button>
                         <button type="submit"
-                            class="btn btn-primary ml-2">{{ isset($disbursment) ? 'Update' : 'Create' }}</button>
+                            class="btn btn-primary ml-2">{{ isset($ammendment) ? __('labels.save_changes') : __('labels.save') }}</button>
                     </div>
                 </div>
             </form>

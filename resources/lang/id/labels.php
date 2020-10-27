@@ -67,7 +67,7 @@ return  [
 	'start_date' => 'Tanggal Mulai',
 	'due_date' => 'Tanggal Berakhir',
 	'progress' => 'Kemajuan',
-	'real_physical' => 'Fisik',
+	'real_physical' => 'Fisik Riil',
 	'last_update' => 'Pembaharuan terbaru',
 	'add_progress' => 'Buat Kemajuan',
 	'sefin_code' => 'Kode SEFIN',
@@ -254,5 +254,45 @@ return  [
 	'choose_contact' => 'Pilih Kontak',
 	'price' => 'Harga',
 	'program' => 'Program',
-	'contract_state' => 'Negara Kontrak',
+	'contract_state' => 'Status Kontrak',
+	'contract_execution' => 'Eksekusi Kontrak',
+	'contact_text' => 'Detail Kontak Penyedia Layanan',
+
+	// execution > disbursment
+	'disbursment' => 'Pencairan',
+	'warranty' => 'Garansi',
+	'order' => 'Urutan',
+	'date' => 'Tanggal',
+
+	// tender > offerer
+	'offerer_list' => 'Daftar Penawar',
+
+	// project > file
+	'document_name' => 'Nama Dokumen',
+	'document_list' => 'Daftar Dokumen',
+	'author' => 'Penulis',
+
+	// budget > source
+	'source_name' => 'Nama Pendanaan',
+	'source_list' => 'Daftar Pendanaan',
+
+	// project > progress
+	'progress_date' => 'Tanggal Kemajuan',
+	'theme_issues_description' => 'Deskripsi Tema/Masalah',
+	'problem_description' => 'Deskripsi Masalah',
+	'real_finance' => 'Keuangan Riil',
+	'image' => 'Gambar',
+	'scheduled_finance' => 'Jadwal Keuangan',
+	'physical_program' => 'Program Fisik',
+	'advance_date' => 'Tanggal Kemajuan',
+	'guaranties_file' => 'Berkas Jaminan',
+	'advance_file' => 'Berkas Kemajuan',
+
+	// progress (advance) > image
+	'upload_images'=> 'Unggah Gambar',
+	'drop_file_text' => 'Letakkan file di sini atau klik untuk mengupload',
+	'drop_file_text_sub' => 'Unggah hingga 10 gambar',
+	'list_images'=> 'Daftar Gambar',
+	'image_name'=> 'Nama Gambar',
+	'path'=> 'Path',
 ];

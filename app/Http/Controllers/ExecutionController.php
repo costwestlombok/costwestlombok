@@ -65,7 +65,7 @@ class ExecutionController extends Controller
         $execution = Execution::create($data);
         Session::put('success', trans('labels.saved'));
 
-        return redirect('contract-execution/' . $execution->id);
+        return redirect('contract/' . $execution->engage->id . '/execution');
     }
 
     /**
@@ -118,7 +118,6 @@ class ExecutionController extends Controller
         }
         $execution->update($data);
         Session::put('success', trans('labels.updated'));
-
         return redirect('contract/' . $execution->engage->id . '/execution');
     }
 
@@ -130,10 +129,10 @@ class ExecutionController extends Controller
      */
     public function destroy(Execution $execution)
     {
-        $id = $execution->engage->id;
+        $award = $execution->engage->award;
         $execution->delete();
         Session::put('success', trans('labels.deleted'));
-        return redirect('contract/' . $id);
+        return redirect('award/' . $award->id . '/contract');
     }
 
     public function disbursment(Execution $execution)
@@ -152,38 +151,42 @@ class ExecutionController extends Controller
         $data = $request->all();
         // return $data;
         $data['amount'] = str_replace(",", "", $request->amount);
-        $status = Status::where('status_name', $request->status_id)->first();
-
-        if ($status) {
-            $data['status_id'] = $status->id;
-        } else {
-            $tm = Status::create([
-                'status_name' => $request->status_id,
-            ]);
-            $data['status_id'] = $tm->id;
+        if ($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
         }
-        Disbursment::create($data);
+        $disbursment = Disbursment::create($data);
         Session::put('success', trans('labels.saved'));
-        return redirect('contract/' . $execution->id . '/execution');
+        return redirect('contract/' . $disbursment->execution->engage->id . '/execution');
     }
 
     public function disbursment_update(Request $request, Disbursment $disbursment)
     {
         $data = $request->all();
         $data['amount'] = str_replace(",", "", $request->amount);
-        $status = Status::where('status_name', $request->status_id)->first();
-
-        if ($status) {
-            $data['status_id'] = $status->id;
+        if ($request->status_id) {
+            $status = Status::where('status_name', $request->status_id)->first();
+            if ($status) {
+                $data['status_id'] = $status->id;
+            } else {
+                $tm = Status::create([
+                    'status_name' => $request->status_id,
+                ]);
+                $data['status_id'] = $tm->id;
+            }
         } else {
-            $tm = Status::create([
-                'status_name' => $request->status_id,
-            ]);
-            $data['status_id'] = $tm->id;
+            $data['status_id'] = null;
         }
         $disbursment->update($data);
         Session::put('success', trans('labels.updated'));
-        return redirect('contract-execution/' . $request->executions_id);
+        return redirect('contract/' . $disbursment->execution->engage->id . '/execution');
     }
 
     public function disbursment_destroy(Disbursment $disbursment)
@@ -283,7 +286,7 @@ class ExecutionController extends Controller
                 return date('Y-m-d H:i:s', strtotime($disbursment->created_at));
             })
             ->editColumn('date', function ($disbursment) {
-                return date('D, d M Y', strtotime($disbursment->date));
+                return \Carbon\Carbon::parse($disbursment->date)->translatedFormat('l, d M Y');
             })
             ->editColumn('amount', function ($disbursment) {
                 return number_format($disbursment->amount);
