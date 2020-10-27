@@ -63,6 +63,7 @@
                         <!--end::Title-->
                     </div>
                     <!--end::Info-->
+                    @if(Auth::user())
                     <!--begin::Actions-->
                     <div class="card-toolbar mb-7">
                         <div class="dropdown dropdown-inline">
@@ -121,6 +122,7 @@
                         </div>
                     </div>
                     <!--end::Actions-->
+                    @endif
                 </div>
                 <!--end::Info-->
                 <!--begin::Data-->

@@ -72,6 +72,7 @@
         </div>
         <!--end::Details-->
         @if(isset($tender))
+        @if(Auth::user())
         <!--begin::Toolbar-->
         <div class="d-flex align-items-right">
             <!--begin::Button-->
@@ -93,6 +94,7 @@
             <!--end::Button-->
         </div>
         <!--end::Toolbar-->
+        @endif
         @endif
     </div>
 </div>
