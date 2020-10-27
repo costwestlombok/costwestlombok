@@ -62,11 +62,11 @@
                     title: '{{ __("labels.action") }}',
                     orderable: false,
                     render: function (data, type, full, meta) {
-                        return '\
+                        return '@if(Auth::user())\
                         <div class="text-right nowrap">\
                         <a href="#" data-id="'+ full.id + '" class="button btn btn-xs btn-clean btn-icon" data-id=' + full.id + ' title="Delete"><i class="fas fa-trash"></i></a>\
                         </div>\
-                    ';
+                        @endif';
                     },
                 },
                 {
@@ -179,6 +179,7 @@
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">
+        @if(Auth::user())
         <!--begin::Card-->
         <div class="card card-custom">
             <div class="card-header">
@@ -219,6 +220,7 @@
         </div>
         <br>
         <!--end::Card-->
+        @endif
         <!--begin::Card-->
         <div class="card card-custom">
             <div class="card-header">
