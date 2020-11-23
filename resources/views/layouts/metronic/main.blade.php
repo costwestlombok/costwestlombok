@@ -707,17 +707,30 @@
             </div>
             <!--end::Content-->
             <!--begin::Footer-->
-            <div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer">
-                <!--begin::Container-->
-                <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
-                    <!--begin::Copyright-->
-                    <div class="text-dark order-2 order-md-1">
-                        <span class="text-muted font-weight-bold mr-2">2020©</span>
-                        <a href="{{ url('/') }}" class="text-dark-75 text-hover-primary">{{ __('labels.title') }}</a>
+            <div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer" style="border-top: 1px solid #EBEDF3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center mt-3 mb-3">
+                                <!--begin::Text-->
+                                <div class="d-flex flex-column flex-grow-1 font-weight-bold">
+                                    <span class="text-muted">Supported by:</span>
+                                </div>
+                                <!--end::Text-->
+                                <!--begin::Dropdown-->
+                                <div class="text-dark order-2 order-md-1">
+                                    <span class="text-muted font-weight-bold mr-2">2020©</span>
+                                    <a href="{{ url('/') }}" class="text-dark-75 text-hover-primary">{{ __('labels.title') }}</a>
+                                </div>
+                                <!--end::Dropdown-->
+                            </div>
+                            <img src="{{url('/images/undp.jpg')}}" alt="UNDP" class="img-responsive mr-3 align-top" height="50">
+                            <img src="{{url('/images/fair-biz.jpg')}}" alt="UNDP" class="img-responsive mr-3 align-top" height="30">
+                            <img src="{{url('/images/uk-gov.jpg')}}" alt="UNDP" class="img-responsive align-top" height="20">
+                        </div>
                     </div>
-                    <!--end::Copyright-->
                 </div>
-                <!--end::Container-->
+                
             </div>
             <!--end::Footer-->
         </div>
