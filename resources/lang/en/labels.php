@@ -286,4 +286,7 @@ return  [
 	'list_images'=> 'List Images',
 	'image_name'=> 'Image Name',
 	'path'=> 'Path',
+
+
+	'no_project'=> 'No Project',
 ];

@@ -295,4 +295,7 @@ return  [
 	'list_images'=> 'Daftar Gambar',
 	'image_name'=> 'Nama Gambar',
 	'path'=> 'Path',
+
+
+	'no_project'=> 'Tidak ada Proyek',
 ];

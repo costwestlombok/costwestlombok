@@ -8,7 +8,7 @@
     <!--begin::Container-->
     <div class="container">
         <div class="row">
-            <div class="col-xl-8">
+            <div class="col-lg-8">
                 <!--begin::Nav Panel Widget 2-->
                 <div class="card card-custom gutter-b card-stretch card-shadowless">
                     <!--begin::Body-->
@@ -205,7 +205,7 @@
                 </div>
                 <!--begin::Nav Panel Widget 2-->
             </div>
-            <div class="col-xl-4">
+            <div class="col-lg-4">
                 <!--begin::Engage Widget 8-->
                 <div class="card card-custom gutter-b card-stretch card-shadowless">
                     <div class="card-body p-0 d-flex">
@@ -251,7 +251,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xl-8">
+            <div class="{{ Auth::user()->type == 'admin' ? 'col-lg-8' : 'col-lg-12' }}">
                 <!--begin::Advance Table Widget 1-->
                 <div class="card card-custom card-stretch gutter-b card-shadowless bg-light">
                     <!--begin::Header-->
@@ -286,7 +286,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($projects as $item)
+                                    @forelse($projects as $item)
                                     <tr class="font-size-sm">
                                         <td class="text-center">
                                             {{ $loop->iteration }}
@@ -329,7 +329,13 @@
                                             </button>
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr class="font-size-sm">
+                                        <td class="text-center text-muted" colspan="6">
+                                            {{ __('labels.no_project') }}
+                                        </td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -339,6 +345,7 @@
                 </div>
                 <!--end::Advance Table Widget 1-->
             </div>
+            @if(Auth::user()->type == 'admin')
             <div class="col-lg-4">
                 <!--begin::List Widget 3-->
                 <div class="card card-custom card-stretch gutter-b bg-light-success">
@@ -381,7 +388,9 @@
                 </div>
                 <!--end::List Widget 3-->
             </div>
+            @endif
         </div>
+        @if(Auth::user()->type == 'admin')
         <div class="row">
             <div class="col-lg-4">
                 <!--begin::List Widget 3-->
@@ -514,6 +523,7 @@
                 <!--end::Base Table Widget 2-->
             </div>
         </div>
+        @endif
     </div>
     <!--end::Container-->
 </div>

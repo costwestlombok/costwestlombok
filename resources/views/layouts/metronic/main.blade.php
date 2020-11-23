@@ -84,6 +84,7 @@
                             </a>
                         </li>
                         @if(Auth::user())
+                        @if(Auth::user()->type == 'admin')
                         <li class="menu-section">
                             <h4 class="menu-text">{{ strtoupper(__('labels.principal')) }}</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
@@ -270,6 +271,7 @@
                                 </ul>
                             </div>
                         </li>
+                        @endif
                         <li class="menu-section">
                             <h4 class="menu-text">{{ __('labels.project_management') }}</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>

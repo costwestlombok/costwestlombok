@@ -26,7 +26,11 @@ class DashboardController extends Controller
         if (Auth::guest()) {
             return redirect('/');
         }
-        $projects = Project::orderBy('created_at', 'DESC')->limit(4)->get();
+        if (Auth::user()->type == 'admin') {
+            $projects = Project::orderBy('created_at', 'DESC')->limit(4)->get();
+        } else {
+            $projects = Auth::user()->agency->projects()->orderBy('created_at', 'DESC')->limit(4)->get();
+        }
         $officials = Official::orderBy('created_at', 'DESC')->limit(5)->get();
         $sources = Source::orderBy('created_at', 'DESC')->limit(5)->get();
         $offerers = Offerer::orderBy('created_at', 'DESC')->limit(5)->get();
