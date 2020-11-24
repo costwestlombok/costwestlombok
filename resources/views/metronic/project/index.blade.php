@@ -50,6 +50,17 @@
         @if(Auth::check())
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
+            @if(Auth::user()->type == 'agency')
+            <!--begin::Button-->
+            <a href="{{ route('project.index', ['type' => request()->type == 'only_me' ? 'all' : 'only_me']) }}" class="btn btn-success font-weight-bolder mr-2">
+                @if(request()->type == 'only_me')
+                {{ __('labels.show_all') }} {{ __('labels.project') }}
+                @else
+                {{ __('labels.project') }} {{ Auth::user()->agency->name }}
+                @endif
+            </a>
+            <!--end::Button-->
+            @endif
             <!--begin::Button-->
             <a href="{{ route('project.create') }}" class="btn btn-primary font-weight-bolder"><span
                     class="svg-icon svg-icon-md">

@@ -93,6 +93,7 @@
                                 </a>
                             </li>
                             @if(Auth::check())
+                            @if(Auth::user()->type == 'admin' || in_array($project->id, Auth::user()->agency->projects()->pluck('projects.id')->toArray()))
                             <hr>
                             <li class="navi-item">
                                 <a href="{{ url('project/'.$project->id.'/edit') }}" class="navi-link">
@@ -114,6 +115,8 @@
                                     <span class="navi-text ml-2"> {{ __('labels.edit') }}</span>
                                 </a>
                             </li>
+                            @endif
+                            @if(Auth::user()->type == 'admin')
                             <li class="navi-item">
                                 <a href="javascript:deleteFn('project', '{{ $project->id }}')" class="navi-link">
                                     <span class="svg-icon menu-icon">
@@ -134,6 +137,7 @@
                                     <span class="navi-text ml-2"> {{ __('labels.delete') }}</span>
                                 </a>
                             </li>
+                            @endif
                             @endif
                         </ul>
                         <!--end::Navigation-->
@@ -162,9 +166,11 @@
                         class="text-muted font-weight-bold">({{ __('labels.last_update') }}:
                         {{ Carbon\Carbon::parse($project->latest_progress->date_of_advance ?? now())->translatedFormat('l, d M Y') }})</span>
                     @if(Auth::check())
+                    @if(Auth::user()->type == 'admin' || in_array($project->id, Auth::user()->agency->projects()->pluck('projects.id')->toArray()))
                     <div class="float-right">
                         <a href="{{ url('project-progress/'.$project->id) }}">{{ __('labels.add_progress') }}</a>
                     </div>
+                    @endif
                     @endif
                     <div class="d-flex align-items-center pt-2">
                         <div class="progress progress-xs mt-2 mb-2 w-100">
@@ -235,8 +241,10 @@
                         class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->tenders->count()) }}
                         {{ __('labels.tender') }}</a>
                     @if(Auth::check())
+                    @if(Auth::user()->type == 'admin' || in_array($project->id, Auth::user()->agency->projects()->pluck('projects.id')->toArray()))
                     <a href="{{ route('project.tender.create', $project) }}"
                         class="text-primary font-weight-bolder">{{ __('labels.add') }} {{ __('labels.tender') }}</a>
+                    @endif
                     @endif
                 </div>
             </div>
@@ -251,8 +259,10 @@
                         class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->file->count()) }}
                         {{ __('labels.document') }}</a>
                     @if(Auth::check())
+                    @if(Auth::user()->type == 'admin' || in_array($project->id, Auth::user()->agency->projects()->pluck('projects.id')->toArray()))
                     <a href="{{ route('project.file.index', $project) }}"
                         class="text-primary font-weight-bolder">{{ __('labels.add') }} {{ __('labels.document') }}</a>
+                    @endif
                     @endif
                 </div>
             </div>
@@ -267,8 +277,10 @@
                         class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->project_budget->count()) }}
                         {{ __('labels.budget') }}</a>
                     @if(Auth::check())
+                    @if(Auth::user()->type == 'admin' || in_array($project->id, Auth::user()->agency->projects()->pluck('projects.id')->toArray()))
                     <a href="{{ url('project-budget/'.$project->id) }}"
                         class="text-primary font-weight-bolder">{{ __('labels.add') }} {{ __('labels.budget') }}</a>
+                    @endif
                     @endif
                 </div>
             </div>

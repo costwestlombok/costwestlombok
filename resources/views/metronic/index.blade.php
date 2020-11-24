@@ -39,7 +39,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bold text-center">{{ __('labels.project') }}<br />{{ App\Project::count() }}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bold text-center">{{ __('labels.project') }}<br />{{ $projects->count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -69,7 +69,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.tender') }}<br />{{ App\Tender::count() }}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.tender') }}<br />{{ Auth::user()->agency_id ? App\Tender::whereIn('project_id', $projects->pluck('id'))->count() : App\Tender::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -97,7 +97,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.award') }}<br />{{ App\Award::count() }}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.award') }}<br />{{ Auth::user()->agency_id ? App\Award::whereIn('tender_id', App\Tender::whereIn('project_id', $projects->pluck('id'))->pluck('id'))->count() : App\Award::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -129,10 +129,11 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.contract') }}<br />{{ App\Contract::count() }}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.contract') }}<br />{{ Auth::user()->agency_id ? App\Contract::whereIn('award_id', App\Award::whereIn('tender_id', App\Tender::whereIn('project_id', $projects->pluck('id'))->pluck('id'))->pluck('id'))->count() : App\Contract::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
+                            @if(Auth::user()->type == 'admin')
                             <!--begin::Item-->
                             <li class="nav-item d-flex flex-grow-1 flex-shrink-0 mr-3">
                                 <a class="nav-link border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
@@ -189,6 +190,7 @@
                                 </a>
                             </li>
                             <!--end::Item-->
+                            @endif
                         </ul>
                         <!--end::Nav Tabs-->
                         <!--begin::Nav Content-->
@@ -213,7 +215,7 @@
                             class="d-flex align-items-start justify-content-start flex-grow-1 bg-light-warning p-8 card-rounded flex-grow-1 position-relative">
                             <div class="d-flex flex-column align-items-start flex-grow-1 h-100">
                                 <div class="p-1 flex-grow-1">
-                                    <h4 class="text-warning font-weight-bolder">{{ App\Project::count() }}
+                                    <h4 class="text-warning font-weight-bolder">{{ $projects->count() }}
                                         {{ __('labels.project') }}</h4>
                                     <p class="text-dark-50 font-weight-bold mt-3">Total {{ __('labels.project') }}</p>
                                 </div>
@@ -323,10 +325,12 @@
                                                 class="btn btn-xs btn-clean btn-icon" title="{{ __('labels.edit') }}">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <button data-toggle="modal" data-target="#delete-{{ $item->id }}"
+                                            @if(Auth::user()->type == 'admin')
+                                            <button xdata-toggle="modal" data-target="#delete-{{ $item->id }}"
                                                 class="btn btn-xs btn-clean btn-icon" title="Delete">
                                                 <i class="fas fa-trash"></i>
                                             </button>
+                                            @endif
                                         </td>
                                     </tr>
                                     @empty
@@ -527,6 +531,7 @@
     </div>
     <!--end::Container-->
 </div>
+@if(Auth::user()->type == 'admin')
 @foreach ($projects as $a)
 <form action="{{ route('project.destroy', $a) }}" method="post">
     @csrf
@@ -549,4 +554,5 @@
     </div>
 </form>
 @endforeach
+@endif
 @endsection

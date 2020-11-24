@@ -298,4 +298,6 @@ return  [
 
 
 	'no_project'=> 'Tidak ada Proyek',
+	'supported_by'=> 'Didukung Oleh',
+	'show_all'=> 'Tampilkan Semua',
 ];

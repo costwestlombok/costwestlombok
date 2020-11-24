@@ -12,6 +12,7 @@ use DataTables;
 use Illuminate\Http\Request;
 use Session;
 use Storage;
+use Auth;
 
 class ProjectController extends Controller
 {
@@ -29,10 +30,18 @@ class ProjectController extends Controller
     public function index()
     {
         if (request()->get('query')) {
-            $projects = Project::where('project_title', 'like', '%'.request()->get('query').'%')->latest()->paginate(10);
+            $projects = Project::where('project_title', 'like', '%'.request()->get('query').'%')->latest();
         } else {
-            $projects = Project::latest()->paginate(10);
+            $projects = Project::latest();
         }
+        if (request()->type) {
+            if (request()->type == 'only_me') {
+                if (Auth::user()->type == 'agency') {
+                    $projects = $projects->whereIn('id', Auth::user()->agency->projects()->pluck('projects.id'));
+                }
+            }
+        }
+        $projects = $projects->paginate(10);
         return view('metronic.project.index', ['projects' => $projects]);
     }
 

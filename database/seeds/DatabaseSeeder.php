@@ -60,6 +60,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'dputr@lombokbaratkab.go.id',
             'password' => bcrypt('testing'),
             'agency_id' => $agency->id,
+            'type' => 'agency',
         ]);
 
         // $org = Organization::create([

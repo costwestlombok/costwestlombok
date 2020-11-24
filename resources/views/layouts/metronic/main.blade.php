@@ -3,7 +3,7 @@
 <div id="kt_header_mobile" class="header-mobile header-mobile-fixed">
     <!--begin::Logo-->
     <a href="{{ url('/') }}">
-        <img alt="Logo" src="{{ url('metronic/assets/media/logos/logo-letter-1.png') }}"
+        <img alt="Logo" src="{{ url('images/CoST logo_ West Lombok, Indonesia.png') }}"
             class="logo-default max-h-30px" />
     </a>
     <!--end::Logo-->
@@ -446,7 +446,7 @@
                         <!--end::Aside Toggle-->
                         <!--begin::Logo-->
                         <a href="{{ url('/') }}">
-                            <img alt="Logo" src="{{ asset('metronic/assets/media/logos/logo-letter-1.png') }}"
+                            <img alt="Logo" src="{{ asset('images/CoST logo_ West Lombok, Indonesia.png') }}"
                                 class="logo-sticky max-h-35px" />
                         </a>
                         <!--end::Logo-->
@@ -716,7 +716,7 @@
                             <div class="d-flex align-items-center mt-3 mb-3">
                                 <!--begin::Text-->
                                 <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                                    <span class="text-muted">Supported by:</span>
+                                    <span class="text-muted">{{ __('labels.supported_by') }}</span>
                                 </div>
                                 <!--end::Text-->
                                 <!--begin::Dropdown-->

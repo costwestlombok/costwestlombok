@@ -289,4 +289,6 @@ return  [
 
 
 	'no_project'=> 'No Project',
+	'supported_by'=> 'Supported By',
+	'show_all'=> 'Show All',
 ];
