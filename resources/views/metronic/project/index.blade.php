@@ -17,6 +17,9 @@
                 <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">{{$projects->total()}}
                     Total</span>
                 <form class="ml-5" action="{{ route('project.index') }}" method="GET">
+                    @if(request()->type)
+                    <input type="hidden" name="type" value="{{ request()->type }}">
+                    @endif
                     <div class="input-group input-group-sm input-group-solid" style="max-width: 175px">
                         <input type="text" name="query" value="{{ request()->get('query') }}" class="form-control"
                             id="kt_subheader_search_form" placeholder="{{ __('labels.search') }}...">
@@ -52,7 +55,8 @@
         <div class="d-flex align-items-center">
             @if(Auth::user()->type == 'agency')
             <!--begin::Button-->
-            <a href="{{ route('project.index', ['type' => request()->type == 'only_me' ? 'all' : 'only_me']) }}" class="btn btn-success font-weight-bolder mr-2">
+            <a href="{{ route('project.index', ['type' => request()->type == 'only_me' ? 'all' : 'only_me']) }}"
+                class="btn btn-success font-weight-bolder mr-2">
                 @if(request()->type == 'only_me')
                 {{ __('labels.show_all') }} {{ __('labels.project') }}
                 @else

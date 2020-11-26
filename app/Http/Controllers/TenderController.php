@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Session;
 use Storage;
+use Auth;
 
 class TenderController extends Controller
 {
@@ -31,8 +32,19 @@ class TenderController extends Controller
      */
     public function index()
     {
-        //
-        $tenders = Tender::paginate(10);
+        if (request()->get('query_tender')) {
+            $tenders = Tender::where('project_process_name', 'like', '%'.request()->get('query_tender').'%')->latest();
+        } else {
+            $tenders = Tender::latest();
+        }
+        if (request()->type) {
+            if (request()->type == 'only_me') {
+                if (Auth::user()->type == 'agency') {
+                    $tenders = $tenders->whereIn('project_id', Auth::user()->agency->agencyProjects()->pluck('project_id'));
+                }
+            }
+        }
+        $tenders = $tenders->paginate(10);
         return view('metronic.tender.index', compact('tenders'));
     }
 

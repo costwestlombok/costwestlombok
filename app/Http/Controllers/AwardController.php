@@ -9,6 +9,7 @@ use App\Tender;
 use Illuminate\Http\Request;
 use Session;
 use Storage;
+use Auth;
 
 class AwardController extends Controller
 {
@@ -26,10 +27,18 @@ class AwardController extends Controller
     public function index()
     {
         if (request()->get('query_award')) {
-            $awards = Award::where('process_number', 'like', '%'.request()->get('query_award').'%')->latest()->paginate(10);
+            $awards = Award::where('process_number', 'like', '%'.request()->get('query_award').'%')->latest();
         } else {
-            $awards = Award::latest()->paginate(10);
+            $awards = Award::latest();
         }
+        if (request()->type) {
+            if (request()->type == 'only_me') {
+                if (Auth::user()->type == 'agency') {
+                    $awards = $awards->whereIn('tender_id', Tender::whereIn('project_id', Auth::user()->agency->agencyProjects()->pluck('project_id'))->pluck('id'));
+                }
+            }
+        }
+        $awards = $awards->paginate(10);
         return view('metronic.award.index', compact('awards'));
     }
 

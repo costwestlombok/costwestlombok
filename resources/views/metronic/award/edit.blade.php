@@ -2,60 +2,6 @@
 @section('style')
 <link href="/metronic/assets/css/pages/wizard/wizard-3.css" rel="stylesheet" type="text/css" />
 @endsection
-@section('script')
-<script src="/metronic/assets/js/pages/custom/wizard/wizard-3.js"></script>
-<script>
-    var KTTypeahead = function () {
-        var demo1 = function () {
-            var contract_method = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.whitespace,
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                // url points to a json file that contains an array of country names, see
-                // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
-                // prefetch: COST_URL
-                prefetch: "{{ url('/get-contract-method') }}"
-            });
-
-            // passing in `null` for the `options` arguments will result in the default
-            // options being used
-
-            $('#contract_method_id').typeahead(null, {
-                name: 'contract_method_id',
-                source: contract_method
-            });
-        }
-        var demo2 = function () {
-            var status = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.whitespace,
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                // url points to a json file that contains an array of country names, see
-                // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
-                // prefetch: COST_URL
-                prefetch: "{{ url('/get-status') }}"
-            });
-
-            // passing in `null` for the `options` arguments will result in the default
-            // options being used
-
-            $('#status_id').typeahead(null, {
-                name: 'status_id',
-                source: status
-            });
-        }
-        return {
-            // public functions
-            init: function () {
-                demo1();
-                demo2();
-            }
-        };
-    }();
-
-    jQuery(document).ready(function () {
-        KTTypeahead.init();
-    });
-</script>
-@endsection
 @section('content')
 <div class="container">
     <div class="card card-custom">
@@ -114,7 +60,7 @@
                                 <div class="form-group">
                                     <label for="name">{{ __('labels.participant_number') }}</label>
                                     <input type="number" class="form-control" name="participants_number"
-                                        value="{{ $award->participants_number ?? '' }}" />
+                                        value="{{ $award->participants_number ?? '' }}" required />
                                 </div>
                                 <!--end::Input-->
                                 <div class="row">
@@ -234,4 +180,155 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+    "use strict";
+
+    // Class definition
+    var KTWizard3 = function () {
+        // Base elements
+        var _wizardEl;
+        var _formEl;
+        var _wizard;
+        var _validations = [];
+
+        // Private functions
+        var initWizard = function () {
+            // Initialize form wizard
+            _wizard = new KTWizard(_wizardEl, {
+                startStep: 1, // initial active step number
+                clickableSteps: true  // allow step clicking
+            });
+
+            // Validation before going to next page
+            _wizard.on('beforeNext', function (wizard) {
+                // Don't go to the next step yet
+                _wizard.stop();
+
+                // Validate form
+                var validator = _validations[wizard.getStep() - 1]; // get validator for currnt step
+                validator.validate().then(function (status) {
+                    if (status == 'Valid') {
+                        _wizard.goNext();
+                        KTUtil.scrollTop();
+                    } else {
+                        Swal.fire({
+                            text: "{{ __('labels.form_wizard_warning_text') }}",
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "{{ __('labels.form_wizard_warning_confirm') }}",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light"
+                            }
+                        }).then(function () {
+                            KTUtil.scrollTop();
+                        });
+                    }
+                });
+            });
+
+            // Change event
+            _wizard.on('change', function (wizard) {
+                KTUtil.scrollTop();
+            });
+        }
+
+        var initValidation = function () {
+            // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+            // Step 1
+            _validations.push(FormValidation.formValidation(
+                _formEl,
+                {
+                    fields: {
+                        process_number: {
+                            validators: {
+                                notEmpty: {
+                                    message: "{{ __('labels.process_number') }} {{ __('labels.is_required') }}"
+                                }
+                            }
+                        },
+                        participants_number: {
+                            validators: {
+                                notEmpty: {
+                                    message: "{{ __('labels.participant_number') }} {{ __('labels.is_required') }}"
+                                }
+                            }
+                        },
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap: new FormValidation.plugins.Bootstrap()
+                    }
+                }
+            ));
+        }
+
+        return {
+            // public functions
+            init: function () {
+                _wizardEl = KTUtil.getById('kt_wizard_v3');
+                _formEl = KTUtil.getById('kt_form');
+
+                initWizard();
+                initValidation();
+            }
+        };
+    }();
+
+    jQuery(document).ready(function () {
+        KTWizard3.init();
+    });
+</script>
+<script>
+    var KTTypeahead = function () {
+        var demo1 = function () {
+            var contract_method = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                // url points to a json file that contains an array of country names, see
+                // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
+                // prefetch: COST_URL
+                prefetch: "{{ url('/get-contract-method') }}"
+            });
+
+            // passing in `null` for the `options` arguments will result in the default
+            // options being used
+
+            $('#contract_method_id').typeahead(null, {
+                name: 'contract_method_id',
+                source: contract_method
+            });
+        }
+        var demo2 = function () {
+            var status = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                // url points to a json file that contains an array of country names, see
+                // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
+                // prefetch: COST_URL
+                prefetch: "{{ url('/get-status') }}"
+            });
+
+            // passing in `null` for the `options` arguments will result in the default
+            // options being used
+
+            $('#status_id').typeahead(null, {
+                name: 'status_id',
+                source: status
+            });
+        }
+        return {
+            // public functions
+            init: function () {
+                demo1();
+                demo2();
+            }
+        };
+    }();
+
+    jQuery(document).ready(function () {
+        KTTypeahead.init();
+    });
+</script>
 @endsection

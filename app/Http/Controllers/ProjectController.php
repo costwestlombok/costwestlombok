@@ -37,7 +37,7 @@ class ProjectController extends Controller
         if (request()->type) {
             if (request()->type == 'only_me') {
                 if (Auth::user()->type == 'agency') {
-                    $projects = $projects->whereIn('id', Auth::user()->agency->projects()->pluck('projects.id'));
+                    $projects = $projects->whereIn('id', Auth::user()->agency->agencyProjects()->pluck('project_id'));
                 }
             }
         }
@@ -118,7 +118,14 @@ class ProjectController extends Controller
                 $data['role_id'] = $r->id;
             } 
         }
-        Project::create($data);
+        $project = Project::create($data);
+
+        if (Auth::user()->agency_id) {
+            Auth::user()->agency->agencyProjects()->create([
+                'project_id' => $project->id,
+            ]);
+        }
+
         Session::put("success", trans('labels.saved'));
         return redirect('/project');
     }

@@ -41,6 +41,9 @@
                 <form class="ml-5"
                     action="{{ isset($tender) ? route('tender.award.index', $tender) : route('award.index') }}"
                     method="GET">
+                    @if(request()->type)
+                    <input type="hidden" name="type" value="{{ request()->type }}">
+                    @endif
                     <div class="input-group input-group-sm input-group-solid" style="max-width: 175px">
                         <input type="text" name="query_award" value="{{ request()->get('query_award') }}"
                             class="form-control" id="kt_subheader_search_form"
@@ -73,6 +76,9 @@
         <!--end::Details-->
         @if(isset($tender))
         @if(Auth::user())
+        @if(Auth::user()->type == 'admin' || in_array($tender->id,
+        App\Tender::whereIn('project_id',
+        Auth::user()->agency->agencyProjects()->pluck('project_id'))->pluck('id')->toArray()))
         <!--begin::Toolbar-->
         <div class="d-flex align-items-right">
             <!--begin::Button-->
@@ -94,6 +100,26 @@
             <!--end::Button-->
         </div>
         <!--end::Toolbar-->
+        @endif
+        @endif
+        @else
+        @if(Auth::check())
+        @if(Auth::user()->type == 'agency')
+        <!--begin::Toolbar-->
+        <div class="d-flex align-items-center">
+            <!--begin::Button-->
+            <a href="{{ route('award.index', ['type' => request()->type == 'only_me' ? 'all' : 'only_me']) }}"
+                class="btn btn-success font-weight-bolder mr-2">
+                @if(request()->type == 'only_me')
+                {{ __('labels.show_all') }} {{ __('labels.award') }}
+                @else
+                {{ __('labels.award') }} {{ Auth::user()->agency->name }}
+                @endif
+            </a>
+            <!--end::Button-->
+        </div>
+        <!--end::Toolbar-->
+        @endif
         @endif
         @endif
     </div>
@@ -138,8 +164,14 @@
                                         <!--begin::Navigation-->
                                         <ul class="navi navi-hover">
                                             <li class="navi-item">
-                                                <a href="{{ empty($award->contract) ? route('award.contract.create', $award->id) : route('award.contract.index', $award->id) }}"
-                                                    class="navi-link">
+                                                <a href="{{ Auth::user() ? 
+                                                    (empty($award->contract) ? 
+                                                        (in_array($award->id, App\Award::whereIn('tender_id', App\Tender::whereIn('project_id', Auth::user()->agency->agencyProjects()->pluck('project_id'))->pluck('id'))->pluck('id')->toArray()) ? 
+                                                            route('award.contract.create', $award->id) : route('award.contract.index', $award->id)
+                                                        ) : 
+                                                        route('award.contract.index', $award->id)
+                                                    ) : 
+                                                    route('award.contract.index', $award->id) }}" class="navi-link">
                                                     <span class="svg-icon menu-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -172,6 +204,9 @@
                                                 </a>
                                             </li>
                                             @if(Auth::check())
+                                            @if(Auth::user()->type == 'admin' || in_array($award->id,
+                                            App\Award::whereIn('tender_id', App\Tender::whereIn('project_id',
+                                            Auth::user()->agency->agencyProjects()->pluck('project_id'))->pluck('id'))->pluck('id')->toArray()))
                                             <hr>
                                             <li class="navi-item">
                                                 <a href="{{ url('award/'.$award->id.'/edit') }}" class="navi-link">
@@ -194,6 +229,8 @@
                                                     <span class="navi-text ml-2"> {{ __('labels.edit') }}</span>
                                                 </a>
                                             </li>
+                                            @endif
+                                            @if(Auth::user()->type == 'admin')
                                             <li class="navi-item">
                                                 <a href="javascript:deleteFn('award', '{{ $award->id }}')"
                                                     class="navi-link">
@@ -216,6 +253,7 @@
                                                     <span class="navi-text ml-2"> {{ __('labels.delete') }}</span>
                                                 </a>
                                             </li>
+                                            @endif
                                             @endif
                                         </ul>
                                         <!--end::Navigation-->
@@ -288,10 +326,16 @@
                                         {{ __('labels.contract') }}
                                     </span>
                                     @if(empty($award->contract))
+                                    @if(Auth::user())
+                                    @if(Auth::user()->type == 'admin' || in_array($award->id,
+                                    App\Award::whereIn('tender_id', App\Tender::whereIn('project_id',
+                                    Auth::user()->agency->agencyProjects()->pluck('project_id'))->pluck('id'))->pluck('id')->toArray()))
                                     <a href="{{ route('award.contract.create', $award->id) }}"
                                         class="text-primary font-weight-bolder">
                                         {{ __('labels.create') }} {{ __('labels.contract') }}
                                     </a>
+                                    @endif
+                                    @endif
                                     @else
                                     <a href="{{ route('award.contract.index', $award->id) }}"
                                         class="text-primary font-weight-bolder subheader-separator subheader-separator-ver">

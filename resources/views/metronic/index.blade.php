@@ -129,7 +129,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.contract') }}<br />{{ Auth::user()->agency_id ? App\Contract::whereIn('award_id', App\Award::whereIn('tender_id', App\Tender::whereIn('project_id', $projects->pluck('id'))->pluck('id'))->pluck('id'))->count() : App\Contract::count() }}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.contract') }}<br />{{ Auth::user()->agency_id ? App\Contract::whereIn('awards_id', App\Award::whereIn('tender_id', App\Tender::whereIn('project_id', $projects->pluck('id'))->pluck('id'))->pluck('id'))->count() : App\Contract::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->

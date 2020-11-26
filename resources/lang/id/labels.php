@@ -300,4 +300,7 @@ return  [
 	'no_project'=> 'Tidak ada Proyek',
 	'supported_by'=> 'Didukung Oleh',
 	'show_all'=> 'Tampilkan Semua',
+	'is_required'=> 'harus diisi',
+	'form_wizard_warning_text'=> 'Maaf, sepertinya ada beberapa kesalahan yang terdeteksi, harap coba lagi.',
+	'form_wizard_warning_confirm'=> 'Oke, saya mengerti!',
 ];

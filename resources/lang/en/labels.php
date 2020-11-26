@@ -291,4 +291,7 @@ return  [
 	'no_project'=> 'No Project',
 	'supported_by'=> 'Supported By',
 	'show_all'=> 'Show All',
+	'is_required'=> 'is required',
+	'form_wizard_warning_text'=> 'Sorry, looks like there are some errors detected, please try again.',
+	'form_wizard_warning_confirm'=> 'Ok, got it!',
 ];

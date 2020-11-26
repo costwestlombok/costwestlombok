@@ -215,7 +215,8 @@
                                                 </a>
                                             </li>
                                             @if(Auth::check())
-                                            @if(Auth::user()->type == 'admin' || in_array($project->id, Auth::user()->agency->projects()->pluck('projects.id')->toArray()))
+                                            @if(Auth::user()->type == 'admin' || in_array($project->id,
+                                            Auth::user()->agency->agencyProjects()->pluck('project_id')->toArray()))
                                             <hr>
                                             <li class="navi-item">
                                                 <a href="{{ url('project/'.$project->id.'/edit') }}" class="navi-link">
@@ -291,7 +292,8 @@
                                         class="text-muted font-weight-bold">({{ __('labels.last_update') }}:
                                         {{ Carbon\Carbon::parse($project->latest_progress->date_of_advance ?? now())->translatedFormat('l, d M Y') }})</span>
                                     @if(Auth::check())
-                                    @if(Auth::user()->type == 'admin' || in_array($project->id, Auth::user()->agency->projects()->pluck('projects.id')->toArray()))
+                                    @if(Auth::user()->type == 'admin' || in_array($project->id,
+                                    Auth::user()->agency->agencyProjects()->pluck('project_id')->toArray()))
                                     <div class="float-right">
                                         <a
                                             href="{{ url('project-progress/'.$project->id) }}">{{ __('labels.add_progress') }}</a>
@@ -367,7 +369,8 @@
                                         class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->tenders->count()) }}
                                         {{ __('labels.tender') }}</a>
                                     @if(Auth::check())
-                                    @if(Auth::user()->type == 'admin' || in_array($project->id, Auth::user()->agency->projects()->pluck('projects.id')->toArray()))
+                                    @if(Auth::user()->type == 'admin' || in_array($project->id,
+                                    Auth::user()->agency->agencyProjects()->pluck('project_id')->toArray()))
                                     <a href="{{ route('project.tender.create', $project) }}"
                                         class="text-primary font-weight-bolder">{{ __('labels.add') }}
                                         {{ __('labels.tender') }}</a>
@@ -386,7 +389,8 @@
                                         class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->file->count()) }}
                                         {{ __('labels.document') }}</a>
                                     @if(Auth::check())
-                                    @if(Auth::user()->type == 'admin' || in_array($project->id, Auth::user()->agency->projects()->pluck('projects.id')->toArray()))
+                                    @if(Auth::user()->type == 'admin' || in_array($project->id,
+                                    Auth::user()->agency->agencyProjects()->pluck('project_id')->toArray()))
                                     <a href="{{ route('project.file.index', $project) }}"
                                         class="text-primary font-weight-bolder">{{ __('labels.add') }}
                                         {{ __('labels.document') }}</a>
@@ -405,7 +409,8 @@
                                         class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->project_budget->count()) }}
                                         {{ __('labels.budget') }}</a>
                                     @if(Auth::check())
-                                    @if(Auth::user()->type == 'admin' || in_array($project->id, Auth::user()->agency->projects()->pluck('projects.id')->toArray()))
+                                    @if(Auth::user()->type == 'admin' || in_array($project->id,
+                                    Auth::user()->agency->agencyProjects()->pluck('project_id')->toArray()))
                                     <a href="{{ url('project-budget/'.$project->id) }}"
                                         class="text-primary font-weight-bolder">{{ __('labels.add') }}
                                         {{ __('labels.budget') }}</a>

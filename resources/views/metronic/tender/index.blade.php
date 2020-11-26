@@ -37,6 +37,9 @@
                 <form class="ml-5"
                     action="{{ isset($project) ? route('project.tender.index', $project) : route('tender.index') }}"
                     method="GET">
+                    @if(request()->type)
+                    <input type="hidden" name="type" value="{{ request()->type }}">
+                    @endif
                     <div class="input-group input-group-sm input-group-solid" style="max-width: 175px">
                         <input type="text" name="query_tender" value="{{ request()->get('query_tender') }}"
                             class="form-control" id="kt_subheader_search_form"
@@ -75,6 +78,25 @@
             <!--end::Button-->
         </div>
         <!--end::Toolbar-->
+        @else
+        @if(Auth::check())
+        @if(Auth::user()->type == 'agency')
+        <!--begin::Toolbar-->
+        <div class="d-flex align-items-center">
+            <!--begin::Button-->
+            <a href="{{ route('tender.index', ['type' => request()->type == 'only_me' ? 'all' : 'only_me']) }}"
+                class="btn btn-success font-weight-bolder mr-2">
+                @if(request()->type == 'only_me')
+                {{ __('labels.show_all') }} {{ __('labels.tender') }}
+                @else
+                {{ __('labels.tender') }} {{ Auth::user()->agency->name }}
+                @endif
+            </a>
+            <!--end::Button-->
+        </div>
+        <!--end::Toolbar-->
+        @endif
+        @endif
         @endif
     </div>
 </div>
@@ -164,6 +186,9 @@
                                                 </a>
                                             </li>
                                             @if(Auth::check())
+                                            @if(Auth::user()->type == 'admin' || in_array($tender->id,
+                                            App\Tender::whereIn('project_id',
+                                            Auth::user()->agency->agencyProjects()->pluck('project_id'))->pluck('id')->toArray()))
                                             <hr>
                                             <li class="navi-item">
                                                 <a href="{{ url('tender/'.$tender->id.'/edit') }}" class="navi-link">
@@ -186,6 +211,8 @@
                                                     <span class="navi-text ml-2"> {{ __('labels.edit') }}</span>
                                                 </a>
                                             </li>
+                                            @endif
+                                            @if(Auth::user()->type == 'admin')
                                             <li class="navi-item">
                                                 <a href="javascript:deleteFn('tender', '{{ $tender->id }}')"
                                                     class="navi-link">
@@ -208,6 +235,7 @@
                                                     <span class="navi-text ml-2"> {{ __('labels.delete') }}</span>
                                                 </a>
                                             </li>
+                                            @endif
                                             @endif
                                         </ul>
                                         <!--end::Navigation-->
@@ -272,9 +300,13 @@
                                         class="text-dark-75 font-weight-bolder font-size-sm">{{ $tender->awards->count() }}
                                         {{ __('labels.award') }}</a>
                                     @if(Auth::check())
+                                    @if(Auth::user()->type == 'admin' || in_array($tender->id,
+                                    App\Tender::whereIn('project_id',
+                                    Auth::user()->agency->agencyProjects()->pluck('project_id'))->pluck('id')->toArray()))
                                     <a href="{{ url('award-create/'.$tender->id) }}"
                                         class="text-primary font-weight-bolder">{{ __('labels.create') }}
                                         {{ __('labels.award') }}</a>
+                                    @endif
                                     @endif
                                 </div>
                             </div>
@@ -289,9 +321,13 @@
                                         class="text-dark-75 font-weight-bolder font-size-sm">{{ $tender->tender_offerer->count() }}
                                         {{ __('labels.offerer') }}</a>
                                     @if(Auth::check())
+                                    @if(Auth::user()->type == 'admin' || in_array($tender->id,
+                                    App\Tender::whereIn('project_id',
+                                    Auth::user()->agency->agencyProjects()->pluck('project_id'))->pluck('id')->toArray()))
                                     <a href="{{ url('tender-offerer/'.$tender->id) }}"
                                         class="text-primary font-weight-bolder">{{ __('labels.create') }}
                                         {{ __('labels.offerer') }}</a>
+                                    @endif
                                     @endif
                                 </div>
                             </div>

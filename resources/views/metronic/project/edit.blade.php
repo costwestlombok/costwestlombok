@@ -1,119 +1,12 @@
 @extends('layouts.metronic')
 @section('style')
 <link href="/metronic/assets/css/pages/wizard/wizard-3.css" rel="stylesheet" type="text/css" />
-@endsection
-@section('script')
-<script src="/metronic/assets/js/pages/custom/wizard/wizard-3.js"></script>
-<script src="/metronic/assets/js/pages/crud/forms/widgets/select2.js"></script>
-<script>
-    var COST_URL = "{{ url('/get-entity') }}";
-</script>
-<script>
-    var KTSelect2 = function () {
-        // Private functions
-        var demos = function () {
-            // basic
-            $('#entity').select2({
-                placeholder: "{{ __('labels.choose_organization') }}"
-            });
-            $('#unit').select2({
-                placeholder: "{{ __('labels.choose_organization_unit') }}"
-            });
-            $('#official').select2({
-                placeholder: "{{ __('labels.choose_official') }}"
-            });
-            $('#sector').select2({
-                placeholder: "{{ __('labels.choose_sector') }}"
-            });
-            $('#subsector').select2({
-                placeholder: "{{ __('labels.choose_subsector') }}"
-            });
-            $('#purpose').select2({
-                placeholder: "{{ __('labels.choose_purpose') }}"
-            });
-            $('#status').select2({
-                placeholder: "{{ __('labels.choose_status') }}"
-            });
-        }
-        return {
-            init: function () {
-                demos();
-            }
-        };
-    }();
-    var KTTypeahead = function () {
-        var demo3 = function () {
-            var role = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.whitespace,
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                // url points to a json file that contains an array of country names, see
-                // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
-                // prefetch: COST_URL
-                prefetch: "{{ url('/get-role') }}"
-            });
-
-            // passing in `null` for the `options` arguments will result in the default
-            // options being used
-            $('#role_id').typeahead(null, {
-                name: 'role_id',
-                source: role
-            });
-        }
-        return {
-            // public functions
-            init: function () {
-                demo3();
-            }
-        };
-    }();
-
-    jQuery(document).ready(function () {
-        KTTypeahead.init();
-        KTSelect2.init();
-        $('#entity').change(function () {
-            var entity_id = $(this).val();
-            $.ajax({
-                type: "GET",
-                url: "{{url('/get-unit')}}/" + entity_id,
-                success: function (data) {
-                    $('#unit option:gt(0)').remove();
-                    $.each(data, function () {
-                        $("#unit").append('<option value="' + this.id + '">' + this.unit_name + '</option>')
-                    });
-                }
-            });
-        });
-
-        $('#unit').change(function () {
-            var unit_id = $(this).val();
-            console.log("tes");
-            $.ajax({
-                type: "GET",
-                url: "{{url('/get-official')}}/" + unit_id,
-                success: function (data) {
-                    $('#official option:gt(0)').remove();
-                    $.each(data, function () {
-                        $("#official").append('<option value="' + this.id + '">' + this.name + '</option>')
-                    });
-                }
-            });
-        });
-
-        $('#sector').change(function () {
-            var sector_id = $(this).val();
-            $.ajax({
-                type: "GET",
-                url: "{{url('/get-subsector')}}/" + sector_id,
-                success: function (data) {
-                    $('#subsector option:gt(0)').remove();
-                    $.each(data, function () {
-                        $("#subsector").append('<option value="' + this.id + '">' + this.subsector_name + '</option>')
-                    });
-                }
-            });
-        });
-    });
-</script>
+<style>
+    select[name='status_id'] {
+        width: 100% !important;
+        height: calc(1.5em + 1.3rem + 2px) !important;
+    }
+</style>
 @endsection
 @section('content')
 @php
@@ -443,7 +336,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id 
                                         <div class="form-group">
                                             <label>{{ __('labels.status') }}</label>
                                             <select class="form-control" name="status_id" id="status"
-                                                style="width: 100%;">
+                                                style="width: 100%;" required>
                                                 <option value="">{{ __('labels.choose_status') }}</option>
                                                 @foreach ($statuses as $status)
                                                 <option value="{{$status->id}}" @if(isset($project)) @if($status->id
@@ -484,4 +377,244 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id 
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+    "use strict";
+
+    // Class definition
+    var KTWizard3 = function () {
+        // Base elements
+        var _wizardEl;
+        var _formEl;
+        var _wizard;
+        var _validations = [];
+
+        // Private functions
+        var initWizard = function () {
+            // Initialize form wizard
+            _wizard = new KTWizard(_wizardEl, {
+                startStep: 1, // initial active step number
+                clickableSteps: true  // allow step clicking
+            });
+
+            // Validation before going to next page
+            _wizard.on('beforeNext', function (wizard) {
+                // Don't go to the next step yet
+                _wizard.stop();
+
+                // Validate form
+                var validator = _validations[wizard.getStep() - 1]; // get validator for currnt step
+                validator.validate().then(function (status) {
+                    if (status == 'Valid') {
+                        _wizard.goNext();
+                        KTUtil.scrollTop();
+                    } else {
+                        Swal.fire({
+                            text: "{{ __('labels.form_wizard_warning_text') }}",
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "{{ __('labels.form_wizard_warning_confirm') }}",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light"
+                            }
+                        }).then(function () {
+                            KTUtil.scrollTop();
+                        });
+                    }
+                });
+            });
+
+            // Change event
+            _wizard.on('change', function (wizard) {
+                KTUtil.scrollTop();
+            });
+        }
+
+        var initValidation = function () {
+            // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+            // Step 1
+            _validations.push(FormValidation.formValidation(
+                _formEl,
+                {
+                    fields: {
+                        project_code: {
+                            validators: {
+                                notEmpty: {
+                                    message: "{{ __('labels.project_code') }} {{ __('labels.is_required') }}"
+                                }
+                            }
+                        },
+                        project_title: {
+                            validators: {
+                                notEmpty: {
+                                    message: "{{ __('labels.project_title') }} {{ __('labels.is_required') }}"
+                                }
+                            }
+                        },
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap: new FormValidation.plugins.Bootstrap()
+                    }
+                }
+            ));
+
+            // Step 2
+            _validations.push(FormValidation.formValidation(
+                _formEl, {}
+            ));
+
+            // Step 3
+            _validations.push(FormValidation.formValidation(
+                _formEl, {}
+            ));
+
+            // Step 4
+            _validations.push(FormValidation.formValidation(
+                _formEl,
+                {
+                    fields: {
+                        status_id: {
+                            validators: {
+                                notEmpty: {
+                                    message: "{{ __('labels.status') }} {{ __('labels.is_required') }}"
+                                }
+                            }
+                        },
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap: new FormValidation.plugins.Bootstrap()
+                    }
+                }
+            ));
+        }
+
+        return {
+            // public functions
+            init: function () {
+                _wizardEl = KTUtil.getById('kt_wizard_v3');
+                _formEl = KTUtil.getById('kt_form');
+
+                initWizard();
+                initValidation();
+            }
+        };
+    }();
+
+    jQuery(document).ready(function () {
+        KTWizard3.init();
+    });
+</script>
+<script src="/metronic/assets/js/pages/crud/forms/widgets/select2.js"></script>
+<script>
+    var COST_URL = "{{ url('/get-entity') }}";
+</script>
+<script>
+    var KTSelect2 = function () {
+        // Private functions
+        var demos = function () {
+            // basic
+            $('#entity').select2({
+                placeholder: "{{ __('labels.choose_organization') }}"
+            });
+            $('#unit').select2({
+                placeholder: "{{ __('labels.choose_organization_unit') }}"
+            });
+            $('#official').select2({
+                placeholder: "{{ __('labels.choose_official') }}"
+            });
+            $('#sector').select2({
+                placeholder: "{{ __('labels.choose_sector') }}"
+            });
+            $('#subsector').select2({
+                placeholder: "{{ __('labels.choose_subsector') }}"
+            });
+            $('#purpose').select2({
+                placeholder: "{{ __('labels.choose_purpose') }}"
+            });
+            $('#status').select2({
+                placeholder: "{{ __('labels.choose_status') }}"
+            });
+        }
+        return {
+            init: function () {
+                demos();
+            }
+        };
+    }();
+    var KTTypeahead = function () {
+        var demo3 = function () {
+            var role = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                // url points to a json file that contains an array of country names, see
+                // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
+                // prefetch: COST_URL
+                prefetch: "{{ url('/get-role') }}"
+            });
+
+            // passing in `null` for the `options` arguments will result in the default
+            // options being used
+            $('#role_id').typeahead(null, {
+                name: 'role_id',
+                source: role
+            });
+        }
+        return {
+            // public functions
+            init: function () {
+                demo3();
+            }
+        };
+    }();
+
+    jQuery(document).ready(function () {
+        KTTypeahead.init();
+        KTSelect2.init();
+        $('#entity').change(function () {
+            var entity_id = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "{{url('/get-unit')}}/" + entity_id,
+                success: function (data) {
+                    $('#unit option:gt(0)').remove();
+                    $.each(data, function () {
+                        $("#unit").append('<option value="' + this.id + '">' + this.unit_name + '</option>')
+                    });
+                }
+            });
+        });
+
+        $('#unit').change(function () {
+            var unit_id = $(this).val();
+            console.log("tes");
+            $.ajax({
+                type: "GET",
+                url: "{{url('/get-official')}}/" + unit_id,
+                success: function (data) {
+                    $('#official option:gt(0)').remove();
+                    $.each(data, function () {
+                        $("#official").append('<option value="' + this.id + '">' + this.name + '</option>')
+                    });
+                }
+            });
+        });
+
+        $('#sector').change(function () {
+            var sector_id = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "{{url('/get-subsector')}}/" + sector_id,
+                success: function (data) {
+                    $('#subsector option:gt(0)').remove();
+                    $.each(data, function () {
+                        $("#subsector").append('<option value="' + this.id + '">' + this.subsector_name + '</option>')
+                    });
+                }
+            });
+        });
+    });
+</script>
 @endsection

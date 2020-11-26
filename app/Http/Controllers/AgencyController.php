@@ -84,18 +84,13 @@ class AgencyController extends Controller
      */
     public function destroy(Agency $agency)
     {
+        $agency->user->delete();
         $agency->delete();
         return back();
     }
 
     public function user(Request $request, Agency $agency)
     {
-        // check username
-        $is_username_taken = \App\User::where('username', $request->username)->exists();
-        if ($is_username_taken) {
-            Session::put('fail', __('labels.username_taken'));
-            return back()->withInput();
-        }
         $r = $request->all();
         unset($r['_token']);
         if ($agency->user) {
@@ -106,6 +101,12 @@ class AgencyController extends Controller
             }
             $agency->user()->update($r);
         } else {
+            // check username
+            $is_username_taken = \App\User::where('username', $request->username)->exists();
+            if ($is_username_taken) {
+                Session::put('fail', __('labels.username_taken'));
+                return back()->withInput();
+            }
             $r['password'] = bcrypt($r['password']);
             $agency->user()->create($r);
         }

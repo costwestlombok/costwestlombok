@@ -16,6 +16,9 @@
                 <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">{{ $contracts->total() }}
                     Total</span>
                 <form class="ml-5" action="{{ route('contract.index') }}" method="GET">
+                    @if(request()->type)
+                    <input type="hidden" name="type" value="{{ request()->type }}">
+                    @endif
                     <div class="input-group input-group-sm input-group-solid" style="max-width: 175px">
                         <input type="text" name="query_contract" value="{{ request()->get('query_contract') }}"
                             class="form-control" id="kt_subheader_search_form"

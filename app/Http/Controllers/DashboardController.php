@@ -29,7 +29,7 @@ class DashboardController extends Controller
         if (Auth::user()->type == 'admin') {
             $projects = Project::orderBy('created_at', 'DESC')->limit(4)->get();
         } else {
-            $projects = Auth::user()->agency->projects()->orderBy('created_at', 'DESC')->limit(4)->get();
+            $projects = Project::whereIn('id', Auth::user()->agency->agencyProjects()->pluck('project_id'))->orderBy('created_at', 'DESC')->limit(4)->get();
         }
         $officials = Official::orderBy('created_at', 'DESC')->limit(5)->get();
         $sources = Source::orderBy('created_at', 'DESC')->limit(5)->get();

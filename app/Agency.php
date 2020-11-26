@@ -21,4 +21,9 @@ class Agency extends Model
     {
         return $this->belongsToMany(Project::class, 'agency_projects', 'project_id', 'agency_id');
     }
+
+    public function agencyProjects()
+    {
+        return $this->hasMany(AgencyProject::class);
+    }
 }
