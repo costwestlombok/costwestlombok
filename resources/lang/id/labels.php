@@ -124,10 +124,12 @@ return  [
 	'choose_sector' => 'Pilih Sektor',
 
 	// source
-	'acronym' => 'Akronim',
+	'acronym' => 'Akronim/Singkatan',
+	'sources' => 'Sumber Dana',
 
 	// offerer
 	'legal_name' => 'Nama Resmi',
+	'offerer_name' => 'Nama Penawar',
 
 	// project
 	'displaying' => 'Menampilkan',

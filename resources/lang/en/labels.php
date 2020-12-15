@@ -125,9 +125,11 @@ return  [
 
 	// source
 	'acronym' => 'Acronym',
+	'sources' => 'Source Name',
 
 	// offerer
 	'legal_name' => 'Legal Name',
+	'offerer_name' => 'Offerer Name',
 
 	// project
 	'displaying' => 'Displaying',

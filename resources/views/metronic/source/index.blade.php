@@ -64,7 +64,7 @@
                     },
                 },
                 {
-                    targets: 0,
+                    targets: [0, 2, 3],
                     className: 'text-center'
                 },
             ],

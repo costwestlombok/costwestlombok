@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="name">{{ __('labels.name') }}</label>
+                                <label for="name">{{ __('labels.sources') }}</label>
                                 <input type="text" class="form-control" value="{{ $source->source_name ?? '' }}"
                                     name="source_name" required />
                             </div>

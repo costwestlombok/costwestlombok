@@ -35,7 +35,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="name">{{ __('labels.name') }}</label>
+                                <label for="name">{{ __('labels.subsector') }}</label>
                                 <input type="text" class="form-control" value="{{ $subsector->subsector_name ?? '' }}"
                                     name="subsector_name" required />
                             </div>

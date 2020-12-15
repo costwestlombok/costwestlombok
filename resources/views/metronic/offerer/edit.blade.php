@@ -20,7 +20,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">{{ __('labels.name') }}</label>
+                                <label for="name">{{ __('labels.offerer_name') }}</label>
                                 <input type="text" class="form-control" name="offerer_name"
                                     value="{{$offerer->offerer_name ?? ''}}" required />
                             </div>

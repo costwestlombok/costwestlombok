@@ -20,7 +20,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="name">{{ __('labels.name') }}</label>
+                                <label for="name">{{ __('labels.contract_method') }}</label>
                                 <input type="text" class="form-control"
                                     value="{{ $contract_method->method_name ?? '' }}" name="method_name" required />
                             </div>
