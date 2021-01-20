@@ -150,14 +150,14 @@ class FrontController extends Controller
                     // tender
                     $award = $contract->award;
                     $tender = $award->tender;
-                    $c['summary']['tender'] = [
-                        'title' => $tender->project_process_name,
-                        'costEstimate' => [
-                            'amount' => $award->contract_estimate_cost,
-                            'currency' => 'IDR',
-                        ],
-                        'numberOfTenderers' => $award->participants_number,
-                    ];
+                    // $c['summary']['tender'] = [
+                    //     'title' => $tender->project_process_name,
+                    //     'costEstimate' => [
+                    //         'amount' => $award->contract_estimate_cost,
+                    //         'currency' => 'IDR',
+                    //     ],
+                    //     'numberOfTenderers' => $award->participants_number,
+                    // ];
                     // $c['suppliers ']
 
                     return $c;
