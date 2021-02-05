@@ -163,7 +163,7 @@ class ContractController extends Controller
         return view('metronic.completion.show', compact('completion', 'contract'));
     }
 
-    public function completion_create(Contract $contract)
+    public function completionCreate(Contract $contract)
     {
         return view('metronic.completion.edit', compact('contract'));
     }
