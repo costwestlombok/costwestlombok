@@ -207,6 +207,7 @@
             </div>
             <!--end: Item-->
             <!--begin: Item-->
+            <!--
             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                 <span class="mr-4">
                     <i class="fas fa-qrcode icon-2x"></i>
@@ -218,6 +219,7 @@
                     </span>
                 </div>
             </div>
+            -->
             <!--end: Item-->
             <!--begin: Item-->
             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">

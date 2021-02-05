@@ -141,11 +141,13 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id 
                                         <input type="text" class="form-control" name="budget" id="budget"
                                             value="{{ number_format($project->budget ?? '0') }}" required>
                                     </div>
+                                    <!--
                                     <div class="form-group fv-plugins-icon-container">
                                         <label for="name">{{ __('labels.sefin_code') }}</label>
                                         <input type="text" class="form-control" name="code_sefin"
                                             value="{{$project->code_sefin ?? ''}}" id="code_sefin">
                                     </div>
+                                    -->
                                     <div class="form-group fv-plugins-icon-container">
                                         <label for="name">{{ __('labels.environment_impact_description') }}</label>
                                         <textarea name="environment_desc" id="environment_desc" class="form-control"
