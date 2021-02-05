@@ -314,7 +314,7 @@
                         </div>
                         <!--end::Content-->
                         <!--begin::Text-->
-                        <p class="mb-7 mt-3">{!! $project->project_description !!}</p>
+                        <pre class="mb-7 mt-3" style="font: inherit">{!! $project->project_description !!}</pre>
                         <!--end::Text-->
                         <!--begin::Blog-->
                         <div class="d-flex flex-wrap">
