@@ -227,6 +227,9 @@ class ProjectController extends Controller
     {
         $data = $request->all();
         unset($data['map_search']);
+        $start = Carbon::parse($request->start_date);
+        $end = Carbon::parse($request->end_date);
+        $data['duration'] = $start->diffInDays($end);
         $data['budget'] = str_replace(",", "", $request->budget);
         $role = Role::where('role_name', $request->role_id)->first();
 
