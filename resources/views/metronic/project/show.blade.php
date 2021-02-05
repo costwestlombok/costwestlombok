@@ -314,7 +314,7 @@
                         </div>
                         <!--end::Content-->
                         <!--begin::Text-->
-                        <p class="mb-7 mt-3 text-truncate">{{ $project->project_description }}</p>
+                        <p class="mb-7 mt-3">{!! $project->project_description !!}</p>
                         <!--end::Text-->
                         <!--begin::Blog-->
                         <div class="d-flex flex-wrap">
