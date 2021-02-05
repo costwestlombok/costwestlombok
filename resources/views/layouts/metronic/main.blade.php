@@ -3,8 +3,7 @@
 <div id="kt_header_mobile" class="header-mobile header-mobile-fixed">
     <!--begin::Logo-->
     <a href="{{ url('/') }}">
-        <img alt="Logo" src="{{ url('images/CoST logo_ West Lombok, Indonesia.png') }}"
-            class="logo-default max-h-30px" />
+        <img alt="Logo" src="{{ url('images/cost_30.png') }}" class="logo-default max-h-30px" />
     </a>
     <!--end::Logo-->
     <!--begin::Toolbar-->
@@ -446,8 +445,7 @@
                         <!--end::Aside Toggle-->
                         <!--begin::Logo-->
                         <a href="{{ url('/') }}">
-                            <img alt="Logo" src="{{ asset('images/CoST logo_ West Lombok, Indonesia.png') }}"
-                                class="logo-sticky max-h-35px" />
+                            <img alt="Logo" src="{{ asset('images/cost_35.png') }}" class="logo-sticky max-h-35px" />
                         </a>
                         <!--end::Logo-->
                         <!--begin::Desktop Search-->
@@ -709,7 +707,8 @@
             </div>
             <!--end::Content-->
             <!--begin::Footer-->
-            <div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer" style="border-top: 1px solid #EBEDF3">
+            <div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer"
+                style="border-top: 1px solid #EBEDF3">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
@@ -722,17 +721,23 @@
                                 <!--begin::Dropdown-->
                                 <div class="text-dark order-2 order-md-1">
                                     <span class="text-muted font-weight-bold mr-2">2020©</span>
-                                    <a href="{{ url('/') }}" class="text-dark-75 text-hover-primary">{{ __('labels.title') }}</a>
+                                    <a href="{{ url('/') }}"
+                                        class="text-dark-75 text-hover-primary">{{ __('labels.title') }}</a>
                                 </div>
                                 <!--end::Dropdown-->
                             </div>
-                            <img src="{{url('/images/undp.jpg')}}" alt="UNDP" class="img-responsive mr-3 align-top" height="50">
-                            <img src="{{url('/images/fair-biz.jpg')}}" alt="UNDP" class="img-responsive mr-3 align-top" height="30">
-                            <img src="{{url('/images/uk-gov.jpg')}}" alt="UNDP" class="img-responsive align-top" height="20">
+                            <img src="{{url('/images/uk-gov.png')}}" alt="UNDP" class="img-responsive align-top"
+                                height="50">
+                            <img src="{{url('/images/undp.png')}}" alt="UNDP" class="img-responsive mr-3 align-top"
+                                height="50">
+                            <img src="{{url('/images/fair-biz.png')}}" alt="UNDP" class="img-responsive mr-3 align-top"
+                                height="50">
+                            <img src="{{url('/images/netherlands.png')}}" alt="UNDP"
+                                class="img-responsive mr-3 align-top" height="50">
                         </div>
                     </div>
                 </div>
-                
+
             </div>
             <!--end::Footer-->
         </div>
