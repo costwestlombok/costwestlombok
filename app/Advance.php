@@ -19,7 +19,7 @@ class Advance extends Model
 
     public function status()
     {
-        return $this->belongsTo('App\status', 'status_id', 'id');
+        return $this->belongsTo('App\Status', 'status_id', 'id');
     }
 
     public function image()
