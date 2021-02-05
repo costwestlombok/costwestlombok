@@ -182,7 +182,7 @@ class ContractController extends Controller
         $c = Completion::create($data);
         Session::put('success', trans('labels.saved'));
 
-        return redirect('contract-completion/' . $c->id);
+        return redirect('contract/' . $c->contract->id . '/completion');
     }
 
     public function completion_update(Request $request, Completion $completion)

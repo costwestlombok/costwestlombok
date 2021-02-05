@@ -1,11 +1,5 @@
 @extends('layouts.metronic')
 @section('content')
-@php
-if (!isset($contract)) {
-$contract = $completion->contract;
-dd($contract->award);
-}
-@endphp
 <!--begin::Subheader-->
 <div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
     <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
