@@ -3,6 +3,7 @@
 @php
 if (!isset($contract)) {
 $contract = $completion->contract;
+dd($contract->award);
 }
 @endphp
 <!--begin::Subheader-->
