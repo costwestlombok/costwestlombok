@@ -34,8 +34,8 @@ return  [
 	'agency' => 'OPD',
 	'catalog' => 'Katalog',
 	'organization' => 'Organisasi',
-	'organization_unit' => 'Unit Organisasi',
-	'official' => 'Penjabat',
+	'organization_unit' => 'Unit/Bagian Organisasi',
+	'official' => 'Pejabat',
 	'role' => 'Wewenang',
 	'sector' => 'Sektor',
 	'subsector' => 'Subsektor',
@@ -60,10 +60,10 @@ return  [
 
 	// shared/project
 	'document' => 'Dokumen',
-	'budget' => 'Anggaran',
+	'budget' => 'Anggaran Proyek',
 	'edit' => 'Ubah',
 	'delete' => 'Hapus',
-	'project_code' => 'Kode Proyek',
+	'project_code' => 'Nomor Referensi',
 	'start_date' => 'Tanggal Mulai',
 	'due_date' => 'Tanggal Berakhir',
 	'progress' => 'Kemajuan',
@@ -115,7 +115,7 @@ return  [
 
 	// official
 	'position' => 'Posisi',
-	'official_name' => 'Nama Penjabat',
+	'official_name' => 'Nama Pejabat',
 	'choose_organization_unit' => 'Pilih Unit Organisasi',
 
 	// sector
@@ -147,22 +147,22 @@ return  [
 	// project > edit
 	'next' => 'Selanjutnya',
 	'previous' => 'Sebelumnya',
-	'choose_official' => 'Pilih Penjabat',
+	'choose_official' => 'Pilih Pejabat',
 	'choose_subsector' => 'Pilih Subsektor',
 	'choose_purpose' => 'Pilih Tujuan Proyek',
 	'choose_status' => 'Pilih Status',
 	'project_add_sub' => 'Buat detail proyek dan simpan',
 	'project_edit_sub' => 'Ubah detail proyek dan simpan perubahan',
 
-	'project_description' => 'Deskripsi Proyek',
+	'project_description' => 'Gambaran Proyek',
 	'project_description_sub' => 'Masukkan Detail Proyek Anda',
 	'project_name' => 'Nama Proyek',
-	'project_description' => 'Deskripsi Proyek',
-	'environment_impact_description' => 'Deskripsi Dampak Lingkungan',
-	'settlement_description' => 'Deskripsi Penyelesaian',
+	// 'project_description' => 'Deskripsi Proyek',
+	'environment_impact_description' => 'Dampak Lingkungan',
+	'settlement_description' => 'Dampak Terhadap Lahan dan Permukiman',
 
-	'management' => 'Manajemen',
-	'management_sub' => 'Manajemen Proyek',
+	'management' => 'Pemilik Proyek',
+	'management_sub' => 'Pemilik Proyek',
 
 	'location_sub' => 'Pilih Lokasi Awal dan Lokasi Akhir',
 	'enter_location' => 'Masukkan Lokasi',
