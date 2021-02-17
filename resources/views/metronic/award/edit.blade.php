@@ -80,7 +80,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group fv-plugins-icon-container">
+                                {{-- <div class="form-group fv-plugins-icon-container">
                                     <div class="form-group">
                                         <label for="name">{{ __('labels.contract_method') }}</label>
                                         <div class="typeahead">
@@ -90,15 +90,15 @@
                                                 style="width: 100%">
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label>Status</label>
                                     <div class="typeahead">
                                         <input class="form-control" value="{{ $award->status->status_name ?? '' }}"
                                             id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%">
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <!--end: Wizard Step 1-->
                             <!--begin: Wizard Step 2-->

@@ -44,7 +44,7 @@ return  [
 	'contract_type' => 'Jenis Kontrak',
 	'offerer' => 'Penawar',
 	'contact' => 'Kontak',
-	'tender_method' => 'Metode Tender',
+	'tender_method' => 'Proses Pengadaan',
 	'contract_method' => 'Metode Kontrak',
 	'warranty_type' => 'Jenis Garansi',
 	'status' => 'Status',
@@ -64,8 +64,8 @@ return  [
 	'edit' => 'Ubah',
 	'delete' => 'Hapus',
 	'project_code' => 'Nomor Referensi',
-	'start_date' => 'Tanggal Mulai',
-	'due_date' => 'Tanggal Berakhir',
+	'start_date' => 'Tanggal Mulai Proyek',
+	'due_date' => 'Tanggal Berakhir Proyek',
 	'progress' => 'Kemajuan',
 	'real_physical' => 'Fisik Riil',
 	'last_update' => 'Pembaharuan terbaru',
@@ -171,9 +171,9 @@ return  [
 	'final_latitude' => 'Latitude Akhir',
 	'final_longitude' => 'Longitude Akhir',
 
-	'date_and_status' => 'Tanggal dan Status',
+	'date_and_status' => 'Tanggal dan Status Proyek',
 	'end_date' => 'Tanggal Berakhir',
-	'approved_date' => 'Tanggal Disetujui',
+	'approved_date' => 'Tanggal Persetujuan Anggaran Proyek',
 	'publication_date' => 'Tanggal Publikasi',
 
 	// tender
@@ -190,7 +190,7 @@ return  [
 	'tender_amount' => 'Jumlah Tender',
 	'tender_status' => 'Status Tender',
 
-	'management_and_date' => 'Manajemen dan Tanggal',
+	'management_and_date' => 'Manajemen Pengadaan dan Tanggal',
 	'max_extended_date' => 'Tanggal Perpanjangan Maksimal',
 
 	'file' => 'Berkas',
@@ -206,15 +206,15 @@ return  [
 
 	// award
 	'award_process_number' => 'Award Process Number',
-	'estimated_cost' => 'Estimasi Biaya',
-	'cost' => 'Biaya',
+	'estimated_cost' => 'Perkiraan Biaya',
+	'cost' => 'Harga Kontrak',
 	'participant' => 'Partisipan',
 	'view_detail' => 'Lihat Detail',
 
 	'award_description' => 'Deskripsi Award',
-	'award_description_sub' => 'Masukkan Detail Award Anda',
-	'participant_number' => 'Jumlah Partisipan',
-	'cost_estimation' => 'Biaya Estimasi',
+	'award_description_sub' => 'Masukkan Detail Penawaran',
+	'participant_number' => 'Jumlah Perusahaan Yang Memasukkan Penawaran',
+	'cost_estimation' => 'Perkiraan Biaya',
 
 	'file_and_publication_date' => 'Berkas dan Tanggal Publikasi',
 	'file_opening_act' => 'Berkas Opening Act',
@@ -225,7 +225,7 @@ return  [
 	// contract
 	'contract_number' => 'Nomor Kontrak',
 	'contract_scope' => 'Lingkup Kontrak',
-	'price_local_currency' => 'Harga Lokal',
+	'price_local_currency' => 'Harga Kontrak',
 	'price_usd_currency' => 'Harga USD',
 	'view' => 'Lihat',
 	'ammendment' => 'Amandemen',

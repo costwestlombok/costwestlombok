@@ -282,13 +282,13 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id ?
                                             name="tender_status_id" type="text" dir="ltr" style="width: 100%">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label>{{ __('labels.status') }}</label>
                                     <div class="typeahead">
                                         <input class="form-control" value="{{$tender->status->status_name ?? ''}}"
                                             id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%">
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <!--end: Wizard Step 1-->
                             <!--begin: Wizard Step 2-->
