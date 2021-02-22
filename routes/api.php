@@ -85,3 +85,6 @@ Route::get('execution/{execution}/delete', 'ExecutionController@destroy');
 
 Route::get('completion/{completion}/delete', 'CompletionController@destroy');
 Route::get('advance/{advance}/image', 'ProgressController@imageApi');
+
+Route::get('banner', 'BannerController@api');
+Route::get('banner/{banner}/delete', 'BannerController@destroy');

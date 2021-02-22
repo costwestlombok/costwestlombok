@@ -195,3 +195,4 @@ Route::get('/get-source', 'SourceController@get_data');
 
 Route::post('agency/{agency}/user', 'AgencyController@user')->name('agency.user');
 Route::resource('agency', 'AgencyController');
+Route::resource('banner', 'BannerController');

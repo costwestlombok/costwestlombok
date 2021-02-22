@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Banner;
 use Illuminate\Http\Request;
+use Storage;
+use DataTables;
+use Session;
 
 class BannerController extends Controller
 {
@@ -14,7 +17,7 @@ class BannerController extends Controller
      */
     public function index()
     {
-        //
+        return view('metronic.banner.index');
     }
 
     /**
@@ -24,7 +27,7 @@ class BannerController extends Controller
      */
     public function create()
     {
-        //
+        return view('metronic.banner.edit');
     }
 
     /**
@@ -35,7 +38,14 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        if ($request->has('image')) {
+            $data['image'] = $request->file('image')->store('banners');
+        }
+        Banner::create($data);
+        Session::put("success", trans('labels.saved'));
+
+        return redirect()->route('banner.index');
     }
 
     /**
@@ -57,7 +67,7 @@ class BannerController extends Controller
      */
     public function edit(Banner $banner)
     {
-        //
+        return view('metronic.banner.edit', compact('banner'));
     }
 
     /**
@@ -69,7 +79,15 @@ class BannerController extends Controller
      */
     public function update(Request $request, Banner $banner)
     {
-        //
+        $data = $request->all();
+        if ($request->has('image')) {
+            Storage::delete($banner->image);
+            $data['image'] = $request->file('image')->store('banners');
+        }
+        $banner->update($data);
+        Session::put("success", trans('labels.updated'));
+
+        return redirect()->route('banner.index');
     }
 
     /**
@@ -80,6 +98,17 @@ class BannerController extends Controller
      */
     public function destroy(Banner $banner)
     {
-        //
+        Storage::delete($banner->image);
+        $banner->delete();
+        return redirect()->route('banner.index');
+    }
+
+    public function api()
+    {
+        return DataTables::of(Banner::query())
+            ->editColumn('created_at', function ($banner) {
+                return date('Y-m-d H:i:s', strtotime($banner->created_at));
+            })
+            ->make(true);
     }
 }

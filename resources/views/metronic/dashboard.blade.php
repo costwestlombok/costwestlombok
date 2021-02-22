@@ -17,6 +17,42 @@
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">
+        @if(\App\Banner::count())
+        <!--begin::Row-->
+        <div class="row">
+            <div class="col-xl-12">
+                <div id="carouselExampleIndicators" class="carousel slide gutter-b" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        @foreach (\App\Banner::orderBy('order')->limit(5)->get() as $slider)
+                        <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}"
+                            class="{{ $loop->first ? 'active' : '' }}"></li>
+                        @endforeach
+                    </ol>
+                    <div class="carousel-inner" style="border-radius: 0.85rem;">
+                        @foreach (\App\Banner::orderBy('order')->limit(5)->get() as $slider)
+                        <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                            <img class="" style="object-fit: cover; width: 100%;"
+                                src="{{ url('storage/'.$slider->image) }}" alt="First slide">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>{{ $slider->title }}</h5>
+                                <p>{{ $slider->subtitle }}</p>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--end::Row-->
+        @endif
         <!--begin::Row-->
         <div class="row">
             <div class="col-xl-12">

@@ -27,7 +27,7 @@ return  [
 
 	// menu
 	'dashboard' => 'Beranda',
-	'auth' => 'tentikasi',
+	'auth' => 'Otentikasi',
 	'login' => 'Masuk',
 	'logout' => 'Keluar',
 	'principal' => 'Utama',
@@ -305,4 +305,9 @@ return  [
 	'is_required'=> 'harus diisi',
 	'form_wizard_warning_text'=> 'Maaf, sepertinya ada beberapa kesalahan yang terdeteksi, harap coba lagi.',
 	'form_wizard_warning_confirm'=> 'Oke, saya mengerti!',
+
+
+	'setting' => 'Konfigurasi',
+	'banner' => 'Banner',
+	'order' => 'Urutan',
 ];

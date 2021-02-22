@@ -92,7 +92,6 @@
                             <label class="custom-file-label"
                                 for="adendum">{{ isset($ammendment) ? ($ammendment->adendum ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file') }}</label>
                         </div>
-                        </select>
                     </div>
                     <div class="form-group">
                         <label>{{ __('labels.status') }}</label>

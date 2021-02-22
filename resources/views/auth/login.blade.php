@@ -45,7 +45,7 @@
 				<div class="login-form text-center p-7 position-relative overflow-hidden">
 					<!--begin::Login Header-->
 					<div class="d-flex flex-center mb-15">
-						<a href="#">
+						<a href="{{ url('/') }}">
 							<img src="{{ asset('images/cost_65.png') }}" class="max-h-65px" alt="" />
 						</a>
 					</div>
