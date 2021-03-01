@@ -278,12 +278,12 @@
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="d-block font-weight-bold mb-4">{{ __('labels.start_date') }}</span>
                                 <span
-                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->start_date)->translatedFormat('l, d M Y') }}</span>
+                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ $project->start_date ? $project->start_date->translatedFormat('l, d M Y') : '-' }}</span>
                             </div>
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="d-block font-weight-bold mb-4">{{ __('labels.due_date') }}</span>
                                 <span
-                                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->end_date)->translatedFormat('l, d M Y') }}</span>
+                                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ $project->end_date ? $project->end_date->translatedFormat('l, d M Y') : '-' }}</span>
                             </div>
                             <!--begin::Progress-->
                             <div class="flex-row-fluid mb-7">
@@ -314,7 +314,8 @@
                         </div>
                         <!--end::Content-->
                         <!--begin::Text-->
-                        <pre class="mb-7 mt-3" style="font: inherit">{!! $project->project_description !!}</pre>
+                        <pre class="mb-7 mt-3"
+                            style="font: inherit; white-space: pre-wrap;">{!! $project->project_description !!}</pre>
                         <!--end::Text-->
                         <!--begin::Blog-->
                         <div class="d-flex flex-wrap">
@@ -355,8 +356,12 @@
                                 <div class="d-flex flex-column text-dark-75">
                                     <span class="font-weight-bolder font-size-sm">{{ __('labels.duration') }}</span>
                                     <span class="font-weight-bolder font-size-h5">
+                                        @if($project->duration)
                                         {{ number_format($project->duration) }}
                                         <span class="text-dark-50 font-weight-bold"> {{ __('labels.days') }}</span>
+                                        @else
+                                        -
+                                        @endif
                                     </span>
                                 </div>
                             </div>
@@ -424,6 +429,88 @@
                         </div>
                         <!--end::Blog-->
                         <hr>
+                        <h3 class="card-label mt-5 mb-5">Identitas Proyek</h3>
+                        <table class="table">
+                            <tr>
+                                <td>1</td>
+                                <td>{{ __('labels.project_code') }}</td>
+                                <td>{{ $project->project_code }}</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Pemilik Proyek</td>
+                                <td>{{ $project->official->unit->org->name ?? '-' }},
+                                    {{ $project->official->unit->unit_name ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>{{ __('labels.sector') }}, {{ __('labels.subsector') }}</td>
+                                <td>{{ $project->subsector->sector->sector_name ?? '-' }},
+                                    {{ $project->subsector->subsector_name ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>{{ __('labels.project_name') }}</td>
+                                <td>{{ $project->project_title }}</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Lokasi Proyek</td>
+                                <td>{{ $project->project_location }}</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Tujuan</td>
+                                <td>{{ $project->purpose->purpose_name ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>{{ __('labels.project_description') }}</td>
+                                <td>{{ $project->project_description ?? '-' }}</td>
+                            </tr>
+                        </table>
+                        <hr>
+                        <h3 class="card-label mt-5 mb-5">Kontrak</h3>
+                        <table class="table">
+                            <tr>
+                                <td>1</td>
+                                <td>{{ __('labels.project_code') }}</td>
+                                <td>{{ $project->project_code }}</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Pemilik Proyek</td>
+                                <td>{{ $project->official->unit->org->name ?? '-' }},
+                                    {{ $project->official->unit->unit_name ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>{{ __('labels.sector') }}, {{ __('labels.subsector') }}</td>
+                                <td>{{ $project->subsector->sector->sector_name ?? '-' }},
+                                    {{ $project->subsector->subsector_name ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>{{ __('labels.project_name') }}</td>
+                                <td>{{ $project->project_title }}</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Lokasi Proyek</td>
+                                <td>{{ $project->project_location }}</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Tujuan</td>
+                                <td>{{ $project->purpose->purpose_name ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>{{ __('labels.project_description') }}</td>
+                                <td>{{ $project->project_description ?? '-' }}</td>
+                            </tr>
+                        </table>
+                        <hr>
                         <div class="row mt-5 mb-5">
                             <div class="col-md-6">
                                 <h3 class="card-label mt-5 mb-5">{{ __('labels.progress_percent') }} (%)</h3>
@@ -434,6 +521,7 @@
                                 <div id="chart_2"></div>
                             </div>
                         </div>
+                        @if($map)
                         <div class="row">
                             <div class="col-md-12">
                                 <h3 class="card-label mt-5 mb-5">{{ __('labels.location') }}</h3>
@@ -441,6 +529,7 @@
                                 {!! $map['html'] !!}
                             </div>
                         </div>
+                        @endif
                     </div>
                     <!--end::Body-->
                 </div>

@@ -25,6 +25,8 @@ class CreateProjectsTable extends Migration
             $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('set null');
             $table->uuid('status_id')->nullable();
             $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('set null');
+            $table->uuid('project_status_id')->nullable();
+            $table->foreign('project_status_id')->references('id')->on('project_statuses')->onUpdate('cascade')->onDelete('set null');
             $table->string('project_code')->nullable();
             $table->string('project_title')->nullable();
             $table->text('project_description')->nullable();
@@ -43,6 +45,9 @@ class CreateProjectsTable extends Migration
             $table->datetime('lifetime_end_date')->nullable();
             $table->datetime('date_of_publication')->nullable();
             $table->datetime('date_of_approved')->nullable();
+
+            // fllaj requirement
+            $table->text('project_location')->nullable();
             $table->timestamps();
         });
     }

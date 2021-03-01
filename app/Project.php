@@ -10,6 +10,14 @@ class Project extends Model
     use Uuids;
     protected $keyType = 'uuid';
     protected $guarded = [];
+    protected $dates = [
+        'start_date',
+        'end_date',
+        'date_of_approved',
+        'date_of_publication',
+        'created_at',
+        'updated_at',
+    ];
     public $incrementing = false;
 
     public function subsector()
@@ -60,5 +68,10 @@ class Project extends Model
     public function project_budget()
     {
         return $this->hasMany(Budget::class);
+    }
+
+    public function projectStatus()
+    {
+        return $this->hasMany(ProjectStatus::class);
     }
 }

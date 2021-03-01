@@ -310,4 +310,12 @@ return  [
 	'setting' => 'Konfigurasi',
 	'banner' => 'Banner',
 	'order' => 'Urutan',
+
+	// ProjectStatus
+	'identification' => 'Identifikasi',
+	'preparation' => 'Perencanaan',
+	'implementation' => 'Implementasi',
+	'completion' => 'Penyelesaian',
+	'completed' => 'Selesai',
+	'cancelled' => 'Dibatalkan',
 ];

@@ -77,6 +77,7 @@ Route::get('contact/{contact}/delete', 'ContactController@destroy');
 
 Route::get('project/{project}/delete', 'ProjectController@destroy');
 Route::get('project-file/{projectdocument}/delete', 'ProjectController@project_file_delete');
+Route::get('tender/{tender}/offerer', 'TenderController@offerer');
 Route::get('tender/{tender}/delete', 'TenderController@destroy');
 Route::get('award/{award}/delete', 'AwardController@destroy');
 Route::get('contract/{contract}/delete', 'ContractController@destroy');

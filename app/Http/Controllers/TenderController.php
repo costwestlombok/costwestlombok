@@ -9,6 +9,7 @@ use App\OrganizationUnit;
 use App\Project;
 use App\Status;
 use App\Tender;
+use App\TenderOfferer;
 use App\TenderMethod;
 use App\TenderStatus;
 use Carbon\Carbon;
@@ -16,6 +17,7 @@ use Illuminate\Http\Request;
 use Session;
 use Storage;
 use Auth;
+use DataTables;
 
 class TenderController extends Controller
 {
@@ -398,5 +400,27 @@ class TenderController extends Controller
     public function awardCreate(Tender $tender)
     {
         return view('metronic.award.edit', compact('tender'));
+    }
+
+    public function offerer(Tender $tender)
+    {
+        return DataTables::of(TenderOfferer::where('tender_id', $tender->id))
+            ->editColumn('created_at', function ($to) {
+                return date('Y-m-d H:i:s', strtotime($to->created_at));
+            })
+            ->addColumn('offerer', function ($to) {
+                return $to->offerer->offerer_name;
+            })
+            ->addColumn('contract', function ($to) {
+                return $to->offerer->contract->count();
+            })
+            ->orderColumn('contract', function ($query, $order) {
+                $query->withCount('contract')
+                // sortBy(function ($organization) {
+                //     return $organization->to->count();
+                // }, $order);
+                    ->orderBy('contract', $order);
+            })
+            ->make(true);
     }
 }

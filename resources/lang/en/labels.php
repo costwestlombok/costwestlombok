@@ -301,4 +301,12 @@ return  [
 	'setting' => 'Settings',
 	'banner' => 'Banner',
 	'order' => 'Order',
+
+	// ProjectStatus
+	'identification' => 'Identification',
+	'preparation' => 'Preparation',
+	'implementation' => 'Implementation',
+	'completion' => 'Completion',
+	'completed' => 'Completed',
+	'cancelled' => 'Cancelled',
 ];

@@ -153,12 +153,12 @@
             <div class="mr-12 d-flex flex-column mb-7">
                 <span class="d-block font-weight-bold mb-4">{{ __('labels.start_date') }}</span>
                 <span
-                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->start_date)->translatedFormat('l, d M Y') }}</span>
+                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ $project->start_date ? $project->start_date->translatedFormat('l, d M Y') : '-' }}</span>
             </div>
             <div class="mr-12 d-flex flex-column mb-7">
                 <span class="d-block font-weight-bold mb-4">{{ __('labels.due_date') }}</span>
                 <span
-                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($project->end_date)->translatedFormat('l, d M Y') }}</span>
+                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ $project->end_date ? $project->end_date->translatedFormat('l, d M Y') : '-' }}</span>
             </div>
             <!--begin::Progress-->
             <div class="flex-row-fluid mb-7">
@@ -229,8 +229,12 @@
                 <div class="d-flex flex-column text-dark-75">
                     <span class="font-weight-bolder font-size-sm">{{ __('labels.duration') }}</span>
                     <span class="font-weight-bolder font-size-h5">
+                        @if($project->duration)
                         {{ number_format($project->duration) }}
                         <span class="text-dark-50 font-weight-bold"> {{ __('labels.days') }}</span>
+                        @else
+                        -
+                        @endif
                     </span>
                 </div>
             </div>

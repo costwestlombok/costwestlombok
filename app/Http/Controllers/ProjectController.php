@@ -151,19 +151,22 @@ class ProjectController extends Controller
         $rf = $progress->map(function ($dt) {
             return doubleval($dt->real_financing);
         });
-        $map = new Googlemaps();
-        $map->add_marker([
-            'position' => $project->initial_lat . ',' . $project->initial_lon,
-            'icon' => 'http://maps.google.com/mapfiles/kml/paddle/A.png',
-        ]);
-        $map->add_marker([
-            'position' => $project->final_lat . ',' . $project->final_lon,
-            'icon' => 'http://maps.google.com/mapfiles/kml/paddle/B.png',
-        ]);
-        $map->initialize([
-            'center' => $project->initial_lat . ',' . $project->initial_lon,
-        ]);
-        $map = $map->create_map();
+        $map = false;
+        if ($project->initial_lat && $project->initial_lon && $project->final_lat && $project->final_lon) {
+            $map = new Googlemaps();
+            $map->add_marker([
+                'position' => $project->initial_lat . ',' . $project->initial_lon,
+                'icon' => 'http://maps.google.com/mapfiles/kml/paddle/A.png',
+            ]);
+            $map->add_marker([
+                'position' => $project->final_lat . ',' . $project->final_lon,
+                'icon' => 'http://maps.google.com/mapfiles/kml/paddle/B.png',
+            ]);
+            $map->initialize([
+                'center' => $project->initial_lat . ',' . $project->initial_lon,
+            ]);
+            $map = $map->create_map();
+        }
         return view('metronic.project.show', compact('project', 'pp', 'rp', 'sf', 'rf', 'date', 'map'));
     }
 
@@ -180,7 +183,7 @@ class ProjectController extends Controller
          $map->add_marker([
             'id' => 'A',
             'title' => 'true',
-            'position' => $project->initial_lat . ',' . $project->initial_lon,
+            'position' => ($project->initial_lat ?? '-8.683070211544514') . ',' . ($project->initial_lon ?? '116.13077257514645'),
             'draggable' => TRUE,
             'ondragend' => 'document.getElementById("initial_lat").value =event.latLng.lat(); document.getElementById("initial_lon").value = event.latLng.lng();',
             'icon' => 'http://maps.google.com/mapfiles/kml/paddle/A.png',
@@ -188,13 +191,13 @@ class ProjectController extends Controller
         $map->add_marker([
             'id' => 'B',
             'title' => 'false',
-            'position' => $project->final_lat . ',' . $project->final_lon,
+            'position' => ($project->final_lat ?? '-8.679305276105104') . ',' . ($project->final_lon ?? '116.13759645742493'),
             'draggable' => TRUE,
             'ondragend' => 'document.getElementById("final_lat").value =event.latLng.lat(); document.getElementById("final_lon").value = event.latLng.lng();',
             'icon' => 'http://maps.google.com/mapfiles/kml/paddle/B.png',
         ]);
         $map->initialize([
-            'center' => $project->initial_lat . ',' . $project->initial_lon,
+            'center' => ($project->initial_lat ?? '-8.683070211544514') . ',' . ($project->initial_lon ?? '116.13077257514645'),
             'places' => TRUE,
             'onclick' => '
                 if (marker_A.title == "true") {

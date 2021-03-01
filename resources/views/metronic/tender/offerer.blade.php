@@ -5,7 +5,7 @@
 <script src="/metronic/assets/js/pages/crud/forms/widgets/form-repeater.js"></script>
 <!--end::Page Vendors-->
 <script>
-    var COST_URL = "{{ url('api/tender-offerer') }}";
+    var COST_URL = "{{ url('api/tender/' . $tender->id . '/offerer') }}";
 </script>
 <script>
     var KTSelect2 = function () {

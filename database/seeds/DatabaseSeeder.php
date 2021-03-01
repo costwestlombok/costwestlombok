@@ -11,6 +11,7 @@ use App\Agency;
 use App\User;
 use App\ContractType;
 use App\Offerer;
+use App\ProjectStatus;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -62,6 +63,8 @@ class DatabaseSeeder extends Seeder
             'agency_id' => $agency->id,
             'type' => 'agency',
         ]);
+
+        $this->call(ProjectStatusSeeder::class);
 
         // $org = Organization::create([
         //     'name' => 'General Directorate of Roads (DGC)',

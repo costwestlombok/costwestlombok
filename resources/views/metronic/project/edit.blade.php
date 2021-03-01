@@ -164,7 +164,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id 
                                 <div class="pb-5" data-wizard-type="step-content">
                                     <h4 class="mb-10 font-weight-bold text-dark">{{ __('labels.management_sub') }}</h4>
                                     <!--begin::Input-->
-                                    <div class="form-group fv-plugins-icon-container">
+                                    <div class="form-group fv-plugins-icon-container d-none">
                                         <div class="form-group">
                                             <label for="name">{{ __('labels.role') }}</label>
                                             <div class="typeahead">
@@ -174,6 +174,8 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id 
                                             </div>
                                         </div>
                                     </div>
+                                    <!--end::Input-->
+                                    <!--begin::Input-->
                                     <div class="form-group fv-plugins-icon-container">
                                         <label>{{ __('labels.organization') }}</label>
                                         <select class="form-control" name="" id="entity" style="width: 100%;">
@@ -273,16 +275,14 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id 
                                             <div class="form-group">
                                                 <label for="name">{{ __('labels.initial_latitude') }}</label>
                                                 <input type="text" class="form-control" name="initial_lat"
-                                                    id="initial_lat"
-                                                    value="{{$project->initial_lat ?? -8.683070211544514}}">
+                                                    id="initial_lat" value="{{$project->initial_lat ?? ''}}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="name">{{ __('labels.initial_longitude') }}</label>
                                                 <input type="text" class="form-control" name="initial_lon"
-                                                    id="initial_lon"
-                                                    value="{{$project->initial_lon ?? 116.13077257514645}}">
+                                                    id="initial_lon" value="{{$project->initial_lon ?? ''}}">
                                             </div>
                                         </div>
                                     </div>
@@ -292,14 +292,14 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id 
                                             <div class="form-group">
                                                 <label for="name">{{ __('labels.final_latitude') }}</label>
                                                 <input type="text" class="form-control" name="final_lat" id="final_lat"
-                                                    value="{{$project->final_lat ?? -8.679305276105104}}">
+                                                    value="{{$project->final_lat ?? ''}}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="name">{{ __('labels.final_longitude') }}</label>
                                                 <input type="text" class="form-control" name="final_lon" id="final_lon"
-                                                    value="{{$project->final_lon ?? 116.13759645742493}}">
+                                                    value="{{$project->final_lon ?? ''}}">
                                             </div>
                                         </div>
                                     </div>
@@ -313,38 +313,38 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id 
                                         <div class="form-group fv-plugins-icon-container">
                                             <label for="name">{{ __('labels.start_date') }}</label>
                                             <input type="date" class="form-control" name="start_date" id="start_date"
-                                                value="{{ date_format(Carbon\Carbon::parse($project->start_date ?? date('Y-m-d')), 'Y-m-d') }}">
+                                                value="{{ isset($project) ? ($project->start_date ? $project->start_date->format('Y-m-d') : '') : '' }}">
                                         </div>
                                         <!--end::Input-->
                                         <!--begin::Input-->
                                         <div class="form-group">
                                             <label for="name">{{ __('labels.end_date') }}</label>
                                             <input type="date" class="form-control" name="end_date" id="end_date"
-                                                value="{{ date_format(Carbon\Carbon::parse($project->end_date ?? date('Y-m-d')), 'Y-m-d') }}">
+                                                value="{{ isset($project) ? ($project->end_date ? $project->end_date->format('Y-m-d') : '') : '' }}">
                                         </div>
                                         <!--end::Input-->
                                         <div class="form-group">
                                             <label for="name">{{ __('labels.approved_date') }}</label>
                                             <input type="date" class="form-control" name="date_of_approved"
                                                 id="date_of_approved"
-                                                value="{{ date_format(Carbon\Carbon::parse($project->date_of_approved ?? date('Y-m-d')), 'Y-m-d') }}">
+                                                value="{{ isset($project) ? ($project->date_of_approved ? $project->date_of_approved->format('Y-m-d') : '') : '' }}">
                                         </div>
                                         <div class="form-group">
                                             <label for="name">{{ __('labels.publication_date') }}</label>
                                             <input type="date" class="form-control" name="date_of_publication"
                                                 id="date_of_publication"
-                                                value="{{ date_format(Carbon\Carbon::parse($project->date_of_publication ?? date('Y-m-d')), 'Y-m-d') }}">
+                                                value="{{ isset($project) ? ($project->date_of_publication ? $project->date_of_publication->format('Y-m-d') : '') : '' }}">
                                         </div>
                                         <div class="form-group">
                                             <label>{{ __('labels.status') }}</label>
-                                            <select class="form-control" name="status_id" id="status"
+                                            <select class="form-control" name="project_status_id" id="status"
                                                 style="width: 100%;" required>
                                                 <option value="">{{ __('labels.choose_status') }}</option>
-                                                @foreach ($statuses as $status)
+                                                @foreach (\App\ProjectStatus::all() as $status)
                                                 <option value="{{$status->id}}" @if(isset($project)) @if($status->id
                                                     ==
-                                                    $project->status_id)
-                                                    selected @endif @endif>{{$status->status_name}}</option>
+                                                    $project->project_status_id)
+                                                    selected @endif @endif>{{ __('labels.'.$status->code) }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
