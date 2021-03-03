@@ -267,16 +267,17 @@
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
-                                    <i class="flaticon-price-tag icon-2x"></i>
+                                    <i class="flaticon2-architecture-and-city icon-2x"></i>
                                 </span>
                                 <div class="d-flex flex-column text-dark-75">
                                     <span class="font-weight-bolder font-size-sm">{{ __('labels.amount') }}</span>
-                                    <span class="font-weight-bolder font-size-h5">
-                                        <span class="text-dark-50 font-weight-bold">Rp
-                                        </span>{{ number_format($tender->amount) }}</span>
+                                    <span class="font-weight-bolder font-size-h5">{{ number_format($tender->amount) }}
+                                        <span class="text-dark-50 font-weight-bold">Tender
+                                        </span></span>
                                 </div>
                             </div>
                             <!--end: Item-->
+                            @if(false)
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
@@ -290,6 +291,7 @@
                                 </div>
                             </div>
                             <!--end: Item-->
+                            @endif
                             <!--begin: Item-->
                             <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                                 <span class="mr-4">
