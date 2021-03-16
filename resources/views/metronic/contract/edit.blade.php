@@ -119,24 +119,24 @@ $suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
                             <div class="form-group">
                                 <label for="start">{{ __('labels.start_date') }}</label>
                                 <input type="date" class="form-control"
-                                    value="{{ Carbon\Carbon::parse($contract->start_date ?? date('Y-m-d'))->format('Y-m-d') }}"
-                                    name="start_date" required />
+                                    value="{{ isset($contract) ? ($contract->start_date ? $contract->start_date->format('Y-m-d') : ($contract->award->tender->start_date ? $contract->award->tender->start_date->format('Y-m-d') : '')) : (isset($award) ? ($award->tender->start_date ? $award->tender->start_date->format('Y-m-d') : '') : '') }}"
+                                    name="start_date" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="end">{{ __('labels.end_date') }}</label>
                                 <input type="date" class="form-control"
-                                    value="{{ Carbon\Carbon::parse($contract->end_date ?? date('Y-m-d'))->format('Y-m-d') }}"
-                                    name="end_date" required />
+                                    value="{{ isset($contract) ? ($contract->end_date ? $contract->end_date->format('Y-m-d') : ($contract->award->tender->end_date ? $contract->award->tender->end_date->format('Y-m-d') : '')) : (isset($award) ? ($award->tender->end_date ? $award->tender->end_date->format('Y-m-d') : '') : '') }}"
+                                    name="end_date" />
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="max_extend_date">{{ __('labels.max_extended_date') }}</label>
                         <input type="date" class="form-control"
-                            value="{{ Carbon\Carbon::parse($contract->max_entended_date ?? date('Y-m-d'))->format('Y-m-d') }}"
-                            name="max_extend_date" required />
+                            value="{{ isset($contract) ? ($contract->max_entended_date ? $contract->max_entended_date->format('Y-m-d') : '') : '' }}"
+                            name="max_extend_date" />
                     </div>
                     <div class="form-group">
                         <label>{{ __('labels.status') }}</label>

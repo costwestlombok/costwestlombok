@@ -2,7 +2,8 @@
 <div class="d-flex justify-content-between align-items-center flex-wrap">
     <div class="d-flex flex-wrap mr-3">
         @if($data->lastPage() > 1)
-        <a href="{{ $data->appends(request()->input())->url(1) }}" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"
+        <a href="{{ $data->appends(request()->input())->url(1) }}"
+            class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"
             {{ ($data->currentPage() == 1) ? ' disabled' : '' }}>
             <i class="ki ki-bold-double-arrow-back icon-xs"></i>
         </a>
@@ -10,8 +11,8 @@
             class="btn btn-icon btn-sm btn-light-primary mr-2 my-1 {{ ($data->currentPage() == 1) ? ' disabled' : '' }}">
             <i class="ki ki-bold-arrow-back icon-xs"></i>
         </a>
-        @if($data->total() >= 4)
-        @if($data->total() / 2 >= $data->currentPage() && $data->currentPage() > 2)
+        @if($data->lastPage() > 4)
+        @if($data->lastPage() / 2 >= $data->currentPage() && $data->currentPage() > 2)
         <a href="{{ $data->appends(request()->input())->url($data->currentPage() - 1) }}"
             class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($data->currentPage() == $data->currentPage() - 1) ? ' active' : '' }}">{{ $data->currentPage() - 1 }}</a>
         <a href="{{ $data->appends(request()->input())->url($data->currentPage()) }}"
@@ -23,7 +24,7 @@
             class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($data->currentPage() == 2) ? ' active' : '' }}">2</a>
         @endif
         <a href="javascript:;" class="btn btn-icon btn-sm border-0 mr-2 my-1">...</a>
-        @if($data->currentPage() > $data->total() / 2 && $data->lastPage() - 1 >
+        @if($data->currentPage() > $data->lastPage() / 2 && $data->lastPage() - 1 >
         $data->currentPage())
         <a href="{{ $data->appends(request()->input())->url($data->currentPage()) }}"
             class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {{ ($data->currentPage() == $data->currentPage()) ? ' active' : '' }}">{{ $data->currentPage() }}</a>
@@ -51,10 +52,10 @@
         </a>
         @endif
     </div>
-    @if($data->total())
+    @if($data->lastPage())
     <div class="d-flex align-items-center">
         <span class="text-muted">{{ __('labels.displaying') }} {{$data->count()}} {{ __('labels.of') }}
-            {{$data->total()}} {{ __('labels.records') }}</span>
+            {{$data->lastPage()}} {{ __('labels.records') }}</span>
     </div>
     @endif
 </div>

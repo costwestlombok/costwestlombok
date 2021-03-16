@@ -470,47 +470,256 @@
                             </tr>
                         </table>
                         <hr>
-                        <h3 class="card-label mt-5 mb-5">Kontrak</h3>
+                        <h3 class="card-label mt-5 mb-5">Persiapan Proyek</h3>
                         <table class="table">
                             <tr>
                                 <td>1</td>
-                                <td>{{ __('labels.project_code') }}</td>
-                                <td>{{ $project->project_code }}</td>
+                                <td>Lingkup Proyek (Output Utama)</td>
+                                <td colspan="2">{{ '-' }}</td>
                             </tr>
                             <tr>
                                 <td>2</td>
-                                <td>Pemilik Proyek</td>
-                                <td>{{ $project->official->unit->org->name ?? '-' }},
-                                    {{ $project->official->unit->unit_name ?? '-' }}</td>
+                                <td>Dampak Lingkungan</td>
+                                <td colspan="2">{{ $project->environment_desc ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <td>3</td>
-                                <td>{{ __('labels.sector') }}, {{ __('labels.subsector') }}</td>
-                                <td>{{ $project->subsector->sector->sector_name ?? '-' }},
-                                    {{ $project->subsector->subsector_name ?? '-' }}</td>
+                                <td>Dampak Terhadap Lahan dan Permukiman</td>
+                                <td colspan="2">{{ $project->settlement_desc ?? '-' }}</td>
                             </tr>
                             <tr>
-                                <td>4</td>
-                                <td>{{ __('labels.project_name') }}</td>
-                                <td>{{ $project->project_title }}</td>
+                                <td rowspan="3">4</td>
+                                <td rowspan="3">Rincian Kontrak</td>
+                                <td>Nama PPK</td>
+                                <td>{{ $project->official->name ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>No. HP/E-mail</td>
+                                <td>{{ $project->official->phone ?? '-' }} / {{ $project->official->email ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>Jabatan</td>
+                                <td>{{ $project->official->position ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <td>5</td>
-                                <td>Lokasi Proyek</td>
-                                <td>{{ $project->project_location }}</td>
+                                <td>Sumber Dana</td>
+                                <td colspan="2">{{ $project->project_budget()->first()->name ?? '-' }}
+                                </td>
                             </tr>
                             <tr>
                                 <td>6</td>
-                                <td>Tujuan</td>
-                                <td>{{ $project->purpose->purpose_name ?? '-' }}</td>
+                                <td>Anggaran Proyek</td>
+                                <td colspan="2">
+                                    Rp
+                                    {{ number_format($project->budget ?? 0) }}
+                                </td>
                             </tr>
                             <tr>
                                 <td>7</td>
-                                <td>{{ __('labels.project_description') }}</td>
-                                <td>{{ $project->project_description ?? '-' }}</td>
+                                <td>Tanggal Persetujuan Anggaran Proyek</td>
+                                <td colspan="2">
+                                    {{ $project->date_of_approved ? $project->date_of_approved->isoFormat('D MMMM Y') : '-' }}
                             </tr>
                         </table>
                         <hr>
+                        @if($project->tenders()->count())
+                        <h3 class="card-label mt-5 mb-5">Penyelesaian Proyek</h3>
+                        <table class="table">
+                            <tr>
+                                <td>1</td>
+                                <td>Status Proyek (saat ini)</td>
+                                <td>Kontrak</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Biaya Saat Selesai (Proyeksi)</td>
+                                <td>
+                                    Rp
+                                    @if($project->tenders()->first()->awards()->count() &&
+                                    $project->tenders()->first()->awards()->first()->contract)
+                                    {{ number_format($project->tenders()->first()->awards()->first()->contract->completion->final_cost ?? 0) }}
+                                    @else
+                                    -
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Tanggal Selesai (Proyeksi)</td>
+                                <td>
+                                    @if($project->tenders()->first()->awards()->count() &&
+                                    $project->tenders()->first()->awards()->first()->contract)
+                                    {{ $project->tenders()->first()->awards()->first()->contract->completion->date->isoFormat('D MMMM Y') ?? '-' }}
+                                    @else
+                                    -
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Lingkup Saat Selesai (Proyeksi)</td>
+                                <td>
+                                    @if($project->tenders()->first()->awards()->count() &&
+                                    $project->tenders()->first()->awards()->first()->contract)
+                                    <pre
+                                        class="textarea">{!! $project->tenders()->first()->awards()->first()->contract->completion->final_scope ?? '-' !!}</pre>
+                                    @else
+                                    -
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Alasan Perubahan Pada Proyek</td>
+                                <td>{{ 'Ada pada addendum dan CCO' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Refrensi Laporan Audit dan Evaluasi</td>
+                                <td>{{ 'Tidak ada' }}
+                                </td>
+                            </tr>
+                        </table>
+                        <hr>
+                        <h3 class="card-label mt-5 mb-5">Tahap Kontrak</h3>
+                        <table class="table">
+                            <tr>
+                                <td>1</td>
+                                <td>Tanggal</td>
+                                <td>-</td>
+                            </tr>
+                        </table>
+                        <hr>
+                        <h3 class="card-label mt-5 mb-5">Pengadaan</h3>
+                        <table class="table">
+                            <tr>
+                                <td>1</td>
+                                <td>Entitas Pengadaan serta Rincian Kontrak</td>
+                                <td>{{ $project->tenders()->first()->official->name ?? '-' }},
+                                    {{ $project->tenders()->first()->official->phone ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Proses Pengadaan</td>
+                                <td>{{ $project->tenders()->first()->tender_method->method_name ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Jenis Kontrak</td>
+                                <td>{{ $project->tenders()->first()->contract_type->type_name ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Status Kontrak (Saat Ini)</td>
+                                <td>{{ '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Jumlah Perusahaan yang Ikut Tender</td>
+                                <td>{{ $project->tenders()->first()->tender_offerer()->count() ?? '-' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Jumlah Perusahaan yang Memasukkan Penawaran</td>
+                                <td>{{ $project->tenders()->first()->awards()->first()->participants_number ?? '-' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>Perkiraan Biaya</td>
+                                <td>
+                                    Rp
+                                    {{ number_format($project->tenders()->first()->awards()->first()->contract_estimate_cost ?? 0) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>Entitas Administrasi Kontrak</td>
+                                <td>{{ $project->tenders()->first()->awards()->first()->contract->supplier->offerer_name ?? '-' }}
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>Judul Kontrak</td>
+                                <td>{{ $project->tenders()->first()->awards()->first()->contract->contract_title ?? '-' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>Perusahaan Kontrak</td>
+                                <td>{{ $project->tenders()->first()->awards()->first()->contract->supplier->legal_name ?? '-' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td>Harga Kontrak</td>
+                                <td>
+                                    Rp
+                                    {{ number_format($project->tenders()->first()->awards()->first()->contract->price_local_currency ?? 0) }}
+                                </td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>Lingkup Kerja</td>
+                                <td>
+                                    <pre class="mb-7 mt-3"
+                                        style="font: inherit; white-space: pre-wrap;">{!! $project->tenders()->first()->awards()->first()->contract->contract_scope ?? '' !!}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td>Tanggal Mulai Serta Lama Kontrak</td>
+                                <td>
+                                    @if($project->tenders()->first()->awards()->count() &&
+                                    $project->tenders()->first()->awards()->first()->contract)
+                                    {{ $project->tenders()->first()->awards()->first()->contract->start_date->isoFormat('D MMMM Y') ?? '-' }}
+                                    s/d
+                                    {{ $project->tenders()->first()->awards()->first()->contract->end_date->isoFormat('D MMMM Y') ?? '-' }}
+                                    @else
+                                    -
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+                        <hr>
+                        <h3 class="card-label mt-5 mb-5">Implementasi</h3>
+                        <table class="table">
+                            <tr>
+                                <td>1</td>
+                                <td>Variasi Harga Kontrak</td>
+                                <td>Tidak Ada</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Eskalasi Harga Kontrak</td>
+                                <td>Ada pada addendum dan CCO</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Variasi Lama Kontrak</td>
+                                <td>Tidak Ada</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Variasi Lingkup Kontrak</td>
+                                <td>Tidak Ada</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Alasan Perubahan Harga</td>
+                                <td>Tidak Ada</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Alasan Perubahan Lingkup dan Lama</td>
+                                <td>Tidak Ada</td>
+                            </tr>
+                        </table>
+                        <hr>
+                        @endif
                         <div class="row mt-5 mb-5">
                             <div class="col-md-6">
                                 <h3 class="card-label mt-5 mb-5">{{ __('labels.progress_percent') }} (%)</h3>

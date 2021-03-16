@@ -11,6 +11,9 @@ class Award extends Model
     protected $keyType = 'uuid';
     protected $guarded = [];
     public $incrementing = false;
+    protected $dates = [
+        'published_at',
+    ];
 
     public function tender()
     {

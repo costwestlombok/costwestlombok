@@ -140,7 +140,7 @@ class ContractController extends Controller
         }
         $contract->update($data);
         Session::put('success', trans('labels.updated'));
-        return redirect('contract/' . $contract->id);
+        return redirect('award/' . $contract->award->id . '/contract');
     }
 
     /**

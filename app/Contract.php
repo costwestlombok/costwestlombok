@@ -11,6 +11,10 @@ class Contract extends Model
     protected $keyType = 'uuid';
     protected $guarded = [];
     public $incrementing = false;
+    protected $dates = [
+        'start_date',
+        'end_date'
+    ];
 
     public function status()
     {

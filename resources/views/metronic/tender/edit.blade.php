@@ -274,6 +274,7 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id ?
                                         </div>
                                     </div>
                                 </div>
+                                @if(false)
                                 <div class="form-group">
                                     <label>{{ __('labels.tender_status') }}</label>
                                     <div class="typeahead">
@@ -282,13 +283,14 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id ?
                                             name="tender_status_id" type="text" dir="ltr" style="width: 100%">
                                     </div>
                                 </div>
-                                {{-- <div class="form-group">
+                                <div class="form-group">
                                     <label>{{ __('labels.status') }}</label>
                                     <div class="typeahead">
                                         <input class="form-control" value="{{$tender->status->status_name ?? ''}}"
                                             id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%">
                                     </div>
-                                </div> --}}
+                                </div>
+                                @endif
                             </div>
                             <!--end: Wizard Step 1-->
                             <!--begin: Wizard Step 2-->
@@ -337,23 +339,22 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id ?
                                 <div class="form-group">
                                     <label>{{ __('labels.start_date') }}</label>
                                     <input type="date" name="start_date" class="form-control"
-                                        value="{{ date_format(Carbon\Carbon::parse($tender->start_date ?? date('Y-m-d')), 'Y-m-d') }}">
+                                        value="{{ isset($tender) ? ($tender->start_date ? $tender->start_date->format('Y-m-d') : ($tender->project->start_date ? $tender->project->start_date->format('Y-m-d') : '')) : (isset($project) ? ($project->start_date ? $project->start_date->format('Y-m-d') : '') : '') }}">
                                 </div>
                                 <div class="form-group">
                                     <label>{{ __('labels.end_date') }}</label>
                                     <input type="date" name="end_date" class="form-control"
-                                        value="{{ date_format(Carbon\Carbon::parse($tender->end_date ?? date('Y-m-d')), 'Y-m-d') }}">
+                                        value="{{ isset($tender) ? ($tender->end_date ? $tender->end_date->format('Y-m-d') : ($tender->project->end_date ? $tender->project->end_date->format('Y-m-d') : '')) : (isset($project) ? ($project->end_date ? $project->end_date->format('Y-m-d') : '') : '') }}">
                                 </div>
                                 <div class="form-group">
                                     <label>{{ __('labels.max_extended_date') }}</label>
                                     <input type="date" name="max_extended_process" class="form-control"
-                                        value="{{ date_format(Carbon\Carbon::parse($tender->max_extended_process ?? date('Y-m-d')), 'Y-m-d') }}">
+                                        value="{{ isset($tender) ? ($tender->max_extended_process ? $tender->max_extended_process->format('Y-m-d') : '') : '' }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">{{ __('labels.publication_date') }}</label>
-                                    <input type="date" class="form-control" name="date_of_publication"
-                                        id="date_of_publication"
-                                        value="{{ date_format(Carbon\Carbon::parse($tender->date_of_publication ?? date('Y-m-d')), 'Y-m-d') }}">
+                                    <label>{{ __('labels.publication_date') }}</label>
+                                    <input type="date" name="date_of_publication" class="form-control"
+                                        value="{{ isset($tender) ? ($tender->date_of_publication ? $tender->date_of_publication->format('Y-m-d') : '') : '' }}">
                                 </div>
                             </div>
                             <!--end: Wizard Step 2-->

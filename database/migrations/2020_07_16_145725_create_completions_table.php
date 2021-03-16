@@ -17,7 +17,7 @@ class CreateCompletionsTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('contracts_id');
             $table->foreign('contracts_id')->references('id')->on('contracts')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('final_scope', 300)->nullable();
+            $table->text('final_scope')->nullable();
             $table->text('description')->nullable();
             $table->date('date')->nullable();
             $table->string('justification', 500)->nullable();

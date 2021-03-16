@@ -48,6 +48,7 @@ class CreateProjectsTable extends Migration
 
             // fllaj requirement
             $table->text('project_location')->nullable();
+            $table->text('project_scope')->nullable();
             $table->timestamps();
         });
     }

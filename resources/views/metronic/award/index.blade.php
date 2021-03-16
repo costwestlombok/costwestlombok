@@ -273,7 +273,7 @@
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="d-block font-weight-bold mb-4">{{ __('labels.publication_date') }}</span>
                                 <span
-                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($award->published_at)->translatedFormat('l, d F Y') }}</span>
+                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ $award->published_at ? $award->published_at->translatedFormat('l, d M Y') : '-' }}</span>
                             </div>
                         </div>
                         <div class="d-flex flex-wrap">

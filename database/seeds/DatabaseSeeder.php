@@ -28,8 +28,8 @@ class DatabaseSeeder extends Seeder
         DB::statement("SET foreign_key_checks=0");
         // Offerer::truncate();
         // ContractType::truncate();
-        User::truncate();
-        Agency::truncate();
+        // User::truncate();
+        // Agency::truncate();
         // Subsector::truncate();
         // Source::truncate();
         // Sector::truncate();
@@ -39,30 +39,30 @@ class DatabaseSeeder extends Seeder
         // Official::truncate();
         DB::statement("SET foreign_key_checks=1");
         
-        $this->call(BannerSeeder::class);
+        // $this->call(BannerSeeder::class);
         // $this->call(AgencySeeder::class);
 
-        User::create([
-            'name' => 'Administrator',
-            'username' => 'admin',
-            'email' => 'admin@cost.com',
-            'password' => bcrypt('testing'),
-            'type' => 'admin',
-        ]);
+        // User::create([
+        //     'name' => 'Administrator',
+        //     'username' => 'admin',
+        //     'email' => 'admin@cost.com',
+        //     'password' => bcrypt('testing'),
+        //     'type' => 'admin',
+        // ]);
 
-        $agency = Agency::create([
-            'name' => 'PUTR',
-            'full_name' => 'Dinas Pekerjaan Umum dan Penataan Ruang',
-        ]);
+        // $agency = Agency::create([
+        //     'name' => 'PUTR',
+        //     'full_name' => 'Dinas Pekerjaan Umum dan Penataan Ruang',
+        // ]);
 
-        User::create([
-            'name' => 'PUTR',
-            'username' => 'putr',
-            'email' => 'dputr@lombokbaratkab.go.id',
-            'password' => bcrypt('testing'),
-            'agency_id' => $agency->id,
-            'type' => 'agency',
-        ]);
+        // User::create([
+        //     'name' => 'PUTR',
+        //     'username' => 'putr',
+        //     'email' => 'dputr@lombokbaratkab.go.id',
+        //     'password' => bcrypt('testing'),
+        //     'agency_id' => $agency->id,
+        //     'type' => 'agency',
+        // ]);
 
         $this->call(ProjectStatusSeeder::class);
 

@@ -206,7 +206,7 @@ class ProgressController extends Controller
 
     public function progress(Project $project)
     {
-        $advances = Advance::orderBy('date_of_advance', 'DESC')->paginate(8);
+        $advances = Advance::where('project_id', $project->id)->orderBy('date_of_advance', 'DESC')->paginate(8);
         return view('metronic.progress.index', compact('advances', 'project'));
     }
 

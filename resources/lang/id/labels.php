@@ -157,7 +157,6 @@ return  [
 	'project_description' => 'Gambaran Proyek',
 	'project_description_sub' => 'Masukkan Detail Proyek Anda',
 	'project_name' => 'Nama Proyek',
-	// 'project_description' => 'Deskripsi Proyek',
 	'environment_impact_description' => 'Dampak Lingkungan',
 	'settlement_description' => 'Dampak Terhadap Lahan dan Permukiman',
 
@@ -175,6 +174,9 @@ return  [
 	'end_date' => 'Tanggal Berakhir',
 	'approved_date' => 'Tanggal Persetujuan Anggaran Proyek',
 	'publication_date' => 'Tanggal Publikasi',
+
+	'project_location' => 'Lokasi Proyek',
+	'project_scope' => 'Lingkup Proyek',
 
 	// tender
 	'tender_code' => 'Kode Tender',
@@ -205,15 +207,15 @@ return  [
 	'change_file_text' => 'Unggah file untuk mengubah berkas',
 
 	// award
-	'award_process_number' => 'Award Process Number',
+	'award_process_number' => 'Nomor Proses Penawaran',
 	'estimated_cost' => 'Perkiraan Biaya',
 	'cost' => 'Harga Kontrak',
 	'participant' => 'Partisipan',
 	'view_detail' => 'Lihat Detail',
 
-	'award_description' => 'Deskripsi Award',
+	'award_description' => 'Deskripsi Penawaran',
 	'award_description_sub' => 'Masukkan Detail Penawaran',
-	'participant_number' => 'Jumlah Perusahaan Yang Memasukkan Penawaran',
+	'participant_number' => 'Jumlah Perusahaan yang Memasukkan Penawaran',
 	'cost_estimation' => 'Perkiraan Biaya',
 
 	'file_and_publication_date' => 'Berkas dan Tanggal Publikasi',

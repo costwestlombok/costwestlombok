@@ -2,7 +2,7 @@
 @section('style')
 <link href="/metronic/assets/css/pages/wizard/wizard-3.css" rel="stylesheet" type="text/css" />
 <style>
-    select[name='status_id'] {
+    select[name='project_status_id'] {
         width: 100% !important;
         height: calc(1.5em + 1.3rem + 2px) !important;
     }
@@ -158,6 +158,11 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id 
                                         <textarea name="settlement_desc" id="settlement_desc" class="form-control"
                                             rows="3">{{$project->settlement_desc ?? ''}}</textarea>
                                     </div>
+                                    <div class="form-group fv-plugins-icon-container">
+                                        <label for="name">{{ __('labels.project_scope') }}</label>
+                                        <textarea name="project_scope" id="project_scope" class="form-control"
+                                            rows="3">{{$project->project_scope ?? ''}}</textarea>
+                                    </div>
                                 </div>
                                 <!--end: Wizard Step 1-->
                                 <!--begin: Wizard Step 2-->
@@ -253,9 +258,14 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id 
                                 <!--begin: Wizard Step 3-->
                                 <div class="pb-5" data-wizard-type="step-content">
                                     <h4 class="mb-10 font-weight-bold text-dark">{{ __('labels.location_sub') }}</h4>
+                                    <div class="form-group fv-plugins-icon-container">
+                                        <label for="name">{{ __('labels.project_location') }}</label>
+                                        <textarea name="project_location" id="project_location" class="form-control"
+                                            rows="3">{{$project->project_location ?? ''}}</textarea>
+                                    </div>
+                                    <hr>
                                     <!--begin::Select-->
                                     <div class="form-group fv-plugins-icon-container">
-
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <!--begin::Input-->

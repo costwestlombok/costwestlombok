@@ -19,11 +19,11 @@
                 <div class="card-body">
                     <div class="row">
                         <input type="hidden" value="{{ $contract->id }}" name="contracts_id">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="name">{{ __('labels.final_scope') }}</label>
-                                <input type="text" name="final_scope" class="form-control"
-                                    value="{{ $completion->final_scope ?? '' }}" required>
+                                <textarea name="justification" rows="5" class="form-control"
+                                    required>{{ $completion->final_scope ?? '' }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -33,11 +33,11 @@
                                     value="{{ number_format($completion->final_cost ?? 0) }}" required>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">{{ __('labels.final_date') }}</label>
                                 <input type="date" name="date" class="form-control"
-                                    value="{{ Carbon\Carbon::parse($contract->date ?? date('Y-m-d'))->format('Y-m-d') }}">
+                                    value="{{ isset($completion) ? ($completion->date ? $completion->date->format('Y-m-d') : ($completion->contract->end_date ? $completion->contract->end_date->format('Y-m-d') : '')) : '' }}">
                             </div>
                         </div>
                         <div class="col-md-6">

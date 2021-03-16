@@ -11,6 +11,9 @@ class Completion extends Model
     protected $keyType = 'uuid';
     protected $guarded = [];
     public $incrementing = false;
+    protected $dates = [
+        'date'
+    ];
 
     public function contract()
     {

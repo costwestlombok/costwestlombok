@@ -157,7 +157,6 @@ return  [
 	'project_description' => 'Project Description',
 	'project_description_sub' => 'Enter the Details of your Project',
 	'project_name' => 'Project Name',
-	'project_description' => 'Project Description',
 	'environment_impact_description' => 'Environment Impact Description',
 	'settlement_description' => 'Settlement Description',
 
@@ -175,6 +174,9 @@ return  [
 	'end_date' => 'End Date',
 	'approved_date' => 'Approved Date',
 	'publication_date' => 'Publication Date',
+
+	'project_location' => 'Project Location',
+	'project_scope' => 'Project Scope',
 
 	// tender
 	'tender_code' => 'Tender Code',

@@ -83,102 +83,96 @@
                                 {{-- <div class="form-group fv-plugins-icon-container">
                                     <div class="form-group">
                                         <label for="name">{{ __('labels.contract_method') }}</label>
-                                        <div class="typeahead">
-                                            <input class="form-control"
-                                                value="{{ $award->contract_method->method_name ?? '' }}"
-                                                id="contract_method_id" name="contract_method_id" type="text" dir="ltr"
-                                                style="width: 100%">
-                                        </div>
-                                    </div>
-                                </div> --}}
+                                <div class="typeahead">
+                                    <input class="form-control" value="{{ $award->contract_method->method_name ?? '' }}"
+                                        id="contract_method_id" name="contract_method_id" type="text" dir="ltr"
+                                        style="width: 100%">
+                                </div>
+                            </div>
+                    </div> --}}
 
-                                {{-- <div class="form-group">
+                    {{-- <div class="form-group">
                                     <label>Status</label>
                                     <div class="typeahead">
                                         <input class="form-control" value="{{ $award->status->status_name ?? '' }}"
-                                            id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%">
-                                    </div>
-                                </div> --}}
-                            </div>
-                            <!--end: Wizard Step 1-->
-                            <!--begin: Wizard Step 2-->
-                            <div class="pb-5" data-wizard-type="step-content">
-                                <div class="my-5">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label for="name">{{ __('labels.file_opening_act') }}</label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="opening_act"
-                                                id="opening_act">
-                                            <label class="custom-file-label"
-                                                for="opening_act">{{ isset($award) ? ($award->opening_act ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file') }}</label>
-                                        </div>
-                                    </div>
-                                    <!--end::Input-->
-                                    <!--begin::Input-->
-
-                                    <div class="form-group">
-                                        <label for="name">{{ __('labels.file_recommendation_report_act') }}</label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="recomendation_report_act"
-                                                id="recomendation_report_act">
-                                            <label class="custom-file-label"
-                                                for="recomendation_report_act">{{  isset($award) ? ($award->recomendation_report_act ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file') }}</label>
-                                        </div>
-                                    </div>
-                                    <!--end::Input-->
-                                    <div class="form-group">
-                                        <label for="name">{{ __('labels.file_resolution') }}</label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="award_resolution"
-                                                id="award_resolution">
-                                            <label class="custom-file-label"
-                                                for="award_resolution">{{ isset($award) ? ($award->award_resolution ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file') }}</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="name">{{ __('labels.file_other') }}</label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="others" id="others">
-                                            <label class="custom-file-label"
-                                                for="others">{{ isset($award) ? ($award->others ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file') }}</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="name">{{ __('labels.published_at') }}</label>
-                                        <input type="date" class="form-control" name="published_at" id="published_at"
-                                            value="{{ Carbon\Carbon::parse($award->published_at ?? date('Y-m-d'))->format('Y-m-d') }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <!--end: Wizard Step 2-->
-                            <!--begin: Wizard Actions-->
-                            <div class="d-flex justify-content-between border-top mt-5 pt-10">
-                                <div class="mr-2">
-                                    <button type="button"
-                                        class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
-                                        data-wizard-type="action-prev">{{ __('labels.previous') }}</button>
-                                </div>
-                                <div>
-                                    <button type="submit"
-                                        class="btn btn-success font-weight-bold text-uppercase px-9 py-4"
-                                        data-wizard-type="action-submit">{{ isset($tender) ? __('labels.save_changes') : __('labels.save') }}</button>
-                                    <button type="button"
-                                        class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                        data-wizard-type="action-next">{{ __('labels.next') }}</button>
-                                </div>
-                            </div>
-                            <!--end: Wizard Actions-->
-                        </form>
-                        <!--end: Wizard Form-->
+                    id="status_id" name="status_id" type="text" dir="ltr" style="width: 100%">
+                </div>
+            </div> --}}
+        </div>
+        <!--end: Wizard Step 1-->
+        <!--begin: Wizard Step 2-->
+        <div class="pb-5" data-wizard-type="step-content">
+            <div class="my-5">
+                <!--begin::Input-->
+                <div class="form-group">
+                    <label for="name">{{ __('labels.file_opening_act') }}</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="opening_act" id="opening_act">
+                        <label class="custom-file-label"
+                            for="opening_act">{{ isset($award) ? ($award->opening_act ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file') }}</label>
                     </div>
                 </div>
-                <!--end: Wizard Body-->
+                <!--end::Input-->
+                <!--begin::Input-->
+
+                <div class="form-group">
+                    <label for="name">{{ __('labels.file_recommendation_report_act') }}</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="recomendation_report_act"
+                            id="recomendation_report_act">
+                        <label class="custom-file-label"
+                            for="recomendation_report_act">{{ isset($award) ? ($award->recomendation_report_act ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file') }}</label>
+                    </div>
+                </div>
+                <!--end::Input-->
+                <div class="form-group">
+                    <label for="name">{{ __('labels.file_resolution') }}</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="award_resolution" id="award_resolution">
+                        <label class="custom-file-label"
+                            for="award_resolution">{{ isset($award) ? ($award->award_resolution ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file') }}</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">{{ __('labels.file_other') }}</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="others" id="others">
+                        <label class="custom-file-label"
+                            for="others">{{ isset($award) ? ($award->others ? __('labels.change_file_text') : __('labels.choose_file')) : __('labels.choose_file') }}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name">{{ __('labels.published_at') }}</label>
+                    <input type="date" class="form-control" name="published_at" id="published_at"
+                        value="{{ isset($award) ? ($award->published_at ? $tender->published_at->format('Y-m-d') : '') : '' }}">
+                </div>
             </div>
-            <!--end: Wizard-->
         </div>
+        <!--end: Wizard Step 2-->
+        <!--begin: Wizard Actions-->
+        <div class="d-flex justify-content-between border-top mt-5 pt-10">
+            <div class="mr-2">
+                <button type="button" class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                    data-wizard-type="action-prev">{{ __('labels.previous') }}</button>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success font-weight-bold text-uppercase px-9 py-4"
+                    data-wizard-type="action-submit">{{ isset($tender) ? __('labels.save_changes') : __('labels.save') }}</button>
+                <button type="button" class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                    data-wizard-type="action-next">{{ __('labels.next') }}</button>
+            </div>
+        </div>
+        <!--end: Wizard Actions-->
+        </form>
+        <!--end: Wizard Form-->
     </div>
+</div>
+<!--end: Wizard Body-->
+</div>
+<!--end: Wizard-->
+</div>
+</div>
 </div>
 @endsection
 @section('script')

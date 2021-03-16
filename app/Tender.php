@@ -11,6 +11,12 @@ class Tender extends Model
     protected $keyType = 'uuid';
     protected $guarded = [];
     public $incrementing = false;
+    protected $dates = [
+        'start_date',
+        'end_date',
+        'max_extended_process',
+        'date_of_publication',
+    ];
 
     public function project()
     {

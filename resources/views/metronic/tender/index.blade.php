@@ -250,17 +250,17 @@
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="d-block font-weight-bold mb-4">{{ __('labels.start_date') }}</span>
                                 <span
-                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($tender->start_date)->translatedFormat('l, d M Y') }}</span>
+                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ $tender->start_date ? $tender->start_date->translatedFormat('l, d M Y') : '-' }}</span>
                             </div>
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="d-block font-weight-bold mb-4">{{ __('labels.due_date') }}</span>
                                 <span
-                                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($tender->end_date)->translatedFormat('l, d M Y') }}</span>
+                                    class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ $tender->end_date ? $tender->end_date->translatedFormat('l, d M Y') : '-' }}</span>
                             </div>
                             <div class="mr-12 d-flex flex-column mb-7">
                                 <span class="d-block font-weight-bold mb-4">{{ __('labels.extended_date') }}</span>
                                 <span
-                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ Carbon\Carbon::parse($tender->max_extended_date)->translatedFormat('l, d M Y') }}</span>
+                                    class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ $tender->max_extended_process ? $tender->max_extended_process->translatedFormat('l, d M Y') : '-' }}</span>
                             </div>
                         </div>
                         <div class="d-flex flex-wrap">
