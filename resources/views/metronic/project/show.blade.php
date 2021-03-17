@@ -529,7 +529,7 @@
                             <tr>
                                 <td>1</td>
                                 <td>Status Proyek (saat ini)</td>
-                                <td>{{ $project->projectStatus ? __('labels.'{{ $project->projectStatus->code }} : '-')
+                                <td>{{ $project->projectStatus ? __('labels.' . $project->projectStatus->code }} : '-')
                                     }}</td>
                             </tr>
                             <tr>
