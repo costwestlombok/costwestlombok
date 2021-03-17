@@ -129,7 +129,8 @@
                 <div class="d-flex w-100 align-items-center mb-4 mt-5">
                     <span class="text-dark-75 mr-2 w-25">{{ __('labels.final_scope') }}</span>
                     <span class="text-muted font-weight-bold">
-                        {{ $completion->final_scope }}</span>
+                        <pre class="textarea">{{ $completion->final_scope }}</pre>
+                    </span>
                 </div>
                 <div class="d-flex w-100 align-items-center mb-4">
                     <span class="text-dark-75 mr-2 w-25">{{ __('labels.final_cost') }}</span>
@@ -139,17 +140,19 @@
                 <div class="d-flex w-100 align-items-center mb-4">
                     <span class="text-dark-75 mr-2 w-25">{{ __('labels.final_date') }}</span>
                     <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
-                        {{ Carbon\Carbon::parse($completion->date)->translatedFormat('l, d M Y') }}</span>
+                        {{ $completion->date ? $completion->date->translatedFormat('l, d M Y') : '-' }}</span>
                 </div>
                 <div class="d-flex w-100 align-items-center mb-4">
                     <span class="text-dark-75 mr-2 w-25">{{ __('labels.justification') }}</span>
-                    <p class="text-muted font-weight-bold w-75" style="white-space: pre-line">
-                        {!!$completion->justification!!}</p>
+                    <span class="text-muted font-weight-bold">
+                        <pre class="textarea">{{ $completion->justification }}</pre>
+                    </span>
                 </div>
                 <div class="d-flex w-100 align-items-center mb-4">
                     <span class="text-dark-75 mr-2 w-25">{{ __('labels.description') }}</span>
-                    <p href="#" class="text-muted font-weight-bold w-75" style="white-space: pre-line">
-                        {{ $completion->description }}</p>
+                    <span class="text-muted font-weight-bold">
+                        <pre class="textarea">{{ $completion->description }}</pre>
+                    </span>
                 </div>
                 <!--end::Data-->
             </div>

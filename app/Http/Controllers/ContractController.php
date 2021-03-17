@@ -65,8 +65,10 @@ class ContractController extends Controller
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
         $data['duration'] = $start->diffInDays($end);
-        $data['price_local_currency'] = str_replace(",", "", $request->price_local_currency);
-        $data['price_usd_currency'] = str_replace(",", "", $request->price_usd_currency);
+        if (isset($data['price_local_currency'])) {
+            $data['price_local_currency'] = str_replace(",", "", $request->price_local_currency);
+        }
+        // $data['price_usd_currency'] = str_replace(",", "", $request->price_usd_currency);
 
         if ($request->status_id) {
             $status = Status::where('status_name', $request->status_id)->first();
@@ -122,8 +124,10 @@ class ContractController extends Controller
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
         $data['duration'] = $start->diffInDays($end);
-        $data['price_local_currency'] = str_replace(",", "", $request->price_local_currency);
-        $data['price_usd_currency'] = str_replace(",", "", $request->price_usd_currency);
+        if (isset($data['price_local_currency'])) {
+            $data['price_local_currency'] = str_replace(",", "", $request->price_local_currency);
+        }
+        // $data['price_usd_currency'] = str_replace(",", "", $request->price_usd_currency);
 
         if ($request->status_id) {
             $status = Status::where('status_name', $request->status_id)->first();
@@ -193,7 +197,7 @@ class ContractController extends Controller
         $completion->update($data);
         Session::put('success', trans('labels.updated'));
 
-        return redirect('contract-completion/' . $completion->id);
+        return redirect('contract/' . $completion->contract->id . '/completion');
     }
 
     public function completion_destroy(Completion $completion)

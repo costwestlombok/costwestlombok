@@ -20,6 +20,9 @@
                     @if(request()->type)
                     <input type="hidden" name="type" value="{{ request()->type }}">
                     @endif
+                    @if(request()->status)
+                    <input type="hidden" name="status" value="{{ request()->status }}">
+                    @endif
                     <div class="input-group input-group-sm input-group-solid" style="max-width: 175px">
                         <input type="text" name="query" value="{{ request()->get('query') }}" class="form-control"
                             id="kt_subheader_search_form" placeholder="{{ __('labels.search') }}...">
@@ -53,10 +56,17 @@
         @if(Auth::check())
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
+            <select class="form-control" name="project_status_id" id="status" style="width: auto;" required>
+                <option value="all">Semua status</option>
+                @foreach (\App\ProjectStatus::all() as $status)
+                <option value="{{$status->code}}" {{ request()->status == $status->code ? 'selected' : '' }}>
+                    {{ __('labels.'.$status->code) }}</option>
+                @endforeach
+            </select>
             @if(Auth::user()->type == 'agency')
             <!--begin::Button-->
             <a href="{{ route('project.index', ['type' => request()->type == 'only_me' ? 'all' : 'only_me']) }}"
-                class="btn btn-success font-weight-bolder mr-2">
+                class="btn btn-success font-weight-bolder ml-2">
                 @if(request()->type == 'only_me')
                 {{ __('labels.show_all') }} {{ __('labels.project') }}
                 @else
@@ -66,7 +76,7 @@
             <!--end::Button-->
             @endif
             <!--begin::Button-->
-            <a href="{{ route('project.create') }}" class="btn btn-primary font-weight-bolder"><span
+            <a href="{{ route('project.create') }}" class="btn btn-primary font-weight-bolder ml-2"><span
                     class="svg-icon svg-icon-md">
                     <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -82,6 +92,18 @@
                     <!--end::Svg Icon-->
                 </span>{{ __('labels.create') }} {{ __('labels.project') }}</a>
             <!--end::Button-->
+        </div>
+        <!--end::Toolbar-->
+        @else
+        <!--begin::Toolbar-->
+        <div class="d-flex align-items-center">
+            <select class="form-control" name="project_status_id" id="status" style="width: auto;" required>
+                <option value="all">Semua status</option>
+                @foreach (\App\ProjectStatus::all() as $status)
+                <option value="{{$status->code}}" {{ request()->status == $status->code ? 'selected' : '' }}>
+                    {{ __('labels.'.$status->code) }}</option>
+                @endforeach
+            </select>
         </div>
         <!--end::Toolbar-->
         @endif
@@ -106,4 +128,14 @@
     </div>
     <!--end::Container-->
 </div>
+@endsection
+@section('script')
+<script>
+    $('#status').select2({
+        placeholder: "{{ __('labels.choose_status') }}"
+    });
+    $('#status').on("change", function() { 
+        window.location.href = "{{ url('project') }}?status=" + this.value;
+    });
+</script>
 @endsection

@@ -41,7 +41,15 @@ class ProjectController extends Controller
                 }
             }
         }
-        $projects = $projects->paginate(10);
+        if (request()->status) {
+            if (request()->status != 'all') {
+                $status = request()->status;
+                $projects = $projects->whereHas('projectStatus', function ($q) use ($status) {
+                    $q->where('code', $status);
+                });
+            }
+        }
+        $projects = $projects->paginate(1);
         return view('metronic.project.index', ['projects' => $projects]);
     }
 

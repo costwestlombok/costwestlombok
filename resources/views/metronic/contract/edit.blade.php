@@ -97,14 +97,15 @@ $suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
                         </select>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="price_local_currency">{{ __('labels.price_local_currency') }}</label>
                                 <input type="text" class="form-control"
-                                    value="{{ number_format($contract->price_local_currency ?? '0') }}"
-                                    name="price_local_currency" required />
+                                    value="{{ isset($contract) ? ($contract->price_local_currency ?? ($contract->award->cost ?? '0')) : (isset($award) ? ($award->cost ?? '0') : '0') }}"
+                                    name="price_local_currency" />
                             </div>
                         </div>
+                        @if(false)
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="price_usd_currency">{{ __('labels.price_usd_currency') }}</label>
@@ -113,6 +114,7 @@ $suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
                                     name="price_usd_currency" required />
                             </div>
                         </div>
+                        @endif
                     </div>
                     <div class="row">
                         <div class="col-md-6">

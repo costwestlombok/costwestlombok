@@ -50,7 +50,7 @@ return  [
 	'status' => 'Status',
 	'project_management' => 'Manajemen Proyek',
 	'tender' => 'Tender',
-	'award' => 'Penawaran',
+	'award' => 'Konteks Pengadaan',
 	'contract' => 'Kontrak',
 
 	// landing

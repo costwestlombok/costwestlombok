@@ -72,6 +72,6 @@ class Project extends Model
 
     public function projectStatus()
     {
-        return $this->hasMany(ProjectStatus::class);
+        return $this->belongsTo(ProjectStatus::class);
     }
 }
