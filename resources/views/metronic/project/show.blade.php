@@ -537,7 +537,8 @@
                                 <td>
                                     Rp
                                     @if($project->tenders()->first()->awards()->count() &&
-                                    $project->tenders()->first()->awards()->first()->contract)
+                                    $project->tenders()->first()->awards()->first()->contract &&
+                                    $project->tenders()->first()->awards()->first()->contract->completion)
                                     {{ number_format($project->tenders()->first()->awards()->first()->contract->completion->final_cost ?? 0) }}
                                     @else
                                     -
@@ -549,7 +550,8 @@
                                 <td>Tanggal Selesai (Proyeksi)</td>
                                 <td>
                                     @if($project->tenders()->first()->awards()->count() &&
-                                    $project->tenders()->first()->awards()->first()->contract)
+                                    $project->tenders()->first()->awards()->first()->contract &&
+                                    $project->tenders()->first()->awards()->first()->contract->completion)
                                     {{ $project->tenders()->first()->awards()->first()->contract->completion->date->isoFormat('D MMMM Y') ?? '-' }}
                                     @else
                                     -
@@ -561,7 +563,8 @@
                                 <td>Lingkup Saat Selesai (Proyeksi)</td>
                                 <td>
                                     @if($project->tenders()->first()->awards()->count() &&
-                                    $project->tenders()->first()->awards()->first()->contract)
+                                    $project->tenders()->first()->awards()->first()->contract &&
+                                    $project->tenders()->first()->awards()->first()->contract->completion)
                                     <pre
                                         class="textarea">{!! $project->tenders()->first()->awards()->first()->contract->completion->final_scope ?? '-' !!}</pre>
                                     @else
