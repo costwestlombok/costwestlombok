@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
 
@@ -11,7 +12,7 @@ class FrontController extends Controller
 {
     public function index()
     {
-        if(Auth::check()) {
+        if (Auth::check()) {
             return redirect('home');
         }
         if (!request()->get('type') || request()->get('type') == 'road') {
@@ -34,7 +35,7 @@ class FrontController extends Controller
         ];
         $arr_map = array_map('strtotime', $arr);
         $projects = \App\Project::latest()->get()->map(function ($project) {
-            $p['id'] = 'oc4ids-bu3kcz-'.$project->id;
+            $p['id'] = 'oc4ids-bu3kcz-' . $project->id;
             $p['updated'] = $project->updated_at->format('c');
             $p['title'] = $project->project_title;
             if ($project->subsector_id) {
@@ -46,7 +47,7 @@ class FrontController extends Controller
                 'implementation',
                 'completion',
                 'completed',
-                'cancelled'
+                'cancelled',
             ])) {
                 $p['status'] = 'identification'; // https://standard.open-contracting.org/infrastructure/latest/en/reference/codelists/#projectstatus
             } else {
@@ -61,25 +62,27 @@ class FrontController extends Controller
                 $p['sector'] = [$project->subsector->sector->sector_name];
             }
             $p['type'] = 'rehabilitation'; // https://standard.open-contracting.org/infrastructure/latest/en/reference/codelists/#projecttype
-            $coordinate_initial = new Coordinate([$project->initial_lat, $project->initial_lon], Ellipsoid::createFromName(Ellipsoid::GRS_1980));
-            $coordinate_final = new Coordinate([$project->final_lat, $project->final_lon], Ellipsoid::createFromName(Ellipsoid::GRS_1980));
-            $p['locations'] = [
-                [
-                    'id' => $project->id.'-1',
-                    'description' => 'Start Point',
-                    'geometry' => [
-                        'type' => 'Point',
-                        'coordinates' => [round($coordinate_initial->getEllipsoid()->getA()), round($coordinate_initial->getEllipsoid()->getB())],
-                    ]
-                ], [
-                    'id' => $project->id.'-2',
-                    'description' => 'End Point',
-                    'geometry' => [
-                        'type' => 'Point',
-                        'coordinates' => [round($coordinate_final->getEllipsoid()->getA()), round($coordinate_final->getEllipsoid()->getB())],
-                    ]
-                ]
-            ];
+            if ($project->initial_lat && $project->initial_lon && $project->final_lat && $project->final_lon) {
+                $coordinate_initial = new Coordinate([$project->initial_lat, $project->initial_lon], Ellipsoid::createFromName(Ellipsoid::GRS_1980));
+                $coordinate_final = new Coordinate([$project->final_lat, $project->final_lon], Ellipsoid::createFromName(Ellipsoid::GRS_1980));
+                $p['locations'] = [
+                    [
+                        'id' => $project->id . '-1',
+                        'description' => 'Start Point',
+                        'geometry' => [
+                            'type' => 'Point',
+                            'coordinates' => [round($coordinate_initial->getEllipsoid()->getA()), round($coordinate_initial->getEllipsoid()->getB())],
+                        ],
+                    ], [
+                        'id' => $project->id . '-2',
+                        'description' => 'End Point',
+                        'geometry' => [
+                            'type' => 'Point',
+                            'coordinates' => [round($coordinate_final->getEllipsoid()->getA()), round($coordinate_final->getEllipsoid()->getB())],
+                        ],
+                    ],
+                ];
+            }
             if ($project->project_budget()->count()) {
                 $p['budget'] = [
                     'amount' => [
@@ -131,7 +134,7 @@ class FrontController extends Controller
                     $f['id'] = $file->id;
                     $f['title'] = $file->document_name;
                     $f['description'] = $file->document_description;
-                    $f['url'] = url('storage/'.$file->document_path);
+                    $f['url'] = url('storage/' . $file->document_path);
                     $f['datePublished'] = $file->created_at->format('c');
                     $f['dateModified'] = $file->updated_at->format('c');
                     $f['author'] = $file->author;
@@ -169,18 +172,19 @@ class FrontController extends Controller
 
         $oc4ids = [
             "version" => "0.9",
-            "uri" => "https://cost.digitalcommunity.id/oc4ids.json",
+            "uri" => 'https://cost.digitalcommunity.id/oc4ids.json',
             "publishedDate" => $arr[array_search(max($arr_map), $arr_map)]->format('c'),
             "publisher" => [
                 "name" => "Open Data Services Co-operative Limited",
                 "scheme" => "GB-COH",
                 "uid" => "9506232",
-                "uri" => "http://data.companieshouse.gov.uk/doc/company/09506232"
+                "uri" => "http://data.companieshouse.gov.uk/doc/company/09506232",
             ],
             "publicationPolicy" => "https://standard.open-contracting.org/1.1/en/implementation/publication_policy/",
             "projects" => $projects->toArray(),
         ];
-        // dd($oc4ids);
-        return response()->json($oc4ids);
+        $oc_json = json_encode($oc4ids, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        Storage::disk('public')->put('docs/oc4ids.json', $oc_json);
+        return redirect('storage/docs/oc4ids.json');
     }
 }
