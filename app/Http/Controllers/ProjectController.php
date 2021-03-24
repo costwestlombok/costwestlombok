@@ -7,12 +7,12 @@ use App\Libraries\Googlemaps;
 use App\Project;
 use App\ProjectDocument;
 use App\Role;
+use Auth;
 use Carbon\Carbon;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 use Storage;
-use Auth;
 
 class ProjectController extends Controller
 {
@@ -30,7 +30,7 @@ class ProjectController extends Controller
     public function index()
     {
         if (request()->get('query')) {
-            $projects = Project::where('project_title', 'like', '%'.request()->get('query').'%')->latest();
+            $projects = Project::where('project_title', 'like', '%' . request()->get('query') . '%')->latest();
         } else {
             $projects = Project::latest();
         }
@@ -65,7 +65,7 @@ class ProjectController extends Controller
             'id' => 'A',
             'title' => 'true',
             'position' => '-8.683070211544514,116.13077257514645',
-            'draggable' => TRUE,
+            'draggable' => true,
             'ondragend' => 'document.getElementById("initial_lat").value =event.latLng.lat(); document.getElementById("initial_lon").value = event.latLng.lng();',
             'icon' => 'http://maps.google.com/mapfiles/kml/paddle/A.png',
         ]);
@@ -73,25 +73,25 @@ class ProjectController extends Controller
             'id' => 'B',
             'title' => 'false',
             'position' => '-8.679305276105104,116.13759645742493',
-            'draggable' => TRUE,
+            'draggable' => true,
             'ondragend' => 'document.getElementById("final_lat").value =event.latLng.lat(); document.getElementById("final_lon").value = event.latLng.lng();',
             'icon' => 'http://maps.google.com/mapfiles/kml/paddle/B.png',
         ]);
         $map->initialize([
             'center' => "-8.683070211544514,116.13077257514645",
-            'places' => TRUE,
+            'places' => true,
             'onclick' => '
                 if (marker_A.title == "true") {
                     marker_A.setPosition(event.latLng);
                     marker_A.setTitle("false");
                     marker_B.setTitle("true");
-                    document.getElementById("initial_lat").value = event.latLng.lat(); 
+                    document.getElementById("initial_lat").value = event.latLng.lat();
                     document.getElementById("initial_lon").value = event.latLng.lng();
                 } else {
                     marker_B.setPosition(event.latLng);
                     marker_B.setTitle("false");
                     marker_A.setTitle("true");
-                    document.getElementById("final_lat").value = event.latLng.lat(); 
+                    document.getElementById("final_lat").value = event.latLng.lat();
                     document.getElementById("final_lon").value = event.latLng.lng();
                 }
             ',
@@ -124,7 +124,7 @@ class ProjectController extends Controller
                     'role_name' => $request->role_id,
                 ]);
                 $data['role_id'] = $r->id;
-            } 
+            }
         }
         $project = Project::create($data);
 
@@ -188,11 +188,11 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         $map = new Googlemaps();
-         $map->add_marker([
+        $map->add_marker([
             'id' => 'A',
             'title' => 'true',
             'position' => ($project->initial_lat ?? '-8.683070211544514') . ',' . ($project->initial_lon ?? '116.13077257514645'),
-            'draggable' => TRUE,
+            'draggable' => true,
             'ondragend' => 'document.getElementById("initial_lat").value =event.latLng.lat(); document.getElementById("initial_lon").value = event.latLng.lng();',
             'icon' => 'http://maps.google.com/mapfiles/kml/paddle/A.png',
         ]);
@@ -200,25 +200,25 @@ class ProjectController extends Controller
             'id' => 'B',
             'title' => 'false',
             'position' => ($project->final_lat ?? '-8.679305276105104') . ',' . ($project->final_lon ?? '116.13759645742493'),
-            'draggable' => TRUE,
+            'draggable' => true,
             'ondragend' => 'document.getElementById("final_lat").value =event.latLng.lat(); document.getElementById("final_lon").value = event.latLng.lng();',
             'icon' => 'http://maps.google.com/mapfiles/kml/paddle/B.png',
         ]);
         $map->initialize([
             'center' => ($project->initial_lat ?? '-8.683070211544514') . ',' . ($project->initial_lon ?? '116.13077257514645'),
-            'places' => TRUE,
+            'places' => true,
             'onclick' => '
                 if (marker_A.title == "true") {
                     marker_A.setPosition(event.latLng);
                     marker_A.setTitle("false");
                     marker_B.setTitle("true");
-                    document.getElementById("initial_lat").value = event.latLng.lat(); 
+                    document.getElementById("initial_lat").value = event.latLng.lat();
                     document.getElementById("initial_lon").value = event.latLng.lng();
                 } else {
                     marker_B.setPosition(event.latLng);
                     marker_B.setTitle("false");
                     marker_A.setTitle("true");
-                    document.getElementById("final_lat").value = event.latLng.lat(); 
+                    document.getElementById("final_lat").value = event.latLng.lat();
                     document.getElementById("final_lon").value = event.latLng.lng();
                 }
             ',
@@ -253,12 +253,12 @@ class ProjectController extends Controller
                     'role_name' => $request->role_id,
                 ]);
                 $data['role_id'] = $r->id;
-            } 
+            }
         }
         $project->update($data);
         Session::put('success', trans('labels.updated'));
 
-        return redirect('/project');
+        return redirect()->route('project.show', $project);
     }
 
     /**
