@@ -89,21 +89,21 @@ class FrontController extends Controller
                         'amount' => $project->project_budget()->sum('amount'),
                         'currency' => 'IDR',
                     ],
-                    'budgetBreakdown' => $project->project_budget()->latest()->get()->map(function ($budget) {
-                        $b['id'] = $budget->id;
-                        if ($budget->description) {
-                            $b['description'] = $budget->description;
-                        }
-                        $b['amount'] = [
-                            'amount' => $budget->amount,
-                            'currency' => 'IDR',
-                        ];
-                        $b['period'] = [
-                            'startDate' => date('c', strtotime($budget->start_date)),
-                            'endDate' => date('c', strtotime($budget->end_date)),
-                        ];
-                        return $b;
-                    }),
+                    // 'budgetBreakdown' => $project->project_budget()->latest()->get()->map(function ($budget) {
+                    //     $b['id'] = $budget->id;
+                    //     if ($budget->description) {
+                    //         $b['description'] = $budget->description;
+                    //     }
+                    //     $b['amount'] = [
+                    //         'amount' => $budget->amount,
+                    //         'currency' => 'IDR',
+                    //     ];
+                    //     $b['period'] = [
+                    //         'startDate' => date('c', strtotime($budget->start_date)),
+                    //         'endDate' => date('c', strtotime($budget->end_date)),
+                    //     ];
+                    //     return $b;
+                    // }),
                 ];
             }
             $offerers = \App\Offerer::whereIn('id', \App\TenderOfferer::whereIn('tender_id', $project->tenders()->pluck('id'))->pluck('offerer_id'))->latest()->get();
@@ -111,10 +111,10 @@ class FrontController extends Controller
                 $p['parties'] = $offerers->map(function ($offerer) {
                     $o['name'] = $offerer->offerer_name;
                     $o['id'] = $offerer->id;
-                    $o['identifier'] = [
-                        'legalName' => $offerer->legal_name,
-                        'id' => $offerer->id,
-                    ];
+                    // $o['identifier'] = [
+                    //     'legalName' => $offerer->legal_name,
+                    //     'id' => $offerer->id,
+                    // ];
                     if ($offerer->website) {
                         $o['identifier']['uri'] = $offerer->website;
                     }
@@ -127,6 +127,9 @@ class FrontController extends Controller
             //     'name' => $project->project_title,
             //     'id' => 'oc4ids-bu3kcz-'.$project->id,
             // ];
+            $p['parties'][] = [
+                'roles' => 
+            ]
 
             $files = $project->file()->latest()->get();
             if ($files->count()) {
@@ -147,7 +150,7 @@ class FrontController extends Controller
             if ($contracts->count()) {
                 $p['contractingProcesses'] = $contracts->map(function ($contract) {
                     $c['id'] = $contract->id;
-                    $c['summary']['ocid'] = $contract->id;
+                    // $c['summary']['ocid'] = $contract->id;
                     $c['summary']['title'] = $contract->contract_title;
                     $c['summary']['description'] = $contract->contract_title;
                     // tender
@@ -172,15 +175,15 @@ class FrontController extends Controller
 
         $oc4ids = [
             "version" => "0.9",
-            "uri" => 'https://cost.digitalcommunity.id/oc4ids.json',
+            "uri" => "https://cost.digitalcommunity.id/oc4ids",
             "publishedDate" => $arr[array_search(max($arr_map), $arr_map)]->format('c'),
-            "publisher" => [
-                "name" => "Open Data Services Co-operative Limited",
-                "scheme" => "GB-COH",
-                "uid" => "9506232",
-                "uri" => "http://data.companieshouse.gov.uk/doc/company/09506232",
-            ],
-            "publicationPolicy" => "https://standard.open-contracting.org/1.1/en/implementation/publication_policy/",
+            // "publisher" => [
+            //     "name" => "Open Data Services Co-operative Limited",
+            //     "scheme" => "GB-COH",
+            //     "uid" => "9506232",
+            //     "uri" => "http://data.companieshouse.gov.uk/doc/company/09506232"
+            // ],
+            // "publicationPolicy" => "https://standard.open-contracting.org/1.1/en/implementation/publication_policy/",
             "projects" => $projects->toArray(),
         ];
         $oc_json = json_encode($oc4ids, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
