@@ -115,11 +115,15 @@ class FrontController extends Controller
                     //     'legalName' => $offerer->legal_name,
                     //     'id' => $offerer->id,
                     // ];
-                    if ($offerer->website) {
+                    if ($offerer->website && $offerer->website != '-') {
                         $o['identifier']['uri'] = $offerer->website;
                     }
-                    $o['address']['streetAddress'] = $offerer->address;
-                    $o['contactPoint']['telephone'] = $offerer->phone;
+                    if ($offerer->address && $offerer->address != '-') {
+                        $o['address']['streetAddress'] = $offerer->address;
+                    }
+                    if ($offerer->phone && $offerer->phone != '-') {
+                        $o['contactPoint']['telephone'] = $offerer->phone;
+                    }
                     return $o;
                 });
             }
@@ -128,8 +132,8 @@ class FrontController extends Controller
             //     'id' => 'oc4ids-bu3kcz-'.$project->id,
             // ];
             $p['parties'][] = [
-                'roles' => 
-            ]
+                'roles' => ''
+            ];
 
             $files = $project->file()->latest()->get();
             if ($files->count()) {
