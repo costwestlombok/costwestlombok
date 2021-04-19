@@ -124,6 +124,7 @@ class FrontController extends Controller
                     if ($offerer->phone && $offerer->phone != '-') {
                         $o['contactPoint']['telephone'] = $offerer->phone;
                     }
+                    $o['roles'] = 'tenderer';
                     return $o;
                 });
             }
@@ -131,10 +132,26 @@ class FrontController extends Controller
             //     'name' => $project->project_title,
             //     'id' => 'oc4ids-bu3kcz-'.$project->id,
             // ];
-            $p['parties'][] = [
-                'roles' => ''
-            ];
-
+            if ($project->tenders()->count()) {
+                $tender = $project->tenders()->first();
+                if ($tender->official) {
+                    $tenderObject = [
+                        'name' => $tender->official->unit->org->name,
+                        'id' => $tender->official->unit->org->id,
+                        'roles' => 'publicAuthority',
+                    ];
+                    if ($tender->website && $tender->website != '-') {
+                        $tenderObject['identifier']['uri'] = $tender->website;
+                    }
+                    if ($tender->address && $tender->address != '-') {
+                        $tenderObject['address']['streetAddress'] = $tender->address;
+                    }
+                    if ($tender->phone && $tender->phone != '-') {
+                        $tenderObject['contactPoint']['telephone'] = $tender->phone;
+                    }
+                    $p['parties'][] = $tenderObject;
+                }
+            }
             $files = $project->file()->latest()->get();
             if ($files->count()) {
                 $p['documents'] = $files->map(function ($file) {
@@ -169,7 +186,6 @@ class FrontController extends Controller
                     //     'numberOfTenderers' => $award->participants_number,
                     // ];
                     // $c['suppliers ']
-
                     return $c;
                 });
             }
