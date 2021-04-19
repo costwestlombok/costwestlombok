@@ -35,7 +35,7 @@ class FrontController extends Controller
         ];
         $arr_map = array_map('strtotime', $arr);
         $projects = \App\Project::latest()->get()->map(function ($project) {
-            $p['id'] = 'oc4ids-bu3kcz-' . $project->id;
+            $p['id'] = 'oc4ids-jj5f2u-' . $project->id;
             $p['updated'] = $project->updated_at->format('c');
             $p['title'] = $project->project_title;
             if ($project->subsector_id) {
@@ -59,7 +59,8 @@ class FrontController extends Controller
                 'durationInDays' => $project->duration,
             ];
             if ($project->subsector_id) {
-                $p['sector'] = [$project->subsector->sector->sector_name];
+                // $p['sector'] = [$project->subsector->sector->sector_name];
+                $p['sector'] = 'transport.road';
             }
             $p['type'] = 'rehabilitation'; // https://standard.open-contracting.org/infrastructure/latest/en/reference/codelists/#projecttype
             if ($project->initial_lat && $project->initial_lon && $project->final_lat && $project->final_lon) {
@@ -130,7 +131,7 @@ class FrontController extends Controller
             }
             // $p['publicAuthority'] = [
             //     'name' => $project->project_title,
-            //     'id' => 'oc4ids-bu3kcz-'.$project->id,
+            //     'id' => 'oc4ids-jj5f2u-'.$project->id,
             // ];
             if ($project->tenders()->count()) {
                 $tender = $project->tenders()->first();
@@ -197,12 +198,12 @@ class FrontController extends Controller
             "version" => "0.9",
             "uri" => "https://cost.digitalcommunity.id/oc4ids",
             "publishedDate" => $arr[array_search(max($arr_map), $arr_map)]->format('c'),
-            // "publisher" => [
-            //     "name" => "Open Data Services Co-operative Limited",
-            //     "scheme" => "GB-COH",
-            //     "uid" => "9506232",
-            //     "uri" => "http://data.companieshouse.gov.uk/doc/company/09506232"
-            // ],
+            "publisher" => [
+                "name" => "CoST West Lombok",
+                // "scheme" => "GB-COH",
+                // "uid" => "9506232",
+                // "uri" => "http://data.companieshouse.gov.uk/doc/company/09506232"
+            ],
             // "publicationPolicy" => "https://standard.open-contracting.org/1.1/en/implementation/publication_policy/",
             "projects" => $projects->toArray(),
         ];
