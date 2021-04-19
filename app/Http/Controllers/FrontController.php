@@ -41,7 +41,7 @@ class FrontController extends Controller
             if ($project->subsector_id) {
                 $p['description'] = $project->project_description;
             }
-            if ($project->projectStatus->code) {
+            if ($project->projectStatus) {
                 $p['status'] = $project->projectStatus->code;
             }
             $p['period'] = [
