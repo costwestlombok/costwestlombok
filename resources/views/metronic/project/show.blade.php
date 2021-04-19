@@ -690,7 +690,7 @@
                             </tr>
                         </table>
                         <hr>
-                        <h3 class="card-label mt-5 mb-5">Implementasi</h3>
+                        {{-- <h3 class="card-label mt-5 mb-5">Implementasi</h3>
                         <table class="table">
                             <tr>
                                 <td>1</td>
@@ -723,7 +723,7 @@
                                 <td>Tidak Ada</td>
                             </tr>
                         </table>
-                        <hr>
+                        <hr> --}}
                         @endif
                         <div class="row mt-5 mb-5">
                             <div class="col-md-6">
