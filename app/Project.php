@@ -74,4 +74,9 @@ class Project extends Model
     {
         return $this->belongsTo(ProjectStatus::class);
     }
+
+    public function projectProgresses()
+    {
+        return $this->hasMany(Advance::class);
+    }
 }

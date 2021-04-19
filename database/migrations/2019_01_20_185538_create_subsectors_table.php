@@ -18,6 +18,7 @@ class CreateSubsectorsTable extends Migration
             $table->uuid('sector_id');
             $table->foreign('sector_id')->references('id')->on('sectors')->onUpdate('cascade')->onDelete('cascade');
             $table->string('subsector_name');
+            $table->string('subsector_code')->nullable();
             $table->timestamps();
         });
     }

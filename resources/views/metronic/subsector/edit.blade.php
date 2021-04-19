@@ -40,6 +40,12 @@
                                     name="subsector_name" required />
                             </div>
 
+                            <div class="form-group">
+                                <label for="name">{{ __('labels.subsector_code') }}</label>
+                                <input type="text" class="form-control" value="{{ $subsector->subsector_code ?? '' }}"
+                                    name="subsector_code" required />
+                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -311,4 +311,8 @@ return  [
 	'completion' => 'Completion',
 	'completed' => 'Completed',
 	'cancelled' => 'Cancelled',
+
+	// oc4ids
+	'sector_code' => 'OC4IDS Sector Code',
+	'subsector_code' => 'OC4IDS Subsector Code',
 ];

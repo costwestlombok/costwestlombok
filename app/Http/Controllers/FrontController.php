@@ -41,17 +41,8 @@ class FrontController extends Controller
             if ($project->subsector_id) {
                 $p['description'] = $project->project_description;
             }
-            if (!in_array($project->status->status_name ?? null, [
-                'identification',
-                'preparation',
-                'implementation',
-                'completion',
-                'completed',
-                'cancelled',
-            ])) {
-                $p['status'] = 'identification'; // https://standard.open-contracting.org/infrastructure/latest/en/reference/codelists/#projectstatus
-            } else {
-                $p['status'] = $project->status->status_name ?? null;
+            if ($project->projectStatus->code) {
+                $p['status'] = $project->projectStatus->code;
             }
             $p['period'] = [
                 'startDate' => date('c', strtotime($project->start_date)),
@@ -60,7 +51,10 @@ class FrontController extends Controller
             ];
             if ($project->subsector_id) {
                 // $p['sector'] = [$project->subsector->sector->sector_name];
-                $p['sector'] = 'transport.road';
+                $p['sector'] = [
+                    $project->subsector->sector->sector_code,
+                    $project->subsector->subsector_code,
+                ];
             }
             $p['type'] = 'rehabilitation'; // https://standard.open-contracting.org/infrastructure/latest/en/reference/codelists/#projecttype
             if ($project->initial_lat && $project->initial_lon && $project->final_lat && $project->final_lon) {
@@ -189,6 +183,72 @@ class FrontController extends Controller
                     // $c['suppliers ']
                     return $c;
                 });
+            }
+
+            // contractingProcess aka forecasts and metrics
+            if ($project->projectProgresses()->count()) {
+                $projectProgresses = $project->projectProgresses;
+                $metricPPPO = [
+                    'id' => 'physicalProgress',
+                    'title' => 'Physical progress',
+                ];
+                $metricPPPO['observations'] = $projectProgresses->map(function ($projectProgress) {
+                    $pp['id'] = $projectProgress->id;
+                    $pp['measure'] = $projectProgress->real_percent;
+                    $pp['unit']['name'] = 'percent';
+                    $pp['period'] = [
+                        'startDate' => date('c', strtotime($projectProgress->date_of_advance)),
+                        'endDate' => date('c', strtotime($projectProgress->date_of_advance)),
+                    ];
+                    return $pp;
+                });
+                $p['metrics'][] = $metricPPPO;
+                $metricFPPO = [
+                    'id' => 'financialProgress',
+                    'title' => 'Financial progress',
+                ];
+                $metricFPPO['observations'] = $projectProgresses->map(function ($projectProgress) {
+                    $pp['id'] = $projectProgress->id;
+                    $pp['measure'] = $projectProgress->real_financing;
+                    $pp['unit']['name'] = 'percent';
+                    $pp['period'] = [
+                        'startDate' => date('c', strtotime($projectProgress->date_of_advance)),
+                        'endDate' => date('c', strtotime($projectProgress->date_of_advance)),
+                    ];
+                    return $pp;
+                });
+                $p['metrics'][] = $metricFPPO;
+
+                $forecastPPPO = [
+                    'id' => 'physicalProgress',
+                    'title' => 'Physical progress',
+                ];
+                $forecastPPPO['observations'] = $projectProgresses->map(function ($projectProgress) {
+                    $pp['id'] = $projectProgress->id;
+                    $pp['measure'] = $projectProgress->programmed_percent;
+                    $pp['unit']['name'] = 'percent';
+                    $pp['period'] = [
+                        'startDate' => date('c', strtotime($projectProgress->date_of_advance)),
+                        'endDate' => date('c', strtotime($projectProgress->date_of_advance)),
+                    ];
+                    return $pp;
+                });
+                $p['forecasts'][] = $forecastPPPO;
+                $forecastFPPO = [
+                    'id' => 'financialProgress',
+                    'title' => 'Financial progress',
+                ];
+                $forecastFPPO['observations'] = $projectProgresses->map(function ($projectProgress) {
+                    $pp['id'] = $projectProgress->id;
+                    $pp['measure'] = $projectProgress->scheduled_financing;
+                    $pp['unit']['name'] = 'percent';
+                    $pp['period'] = [
+                        'startDate' => date('c', strtotime($projectProgress->date_of_advance)),
+                        'endDate' => date('c', strtotime($projectProgress->date_of_advance)),
+                    ];
+                    return $pp;
+                });
+                $p['forecasts'][] = $forecastFPPO;
             }
 
             return $p;

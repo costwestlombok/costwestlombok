@@ -23,6 +23,12 @@
                                 <input type="text" class="form-control" value="{{ $sector->sector_name ?? '' }}"
                                     name="sector_name" required />
                             </div>
+
+                            <div class="form-group">
+                                <label for="name">{{ __('labels.sector_code') }}</label>
+                                <input type="text" class="form-control" value="{{ $sector->sector_code ?? '' }}"
+                                    name="sector_code" required />
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -320,4 +320,8 @@ return  [
 	'completion' => 'Penyelesaian',
 	'completed' => 'Selesai',
 	'cancelled' => 'Dibatalkan',
+
+	// oc4ids
+	'sector_code' => 'Kode Sektor OC4IDS',
+	'subsector_code' => 'Kode Subsektor OC4IDS',
 ];
