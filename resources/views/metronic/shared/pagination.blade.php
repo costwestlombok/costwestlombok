@@ -55,7 +55,7 @@
     @if($data->lastPage())
     <div class="d-flex align-items-center">
         <span class="text-muted">{{ __('labels.displaying') }} {{$data->count()}} {{ __('labels.of') }}
-            {{$data->lastPage()}} {{ __('labels.records') }}</span>
+            {{$data->total()}} {{ __('labels.records') }}</span>
     </div>
     @endif
 </div>
