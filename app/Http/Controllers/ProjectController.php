@@ -49,7 +49,7 @@ class ProjectController extends Controller
                 });
             }
         }
-        $projects = $projects->paginate(1);
+        $projects = $projects->paginate(10);
         return view('metronic.project.index', ['projects' => $projects]);
     }
 
