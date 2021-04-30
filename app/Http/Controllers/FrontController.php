@@ -168,7 +168,7 @@ class FrontController extends Controller
                     $c['id'] = $contract->id;
                     // $c['summary']['ocid'] = $contract->id;
                     $c['summary']['title'] = $contract->contract_title;
-                    $c['summary']['description'] = $contract->contract_title;
+                    $c['summary']['description'] = $contract->contract_scope;
                     // tender
                     $award = $contract->award;
                     $tender = $award->tender;
