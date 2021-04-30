@@ -119,7 +119,9 @@ class FrontController extends Controller
                     if ($offerer->phone && $offerer->phone != '-') {
                         $o['contactPoint']['telephone'] = $offerer->phone;
                     }
-                    $o['roles'] = 'tenderer';
+                    $o['roles'] = [
+                        'tenderer'
+                    ];
                     return $o;
                 });
             }
@@ -133,7 +135,7 @@ class FrontController extends Controller
                     $tenderObject = [
                         'name' => $tender->official->unit->org->name,
                         'id' => $tender->official->unit->org->id,
-                        'roles' => 'publicAuthority',
+                        'roles' => ['publicAuthority'],
                     ];
                     if ($tender->website && $tender->website != '-') {
                         $tenderObject['identifier']['uri'] = $tender->website;
