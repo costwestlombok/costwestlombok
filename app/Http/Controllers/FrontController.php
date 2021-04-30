@@ -129,25 +129,24 @@ class FrontController extends Controller
             //     'name' => $project->project_title,
             //     'id' => 'oc4ids-jj5f2u-'.$project->id,
             // ];
-            if ($project->tenders()->count()) {
-                $tender = $project->tenders()->first();
-                if ($tender->official) {
-                    $tenderObject = [
-                        'name' => $tender->official->unit->org->name,
-                        'id' => $tender->official->unit->org->id,
-                        'roles' => ['publicAuthority'],
-                    ];
-                    if ($tender->website && $tender->website != '-') {
-                        $tenderObject['identifier']['uri'] = $tender->website;
-                    }
-                    if ($tender->address && $tender->address != '-') {
-                        $tenderObject['address']['streetAddress'] = $tender->address;
-                    }
-                    if ($tender->phone && $tender->phone != '-') {
-                        $tenderObject['contactPoint']['telephone'] = $tender->phone;
-                    }
-                    $p['parties'][] = $tenderObject;
+            if ($project->official) {
+                $official = $project->official;
+                $org = $official->unit->org;
+                $officialObject = [
+                    'name' => $org->name,
+                    'id' => $org->id,
+                    'roles' => ['publicAuthority'],
+                ];
+                if ($org->website && $org->website != '-') {
+                    $officialObject['identifier']['uri'] = $org->website;
                 }
+                if ($org->address && $org->address != '-') {
+                    $officialObject['address']['streetAddress'] = $org->address;
+                }
+                if ($org->phone && $org->phone != '-') {
+                    $officialObject['contactPoint']['telephone'] = $org->phone;
+                }
+                $p['parties'][] = $officialObject;
             }
             $files = $project->file()->latest()->get();
             if ($files->count()) {
