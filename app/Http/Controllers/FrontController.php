@@ -135,8 +135,27 @@ class FrontController extends Controller
                 $officialObject = [
                     'name' => $org->name,
                     'id' => $org->id,
-                    'roles' => ['publicAuthority'],
+                    'roles' => ['publicAuthority', 'administrativeEntity'],
                 ];
+                if ($project->project_budget()->count()) {
+                    $budget = $project->project_budget()->first();
+                    if ($budget->source()->count()) {
+                        $source = $budget->source()->first();
+                        if ($source->source) {
+                            if ($source->source->acronym == 'PRIM') {
+                                $p['parties'][] = [
+                                    'name' => 'GRANT',
+                                    'id' => '11303000-6752-11eb-904c-b984ec60b957',
+                                    'roles' => [
+                                        'funder',
+                                    ],
+                                ];
+                            } else if (in_array($source->source->acronym, ['DAU', 'DAK'])) {
+                                $officialObject['roles'][] = 'funder';
+                            }
+                        }
+                    }
+                }
                 if ($org->website && $org->website != '-') {
                     $officialObject['identifier']['uri'] = $org->website;
                 }
