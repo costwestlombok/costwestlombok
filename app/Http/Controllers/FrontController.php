@@ -36,6 +36,7 @@ class FrontController extends Controller
         $arr_map = array_map('strtotime', $arr);
         $projects = \App\Project::latest()->get()->map(function ($project) {
             $p['id'] = 'oc4ids-jj5f2u-' . $project->id;
+            $p['externalReference'] = $project->project_code;
             $p['updated'] = $project->updated_at->format('c');
             $p['title'] = $project->project_title;
             if ($project->subsector_id) {
@@ -55,6 +56,9 @@ class FrontController extends Controller
                     $project->subsector->sector->sector_code,
                     $project->subsector->subsector_code,
                 ];
+            }
+            if ($project->purpose) {
+                $p['purpose'] = $project->purpose->purpose_name;
             }
             $p['type'] = 'rehabilitation'; // https://standard.open-contracting.org/infrastructure/latest/en/reference/codelists/#projecttype
             if ($project->initial_lat && $project->initial_lon && $project->final_lat && $project->final_lon) {
@@ -84,6 +88,7 @@ class FrontController extends Controller
                         'amount' => $project->project_budget()->sum('amount'),
                         'currency' => 'IDR',
                     ],
+                    'approvalDate' => $project->date_of_approved->format('c'),
                     // 'budgetBreakdown' => $project->project_budget()->latest()->get()->map(function ($budget) {
                     //     $b['id'] = $budget->id;
                     //     if ($budget->description) {
@@ -104,12 +109,13 @@ class FrontController extends Controller
             $offerers = \App\Offerer::whereIn('id', \App\TenderOfferer::whereIn('tender_id', $project->tenders()->pluck('id'))->pluck('offerer_id'))->latest()->get();
             if ($offerers->count()) {
                 $p['parties'] = $offerers->map(function ($offerer) {
-                    $o['name'] = $offerer->offerer_name;
+                    $o['name'] = $offerer->legal_name;
                     $o['id'] = $offerer->id;
                     // $o['identifier'] = [
                     //     'legalName' => $offerer->legal_name,
                     //     'id' => $offerer->id,
                     // ];
+                    $o['contactPoint']['name'] = $offerer->offerer_name;
                     if ($offerer->website && $offerer->website != '-') {
                         $o['identifier']['uri'] = $offerer->website;
                     }
@@ -125,17 +131,17 @@ class FrontController extends Controller
                     return $o;
                 });
             }
-            // $p['publicAuthority'] = [
-            //     'name' => $project->project_title,
-            //     'id' => 'oc4ids-jj5f2u-'.$project->id,
-            // ];
             if ($project->official) {
                 $official = $project->official;
                 $org = $official->unit->org;
                 $officialObject = [
-                    'name' => $org->name,
+                    'name' => $org->name . ', ' . $official->unit->unit_name,
                     'id' => $org->id,
                     'roles' => ['publicAuthority', 'administrativeEntity'],
+                ];
+                $p['publicAuthority'] = [
+                    'name' => $org->name . ', ' . $official->unit->unit_name,
+                    'id' => $org->id,
                 ];
                 if ($project->project_budget()->count()) {
                     $budget = $project->project_budget()->first();
@@ -162,9 +168,21 @@ class FrontController extends Controller
                 if ($org->address && $org->address != '-') {
                     $officialObject['address']['streetAddress'] = $org->address;
                 }
-                if ($org->phone && $org->phone != '-') {
-                    $officialObject['contactPoint']['telephone'] = $org->phone;
+                if ($official->name && $official->name != '-') {
+                    $officialObject['contactPoint']['name'] = $official->name;
+                    if ($official->position && $official->position != '-') {
+                        $officialObject['contactPoint']['name'] .= ', '.$official->position;
+                    }
                 }
+                if ($official->email && $official->email != '-') {
+                    $officialObject['contactPoint']['email'] = $official->email;
+                }
+                if ($official->phone && $official->phone != '-') {
+                    $officialObject['contactPoint']['phone'] = $official->phone;
+                }
+                // if ($org->phone && $org->phone != '-') {
+                //     $officialObject['contactPoint']['telephone'] = $org->phone;
+                // }
                 $p['parties'][] = $officialObject;
             }
             $files = $project->file()->latest()->get();
