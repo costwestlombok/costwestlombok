@@ -178,7 +178,7 @@ class FrontController extends Controller
                     $officialObject['contactPoint']['email'] = $official->email;
                 }
                 if ($official->phone && $official->phone != '-') {
-                    $officialObject['contactPoint']['phone'] = $official->phone;
+                    $officialObject['contactPoint']['telephone'] = $official->phone;
                 }
                 // if ($org->phone && $org->phone != '-') {
                 //     $officialObject['contactPoint']['telephone'] = $org->phone;
