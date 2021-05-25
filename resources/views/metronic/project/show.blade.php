@@ -577,17 +577,25 @@
                             <tr>
                                 <td>5</td>
                                 <td>Alasan Perubahan Pada Proyek</td>
-                                <td>{{ 'Ada pada addendum dan CCO' }}
+                                <td>
+                                    @if($project->tenders()->first()->awards()->count() &&
+                                    $project->tenders()->first()->awards()->first()->contract &&
+                                    $project->tenders()->first()->awards()->first()->contract->completion)
+                                    <pre
+                                        class="textarea">{!! $project->tenders()->first()->awards()->first()->contract->completion->justification ?? '-' !!}</pre>
+                                    @else
+                                    -
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
                                 <td>6</td>
-                                <td>Refrensi Laporan Audit dan Evaluasi</td>
+                                <td>Referensi Laporan Audit dan Evaluasi</td>
                                 <td>{{ 'Tidak ada' }}
                                 </td>
                             </tr>
                         </table>
-                        <hr>
+                        {{-- <hr>
                         <h3 class="card-label mt-5 mb-5">Tahap Kontrak</h3>
                         <table class="table">
                             <tr>
@@ -595,7 +603,7 @@
                                 <td>Tanggal</td>
                                 <td>-</td>
                             </tr>
-                        </table>
+                        </table> --}}
                         <hr>
                         <h3 class="card-label mt-5 mb-5">Pengadaan</h3>
                         <table class="table">

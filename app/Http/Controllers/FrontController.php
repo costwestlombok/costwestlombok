@@ -135,13 +135,13 @@ class FrontController extends Controller
                 $official = $project->official;
                 $org = $official->unit->org;
                 $officialObject = [
-                    'name' => $org->name . ', ' . $official->unit->unit_name,
                     'id' => $org->id,
-                    'roles' => ['publicAuthority', 'administrativeEntity'],
+                    'name' => $org->name . ', ' . $official->unit->unit_name,
+                    'roles' => ['publicAuthority', 'administrativeEntity', 'procuringEntity'],
                 ];
                 $p['publicAuthority'] = [
-                    'name' => $org->name . ', ' . $official->unit->unit_name,
                     'id' => $org->id,
+                    'name' => $org->name . ', ' . $official->unit->unit_name,
                 ];
                 if ($project->project_budget()->count()) {
                     $budget = $project->project_budget()->first();
@@ -183,6 +183,18 @@ class FrontController extends Controller
                 // if ($org->phone && $org->phone != '-') {
                 //     $officialObject['contactPoint']['telephone'] = $org->phone;
                 // }
+                if ($project->tenders()->first()) {
+                    $tender = $project->tenders()->first();
+                    if ($tender->official) {
+                        $official = $project->tenders()->first()->official;
+                        $officialObject['additionalContactPoints'] = [
+                            'name' => $official->name,
+                        ];
+                        if ($official->phone && $official->phone != '-') {
+                            $officialObject['additionalContactPoints']['telephone'] = $official->phone;
+                        }
+                    }
+                }
                 $p['parties'][] = $officialObject;
             }
             $files = $project->file()->latest()->get();
@@ -210,17 +222,65 @@ class FrontController extends Controller
                     // tender
                     $award = $contract->award;
                     $tender = $award->tender;
+                    if ($tender->tender_method) {
+                        $c['summary']['tender'] = [
+                            'procurementMethod' => 'open',
+                            'procurementMethodDetails' => $tender->tender_method->method_name,
+                        ];
+                    }
                     // $c['summary']['tender'] = [
-                    //     'title' => $tender->project_process_name,
-                    //     'costEstimate' => [
-                    //         'amount' => $award->contract_estimate_cost,
-                    //         'currency' => 'IDR',
-                    //     ],
-                    //     'numberOfTenderers' => $award->participants_number,
+                        // 'title' => $tender->project_process_name,
+                        // 'costEstimate' => [
+                        //     'amount' => $award->contract_estimate_cost,
+                        //     'currency' => 'IDR',
+                        // ],
+                        // 'numberOfTenderers' => $award->participants_number,
                     // ];
+                    if ($award->participants_number) {
+                        $c['summary']['tender']['numberOfTenderers'] = $award->participants_number;
+                    }
                     // $c['suppliers ']
+                    
+                    // doesnt have column for nature
+                    $c['summary']['nature'] = ['construction'];
+
+                    // administrativeEntitiy
+                    if ($tender->project->official) {
+                        $project = $tender->project;
+                        $official = $project->official;
+                        $org = $official->unit->org;
+                        $c['summary']['tender']['administrativeEntity'] = [
+                            'id' => $org->id,
+                            'name' => $org->name . ', ' . $official->unit->unit_name,
+                        ];
+                    }
+
+                    // contractValue
+                    $c['summary']['contractValue'] = [
+                        'amount' => $contract->price_local_currency,
+                        'currency' => 'IDR',
+                    ];
                     return $c;
                 });
+                $contract = $contracts->first();
+                if ($contract->completion) {
+                    $completion = $contract->completion;
+                    $p['completion'] = [
+                        'finalValue' => [
+                            'amount' => $completion->final_cost,
+                            'currency' => 'IDR'
+                        ],
+                        'endDate' => $completion->date->format('c'),
+                        'finalScope' => $completion->final_scope,
+                    ];
+                    if ($completion->justification) {
+                        $p['completion']['finalValueDetails'] = $completion->justification;
+                        $p['completion']['endDateDetails'] = $completion->justification;
+                    }
+                    if ($completion->description) {
+                        $p['completion']['finalScopeDetails'] = $completion->description;
+                    }
+                }
             }
 
             // contractingProcess aka forecasts and metrics

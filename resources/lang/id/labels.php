@@ -242,7 +242,7 @@ return  [
 	'final_scope' => 'Lingkup Akhir',
 	'final_cost' => 'Biaya Akhir',
 	'final_date' => 'Tanggal Akhir',
-	'justification' => 'Justifikasi',
+	'justification' => 'Alasan Perubahan Pada Proyek',
 
 	// ammendment
 	'contract_ammendment' => 'Amandemen Kontrak',
