@@ -316,4 +316,9 @@ return  [
 	// oc4ids
 	'sector_code' => 'OC4IDS Sector Code',
 	'subsector_code' => 'OC4IDS Subsector Code',
+
+	// document_type
+	'landAndSettlementImpact' => 'Land and Settlement Impact',
+	'environmentalImpact' => 'Environmental Impact',
+	'finalAudit' => 'Final Audit',
 ];

@@ -197,19 +197,19 @@ class FrontController extends Controller
                 // }
                 $p['parties'][] = $officialObject;
             }
-            $files = $project->file()->latest()->get();
-            if ($files->count()) {
-                $p['documents'] = $files->map(function ($file) {
-                    $f['id'] = $file->id;
-                    $f['title'] = $file->document_name;
-                    $f['description'] = $file->document_description;
-                    $f['url'] = url('storage/' . $file->document_path);
-                    $f['datePublished'] = $file->created_at->format('c');
-                    $f['dateModified'] = $file->updated_at->format('c');
-                    $f['author'] = $file->author;
-                    return $f;
-                });
-            }
+            // $files = $project->file()->latest()->get();
+            // if ($files->count()) {
+            //     $p['documents'] = $files->map(function ($file) {
+            //         $f['id'] = $file->id;
+            //         $f['title'] = $file->document_name;
+            //         $f['description'] = $file->document_description;
+            //         $f['url'] = url('storage/' . $file->document_path);
+            //         $f['datePublished'] = $file->created_at->format('c');
+            //         $f['dateModified'] = $file->updated_at->format('c');
+            //         $f['author'] = $file->author;
+            //         return $f;
+            //     });
+            // }
 
             // contract
             $contracts = \App\Contract::whereIn('awards_id', \App\Award::whereIn('tender_id', $project->tenders()->pluck('id'))->pluck('id'))->latest()->get();
@@ -281,6 +281,51 @@ class FrontController extends Controller
                         $p['completion']['finalScopeDetails'] = $completion->description;
                     }
                 }
+            }
+
+            // landAndSettlementImpact
+            if ($project->file()->where('document_type', 'landAndSettlementImpact')->count()) {
+                $document = $project->file()->where('document_type', 'landAndSettlementImpact')->first();
+                $p['documents'][] = [
+                    'id' => $document->id,
+                    'description' => $document->document_description,
+                    'type' => 'landAndSettlementImpact',
+                    'url' => url('storage/'.$document->document_path),
+                ];
+            } elseif ($project->settlement_desc) {
+                $p['documents'][] = [
+                    'id' => $project->id.'-doc-1',
+                    'description' => $project->settlement_desc,
+                    'type' => 'landAndSettlementImpact',
+                ];
+            }
+
+            // environmentalImpact
+            if ($project->file()->where('document_type', 'environmentalImpact')->count()) {
+                $document = $project->file()->where('document_type', 'environmentalImpact')->first();
+                $p['documents'][] = [
+                    'id' => $document->id,
+                    'description' => $document->document_description,
+                    'type' => 'environmentalImpact',
+                    'url' => url('storage/'.$document->document_path),
+                ];
+            } elseif ($project->environment_desc) {
+                $p['documents'][] = [
+                    'id' => $project->id.'-doc-1',
+                    'description' => $project->environment_desc,
+                    'type' => 'environmentalImpact',
+                ];
+            }
+
+            // finalAudit
+            if ($project->file()->where('document_type', 'finalAudit')->count()) {
+                $document = $project->file()->where('document_type', 'finalAudit')->first();
+                $p['documents'][] = [
+                    'id' => $document->id,
+                    'description' => $document->document_description,
+                    'type' => 'finalAudit',
+                    'url' => url('storage/'.$document->document_path),
+                ];
             }
 
             // contractingProcess aka forecasts and metrics

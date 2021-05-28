@@ -161,16 +161,17 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="name">{{ __('labels.document_name') }}</label>
-                                <input type="text" name="document_name" class="form-control">
+                                <input type="text" name="document_name" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">{{ __('labels.document_type') }}</label>
-                                <select class="form-control" name="document_type" >
+                                <select class="form-control" name="document_type" required>
                                     <option selected disabled>...</option>
-                                    <option>landAndSettlementImpact</option>
-                                    <option>environmentalImpact</option>
+                                    <option value="landAndSettlementImpact">{{ __('labels.landAndSettlementImpact') }}</option>
+                                    <option value="environmentalImpact">{{ __('labels.environmentalImpact') }}</option>
+                                    <option value="finalAudit">{{ __('labels.finalAudit') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -192,7 +193,7 @@
                                 <label>{{ __('labels.document') }}</label>
                                 <div></div>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="file" name="file">
+                                    <input type="file" class="custom-file-input" id="file" name="file" required>
                                     <label class="custom-file-label" for="file">{{ __('labels.choose_file') }}</label>
                                 </div>
                             </div>
@@ -200,7 +201,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="name">{{ __('labels.description') }}</label>
-                                <textarea name="document_description" rows="5" class="form-control"></textarea>
+                                <textarea name="document_description" rows="5" class="form-control" required></textarea>
                             </div>
                         </div>
                     </div>

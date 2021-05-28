@@ -325,4 +325,9 @@ return  [
 	// oc4ids
 	'sector_code' => 'Kode Sektor OC4IDS',
 	'subsector_code' => 'Kode Subsektor OC4IDS',
+
+	// document_type
+	'landAndSettlementImpact' => 'Dampak Terhadap Lahan dan Permukiman',
+	'environmentalImpact' => 'Dampak Lingkungan',
+	'finalAudit' => 'Referensi Laporan Audit dan Evaluasi',
 ];

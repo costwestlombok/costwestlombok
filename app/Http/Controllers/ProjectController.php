@@ -282,8 +282,8 @@ class ProjectController extends Controller
     public function store_file(Request $request)
     {
         $data = $request->except('file');
-        if ($request->hasFile('photo')) {
-            $data['document_type'] = $request->file('file')->getClientOriginalExtension();
+        if ($request->hasFile('file')) {
+            // $data['document_type'] = $request->file('file')->getClientOriginalExtension();
             $file = $request->file('file')->store('project_files');
             $data['document_path'] = $file;
         }
