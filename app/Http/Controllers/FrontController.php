@@ -311,7 +311,7 @@ class FrontController extends Controller
                 ];
             } elseif ($project->environment_desc) {
                 $p['documents'][] = [
-                    'id' => $project->id.'-doc-1',
+                    'id' => $project->id.'-doc-2',
                     'description' => $project->environment_desc,
                     'type' => 'environmentalImpact',
                 ];
