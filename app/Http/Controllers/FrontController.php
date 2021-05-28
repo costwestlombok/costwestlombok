@@ -183,18 +183,18 @@ class FrontController extends Controller
                 // if ($org->phone && $org->phone != '-') {
                 //     $officialObject['contactPoint']['telephone'] = $org->phone;
                 // }
-                if ($project->tenders()->first()) {
-                    $tender = $project->tenders()->first();
-                    if ($tender->official) {
-                        $official = $project->tenders()->first()->official;
-                        $officialObject['additionalContactPoints'] = [
-                            'name' => $official->name,
-                        ];
-                        if ($official->phone && $official->phone != '-') {
-                            $officialObject['additionalContactPoints']['telephone'] = $official->phone;
-                        }
-                    }
-                }
+                // if ($project->tenders()->first()) {
+                //     $tender = $project->tenders()->first();
+                //     if ($tender->official) {
+                //         $official = $project->tenders()->first()->official;
+                //         $officialObject['additionalContactPoints'] = [
+                //             'name' => $official->name,
+                //         ];
+                //         if ($official->phone && $official->phone != '-') {
+                //             $officialObject['additionalContactPoints']['telephone'] = $official->phone;
+                //         }
+                //     }
+                // }
                 $p['parties'][] = $officialObject;
             }
             $files = $project->file()->latest()->get();
