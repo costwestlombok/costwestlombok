@@ -126,7 +126,8 @@ class FrontController extends Controller
                         $o['contactPoint']['telephone'] = $offerer->phone;
                     }
                     $o['roles'] = [
-                        'tenderer'
+                        'tenderer',
+                        'supplier',
                     ];
                     return $o;
                 });
@@ -260,6 +261,16 @@ class FrontController extends Controller
                         'amount' => $contract->price_local_currency,
                         'currency' => 'IDR',
                     ];
+
+                    // suppliers
+                    if ($offerers->count()) {
+                        $offerer = $offerers->first();
+                        $c['summary']['suppliers'][] = [
+                            'id' => $offerer->id,
+                            'name' => $offerer->legal_name,
+                        ];
+                    }
+
                     return $c;
                 });
                 $contract = $contracts->first();
