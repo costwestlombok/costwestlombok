@@ -29,6 +29,9 @@
                     data: 'document_name'
                 },
                 {
+                    data: 'document_type'
+                },
+                {
                     data: 'author'
                 },
                 {
@@ -43,10 +46,10 @@
                     searchable: false
                 },
             ],
-            order: [[4, "desc"]],
+            order: [[5, "desc"]],
             columnDefs: [
                 {
-                    targets: 5,
+                    targets: 6,
                     title: '{{ __("labels.action") }}',
                     orderable: false,
                     render: function (data, type, full, meta) {
@@ -58,7 +61,7 @@
                     },
                 },
                 {
-                    targets: 4,
+                    targets: 5,
                     render: function (data, type, full, meta) {
                         return '<div class="text-right nowrap">\
                             <code>' + data + '</code>\
@@ -155,10 +158,20 @@
                 <input type="hidden" name="project_id" value="{{$project->id}}">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="name">{{ __('labels.document_name') }}</label>
                                 <input type="text" name="document_name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">{{ __('labels.document_type') }}</label>
+                                <select class="form-control" name="document_type" >
+                                    <option selected disabled>...</option>
+                                    <option>landAndSettlementImpact</option>
+                                    <option>environmentalImpact</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -221,6 +234,7 @@
                         <tr>
                             <th class="text-center column-fit">#</th>
                             <th>{{ __('labels.document_name') }}</th>
+                            <th>{{ __('labels.document_type') }}</th>
                             <th>{{ __('labels.author') }}</th>
                             <th>{{ __('labels.description') }}</th>
                             <th class="column-fit">{{ __('labels.created_at') }}</th>

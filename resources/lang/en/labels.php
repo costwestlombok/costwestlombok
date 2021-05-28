@@ -265,6 +265,7 @@ return  [
 
 	// project > file
 	'document_name' => 'Document Name',
+	'document_type' => 'Document Type',
 	'document_list' => 'Document List',
 	'author' => 'Author',
 

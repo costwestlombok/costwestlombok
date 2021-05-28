@@ -273,6 +273,7 @@ return  [
 
 	// project > file
 	'document_name' => 'Nama Dokumen',
+	'document_type' => 'Tipe Dokumen',
 	'document_list' => 'Daftar Dokumen',
 	'author' => 'Penulis',
 
