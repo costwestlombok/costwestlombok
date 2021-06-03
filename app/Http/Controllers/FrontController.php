@@ -262,6 +262,7 @@ class FrontController extends Controller
                         'currency' => 'IDR',
                     ];
 
+                    $offerers = \App\Offerer::whereIn('id', \App\TenderOfferer::whereIn('tender_id', $project->tenders()->pluck('id'))->pluck('offerer_id'))->latest()->get();
                     // suppliers
                     if ($offerers->count()) {
                         $offerer = $offerers->first();
