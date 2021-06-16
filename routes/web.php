@@ -11,7 +11,7 @@
 |
  */
 
-Route::get('oc4ids', 'FrontController@oc4ids');
+Route::get('oc4ids', ['middleware' => 'cors' , 'uses'=> 'FrontController@oc4ids']);
 Route::get('lang/{language}', 'LocalizationController@switch')->name('localization.switch');
 Route::get('/', 'FrontController@index');
 
