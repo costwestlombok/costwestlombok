@@ -1,51 +1,187 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+<p align="center"><img src="https://cost.digitalcommunity.id/images/cost_65.png"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Overview
 
-## About Laravel
+The purpose of this documentation is to provide a specification for INTRANS Web Service API (Application Programming Interface). Data in this API contains all projects and the details included parties, budget, period, contracts, etc. that have been published by the Transportation Office West Lombok District.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+There will be only one web service URL with GET method for client to call, and the return response will be in JSON format by default. 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Getting Started
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+The current version of the API lives at [Live API](https://cost.digitalcommunity.id/oc4ids).
 
-## Learning Laravel
+### Version
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+| Version | Date | Changes |
+| ------- | ---- | ------- |
+| Version 1 | 2021-04-25 | Initial deployment |
+| Version 2 | 2021-05-03 | Change data structure to fit user requirement |
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+### Endpoints
 
-## Laravel Sponsors
+| Endpoint | What it does |
+| -------- | ------------ |
+| /oc4ids | Returns an objects of projects that have been published |
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
+## API Calls
 
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
+This API supports a data response in JSON format.
 
-## Contributing
+`GET : /oc4ids`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+### Implementation Notes
 
-## Security Vulnerabilities
+This endpoint returns published projects.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+### Response Content Type
 
-## License
+Application/json
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+### Parameters
+
+No parameters needed
+
+### Response Class (Status 200)
+
+An object of projects, example value:
+
+```javascript
+{
+    "version": "0.9",
+    "uri": "string",
+    "publishedDate": datetime,
+    "publisher": {
+        "name": "string"
+    },
+    "projects": [
+        {
+            "id": “string”,
+            "externalReference": "string",
+            "updated": datetime,
+            "title": "string",
+            "description": "string",
+            "status": "string",
+            "period": {
+                "startDate": datetime,
+                "endDate": datetime,
+                "durationInDays": integer
+            },
+            "sector": [
+                "string",
+                "string"
+            ],
+            "purpose": "string",
+            "type": "string",
+            "locations": [
+                {
+                    "id": "string",
+                    "description": "string",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            integer,
+                            integer
+                        ]
+                    }
+                },
+            ],
+            "budget": {
+                "amount": {
+                    "amount": double,
+                    "currency": "string"
+                },
+                "approvalDate": datetime
+            },
+            "parties": [
+                {
+                    "name": "string",
+                    "id": “string”,
+                    "contactPoint": {
+                        "name": "string"
+                    },
+                    "roles": [
+                        "string",
+                        "string"
+                    ]
+                },
+            ],
+            "publicAuthority": {
+                "id": "string",
+                "name": "string"
+            },
+            "contractingProcesses": [
+                {
+                    "id": "string",
+                    "summary": {
+                        "title": "string",
+                        "description": "string",
+                        "tender": {
+                            "procurementMethod": "string",
+                            "procurementMethodDetails": "string",
+                            "numberOfTenderers": integer,
+                            "administrativeEntity": {
+                                "id": "string",
+                                "name": "string"
+                            }
+                        },
+                        "nature": [
+                            "string"
+                        ],
+                        "contractValue": {
+                            "amount": double,
+                            "currency": "string"
+                        },
+                        "suppliers": [
+                            {
+                                "id": "string",
+                                "name": "string"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "documents": [
+                {
+                    "id": "string",
+                    "description": "String",
+                    "type": "string"
+                },
+            ]
+        },
+    ],
+}
+```
+
+### Response Messages
+
+| HTTP Status Code | Reason | Response (Example Value) |
+| ---------------- | ------ | ------------------------ |
+| 500 | Server error | `{ "message": "string" }` |
+
+
+## Field Reference
+
+This field below are returned by the API.
+
+
+| Field Name | Description | Data Type |
+| ---------- | ----------- | --------- |
+| uri | URL of the API | string | 
+| publishedDate | Date and time when the API is published | datetime | 
+| publisher |  | string | 
+| name | Name of the application | string | 
+| projects | Array of projects that have been published | string | 
+| id | Unique identifier | string | 
+| updated | Date and time when the project updated | datetime | 
+| title | Title of the project | string | 
+| description | Description of the project | string | 
+| period | An object to store variable startDate (datetime), endDate (datetime), and duration (integer) | object | 
+| dector | Array that store sector and subsector of the project | array | 
+| type | Type of project | string | 
+| locations | Array of project location that store id (string), description (string), geometry({type, coordinates}) | array | 
+| budget | Budget of the project that store amount (double), currency (string), and approvalDate (datetime) | object | 
+| parties | Parties that involved in the project, include variable name (string), contactPoint ({name, telephone}), address (string), roles (array). | array | 
+| publicAuthority | Name of public authority for the project | array | 
+| contractingProcesses | Summary of contracting process, which contain contract title, description, tender, nature, contractValue, and suppliers. | array | 
+| tender | Detail of tender from the contract, that store procurementMethod (string), procurementMethodDetails (string), numberOfTenderers (integer), and administrativeEntity (object). | string | 
+| documents | Files that’s describe project or required for the project, variable that included are id (string), description (string), type (string). | array | 
