@@ -55,7 +55,7 @@ An object of projects, example value:
     },
     "projects": [
         {
-            "id": “string”,
+            "id": "string",
             "externalReference": "string",
             "updated": datetime,
             "title": "string",
@@ -95,7 +95,7 @@ An object of projects, example value:
             "parties": [
                 {
                     "name": "string",
-                    "id": “string”,
+                    "id": "string",
                     "contactPoint": {
                         "name": "string"
                     },
