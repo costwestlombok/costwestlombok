@@ -11,6 +11,9 @@
 |
  */
 
+Route::get('/foo', function () {
+    Artisan::call('storage:link');
+});
 Route::get('oc4ids', ['middleware' => 'cors' , 'uses'=> 'FrontController@oc4ids']);
 Route::get('lang/{language}', 'LocalizationController@switch')->name('localization.switch');
 Route::get('/', 'FrontController@index');
