@@ -489,7 +489,7 @@
                             </tr>
                             <tr>
                                 <td rowspan="3">4</td>
-                                <td rowspan="3">Rincian Kontrak</td>
+                                <td rowspan="3">Rincian Kontak</td>
                                 <td>Nama PPK</td>
                                 <td>{{ $project->official->name ?? '-' }}</td>
                             </tr>
@@ -504,7 +504,26 @@
                             <tr>
                                 <td>5</td>
                                 <td>Sumber Dana</td>
-                                <td colspan="2">{{ $project->project_budget()->first()->name ?? '-' }}
+                                @php
+                                $sourceName = '-';
+                                $budget = $project->project_budget()->first();
+                                if ($budget) {
+                                $source = $budget->source()->first();
+                                if ($source) {
+                                if ($source->source->aronym == 'PRIM') {
+                                $sourceName = 'GRANT';
+                                } else if (in_array($source->source->acronym, ['DAU', 'DAK'])) {
+                                if ($project->official) {
+                                $official = $project->official;
+                                $org = $official->unit->org;
+                                $sourceName = $org->name . ', ' . $official->unit->unit_name;
+                                }
+                                }
+                                }
+                                }
+                                @endphp
+                                <td colspan="2">
+                                    {{ $sourceName ?? '-' }}
                                 </td>
                             </tr>
                             <tr>
@@ -591,7 +610,7 @@
                             <tr>
                                 <td>6</td>
                                 <td>Referensi Laporan Audit dan Evaluasi</td>
-                                <td>{{ 'Tidak ada' }}
+                                <td>{{ '-' }}
                                 </td>
                             </tr>
                         </table>

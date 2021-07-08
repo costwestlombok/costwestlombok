@@ -326,14 +326,14 @@ class FrontController extends Controller
             $p['documents'][] = [
                 'id' => $document->id,
                 'description' => $document->document_description,
-                'type' => 'landAndSettlementImpact',
+                'documentType' => 'landAndSettlementImpact',
                 'url' => url('storage/'.$document->document_path),
             ];
         } elseif ($project->settlement_desc) {
             $p['documents'][] = [
                 'id' => $project->id.'-doc-1',
                 'description' => $project->settlement_desc,
-                'type' => 'landAndSettlementImpact',
+                'documentType' => 'landAndSettlementImpact',
             ];
         }
 
@@ -343,14 +343,14 @@ class FrontController extends Controller
             $p['documents'][] = [
                 'id' => $document->id,
                 'description' => $document->document_description,
-                'type' => 'environmentalImpact',
+                'documentType' => 'environmentalImpact',
                 'url' => url('storage/'.$document->document_path),
             ];
         } elseif ($project->environment_desc) {
             $p['documents'][] = [
                 'id' => $project->id.'-doc-2',
                 'description' => $project->environment_desc,
-                'type' => 'environmentalImpact',
+                'documentType' => 'environmentalImpact',
             ];
         }
 
