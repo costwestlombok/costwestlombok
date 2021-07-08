@@ -315,7 +315,7 @@ An object of project, example value:
 
 | HTTP Status Code | Reason | Response (Example Value) |
 | ---------------- | ------ | ------------------------ |
-| 200 | Project not found | `project not found` |
+| 200 | Project not found | `{"status":"error","message":"project not found!"}` |
 
 
 ### Field Reference
@@ -375,7 +375,7 @@ An object of project budget, example value:
 
 | HTTP Status Code | Reason | Response (Example Value) |
 | ---------------- | ------ | ------------------------ |
-| 200 | Project not found | `project not found` |
+| 200 | Project not found | `{"status":"error","message":"project not found!"}` |
 
 
 ### Field Reference
@@ -430,7 +430,7 @@ Array of project parties object, example value:
 
 | HTTP Status Code | Reason | Response (Example Value) |
 | ---------------- | ------ | ------------------------ |
-| 200 | Project not found | `project not found` |
+| 200 | Project not found | `{"status":"error","message":"project not found!"}` |
 
 
 ### Field Reference
@@ -477,7 +477,7 @@ An object of project public authority, example value:
 
 | HTTP Status Code | Reason | Response (Example Value) |
 | ---------------- | ------ | ------------------------ |
-| 200 | Project not found | `project not found` |
+| 200 | Project not found | `{"status":"error","message":"project not found!"}` |
 
 
 ### Field Reference
@@ -549,7 +549,7 @@ Array of project contracting processes object, example value:
 
 | HTTP Status Code | Reason | Response (Example Value) |
 | ---------------- | ------ | ------------------------ |
-| 200 | Project not found | `project not found` |
+| 200 | Project not found | `{"status":"error","message":"project not found!"}` |
 
 
 ### Field Reference
@@ -597,7 +597,7 @@ Array of project documents object, example value:
 
 | HTTP Status Code | Reason | Response (Example Value) |
 | ---------------- | ------ | ------------------------ |
-| 200 | Project not found | `project not found` |
+| 200 | Project not found | `{"status":"error","message":"project not found!"}` |
 
 
 ### Field Reference
