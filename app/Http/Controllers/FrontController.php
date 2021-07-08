@@ -440,7 +440,10 @@ class FrontController extends Controller
         if ($project) {
             return $this->projectOc4idsFormat($project);
         }
-        return 'project not found';
+        return response()->json([
+            'status' => 'error',
+            'message' => 'project not found!'
+        ], 500);
     }
     
     public function projectBudget($project_oc4ids_id)
@@ -450,7 +453,10 @@ class FrontController extends Controller
             $p = $this->projectOc4idsFormat($project);
             return $p['budget'];
         }
-        return 'project not found';
+        return response()->json([
+            'status' => 'error',
+            'message' => 'project not found!'
+        ], 500);
     }
     
     public function projectParties($project_oc4ids_id)
@@ -460,7 +466,10 @@ class FrontController extends Controller
             $p = $this->projectOc4idsFormat($project);
             return $p['parties'];
         }
-        return 'project not found';
+        return response()->json([
+            'status' => 'error',
+            'message' => 'project not found!'
+        ], 500);
     }
     
     public function projectPublicAuthority($project_oc4ids_id)
@@ -470,7 +479,10 @@ class FrontController extends Controller
             $p = $this->projectOc4idsFormat($project);
             return $p['publicAuthority'];
         }
-        return 'project not found';
+        return response()->json([
+            'status' => 'error',
+            'message' => 'project not found!'
+        ], 500);
     }
     
     public function projectContractingProcesses($project_oc4ids_id)
@@ -480,7 +492,10 @@ class FrontController extends Controller
             $p = $this->projectOc4idsFormat($project);
             return $p['contractingProcesses'];
         }
-        return 'project not found';
+        return response()->json([
+            'status' => 'error',
+            'message' => 'project not found!'
+        ], 500);
     }
     
     public function projectDocuments($project_oc4ids_id)
@@ -490,6 +505,9 @@ class FrontController extends Controller
             $p = $this->projectOc4idsFormat($project);
             return $p['documents'];
         }
-        return 'project not found';
+        return response()->json([
+            'status' => 'error',
+            'message' => 'project not found!'
+        ], 500);
     }
 }
