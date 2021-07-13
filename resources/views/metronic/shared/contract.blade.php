@@ -179,6 +179,7 @@
         </div>
         <!--end::Top-->
     </div>
+    @if(Auth::user())
     <div class="card-footer d-flex align-items-center">
         @if($contract->completion)
         <a href="{{ route('contract.completion.index', $contract) }}"
@@ -190,5 +191,6 @@
             {{ __('labels.completion') }}</a>
         @endif
     </div>
+    @endif
 </div>
 <!--end::Card-->

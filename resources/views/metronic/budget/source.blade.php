@@ -162,6 +162,7 @@
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">
+        @if(Auth::user())
         <!--begin::Card-->
         <div class="card card-custom">
             <div class="card-header">
@@ -204,6 +205,7 @@
         </div>
         <br>
         <!--end::Card-->
+        @endif
         <!--begin::Card-->
         <div class="card card-custom">
             <div class="card-header">

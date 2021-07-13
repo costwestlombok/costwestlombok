@@ -133,7 +133,7 @@ class FrontController extends Controller
         }
         $offerers = \App\Offerer::whereIn('id', \App\TenderOfferer::whereIn('tender_id', $project->tenders()->pluck('id'))->pluck('offerer_id'))->latest()->get();
         if ($offerers->count()) {
-            $p['parties'] = $offerers->map(function ($offerer) {
+            $p['parties'] = $offerers->map(function ($offerer, $key) {
                 $o['name'] = $offerer->legal_name;
                 $o['id'] = $offerer->id;
                 // $o['identifier'] = [
@@ -150,10 +150,16 @@ class FrontController extends Controller
                 if ($offerer->phone && $offerer->phone != '-') {
                     $o['contactPoint']['telephone'] = $offerer->phone;
                 }
-                $o['roles'] = [
-                    'tenderer',
-                    'supplier',
-                ];
+                if ($key == 0) {
+                    $o['roles'] = [
+                        'tenderer',
+                        'supplier',
+                    ];
+                } else {
+                    $o['roles'] = [
+                        'tenderer',
+                    ];
+                }
                 return $o;
             });
         }
@@ -163,7 +169,7 @@ class FrontController extends Controller
             $officialObject = [
                 'id' => $org->id,
                 'name' => $org->name . ', ' . $official->unit->unit_name,
-                'roles' => ['publicAuthority', 'administrativeEntity', 'procuringEntity'],
+                'roles' => ['publicAuthority', 'administrativeEntity'],
             ];
             $p['publicAuthority'] = [
                 'id' => $org->id,
@@ -318,6 +324,32 @@ class FrontController extends Controller
                     $p['completion']['finalScopeDetails'] = $completion->description;
                 }
             }
+        }
+
+        // tenders as procuringEntity party
+        $procuringEntity = $project->tenders()->first();
+        if ($procuringEntity) {
+            $procuringEntityArray = [
+                'name' => $procuringEntity->official->unit->org->name,
+                'id' => $procuringEntity->official->unit->org->id,
+                'contactPoint' => [
+                    'name' => $procuringEntity->official->name,
+                ],
+                'roles' => [
+                    'procuringEntity'
+                ],
+            ];
+            if ($procuringEntity->official->email) {
+                $procuringEntityArray['contactPoint']['email'] = $procuringEntity->official->email;
+            }
+            if ($procuringEntity->official->phone) {
+                $procuringEntityArray['contactPoint']['telephone'] = $procuringEntity->official->phone;
+            }
+            $p['parties'][] = $procuringEntityArray;
+            $p['summary']['tender']['procuringEntity'] = [
+                'name' => $procuringEntity->official->unit->org->name,
+                'id' => $procuringEntity->official->unit->org->id,
+            ];
         }
 
         // landAndSettlementImpact
