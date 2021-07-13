@@ -346,7 +346,7 @@ class FrontController extends Controller
                 $procuringEntityArray['contactPoint']['telephone'] = $procuringEntity->official->phone;
             }
             $p['parties'][] = $procuringEntityArray;
-            $p['summary']['tender']['procuringEntity'] = [
+            $p['contractingProcesses'][0]['summary']['tender']['procuringEntity'] = [
                 'name' => $procuringEntity->official->unit->org->name,
                 'id' => $procuringEntity->official->unit->org->id,
             ];
