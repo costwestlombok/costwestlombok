@@ -303,6 +303,14 @@ class FrontController extends Controller
                     ];
                 }
 
+                $procuringEntity = $project->tenders()->first();
+                if ($procuringEntity) {
+                    $c['summary']['tender']['procuringEntity'] = [
+                        'name' => $procuringEntity->official->unit->org->name,
+                        'id' => $procuringEntity->official->unit->org->id,
+                    ];
+                }
+
                 return $c;
             });
             $contract = $contracts->first();
@@ -346,10 +354,6 @@ class FrontController extends Controller
                 $procuringEntityArray['contactPoint']['telephone'] = $procuringEntity->official->phone;
             }
             $p['parties'][] = $procuringEntityArray;
-            $p['contractingProcesses'][0]['summary']['tender']['procuringEntity'] = [
-                'name' => $procuringEntity->official->unit->org->name,
-                'id' => $procuringEntity->official->unit->org->id,
-            ];
         }
 
         // landAndSettlementImpact
