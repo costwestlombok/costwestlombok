@@ -738,8 +738,7 @@
                             <div class="d-flex align-items-center mt-3 mb-3">
                                 <!--begin::Text-->
                                 <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                                    <span class="text-muted">{{ __('labels.supported_by') }}</span>
-                                    <div class="mt-2">
+                                    <div>
                                         <a href="https://www.gov.uk/government/organisations/foreign-commonwealth-development-office" target="_blank">
                                             <img src="{{url('/images/uk-gov.png')}}" alt="UK" class="img-responsive align-top"
                                                 height="50">
@@ -757,18 +756,21 @@
                                                 class="img-responsive mr-3 align-top" height="50">
                                         </a>
                                     </div>
+                                    <span class="text-muted mt-2">{{ __('labels.supported_by') }}</span>
                                 </div>
                                 <!--end::Text-->
                                 <!--begin::Dropdown-->
                                 <div class="text-dark order-2 order-md-1">
-                                    <span class="text-muted font-weight-bold mr-2">2020©</span>
-                                    <a href="{{ url('/') }}"
-                                        class="text-dark-75 text-hover-primary">{{ __('labels.title') }}</a>
-                                    <div class="mt-2">
+                                    <div>
                                         <a href="https://infrastructuretransparency.org/" target="_blank">
                                             <img src="{{url('/images/cwl_50.png')}}" alt="UNDP" class="img-responsive align-top"
                                                 height="50">
                                         </a>
+                                    </div>
+                                    <div class="mt-2">
+                                        <span class="text-muted font-weight-bold mr-2">2020©</span>
+                                        <a href="{{ url('/') }}"
+                                            class="text-dark-75 text-hover-primary">{{ __('labels.title') }}</a>
                                     </div>
                                 </div>
                                 <!--end::Dropdown-->
