@@ -739,15 +739,23 @@
                                 <!--begin::Text-->
                                 <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                     <span class="text-muted">{{ __('labels.supported_by') }}</span>
-                                    <div class="mt-1">
-                                        <img src="{{url('/images/uk-gov.png')}}" alt="UNDP" class="img-responsive align-top"
-                                            height="50">
-                                        <img src="{{url('/images/undp.png')}}" alt="UNDP" class="img-responsive mr-3 align-top"
-                                            height="50">
-                                        <img src="{{url('/images/fair-biz.png')}}" alt="UNDP" class="img-responsive mr-3 align-top"
-                                            height="50">
-                                        <img src="{{url('/images/netherlands.png')}}" alt="UNDP"
-                                            class="img-responsive mr-3 align-top" height="50">
+                                    <div class="mt-2">
+                                        <a href="https://www.gov.uk/government/organisations/foreign-commonwealth-development-office" target="_blank">
+                                            <img src="{{url('/images/uk-gov.png')}}" alt="UK" class="img-responsive align-top"
+                                                height="50">
+                                        </a>
+                                        <a href="https://www.undp.org/" target="_blank">
+                                            <img src="{{url('/images/undp.png')}}" alt="UNDP" class="img-responsive mr-3 align-top"
+                                                height="50">
+                                        </a>
+                                        <a href="https://www1.undp.org/content/fairbiz/en/home.html" target="_blank">
+                                            <img src="{{url('/images/fair-biz.png')}}" alt="FAIR-BIZ" class="img-responsive mr-3 align-top"
+                                                height="50">
+                                        </a>
+                                        <a href="https://www.government.nl/ministries/ministry-of-foreign-affairs" target="_blank">
+                                            <img src="{{url('/images/netherlands.png')}}" alt="NETHERLANDS"
+                                                class="img-responsive mr-3 align-top" height="50">
+                                        </a>
                                     </div>
                                 </div>
                                 <!--end::Text-->
@@ -756,9 +764,11 @@
                                     <span class="text-muted font-weight-bold mr-2">2020©</span>
                                     <a href="{{ url('/') }}"
                                         class="text-dark-75 text-hover-primary">{{ __('labels.title') }}</a>
-                                    <div class="mt-1">
-                                        <img src="{{url('/images/cwl_50.png')}}" alt="UNDP" class="img-responsive align-top"
-                                            height="50">
+                                    <div class="mt-2">
+                                        <a href="https://infrastructuretransparency.org/" target="_blank">
+                                            <img src="{{url('/images/cwl_50.png')}}" alt="UNDP" class="img-responsive align-top"
+                                                height="50">
+                                        </a>
                                     </div>
                                 </div>
                                 <!--end::Dropdown-->

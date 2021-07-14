@@ -236,6 +236,13 @@ return  [
 	'contract_title' => 'Contract Title',
 	'choose_offerer' => 'Choose an Offerer',
 
+	// completion
+	'contract_completion' => 'Contract Completion',
+	'final_scope' => 'Final Scope',
+	'final_cost' => 'Final Cost',
+	'final_date' => 'Final Date',
+	'justification' => 'Justification',
+
 	// ammendment
 	'contract_ammendment' => 'Contract Ammendment',
 	'addendum' => 'Addendum',
@@ -294,7 +301,7 @@ return  [
 
 
 	'no_project'=> 'No Project',
-	'supported_by'=> 'Supported By',
+	'supported_by'=> 'This initiative is supported by the UK Government, ASEAN Economic Reform Programme through the UNDP Project "Promoting a Fair Business Environment in ASEAN"',
 	'show_all'=> 'Show All',
 	'is_required'=> 'is required',
 	'form_wizard_warning_text'=> 'Sorry, looks like there are some errors detected, please try again.',
@@ -321,4 +328,19 @@ return  [
 	'landAndSettlementImpact' => 'Land and Settlement Impact',
 	'environmentalImpact' => 'Environmental Impact',
 	'finalAudit' => 'Final Audit',
+
+	// project details
+	'project_identity' => 'Project Identity',
+	'project_owner' => 'Project Owner',
+	'project_preparation' => 'Project Preparation',
+	'contact_details' => 'Contact Details',
+	'project_completion' => 'Project Completion',
+	'project_status' => 'Project Status',
+	'procuring_entity' => 'Procuring Entity',
+	'and' => 'and',
+	'tender_count' => 'Number of Companies Participating in Tender',
+	'administrative_entity' => 'Contract Administration Entity',
+	'contract_company' => 'Contract Company',
+	'ori_start_date' => 'Start Date',
+	'contract_duration' => 'Contract Duration',
 ];

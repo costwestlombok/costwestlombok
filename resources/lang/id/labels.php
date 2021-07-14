@@ -114,7 +114,7 @@ return  [
 	'choose_organization' => 'Pilih Organisasi',
 
 	// official
-	'position' => 'Posisi',
+	'position' => 'Jabatan',
 	'official_name' => 'Nama Pejabat',
 	'choose_organization_unit' => 'Pilih Unit Organisasi',
 
@@ -303,7 +303,7 @@ return  [
 
 
 	'no_project'=> 'Tidak ada Proyek',
-	'supported_by'=> 'Didukung Oleh',
+	'supported_by'=> 'Inisiatif ini didukung oleh Pemerintah Inggris, Program Reformasi Ekonomi ASEAN melalui Proyek UNDP "Mempromosikan Lingkungan Bisnis yang Adil di ASEAN"',
 	'show_all'=> 'Tampilkan Semua',
 	'is_required'=> 'harus diisi',
 	'form_wizard_warning_text'=> 'Maaf, sepertinya ada beberapa kesalahan yang terdeteksi, harap coba lagi.',
@@ -330,4 +330,20 @@ return  [
 	'landAndSettlementImpact' => 'Dampak Terhadap Lahan dan Permukiman',
 	'environmentalImpact' => 'Dampak Lingkungan',
 	'finalAudit' => 'Referensi Laporan Audit dan Evaluasi',
+
+	// project details
+	'project_identity' => 'Identitas Proyek',
+	'project_owner' => 'Pemilik Proyek',
+	'project_preparation' => 'Persiapan Proyek',
+	'contact_details' => 'Rincian Kontak',
+	'project_completion' => 'Penyelesaian Proyek',
+	'project_status' => 'Status Proyek',
+	'project_status' => 'Status Proyek',
+	'procuring_entity' => 'Entitas Pengadaan',
+	'and' => 'dan',
+	'tender_count' => 'Jumlah Perusahaan yang Ikut Tender',
+	'administrative_entity' => 'Entitas Administrasi Kontrak',
+	'contract_company' => 'Perusahaan Kontrak',
+	'ori_start_date' => 'Tanggal Mulai',
+	'contract_duration' => 'Lama Kontrak',
 ];
