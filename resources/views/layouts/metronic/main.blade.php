@@ -542,7 +542,13 @@
                         </div>
                         <!--end::Tablet & Mobile Search-->
                         <!--begin::Create-->
-
+                        @if(Auth::user())
+                        <div class="topbar-item">
+                            <a href="https://wa.me/6281805765333" target="_blank" class="btn btn-text-success btn-hover-light-success font-weight-bold mr-6 btn-sm">
+                                <i class="flaticon-whatsapp text-success"></i> CoST Helpdesk
+                            </a>
+                        </div>
+                        @endif
                         <div class="dropdown">
                             <!--begin::Toggle-->
                             <div class="topbar-item mr-4" data-toggle="dropdown" data-offset="10px,0px"
