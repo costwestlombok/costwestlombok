@@ -83,11 +83,11 @@
                             </a>
                         </li>
                         @if(Auth::user())
-                        @if(Auth::user()->type == 'admin')
                         <li class="menu-section">
                             <h4 class="menu-text">{{ strtoupper(__('labels.principal')) }}</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                         </li>
+                        @if(Auth::user()->type == 'admin')
                         <li class="menu-item {{ request()->segment(1) == 'agency' ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
                             <a href="{{ route('agency.index') }}" class="menu-link ">
@@ -109,6 +109,7 @@
                                 <span class="menu-text">{{ __('labels.agency') }}</span>
                             </a>
                         </li>
+                        @endif
                         <li class="menu-item menu-item-submenu{{ request()->segment(1) == 'catalog' ? ' menu-item-open' : '' }}"
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -270,7 +271,6 @@
                                 </ul>
                             </div>
                         </li>
-                        @endif
                         <li class="menu-section">
                             <h4 class="menu-text">{{ __('labels.project_management') }}</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
