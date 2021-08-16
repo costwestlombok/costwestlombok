@@ -98,7 +98,7 @@ class OffererController extends Controller
     {
         $this->validate($request, [
             'offerer_name' => 'required',
-            'phone' => 'required',
+            // 'phone' => 'required',
         ]);
         $data = $request->all();
         $offerer->update($data);
