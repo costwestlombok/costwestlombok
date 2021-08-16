@@ -343,4 +343,6 @@ return  [
 	'contract_company' => 'Contract Company',
 	'ori_start_date' => 'Start Date',
 	'contract_duration' => 'Contract Duration',
+
+	'change_password' => 'Change Password',
 ];

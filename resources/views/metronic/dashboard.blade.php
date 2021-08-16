@@ -59,9 +59,10 @@
                 <!--begin::Nav Panel Widget 2-->
                 <div class="card card-custom gutter-b card-stretch card-shadowless">
                     <!--begin::Body-->
-                    <div class="card-body p-0">
+                    <div class="card-body p-0 table-responsive">
                         <!--begin::Nav Tabs-->
-                        <ul class="dashboard-tabs nav nav-pills nav-danger row row-paddingless m-0 p-0" role="tablist">
+                        <ul class="dashboard-tabs nav nav-pills nav-danger row row-paddingless m-0 p-0" role="tablist"
+                            style="min-width: 910px">
                             <!--begin::Item-->
                             <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
                                 <a class="nav-link {{ request()->get('type') == 'airport' ? 'active' : '' }} border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"

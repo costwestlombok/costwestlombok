@@ -42,6 +42,7 @@ Route::get('/get-entity', 'OrganizationController@get_entity');
 Route::get('/list', 'FrontController@list');
 
 Route::get('/Users', 'UsersController@login');
+Route::put('user/{user}', 'UsersController@update')->name('user.update');
 Route::resource('dashboard', 'DashboardController');
 
 // catalog

@@ -346,4 +346,6 @@ return  [
 	'contract_company' => 'Perusahaan Kontrak',
 	'ori_start_date' => 'Tanggal Mulai',
 	'contract_duration' => 'Lama Kontrak',
+
+	'change_password' => 'Ubah Password',
 ];

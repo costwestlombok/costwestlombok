@@ -12,9 +12,10 @@
                 <!--begin::Nav Panel Widget 2-->
                 <div class="card card-custom gutter-b card-stretch card-shadowless">
                     <!--begin::Body-->
-                    <div class="card-body p-0">
+                    <div class="card-body p-0 table-responsive">
                         <!--begin::Nav Tabs-->
-                        <ul class="dashboard-tabs nav nav-pills nav-danger m-0 p-0" role="tablist">
+                        <ul class="dashboard-tabs nav nav-pills nav-danger m-0 p-0" role="tablist"
+                            style="min-width: 850px">
                             <!--begin::Item-->
                             <li class="nav-item d-flex flex-grow-1 flex-shrink-0 mr-3">
                                 <a class="nav-link border py-10 d-flex flex-grow-1 rounded flex-column align-items-center active"

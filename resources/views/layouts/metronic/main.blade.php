@@ -388,8 +388,8 @@
                             <h4 class="menu-text">{{ __('labels.auth') }}</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                         </li>
+                        @if(Auth::guest())
                         <li class="menu-item" aria-haspopup="true">
-                            @if(Auth::guest())
                             <a href="{{ route('login') }}" class="menu-link">
                                 <span class="svg-icon menu-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -412,7 +412,29 @@
                                 </span>
                                 <span class="menu-text">{{ __('labels.login') }}</span>
                             </a>
-                            @else
+                        </li>
+                        @else
+                        <li class="menu-item" aria-haspopup="true">
+                            <a href="#change-password" data-toggle="modal" class="menu-link">
+                                <span class="svg-icon menu-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24" />
+                                            <polygon fill="#000000" opacity="0.3"
+                                                transform="translate(8.885842, 16.114158) rotate(-315.000000) translate(-8.885842, -16.114158) "
+                                                points="6.89784488 10.6187476 6.76452164 19.4882481 8.88584198 21.6095684 11.0071623 19.4882481 9.59294876 18.0740345 10.9659914 16.7009919 9.55177787 15.2867783 11.0071623 13.8313939 10.8837471 10.6187476" />
+                                            <path
+                                                d="M15.9852814,14.9852814 C12.6715729,14.9852814 9.98528137,12.2989899 9.98528137,8.98528137 C9.98528137,5.67157288 12.6715729,2.98528137 15.9852814,2.98528137 C19.2989899,2.98528137 21.9852814,5.67157288 21.9852814,8.98528137 C21.9852814,12.2989899 19.2989899,14.9852814 15.9852814,14.9852814 Z M16.1776695,9.07106781 C17.0060967,9.07106781 17.6776695,8.39949494 17.6776695,7.57106781 C17.6776695,6.74264069 17.0060967,6.07106781 16.1776695,6.07106781 C15.3492424,6.07106781 14.6776695,6.74264069 14.6776695,7.57106781 C14.6776695,8.39949494 15.3492424,9.07106781 16.1776695,9.07106781 Z"
+                                                fill="#000000"
+                                                transform="translate(15.985281, 8.985281) rotate(-315.000000) translate(-15.985281, -8.985281) " />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span class="menu-text">{{ __('labels.change_password') }}</span>
+                            </a>
+                        </li>
+                        <li class="menu-item" aria-haspopup="true">
                             <a href="{{ route('logout') }}" class="menu-link">
                                 <span class="svg-icon menu-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -429,8 +451,8 @@
                                 </span>
                                 <span class="menu-text">{{ __('labels.logout') }}</span>
                             </a>
-                            @endif
                         </li>
+                        @endif
                     </ul>
                     <!--end::Menu Nav-->
                 </div>
@@ -544,7 +566,8 @@
                         <!--begin::Create-->
                         @if(Auth::user())
                         <div class="topbar-item">
-                            <a href="https://wa.me/6281805765333" target="_blank" class="btn btn-text-success btn-hover-light-success font-weight-bold mr-6 btn-sm">
+                            <a href="https://wa.me/6281805765333" target="_blank"
+                                class="btn btn-text-success btn-hover-light-success font-weight-bold mr-6 btn-sm">
                                 <i class="flaticon-whatsapp text-success"></i> CoST Helpdesk
                             </a>
                         </div>
@@ -745,35 +768,37 @@
                                 <!--begin::Text-->
                                 <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                     <div>
-                                        <a href="https://www.gov.uk/government/organisations/foreign-commonwealth-development-office" target="_blank">
-                                            <img src="{{url('/images/uk-gov.png')}}" alt="UK" class="img-responsive align-top"
-                                                height="50">
+                                        <a href="https://www.gov.uk/government/organisations/foreign-commonwealth-development-office"
+                                            target="_blank">
+                                            <img src="{{url('/images/uk-gov.png')}}" alt="UK"
+                                                class="img-responsive align-top mb-2" height="50">
                                         </a>
                                         <a href="https://www.undp.org/" target="_blank">
-                                            <img src="{{url('/images/undp.png')}}" alt="UNDP" class="img-responsive mr-3 align-top"
-                                                height="50">
+                                            <img src="{{url('/images/undp.png')}}" alt="UNDP"
+                                                class="img-responsive mr-3 align-top mb-2" height="50">
                                         </a>
                                         <a href="https://www1.undp.org/content/fairbiz/en/home.html" target="_blank">
-                                            <img src="{{url('/images/fair-biz.png')}}" alt="FAIR-BIZ" class="img-responsive mr-3 align-top"
-                                                height="50">
+                                            <img src="{{url('/images/fair-biz.png')}}" alt="FAIR-BIZ"
+                                                class="img-responsive mr-3 align-top mb-2" height="50">
                                         </a>
-                                        <a href="https://www.government.nl/ministries/ministry-of-foreign-affairs" target="_blank">
+                                        <a href="https://www.government.nl/ministries/ministry-of-foreign-affairs"
+                                            target="_blank">
                                             <img src="{{url('/images/netherlands.png')}}" alt="NETHERLANDS"
-                                                class="img-responsive mr-3 align-top" height="50">
+                                                class="img-responsive mr-3 align-top mb-2" height="50">
                                         </a>
                                     </div>
-                                    <span class="text-muted mt-2">{{ __('labels.supported_by') }}</span>
+                                    <span class="text-muted">{{ __('labels.supported_by') }}</span>
                                 </div>
                                 <!--end::Text-->
                                 <!--begin::Dropdown-->
                                 <div class="text-dark order-2 order-md-1">
                                     <div>
                                         <a href="https://infrastructuretransparency.org/" target="_blank">
-                                            <img src="{{url('/images/cwl_50.png')}}" alt="UNDP" class="img-responsive align-top"
-                                                height="50">
+                                            <img src="{{url('/images/cwl_50.png')}}" alt="UNDP"
+                                                class="img-responsive align-top mb-2" height="50">
                                         </a>
                                     </div>
-                                    <div class="mt-2">
+                                    <div>
                                         <span class="text-muted font-weight-bold mr-2">2020©</span>
                                         <a href="{{ url('/') }}"
                                             class="text-dark-75 text-hover-primary">{{ __('labels.title') }}</a>
@@ -793,3 +818,53 @@
     <!--end::Page-->
 </div>
 <!--end::Main-->
+@if(Auth::user())
+@php
+$user = Auth::user();
+@endphp
+<form action="{{ route('user.update', $user) }}" method="post">
+    @csrf
+    @method('PUT')
+    <div class="modal fade" id="change-password" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __($user ? 'labels.edit' : 'labels.create') }} {{ __('labels.user') }}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>{{ __('labels.name') }}</label>
+                        <input type="text" name="name" value="{{ $user->name ?? '' }}" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="username" value="{{ $user->username ?? '' }}" class="form-control"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" value="{{ $user->email ?? '' }}" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="text" name="password" class="form-control" {{ $user ? '' : 'required' }}>
+                        @if($user)
+                        <span class="form-text text-muted">{{ __('labels.password_help') }}</span>
+                        @endif
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold"
+                        data-dismiss="modal">Tutup</button>
+                    <button type="submit"
+                        class="btn btn-primary font-weight-bold">{{ __($user ? 'labels.save_changes' : 'labels.save') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@endif
