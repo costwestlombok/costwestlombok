@@ -150,7 +150,7 @@
                                     <div class="form-group">
                                         <label for="name">{{ __('labels.published_at') }}</label>
                                         <input type="date" class="form-control" name="published_at" id="published_at"
-                                            value="{{ isset($award) ? ($award->published_at ? $tender->published_at->format('Y-m-d') : '') : '' }}">
+                                            value="{{ isset($award) ? ($award->published_at ? $award->published_at->format('Y-m-d') : '') : '' }}">
                                     </div>
                                 </div>
                             </div>
