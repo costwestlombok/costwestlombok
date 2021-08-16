@@ -52,12 +52,14 @@ class OffererController extends Controller
 
         $data = $request->all();
         $o = Offerer::create($data);
-        $dc['name'] = $o->legal_name;
-        $dc['address'] = $o->address;
-        $dc['phone'] = $o->phone;
-        $dc['position'] = "Offerer";
-        $dc['email'] = " ";
-        Contact::create($dc);
+        if ($request->address && $request->phone) {
+            $dc['name'] = $o->legal_name;
+            $dc['address'] = $o->address;
+            $dc['phone'] = $o->phone;
+            $dc['position'] = "Offerer";
+            $dc['email'] = " ";
+            Contact::create($dc);
+        }
 
         Session::put("success", trans('labels.saved'));
         return redirect()->route('offerer.index');
