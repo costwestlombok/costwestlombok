@@ -162,12 +162,17 @@
                             	table.ajax.reload(null, false);
 							} else {
 								var urlArray = location.pathname.split('/');
+								console.log(urlArray)
 								if (urlArray[1] == 'project') {
 									if (urlArray[2] && !urlArray[3]) {
 										location.href = '/project';
 									}
+									else {
+										location.reload();
+									}
+								} else {
+									location.reload();
 								}
-								location.reload();
 							}
                         }         
                     });
