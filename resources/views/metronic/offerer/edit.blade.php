@@ -37,8 +37,8 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="name">{{ __('labels.phone') }}</label>
-                                <input type="text" class="form-control" name="phone" value="{{$offerer->phone ?? ''}}"
-                                    required />
+                                <input type="text" class="form-control" name="phone"
+                                    value="{{$offerer->phone ?? ''}}" />
                             </div>
                         </div>
                         <div class="col-lg-6">
