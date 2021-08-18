@@ -22,15 +22,16 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>{{ __('labels.final_scope') }}</label>
-                                <textarea name="final_scope" rows="5" class="form-control"
-                                    required>{{ $completion->final_scope ?? '' }}</textarea>
+                                <textarea name="final_scope" rows="5"
+                                    class="form-control">{{ $completion->final_scope ?? '' }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{ __('labels.final_cost') }}</label>
                                 <input type="text" name="final_cost" class="form-control"
-                                    value="{{ number_format($completion->final_cost ?? 0) }}" required>
+                                    value="{{ isset($completion) ? ($completion->final_cost ?? ($completion->contract->price_local_currency ?? '0')) : (isset($contract) ? ($contract->price_local_currency ?? '0') : '0') }}"
+                                    required>
                             </div>
                         </div>
                         <div class="col-md-6">

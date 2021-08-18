@@ -29,7 +29,7 @@
             }
         };
     }();
-
+\
     jQuery(document).ready(function () {
         KTTypeahead.init();
     });
@@ -56,15 +56,14 @@
                             <div class="form-group">
                                 <label for="name">{{ __('labels.physical_program') }} (%)</label>
                                 <input type="number" step="0.01" name="programmed_percent"
-                                    value="{{number_format($progress->programmed_percent ?? '0')}}"
-                                    class="form-control">
+                                    value="{{ $progress->programmed_percent ?? '0' }}" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">{{ __('labels.real_physical') }} (%)</label>
                                 <input type="number" step="0.01" name="real_percent"
-                                    value="{{number_format($progress->real_percent ?? '0')}}" class="form-control">
+                                    value="{{ $progress->real_percent ?? '0' }}" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -74,14 +73,14 @@
                             <div class="form-group">
                                 <label for="name">{{ __('labels.scheduled_finance') }}</label>
                                 <input type="text" name="scheduled_financing" class="form-control"
-                                    value="{{number_format($progress->scheduled_financing ?? '0')}}">
+                                    value="{{ $progress->scheduled_financing ?? '0' }}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">{{ __('labels.real_finance') }}</label>
                                 <input type="text" name="real_financing" class="form-control"
-                                    value="{{number_format($progress->real_financing ?? '0')}}">
+                                    value="{{ $progress->real_financing ?? '0' }}">
                             </div>
                         </div>
                     </div>
@@ -99,12 +98,13 @@
                     <div class="form-group">
                         <label for="name">{{ __('labels.advance_date') }}</label>
                         <input type="date" name="date_of_advance" class="form-control"
-                            value="{{Carbon\Carbon::parse($progress->date_of_advance ?? date('Y-m-d'))->format('Y-m-d') }}">
+                            value="{{ isset($progress) ? ($progress->date_of_advance ? $progress->date_of_advance->format('Y-m-d') : '') : '' }}"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="name">{{ __('labels.publication_date') }}</label>
                         <input type="date" name="date_of_publication" class="form-control"
-                            value="{{Carbon\Carbon::parse($progress->date_of_publication ?? date('Y-m-d'))->format('Y-m-d') }}">
+                            value="{{ isset($progress) ? ($progress->date_of_publication ? $progress->date_of_publication->format('Y-m-d') : '') : '' }}">
                     </div>
                     <div class="form-group">
                         <label for="">{{ __('labels.guaranties_file') }}</label>

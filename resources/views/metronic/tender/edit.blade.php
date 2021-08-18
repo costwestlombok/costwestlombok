@@ -250,7 +250,7 @@ $officials = App\Official::where('entity_unit_id', $tender->official->unit->id ?
                                 <div class="form-group fv-plugins-icon-container">
                                     <label for="name">{{ __('labels.tender_amount') }}</label>
                                     <input type="text" class="form-control" name="amount"
-                                        value="{{ number_format($tender->amount ?? '0') }}" />
+                                        value="{{ $tender->amount ?? '0' }}" />
                                 </div>
                                 <div class="form-group fv-plugins-icon-container">
                                     <div class="form-group">

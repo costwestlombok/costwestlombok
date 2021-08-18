@@ -475,7 +475,7 @@
                             <tr>
                                 <td>1</td>
                                 <td>{{ __('labels.project_scope') }}</td>
-                                <td colspan="2">{{ '-' }}</td>
+                                <td colspan="2">{!! $project->project_scope ?? '-' !!}</td>
                             </tr>
                             <tr>
                                 <td>2</td>
@@ -628,7 +628,8 @@
                         <table class="table">
                             <tr>
                                 <td>1</td>
-                                <td>{{ __('labels.procuring_entity') }} {{ __('labels.and') }} {{ __('labels.contact_details') }}</td>
+                                <td>{{ __('labels.procuring_entity') }} {{ __('labels.and') }}
+                                    {{ __('labels.contact_details') }}</td>
                                 <td>{{ $project->tenders()->first()->official->name ?? '-' }},
                                     {{ $project->tenders()->first()->official->phone ?? '-' }}</td>
                             </tr>
@@ -703,10 +704,12 @@
                             </tr>
                             <tr>
                                 <td>13</td>
-                                <td>{{ __('labels.ori_start_date') }} {{ __('labels.and') }} {{ __('labels.contract_duration') }}</td>
+                                <td>{{ __('labels.ori_start_date') }} {{ __('labels.and') }}
+                                    {{ __('labels.contract_duration') }}</td>
                                 <td>
                                     @if($project->tenders()->first()->awards()->count() &&
-                                    $project->tenders()->first()->awards()->first()->contract)
+                                    $project->tenders()->first()->awards()->first()->contract &&
+                                    $project->tenders()->first()->awards()->first()->contract->start_date)
                                     {{ $project->tenders()->first()->awards()->first()->contract->start_date->isoFormat('D MMMM Y') ?? '-' }}
                                     s/d
                                     {{ $project->tenders()->first()->awards()->first()->contract->end_date->isoFormat('D MMMM Y') ?? '-' }}

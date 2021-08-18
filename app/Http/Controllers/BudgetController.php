@@ -31,7 +31,7 @@ class BudgetController extends Controller
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
         $data['amount'] = str_replace(",", "", $request->amount);
-        $data['duration'] = $start->diffInDays($end);
+        $data['duration'] = $start->diffInDays($end) + 1;
 
         Budget::create($data);
         Session::put('success', trans('labels.saved'));
@@ -50,7 +50,7 @@ class BudgetController extends Controller
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
         $data['amount'] = str_replace(",", "", $request->amount);
-        $data['duration'] = $start->diffInDays($end);
+        $data['duration'] = $start->diffInDays($end) + 1;
 
         $budget->update($data);
         Session::put('success', trans('labels.updated'));

@@ -4,6 +4,11 @@
 @section('script')
 @endsection
 @section('content')
+@isset($budget)
+@php
+$project = $budget->project;
+@endphp
+@endisset
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">
@@ -35,16 +40,17 @@
                             <div class="form-group">
                                 <label for="name">{{ __('labels.start_date') }}</label>
                                 <input type="date" name="start_date" class="form-control"
-                                    value="{{ date_format(Carbon\Carbon::parse($budget->start_date ?? date('Y-m-d')), 'Y-m-d') }}">
+                                    value="{{ isset($budget) ? ($budget->start_date ? $budget->start_date->format('Y-m-d') : ($budget->project->start_date ? $budget->project->start_date->format('Y-m-d') : '')) : (isset($project) ? ($project->start_date ? $project->start_date->format('Y-m-d') : '') : '') }}">
                             </div>
                             <div class="form-group">
                                 <label for="name">{{ __('labels.end_date') }}</label>
                                 <input type="date" name="end_date" class="form-control"
-                                    value="{{ date_format(Carbon\Carbon::parse($budget->end_date ?? date('Y-m-d')), 'Y-m-d') }}">
+                                    value="{{ isset($budget) ? ($budget->end_date ? $budget->end_date->format('Y-m-d') : ($budget->project->end_date ? $budget->project->end_date->format('Y-m-d') : '')) : (isset($project) ? ($project->end_date ? $project->end_date->format('Y-m-d') : '') : '') }}">
                             </div>
                             <div class="form-group">
                                 <label for="name">{{ __('labels.amount') }}</label>
-                                <input type="text" name="amount" value="{{ number_format($budget->amount ?? 0)}}"
+                                <input type="text" name="amount"
+                                    value="{{ isset($budget) ? ($budget->amount ?? ($budget->project->budget ?? '0')) : (isset($project) ? ($project->budget ?? '0') : '0') }}"
                                     class="form-control" required>
                             </div>
                         </div>

@@ -57,7 +57,7 @@ class Project extends Model
 
     public function latest_progress()
     {
-        return $this->hasOne('App\Advance');
+        return $this->hasOne('App\Advance')->orderBy('date_of_advance', 'desc');
     }
 
     public function project_source()

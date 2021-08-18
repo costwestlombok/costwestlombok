@@ -160,7 +160,7 @@ class TenderController extends Controller
 
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
-        $data['duration'] = $start->diffInDays($end);
+        $data['duration'] = $start->diffInDays($end) + 1;
         $data['amount'] = str_replace(",", "", $request->amount);
         Tender::create($data);
         Session::put('success', trans('labels.saved'));

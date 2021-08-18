@@ -10,6 +10,10 @@ class Advance extends Model
     use Uuids;
     protected $keyType = 'uuid';
     protected $guarded = [];
+    protected $dates = [
+        'date_of_advance',
+        'date_of_publication',
+    ];
     public $incrementing = false;
 
     public function project()

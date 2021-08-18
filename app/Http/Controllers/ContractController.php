@@ -64,7 +64,7 @@ class ContractController extends Controller
         // return $data;
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
-        $data['duration'] = $start->diffInDays($end);
+        $data['duration'] = $start->diffInDays($end) + 1;
         if (isset($data['price_local_currency'])) {
             $data['price_local_currency'] = str_replace(",", "", $request->price_local_currency);
         }
@@ -123,7 +123,7 @@ class ContractController extends Controller
         $data = $request->all();
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
-        $data['duration'] = $start->diffInDays($end);
+        $data['duration'] = $start->diffInDays($end) + 1;
         if (isset($data['price_local_currency'])) {
             $data['price_local_currency'] = str_replace(",", "", $request->price_local_currency);
         }

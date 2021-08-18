@@ -40,7 +40,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bold text-center">{{ __('labels.project') }}<br />{{ $projects->count() }}</span>
+                                        class="nav-text font-size-lg py-2 font-weight-bold text-center">{{ __('labels.project') }}<br />{{ number_format($project_sum) }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -216,7 +216,7 @@
                             class="d-flex align-items-start justify-content-start flex-grow-1 bg-light-warning p-8 card-rounded flex-grow-1 position-relative">
                             <div class="d-flex flex-column align-items-start flex-grow-1 h-100">
                                 <div class="p-1 flex-grow-1">
-                                    <h4 class="text-warning font-weight-bolder">{{ $projects->count() }}
+                                    <h4 class="text-warning font-weight-bolder">{{ number_format($project_sum) }}
                                         {{ __('labels.project') }}</h4>
                                     <p class="text-dark-50 font-weight-bold mt-3">Total {{ __('labels.project') }}</p>
                                 </div>
@@ -304,7 +304,7 @@
                                         </td>
                                         <td class="text-center">
                                             <span
-                                                class="label label-lg label-light-success label-inline">{{ $item->status->status_name ?? '-' }}</span>
+                                                class="label label-lg label-light-success label-inline">{{ __('labels.'.$item->projectStatus->code) ?? '-' }}</span>
                                         </td>
                                         <td>
                                             <div class="d-flex flex-column w-100 mr-2">

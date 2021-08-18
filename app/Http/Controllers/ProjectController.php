@@ -112,7 +112,7 @@ class ProjectController extends Controller
         unset($data['map_search']);
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
-        $data['duration'] = $start->diffInDays($end);
+        $data['duration'] = $start->diffInDays($end) + 1;
         $data['budget'] = str_replace(",", "", $request->budget);
 
         if ($data['role_id']) {
@@ -240,7 +240,7 @@ class ProjectController extends Controller
         unset($data['map_search']);
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
-        $data['duration'] = $start->diffInDays($end);
+        $data['duration'] = $start->diffInDays($end) + 1;
         $data['budget'] = str_replace(",", "", $request->budget);
         $role = Role::where('role_name', $request->role_id)->first();
 

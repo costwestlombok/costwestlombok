@@ -139,7 +139,7 @@ $subsectors = App\Subsector::where('sector_id', $project->subsector->sector->id 
                                     <div class="form-group fv-plugins-icon-container">
                                         <label for="name">{{ __('labels.budget') }}</label>
                                         <input type="text" class="form-control" name="budget" id="budget"
-                                            value="{{ number_format($project->budget ?? '0') }}" required>
+                                            value="{{ $project->budget ?? '0' }}" required>
                                     </div>
                                     <!--
                                     <div class="form-group fv-plugins-icon-container">

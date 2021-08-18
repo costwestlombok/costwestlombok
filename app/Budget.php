@@ -10,6 +10,10 @@ class Budget extends Model
     use Uuids;
     protected $keyType = 'uuid';
     protected $guarded = [];
+    protected $dates = [
+        'start_date',
+        'end_date',
+    ];
     public $incrementing = false;
 
     public function source()
