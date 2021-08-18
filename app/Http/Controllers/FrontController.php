@@ -311,6 +311,14 @@ class FrontController extends Controller
                     ];
                 }
 
+                // cost estimate
+                if ($award->contract_estimate_cost) {
+                    $c['summary']['tender']['costEstimate'] = [
+                        'amount' => $award->contract_estimate_cost,
+                        'currency' => 'IDR',
+                    ];
+                }
+
                 return $c;
             });
             $contract = $contracts->first();
@@ -325,6 +333,7 @@ class FrontController extends Controller
                     'finalScope' => $completion->final_scope,
                 ];
                 if ($completion->justification) {
+                    $p['completion']['finalScopeDetails'] = $completion->justification;
                     $p['completion']['finalValueDetails'] = $completion->justification;
                     $p['completion']['endDateDetails'] = $completion->justification;
                 }

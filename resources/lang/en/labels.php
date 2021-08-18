@@ -215,7 +215,7 @@ return  [
 
 	'award_description' => 'Award Description',
 	'award_description_sub' => 'Enter the Details of your Award',
-	'participant_number' => 'Participant Number',
+	'participant_number' => 'Number of Bidders',
 	'cost_estimation' => 'Cost Estimation',
 
 	'file_and_publication_date' => 'File and Publication Date',
@@ -338,7 +338,7 @@ return  [
 	'project_status' => 'Project Status',
 	'procuring_entity' => 'Procuring Entity',
 	'and' => 'and',
-	'tender_count' => 'Number of Companies Participating in Tender',
+	'tender_count' => 'Number of Interested Parties',
 	'administrative_entity' => 'Contract Administration Entity',
 	'contract_company' => 'Contract Company',
 	'ori_start_date' => 'Start Date',

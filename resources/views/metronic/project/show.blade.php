@@ -671,7 +671,7 @@
                             <tr>
                                 <td>8</td>
                                 <td>{{ __('labels.administrative_entity') }}</td>
-                                <td>{{ $project->tenders()->first()->awards()->first()->contract->supplier->offerer_name ?? '-' }}
+                                <td>{{ $project->official->name ?? '-' }}
                             </tr>
                             <tr>
                                 <td>9</td>
