@@ -110,8 +110,8 @@ $suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
                             <div class="form-group">
                                 <label for="price_usd_currency">{{ __('labels.price_usd_currency') }}</label>
                                 <input type="text" class="form-control"
-                                    value="{{ number_format($contract->price_usd_currency ?? '0') }}"
-                                    name="price_usd_currency" required />
+                                    value="{{ $contract->price_usd_currency ?? '0' }}" name="price_usd_currency"
+                                    required />
                             </div>
                         </div>
                         @endif
