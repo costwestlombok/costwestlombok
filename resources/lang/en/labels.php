@@ -345,4 +345,6 @@ return  [
 	'contract_duration' => 'Contract Duration',
 
 	'change_password' => 'Change Password',
+
+	'documentation' => 'Documentation',
 ];

@@ -571,6 +571,13 @@
                                 <i class="flaticon-whatsapp text-success"></i> CoST Helpdesk
                             </a>
                         </div>
+                        @else
+                        <div class="topbar-item">
+                            <a href="{{ url('documentation') }}"
+                                class="btn btn-text-danger btn-hover-light-danger font-weight-bold mr-6 btn-sm {{ request()->segment(1) == 'documentation' ? 'active' : '' }}">
+                                <i class="flaticon2-open-text-book text-danger"></i> {{ __('labels.documentation') }}
+                            </a>
+                        </div>
                         @endif
                         <div class="dropdown">
                             <!--begin::Toggle-->

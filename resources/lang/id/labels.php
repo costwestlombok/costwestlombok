@@ -348,4 +348,6 @@ return  [
 	'contract_duration' => 'Lama Kontrak',
 
 	'change_password' => 'Ubah Password',
+
+	'documentation' => 'Dokumentasi',
 ];

@@ -29,6 +29,7 @@ Route::get('oc4ids/project/{project_oc4ids_id}/documents', ['middleware' => 'cor
 
 Route::get('lang/{language}', 'LocalizationController@switch')->name('localization.switch');
 Route::get('/', 'FrontController@index');
+Route::get('documentation', 'FrontController@documentation');
 
 Route::get('home', function () {
     if (Auth::check()) {
@@ -207,7 +208,7 @@ Route::get('/get-tender-status', 'TenderStatusController@get_data');
 Route::get('/get-status', 'StatusController@get_data');
 Route::get('/get-role', 'RoleController@get_data');
 Route::get('/get-warranty-type', 'WarrantyTypeController@get_data');
-Route::get('/get-source', 'SourceController@get_data');
+Route::get('/get-sources', 'SourceController@get_data');
 
 Route::post('agency/{agency}/user', 'AgencyController@user')->name('agency.user');
 Route::resource('agency', 'AgencyController');

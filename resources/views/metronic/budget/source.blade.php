@@ -16,7 +16,7 @@
                 // url points to a json file that contains an array of country names, see
                 // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
                 // prefetch: COST_URL
-                prefetch: "{{ url('/get-source') }}"
+                prefetch: "{{ url('/get-sources') }}"
             });
 
             // passing in `null` for the `options` arguments will result in the default
@@ -186,7 +186,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="name">{{ __('labels.amount') }}</label>
-                                <input type="text" class="form-control" name="amount">
+                                <input type="text" class="form-control" name="amount" value=0>
                             </div>
                         </div>
                     </div>

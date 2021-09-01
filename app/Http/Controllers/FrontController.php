@@ -178,18 +178,22 @@ class FrontController extends Controller
             if ($project->project_budget()->count()) {
                 $budget = $project->project_budget()->first();
                 if ($budget->source()->count()) {
-                    $source = $budget->source()->first();
-                    if ($source->source) {
-                        if ($source->source->acronym == 'PRIM') {
-                            $p['parties'][] = [
-                                'name' => 'GRANT',
-                                'id' => '11303000-6752-11eb-904c-b984ec60b957',
-                                'roles' => [
-                                    'funder',
-                                ],
-                            ];
-                        } else if (in_array($source->source->acronym, ['DAU', 'DAK'])) {
-                            $officialObject['roles'][] = 'funder';
+                    $sources = $budget->source;
+                    foreach ($sources as $source) {
+                        if ($source->source) {
+                            if (in_array($source->source->acronym, ['DAU', 'DAK', 'APBD'])) {
+                                if (!in_array('funder', $officialObject['roles'])) {
+                                    $officialObject['roles'][] = 'funder';
+                                }
+                            } else {
+                                $p['parties'][] = [
+                                    'id' => $source->source->id,
+                                    'name' => $source->source->source_name,
+                                    'roles' => [
+                                        'funder',
+                                    ],
+                                ];
+                            }
                         }
                     }
                 }
@@ -242,6 +246,30 @@ class FrontController extends Controller
         //         return $f;
         //     });
         // }
+
+        // budgetBreakdown 
+        if ($project->project_budget()->count()) {
+            $sources = $project->project_budget()->oldest()->first()->source;
+            foreach ($sources as $source) {
+                if (in_array($source->source->acronym, ['DAU', 'DAK', 'APBD'])) {
+                    $sourceParty = [
+                        'id' => $officialObject['id'],
+                        'name' => $officialObject['name'],
+                    ];
+                } else {
+                    $sourceParty = [
+                        'id' => $source->source->id,
+                        'name' => $source->source->source_name,
+                    ];
+                }
+                $sourceArray = [
+                    'id' => $source->source->id,
+                    'description' => $source->source->name,
+                    'sourceParty' => $sourceParty,
+                ];
+                $p['budget']['budgetBreakdown'][] = $sourceArray;
+            }
+        }
 
         // contract
         $contracts = \App\Contract::whereIn('awards_id', \App\Award::whereIn('tender_id', $project->tenders()->pluck('id'))->pluck('id'))->latest()->get();
@@ -554,5 +582,10 @@ class FrontController extends Controller
             'status' => 'error',
             'message' => 'project not found!'
         ], 500);
+    }
+
+    public function documentation()
+    {
+        return view('metronic.documentation');
     }
 }
