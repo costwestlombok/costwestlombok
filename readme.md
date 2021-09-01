@@ -8,7 +8,7 @@ There will be only one web service URL with GET method for client to call, and t
 
 ## Getting Started
 
-The current version of the API lives at [Live API](https://cost.digitalcommunity.id/oc4ids).
+The current version of the API lives at [Live API](https://intras.fllajlombokbaratkab.or.id/oc4ids).
 
 ### Version
 
