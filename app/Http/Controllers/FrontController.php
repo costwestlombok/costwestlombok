@@ -264,7 +264,7 @@ class FrontController extends Controller
                 }
                 $sourceArray = [
                     'id' => $source->source->id,
-                    'description' => $source->source->name,
+                    'description' => $source->source->source_name,
                     'sourceParty' => $sourceParty,
                 ];
                 $p['budget']['budgetBreakdown'][] = $sourceArray;
