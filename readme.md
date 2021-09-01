@@ -1,4 +1,4 @@
-<p align="center"><img src="https://cost.digitalcommunity.id/images/cost_65.png"></p>
+<p align="center"><img src="https://intras.fllajlombokbaratkab.or.id/images/cost_65.png"></p>
 
 ## Overview
 
