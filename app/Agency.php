@@ -19,7 +19,7 @@ class Agency extends Model
 
     public function projects()
     {
-        return $this->belongsToMany(Project::class, 'agency_projects', 'project_id', 'agency_id');
+        return $this->belongsToMany(Project::class, 'agency_projects', 'agency_id', 'project_id');
     }
 
     public function agencyProjects()
