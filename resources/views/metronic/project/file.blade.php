@@ -38,6 +38,9 @@
                     data: 'document_description'
                 },
                 {
+                    data: 'document_path'
+                },
+                {
                     data: 'created_at',
                     searchable: false
                 },
@@ -46,10 +49,10 @@
                     searchable: false
                 },
             ],
-            order: [[5, "desc"]],
+            order: [[6, "desc"]],
             columnDefs: [
                 {
-                    targets: 6,
+                    targets: 7,
                     title: '{{ __("labels.action") }}',
                     orderable: false,
                     render: function (data, type, full, meta) {
@@ -61,10 +64,18 @@
                     },
                 },
                 {
-                    targets: 5,
+                    targets: 6,
                     render: function (data, type, full, meta) {
                         return '<div class="text-right nowrap">\
                             <code>' + data + '</code>\
+                        </div>';
+                    },
+                },
+                {
+                    targets: 5,
+                    render: function (data, type, full, meta) {
+                        return '<div class="text-center nowrap">\
+                        <a href="{{ url("storage") }}/'+ data + '" target="_blank" class="btn btn-xs btn-clean btn-icon" title="Download"><i class="fas fa-download"></i></a>\
                         </div>';
                     },
                 },
@@ -184,8 +195,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">{{ __('labels.publication_date') }}</label>
-                                <input type="date" name="date_of_publication" class="form-control"
-                                    value="{{date('m-d-Y')}}">
+                                <input type="date" name="date_of_publication" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -238,6 +248,7 @@
                             <th>{{ __('labels.document_type') }}</th>
                             <th>{{ __('labels.author') }}</th>
                             <th>{{ __('labels.description') }}</th>
+                            <th>{{ __('labels.document') }}</th>
                             <th class="column-fit">{{ __('labels.created_at') }}</th>
                             <th class="text-right column-fit">{{ __('labels.action') }}</th>
                         </tr>
