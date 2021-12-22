@@ -508,18 +508,20 @@
                                 $sourceName = '-';
                                 $budget = $project->project_budget()->first();
                                 if ($budget) {
-                                $source = $budget->source()->first();
-                                if ($source) {
-                                if ($source->source->aronym == 'PRIM') {
-                                $sourceName = 'GRANT';
-                                } else if (in_array($source->source->acronym, ['DAU', 'DAK'])) {
-                                if ($project->official) {
-                                $official = $project->official;
-                                $org = $official->unit->org;
-                                $sourceName = $org->name . ', ' . $official->unit->unit_name;
-                                }
-                                }
-                                }
+                                    $source = $budget->source()->first();
+                                    if ($source) {
+                                        if ($source->source->aronym == 'PRIM') {
+                                            $sourceName = 'GRANT';
+                                        } else if (in_array($source->source->acronym, ['DAU', 'DAK'])) {
+                                            if ($project->official) {
+                                                $official = $project->official;
+                                                $org = $official->unit->org;
+                                                $sourceName = $org->name . ', ' . $official->unit->unit_name;
+                                            }
+                                        } else {
+                                            $sourceName = $source->source->source_name;
+                                        }
+                                    }
                                 }
                                 @endphp
                                 <td colspan="2">
