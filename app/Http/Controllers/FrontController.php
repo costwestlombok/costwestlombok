@@ -248,7 +248,7 @@ class FrontController extends Controller
         // }
 
         // budgetBreakdown 
-        if ($project->project_budget()->count()) {
+        if ($project->project_budget()->count() && isset($officialObject)) {
             $sources = $project->project_budget()->oldest()->first()->source;
             foreach ($sources as $source) {
                 if (in_array($source->source->acronym, ['DAU', 'DAK', 'APBD'])) {
