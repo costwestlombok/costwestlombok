@@ -305,8 +305,8 @@ class FrontController extends Controller
                 $c['summary']['nature'] = ['construction'];
 
                 // administrativeEntitiy
+                $project = $tender->project;
                 if ($tender->project->official) {
-                    $project = $tender->project;
                     $official = $project->official;
                     $org = $official->unit->org;
                     $c['summary']['tender']['administrativeEntity'] = [
