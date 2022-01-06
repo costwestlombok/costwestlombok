@@ -373,7 +373,7 @@ class FrontController extends Controller
 
         // tenders as procuringEntity party
         $procuringEntity = $project->tenders()->first();
-        if ($procuringEntity) {
+        if ($procuringEntity && $procuringEntity->official) {
             $procuringEntityArray = [
                 'name' => $procuringEntity->official->unit->org->name,
                 'id' => $procuringEntity->official->unit->org->id,
