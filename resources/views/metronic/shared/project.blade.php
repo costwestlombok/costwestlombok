@@ -117,7 +117,7 @@
                                 </a>
                             </li>
                             @endif
-                            @if(Auth::user()->type == 'admin')
+                            @if(Auth::user()->type == 'admin' || Auth::user()->agency->projects()->where('id', $project->id)->exists())
                             <li class="navi-item">
                                 <a href="javascript:deleteFn('project', '{{ $project->id }}')" class="navi-link">
                                     <span class="svg-icon menu-icon">

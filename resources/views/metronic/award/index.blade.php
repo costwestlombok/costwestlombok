@@ -148,11 +148,17 @@
                                     class="d-flex align-items-center text-dark text-hover-primary font-size-h5 font-weight-bold mr-3">{{ $award->process_number }}</a>
                                 <!--end::Name-->
                                 <!--begin::Contacts-->
-                                <div class="my-2">
+                                <div class="mt-2">
                                     <span class="text-muted font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
                                         {{ __('labels.award_process_number') }}</span>
                                 </div>
                                 <!--end::Contacts-->
+                                <div>
+                                    <span class="text-muted font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">{{ __('labels.tender') }} {{ $award->tender->project_process_name }}</span>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="text-muted font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">{{ __('labels.project') }} {{ $award->tender->project->project_title }}</span>
+                                </div>
                             </div>
                             <!--begin::User-->
                             <!--begin::Actions-->

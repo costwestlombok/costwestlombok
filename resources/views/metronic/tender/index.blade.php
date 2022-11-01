@@ -121,11 +121,19 @@
                                     class="d-flex align-items-center text-dark text-hover-primary font-size-h5 font-weight-bold mr-3">{{ $tender->project_process_name }}</a>
                                 <!--end::Name-->
                                 <!--begin::Contacts-->
-                                <div class="my-2">
+                                <div class="mt-2">
                                     <a href="javascript:void(0)"
                                         class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
                                         {{ __('labels.tender_code') }}
                                         <strong>{{ $tender->process_number }}</strong></a>
+                                </div>
+                                <!--end::Contacts-->
+                                <!--begin::Contacts-->
+                                <div class="mb-2">
+                                    <a href="javascript:void(0)"
+                                        class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                                        {{ __('labels.project') }}
+                                        <strong>{{ $tender->project->project_title }}</strong></a>
                                 </div>
                                 <!--end::Contacts-->
                             </div>
@@ -212,7 +220,7 @@
                                                 </a>
                                             </li>
                                             @endif
-                                            @if(Auth::user()->type == 'admin')
+                                            @if(Auth::user()->type == 'admin' || Auth::user()->agency->projects()->where('projects.id', $tender->project->id)->exists())
                                             <li class="navi-item">
                                                 <a href="javascript:deleteFn('tender', '{{ $tender->id }}')"
                                                     class="navi-link">

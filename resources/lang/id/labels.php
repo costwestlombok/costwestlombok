@@ -189,7 +189,7 @@ return  [
 	'tender_description_sub' => 'Masukkan Detail Tender Anda',
 	'process_number' => 'Nomor Proses',
 	'process_name' => 'Nama Proses',
-	'tender_amount' => 'Jumlah Tender',
+	'tender_amount' => 'Jumlah Tender yang Ikut Tender/Pembanding',
 	'tender_status' => 'Status Tender',
 
 	'management_and_date' => 'Manajemen Pengadaan dan Tanggal',
@@ -341,7 +341,7 @@ return  [
 	'project_status' => 'Status Proyek',
 	'procuring_entity' => 'Entitas Pengadaan',
 	'and' => 'dan',
-	'tender_count' => 'Jumlah Perusahaan yang Ikut Tender',
+	'tender_count' => 'Jumlah Perusahaan yang Ikut Tender/Pembanding',
 	'administrative_entity' => 'Entitas Administrasi Kontrak',
 	'contract_company' => 'Perusahaan Kontrak',
 	'ori_start_date' => 'Tanggal Mulai',

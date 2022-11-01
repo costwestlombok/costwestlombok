@@ -150,6 +150,7 @@
                         </div>
                     </div>
                     <!--end: Item-->
+                    @if(false)
                     <!--begin: Item-->
                     <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
                         <span class="mr-4">
@@ -172,6 +173,7 @@
                         </div>
                     </div>
                     <!--end: Item-->
+                    @endif
                 </div>
                 <!--end::Content-->
             </div>

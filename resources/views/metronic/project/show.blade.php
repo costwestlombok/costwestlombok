@@ -240,7 +240,7 @@
                                                 </a>
                                             </li>
                                             @endif
-                                            @if(Auth::user()->type == 'admin')
+                                            @if(Auth::user()->type == 'admin' || Auth::user()->agency->projects()->where('projects.id', $project->id)->exists())
                                             <li class="navi-item">
                                                 <a href="javascript:deleteFn('project', '{{ $project->id }}')"
                                                     class="navi-link">
@@ -475,7 +475,9 @@
                             <tr>
                                 <td>1</td>
                                 <td>{{ __('labels.project_scope') }}</td>
-                                <td colspan="2">{!! $project->project_scope ?? '-' !!}</td>
+                                <td colspan="2" class="text-wrap">
+                                    <pre class="textarea">{!! $project->project_scope ?? '-' !!}</pre>
+                                </td>
                             </tr>
                             <tr>
                                 <td>2</td>
@@ -487,6 +489,15 @@
                                 <td>{{ __('labels.landAndSettlementImpact') }}</td>
                                 <td colspan="2">{{ $project->settlement_desc ?? '-' }}</td>
                             </tr>
+                            @if(Auth::guest())
+                            <tr>
+                                <td>4</td>
+                                <td colspan="2">{{ __('labels.contact_details') }}</td>
+                                <td>
+                                    {{ $project->official->unit->org->address ?? '-' }}
+                                </td>
+                            </tr>
+                            @else
                             <tr>
                                 <td rowspan="3">4</td>
                                 <td rowspan="3">{{ __('labels.contact_details') }}</td>
@@ -501,6 +512,7 @@
                                 <td>{{ __('labels.position') }}</td>
                                 <td>{{ $project->official->position ?? '-' }}</td>
                             </tr>
+                            @endif
                             <tr>
                                 <td>5</td>
                                 <td>{{ __('labels.sources') }}</td>
@@ -630,10 +642,18 @@
                         <table class="table">
                             <tr>
                                 <td>1</td>
-                                <td>{{ __('labels.procuring_entity') }} {{ __('labels.and') }}
-                                    {{ __('labels.contact_details') }}</td>
-                                <td>{{ $project->tenders()->first()->official->name ?? '-' }},
-                                    {{ $project->tenders()->first()->official->phone ?? '-' }}</td>
+                                <td>{{ __('labels.procuring_entity') }} {{ __('labels.and') }} {{ __('labels.contact_details') }}</td>
+                                @if(Auth::guest())
+                                <td>
+                                    {{ $project->tenders()->first()->official->unit->org->name ?? '-' }},
+                                    {{ $project->tenders()->first()->official->unit->org->address ?? '-' }}
+                                </td>
+                                @else
+                                <td>
+                                    {{ $project->tenders()->first()->official->name ?? '-' }},
+                                    {{ $project->tenders()->first()->official->phone ?? '-' }}
+                                </td>
+                                @endif
                             </tr>
                             <tr>
                                 <td>2</td>
@@ -673,7 +693,11 @@
                             <tr>
                                 <td>8</td>
                                 <td>{{ __('labels.administrative_entity') }}</td>
-                                <td>{{ $project->official->name ?? '-' }}
+                                @if(Auth::guest())
+                                <td>{{ $project->official->unit->org->name ?? '-' }}</td>
+                                @else
+                                <td>{{ $project->official->name ?? '-' }}</td>
+                                @endif
                             </tr>
                             <tr>
                                 <td>9</td>
