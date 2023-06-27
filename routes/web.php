@@ -10,13 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::get('oc4ids', ['middleware' => 'cors' , 'uses'=> 'FrontController@oc4ids']);
-Route::get('oc4ids/project/{project_oc4ids_id}', ['middleware' => 'cors' , 'uses'=> 'FrontController@project']);
-Route::get('oc4ids/project/{project_oc4ids_id}/budget', ['middleware' => 'cors' , 'uses'=> 'FrontController@projectBudget']);
-Route::get('oc4ids/project/{project_oc4ids_id}/parties', ['middleware' => 'cors' , 'uses'=> 'FrontController@projectParties']);
-Route::get('oc4ids/project/{project_oc4ids_id}/publicAuthority', ['middleware' => 'cors' , 'uses'=> 'FrontController@projectPublicAuthority']);
-Route::get('oc4ids/project/{project_oc4ids_id}/contractingProcesses', ['middleware' => 'cors' , 'uses'=> 'FrontController@projectContractingProcesses']);
-Route::get('oc4ids/project/{project_oc4ids_id}/documents', ['middleware' => 'cors' , 'uses'=> 'FrontController@projectDocuments']);
+Route::get('oc4ids', ['middleware' => 'cors', 'uses' => 'FrontController@oc4ids']);
+Route::get('oc4ids/project/{project_oc4ids_id}', ['middleware' => 'cors', 'uses' => 'FrontController@project']);
+Route::get('oc4ids/project/{project_oc4ids_id}/budget', ['middleware' => 'cors', 'uses' => 'FrontController@projectBudget']);
+Route::get('oc4ids/project/{project_oc4ids_id}/parties', ['middleware' => 'cors', 'uses' => 'FrontController@projectParties']);
+Route::get('oc4ids/project/{project_oc4ids_id}/publicAuthority', ['middleware' => 'cors', 'uses' => 'FrontController@projectPublicAuthority']);
+Route::get('oc4ids/project/{project_oc4ids_id}/contractingProcesses', ['middleware' => 'cors', 'uses' => 'FrontController@projectContractingProcesses']);
+Route::get('oc4ids/project/{project_oc4ids_id}/documents', ['middleware' => 'cors', 'uses' => 'FrontController@projectDocuments']);
 // Route::get('oc4ids/project/{project_oc4ids_id}/tender', ['middleware' => 'cors' , 'uses'=> 'FrontController@projectTender']);
 // Route::get('oc4ids/tender', ['middleware' => 'cors' , 'uses'=> 'FrontController@tenders']);
 // Route::get('oc4ids/tender/{tender_oc4ids_id}', ['middleware' => 'cors' , 'uses'=> 'FrontController@tender']);
@@ -26,6 +26,8 @@ Route::get('oc4ids/project/{project_oc4ids_id}/documents', ['middleware' => 'cor
 // Route::get('oc4ids/award/{award_oc4ids_id}/contract', ['middleware' => 'cors' , 'uses'=> 'FrontController@awardContract']);
 // Route::get('oc4ids/contract', ['middleware' => 'cors' , 'uses'=> 'FrontController@contracts']);
 // Route::get('oc4ids/contract/{contract_oc4ids_id}', ['middleware' => 'cors' , 'uses'=> 'FrontController@contract']);
+
+Route::get('helper/duration', 'HelperController@duration');
 
 Route::get('lang/{language}', 'LocalizationController@switch')->name('localization.switch');
 Route::get('/', 'FrontController@index');
