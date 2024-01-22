@@ -97,7 +97,8 @@ class FrontController extends Controller
                         'type' => 'Point',
                         'coordinates' => [round($coordinate_initial->getEllipsoid()->getA()), round($coordinate_initial->getEllipsoid()->getB())],
                     ],
-                ], [
+                ],
+                [
                     'id' => $project->id . '-2',
                     'description' => 'End Point',
                     'geometry' => [
@@ -113,7 +114,7 @@ class FrontController extends Controller
                     'amount' => $project->project_budget()->sum('amount'),
                     'currency' => 'IDR',
                 ],
-                'approvalDate' => $project->date_of_approved->format('c'),
+                'approvalDate' => $project->date_of_approved?->format('c'),
                 // 'budgetBreakdown' => $project->project_budget()->latest()->get()->map(function ($budget) {
                 //     $b['id'] = $budget->id;
                 //     if ($budget->description) {
@@ -207,7 +208,7 @@ class FrontController extends Controller
             if ($official->name && $official->name != '-') {
                 $officialObject['contactPoint']['name'] = $official->name;
                 if ($official->position && $official->position != '-') {
-                    $officialObject['contactPoint']['name'] .= ', '.$official->position;
+                    $officialObject['contactPoint']['name'] .= ', ' . $official->position;
                 }
             }
             if ($official->email && $official->email != '-') {
@@ -289,18 +290,18 @@ class FrontController extends Controller
                     ];
                 }
                 // $c['summary']['tender'] = [
-                    // 'title' => $tender->project_process_name,
-                    // 'costEstimate' => [
-                    //     'amount' => $award->contract_estimate_cost,
-                    //     'currency' => 'IDR',
-                    // ],
-                    // 'numberOfTenderers' => $award->participants_number,
+                // 'title' => $tender->project_process_name,
+                // 'costEstimate' => [
+                //     'amount' => $award->contract_estimate_cost,
+                //     'currency' => 'IDR',
+                // ],
+                // 'numberOfTenderers' => $award->participants_number,
                 // ];
                 if ($award->participants_number) {
                     $c['summary']['tender']['numberOfTenderers'] = $award->participants_number;
                 }
                 // $c['suppliers ']
-                
+
                 // doesnt have column for nature
                 $c['summary']['nature'] = ['construction'];
 
@@ -400,11 +401,11 @@ class FrontController extends Controller
                 'id' => $document->id,
                 'description' => $document->document_description,
                 'documentType' => 'landAndSettlementImpact',
-                'url' => url('storage/'.$document->document_path),
+                'url' => url('storage/' . $document->document_path),
             ];
         } elseif ($project->settlement_desc) {
             $p['documents'][] = [
-                'id' => $project->id.'-doc-1',
+                'id' => $project->id . '-doc-1',
                 'description' => $project->settlement_desc,
                 'documentType' => 'landAndSettlementImpact',
             ];
@@ -417,11 +418,11 @@ class FrontController extends Controller
                 'id' => $document->id,
                 'description' => $document->document_description,
                 'documentType' => 'environmentalImpact',
-                'url' => url('storage/'.$document->document_path),
+                'url' => url('storage/' . $document->document_path),
             ];
         } elseif ($project->environment_desc) {
             $p['documents'][] = [
-                'id' => $project->id.'-doc-2',
+                'id' => $project->id . '-doc-2',
                 'description' => $project->environment_desc,
                 'documentType' => 'environmentalImpact',
             ];
@@ -434,7 +435,7 @@ class FrontController extends Controller
                 'id' => $document->id,
                 'description' => $document->document_description,
                 'type' => 'finalAudit',
-                'url' => url('storage/'.$document->document_path),
+                'url' => url('storage/' . $document->document_path),
             ];
         }
 
@@ -506,7 +507,7 @@ class FrontController extends Controller
 
         return $p;
     }
-    
+
     public function project($project_oc4ids_id)
     {
         $project = Project::where(DB::raw('CONCAT("oc4ids-jj5f2u-", id)'), $project_oc4ids_id)->first();
@@ -518,7 +519,7 @@ class FrontController extends Controller
             'message' => 'project not found!'
         ], 500);
     }
-    
+
     public function projectBudget($project_oc4ids_id)
     {
         $project = Project::where(DB::raw('CONCAT("oc4ids-jj5f2u-", id)'), $project_oc4ids_id)->first();
@@ -531,7 +532,7 @@ class FrontController extends Controller
             'message' => 'project not found!'
         ], 500);
     }
-    
+
     public function projectParties($project_oc4ids_id)
     {
         $project = Project::where(DB::raw('CONCAT("oc4ids-jj5f2u-", id)'), $project_oc4ids_id)->first();
@@ -544,7 +545,7 @@ class FrontController extends Controller
             'message' => 'project not found!'
         ], 500);
     }
-    
+
     public function projectPublicAuthority($project_oc4ids_id)
     {
         $project = Project::where(DB::raw('CONCAT("oc4ids-jj5f2u-", id)'), $project_oc4ids_id)->first();
@@ -557,7 +558,7 @@ class FrontController extends Controller
             'message' => 'project not found!'
         ], 500);
     }
-    
+
     public function projectContractingProcesses($project_oc4ids_id)
     {
         $project = Project::where(DB::raw('CONCAT("oc4ids-jj5f2u-", id)'), $project_oc4ids_id)->first();
@@ -570,7 +571,7 @@ class FrontController extends Controller
             'message' => 'project not found!'
         ], 500);
     }
-    
+
     public function projectDocuments($project_oc4ids_id)
     {
         $project = Project::where(DB::raw('CONCAT("oc4ids-jj5f2u-", id)'), $project_oc4ids_id)->first();
