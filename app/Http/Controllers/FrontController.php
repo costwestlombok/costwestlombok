@@ -114,7 +114,7 @@ class FrontController extends Controller
                     'amount' => $project->project_budget()->sum('amount'),
                     'currency' => 'IDR',
                 ],
-                'approvalDate' => $project->date_of_approved?->format('c'),
+                'approvalDate' => $project->date_of_approved ? $project->date_of_approved->format('c') : null,
                 // 'budgetBreakdown' => $project->project_budget()->latest()->get()->map(function ($budget) {
                 //     $b['id'] = $budget->id;
                 //     if ($budget->description) {
