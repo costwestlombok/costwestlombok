@@ -335,8 +335,8 @@ class FrontController extends Controller
                 $procuringEntity = $project->tenders()->first();
                 if ($procuringEntity) {
                     $c['summary']['tender']['procuringEntity'] = [
-                        'name' => $procuringEntity->official->unit->org->name,
-                        'id' => $procuringEntity->official->unit->org->id,
+                        'name' => $procuringEntity->official ? $procuringEntity->official->unit->org->name : null,
+                        'id' => $procuringEntity->official ? $procuringEntity->official->unit->org->id : null,
                     ];
                 }
 
