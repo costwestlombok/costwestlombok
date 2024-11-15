@@ -44,7 +44,7 @@ class FrontController extends Controller
 
         $oc4ids = [
             'version' => '0.9',
-            'uri' => 'https://cost.digitalcommunity.id/oc4ids',
+            'uri' => url('/') . '/oc4ids',
             'publishedDate' => $arr[array_search(max($arr_map), $arr_map)]->format('c'),
             'publisher' => [
                 'name' => 'CoST West Lombok',
@@ -64,41 +64,96 @@ class FrontController extends Controller
     public function projectOc4idsFormat($project)
     {
         $p['id'] = 'oc4ids-jj5f2u-' . $project->id;
-        $p['externalReference'] = $project->project_code;
+        // $p['externalReference'] = $project->project_code;
         $p['updated'] = $project->updated_at->format('c');
         $p['title'] = $project->project_title;
-        if ($project->subsector_id) {
+        if ($project->subsector_id && $project->project_description) {
             $p['description'] = $project->project_description;
         }
         if ($project->projectStatus) {
-            $p['status'] = $project->projectStatus->code;
+            $p['status'] = $project->projectStatus->code == 'completed' ? 'completion' : $project->projectStatus->code;
         }
-        $p['period'] = [
-            'startDate' => date('c', strtotime($project->start_date)),
-            'endDate' => date('c', strtotime($project->end_date)),
-            'durationInDays' => $project->duration,
-        ];
-        if ($project->subsector_id) {
+        if ($project->startDate) {
+            $p['period']['startDate'] = $project->startDate;
+        }
+        if ($project->endDate) {
+            $p['period']['endDate'] = $project->endDate;
+        }
+        $p['period']['durationInDays'] = $project->duration;
+        if ($project->subsector?->subsector_code && $project->subsector?->sector?->sector_code) {
             // $p['sector'] = [$project->subsector->sector->sector_name];
-            $p['sector'] = [
-                $project->subsector->sector->sector_code,
-                $project->subsector->subsector_code,
+
+            // education
+            // health
+            // energy
+            // energy.solar
+            // energy.wind
+            // energy.hydropower
+            // energy.biomass
+            // energy.geothermal
+            // communications
+            // waterAndWaste
+            // governance
+            // economy
+            // cultureSportsAndRecreation
+            // transport
+            // transport.air
+            // transport.water
+            // transport.rail
+            // transport.road
+            // transport.urban
+            // transport.lowCarbon
+            // socialHousing
+            // naturalResources
+            // naturalResources.floodProtection
+            $sectors = [
+                'education',
+                'health',
+                'energy',
+                'communications',
+                'waterAndWaste',
+                'governance',
+                'economy',
+                'cultureSportsAndRecreation',
+                'transport',
+                'socialHousing',
+                'naturalResources',
             ];
+            $subsectors = [
+                'energy.solar',
+                'energy.wind',
+                'energy.hydropower',
+                'energy.biomass',
+                'energy.geothermal',
+                'transport.air',
+                'transport.water',
+                'transport.rail',
+                'transport.road',
+                'transport.urban',
+                'transport.lowCarbon',
+                'naturalResources.floodProtection',
+            ];
+            if (in_array($project->subsector->sector->sector_code, $sectors) && in_array($project->subsector->subsector_code, $subsectors)) {
+                $p['sector'] = [
+                    $project->subsector->sector->sector_code,
+                    $project->subsector->subsector_code,
+                ];
+            }
         }
         if ($project->purpose) {
             $p['purpose'] = $project->purpose->purpose_name;
         }
         $p['type'] = 'rehabilitation'; // https://standard.open-contracting.org/infrastructure/latest/en/reference/codelists/#projecttype
         if ($project->initial_lat && $project->initial_lon && $project->final_lat && $project->final_lon) {
-            $coordinate_initial = new Coordinate([$project->initial_lat, $project->initial_lon], Ellipsoid::createFromName(Ellipsoid::GRS_1980));
-            $coordinate_final = new Coordinate([$project->final_lat, $project->final_lon], Ellipsoid::createFromName(Ellipsoid::GRS_1980));
+            // $coordinate_initial = new Coordinate([$project->initial_lat, $project->initial_lon], Ellipsoid::createFromName(Ellipsoid::GRS_1980));
+            // $coordinate_final = new Coordinate([$project->final_lat, $project->final_lon], Ellipsoid::createFromName(Ellipsoid::GRS_1980));
             $p['locations'] = [
                 [
                     'id' => $project->id . '-1',
                     'description' => 'Start Point',
                     'geometry' => [
                         'type' => 'Point',
-                        'coordinates' => [round($coordinate_initial->getEllipsoid()->getA()), round($coordinate_initial->getEllipsoid()->getB())],
+                        'coordinates' => [(float) $project->initial_lon, (float) $project->initial_lat],
                     ],
                 ],
                 [
@@ -106,18 +161,18 @@ class FrontController extends Controller
                     'description' => 'End Point',
                     'geometry' => [
                         'type' => 'Point',
-                        'coordinates' => [round($coordinate_final->getEllipsoid()->getA()), round($coordinate_final->getEllipsoid()->getB())],
+                        'coordinates' => [(float) $project->final_lon, (float) $project->final_lat],
                     ],
                 ],
             ];
         }
-        if ($project->project_budget()->count()) {
+        if ($project->project_budget()->count() && $project->date_of_approved) {
             $p['budget'] = [
                 'amount' => [
                     'amount' => $project->project_budget()->sum('amount'),
                     'currency' => 'IDR',
                 ],
-                'approvalDate' => $project->date_of_approved ? $project->date_of_approved->format('c') : null,
+                'approvalDate' => $project->date_of_approved->format('c'),
                 // 'budgetBreakdown' => $project->project_budget()->latest()->get()->map(function ($budget) {
                 //     $b['id'] = $budget->id;
                 //     if ($budget->description) {
@@ -145,7 +200,7 @@ class FrontController extends Controller
                 //     'id' => $offerer->id,
                 // ];
                 $o['contactPoint']['name'] = $offerer->offerer_name;
-                if ($offerer->website && $offerer->website != '-') {
+                if ($offerer->website && $offerer->website != '-' && filter_var($offerer->website, FILTER_VALIDATE_URL) !== false) {
                     $o['identifier']['uri'] = $offerer->website;
                 }
                 if ($offerer->address && $offerer->address != '-') {
@@ -164,20 +219,19 @@ class FrontController extends Controller
                         'tenderer',
                     ];
                 }
-
                 return $o;
-            });
+            })->toArray();
         }
         if ($project->official) {
             $official = $project->official;
             $org = $official->unit->org;
             $officialObject = [
-                'id' => $org->id,
+                'id' => $official->unit->id,
                 'name' => $org->name . ', ' . $official->unit->unit_name,
                 'roles' => ['publicAuthority', 'administrativeEntity'],
             ];
             $p['publicAuthority'] = [
-                'id' => $org->id,
+                'id' => $official->unit->id,
                 'name' => $org->name . ', ' . $official->unit->unit_name,
             ];
             if ($project->project_budget()->count()) {
@@ -203,7 +257,7 @@ class FrontController extends Controller
                     }
                 }
             }
-            if ($org->website && $org->website != '-') {
+            if ($org->website && $org->website != '-' && filter_var($org->website, FILTER_VALIDATE_URL) !== false) {
                 $officialObject['identifier']['uri'] = $org->website;
             }
             if ($org->address && $org->address != '-') {
@@ -253,28 +307,28 @@ class FrontController extends Controller
         // }
 
         // budgetBreakdown
-        if ($project->project_budget()->count() && isset($officialObject)) {
-            $sources = $project->project_budget()->oldest()->first()->source;
-            foreach ($sources as $source) {
-                if (in_array($source->source->acronym, ['DAU', 'DAK', 'APBD'])) {
-                    $sourceParty = [
-                        'id' => $officialObject['id'],
-                        'name' => $officialObject['name'],
-                    ];
-                } else {
-                    $sourceParty = [
-                        'id' => $source->source->id,
-                        'name' => $source->source->source_name,
-                    ];
-                }
-                $sourceArray = [
-                    'id' => $source->source->id,
-                    'description' => $source->source->source_name,
-                    'sourceParty' => $sourceParty,
-                ];
-                $p['budget']['budgetBreakdown'][] = $sourceArray;
-            }
-        }
+        // if ($project->project_budget()->count() && isset($officialObject)) {
+        //     $sources = $project->project_budget()->oldest()->first()->source;
+        //     foreach ($sources as $source) {
+        //         if (in_array($source->source->acronym, ['DAU', 'DAK', 'APBD'])) {
+        //             $sourceParty = [
+        //                 'id' => $officialObject['id'],
+        //                 'name' => $officialObject['name'],
+        //             ];
+        //         } else {
+        //             $sourceParty = [
+        //                 'id' => $source->source->id,
+        //                 'name' => $source->source->source_name,
+        //             ];
+        //         }
+        //         $sourceArray = [
+        //             'id' => $source->source->id,
+        //             'description' => $source->source->source_name,
+        //             'sourceParty' => $sourceParty,
+        //         ];
+        //         $p['budget']['budgetBreakdown'][] = $sourceArray;
+        //     }
+        // }
 
         // contract
         $contracts = \App\Models\Contract::whereIn('awards_id', \App\Models\Award::whereIn('tender_id', $project->tenders()->pluck('id'))->pluck('id'))->latest()->get();
@@ -283,7 +337,9 @@ class FrontController extends Controller
                 $c['id'] = $contract->id;
                 // $c['summary']['ocid'] = $contract->id;
                 $c['summary']['title'] = $contract->contract_title;
-                $c['summary']['description'] = $contract->contract_scope;
+                if ($contract->contract_scope) {
+                    $c['summary']['description'] = $contract->contract_scope;
+                }
                 // tender
                 $award = $contract->award;
                 $tender = $award->tender;
@@ -315,7 +371,7 @@ class FrontController extends Controller
                     $official = $project->official;
                     $org = $official->unit->org;
                     $c['summary']['tender']['administrativeEntity'] = [
-                        'id' => $org->id,
+                        'id' => $official->unit->id,
                         'name' => $org->name . ', ' . $official->unit->unit_name,
                     ];
                 }
@@ -337,10 +393,11 @@ class FrontController extends Controller
                 }
 
                 $procuringEntity = $project->tenders()->first();
-                if ($procuringEntity) {
+                if ($procuringEntity?->official?->unit?->org) {
+                    $org = $official->unit->org;
                     $c['summary']['tender']['procuringEntity'] = [
-                        'name' => $procuringEntity->official ? $procuringEntity->official->unit->org->name : null,
-                        'id' => $procuringEntity->official ? $procuringEntity->official->unit->org->id : null,
+                        'id' => $procuringEntity->official->unit->id,
+                        'name' => $procuringEntity->official->unit->org?->name . ', ' . $procuringEntity->official->unit->name,
                     ];
                 }
 
@@ -363,8 +420,10 @@ class FrontController extends Controller
                         'currency' => 'IDR',
                     ],
                     'endDate' => $completion->date->format('c'),
-                    'finalScope' => $completion->final_scope,
                 ];
+                if ($completion->final_scope) {
+                    $p['completion']['finalScope'] = $completion->final_scope;
+                }
                 if ($completion->justification) {
                     $p['completion']['finalScopeDetails'] = $completion->justification;
                     $p['completion']['finalValueDetails'] = $completion->justification;
@@ -379,23 +438,32 @@ class FrontController extends Controller
         // tenders as procuringEntity party
         $procuringEntity = $project->tenders()->first();
         if ($procuringEntity && $procuringEntity->official) {
-            $procuringEntityArray = [
-                'name' => $procuringEntity->official->unit->org->name,
-                'id' => $procuringEntity->official->unit->org->id,
-                'contactPoint' => [
-                    'name' => $procuringEntity->official->name,
-                ],
-                'roles' => [
-                    'procuringEntity',
-                ],
-            ];
-            if ($procuringEntity->official->email) {
-                $procuringEntityArray['contactPoint']['email'] = $procuringEntity->official->email;
+            $official = $procuringEntity->official;
+            $partiesCollection = collect($p['parties']);
+            $existingParty = $partiesCollection->where('id', $official->unit->id)->first();
+            if ($existingParty) {
+                $existingPartyKey = array_keys($p['parties'], $existingParty)[0];
+                $p['parties'][$existingPartyKey]['roles'][] = 'procuringEntity';
+            } else {
+                $org = $official->unit->org;
+                $procuringEntityArray = [
+                    'id' => $official->unit->id,
+                    'name' => $org->name . ', ' . $official->unit->unit_name,
+                    'contactPoint' => [
+                        'name' => $procuringEntity->official->name,
+                    ],
+                    'roles' => [
+                        'procuringEntity',
+                    ],
+                ];
+                if ($procuringEntity->official->email) {
+                    $procuringEntityArray['contactPoint']['email'] = $procuringEntity->official->email;
+                }
+                if ($procuringEntity->official->phone) {
+                    $procuringEntityArray['contactPoint']['telephone'] = $procuringEntity->official->phone;
+                }
+                $p['parties'][] = $procuringEntityArray;
             }
-            if ($procuringEntity->official->phone) {
-                $procuringEntityArray['contactPoint']['telephone'] = $procuringEntity->official->phone;
-            }
-            $p['parties'][] = $procuringEntityArray;
         }
 
         // landAndSettlementImpact
@@ -438,7 +506,7 @@ class FrontController extends Controller
             $p['documents'][] = [
                 'id' => $document->id,
                 'description' => $document->document_description,
-                'type' => 'finalAudit',
+                'documentType' => 'technicalAuditReport',
                 'url' => url('storage/' . $document->document_path),
             ];
         }
@@ -454,11 +522,12 @@ class FrontController extends Controller
                 $pp['id'] = $projectProgress->id;
                 $pp['measure'] = $projectProgress->real_percent;
                 $pp['unit']['name'] = 'percent';
-                $pp['period'] = [
-                    'startDate' => date('c', strtotime($projectProgress->date_of_advance)),
-                    'endDate' => date('c', strtotime($projectProgress->date_of_advance)),
-                ];
-
+                if ($projectProgress->date_of_advance) {
+                    $pp['period'] = [
+                        'startDate' => date('c', strtotime($projectProgress->date_of_advance)),
+                        'endDate' => date('c', strtotime($projectProgress->date_of_advance)),
+                    ];
+                }
                 return $pp;
             });
             $p['metrics'][] = $metricPPPO;
