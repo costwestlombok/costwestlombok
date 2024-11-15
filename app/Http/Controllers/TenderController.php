@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\ContractType;
-use App\Official;
-use App\Organization;
-use App\OrganizationUnit;
-use App\Project;
-use App\Status;
-use App\Tender;
-use App\TenderOfferer;
-use App\TenderMethod;
-use App\TenderStatus;
+use App\Models\ContractType;
+use App\Models\Official;
+use App\Models\Organization;
+use App\Models\OrganizationUnit;
+use App\Models\Project;
+use App\Models\Status;
+use App\Models\Tender;
+use App\Models\TenderMethod;
+use App\Models\TenderOfferer;
+use App\Models\TenderStatus;
+use Auth;
 use Carbon\Carbon;
+use DataTables;
 use Illuminate\Http\Request;
 use Session;
 use Storage;
-use Auth;
-use DataTables;
 
 class TenderController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -47,13 +46,14 @@ class TenderController extends Controller
             }
         }
         $tenders = $tenders->paginate(10);
+
         return view('metronic.tender.index', compact('tenders'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param int $projectID
+     * @param  int  $projectID
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -79,7 +79,6 @@ class TenderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -161,11 +160,11 @@ class TenderController extends Controller
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
         $data['duration'] = $start->diffInDays($end) + 1;
-        $data['amount'] = str_replace(",", "", $request->amount);
+        $data['amount'] = str_replace(',', '', $request->amount);
         Tender::create($data);
         Session::put('success', trans('labels.saved'));
 
-        return redirect('project/' . $request->project_id . '/tender');
+        return redirect('project/'.$request->project_id.'/tender');
         // return redirect('tender/' . $request->project_id);
     }
 
@@ -217,7 +216,6 @@ class TenderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -329,10 +327,11 @@ class TenderController extends Controller
             $data['status_id'] = null;
         }
 
-        $data['amount'] = str_replace(",", "", $request->amount);
+        $data['amount'] = str_replace(',', '', $request->amount);
         $tender->update($data);
-        Session::put("success", trans('labels.updated'));
-        return redirect('project/' . $request->project_id . '/tender');
+        Session::put('success', trans('labels.updated'));
+
+        return redirect('project/'.$request->project_id.'/tender');
         // return redirect('tender/' . $request->project_id);
     }
 
@@ -370,6 +369,7 @@ class TenderController extends Controller
         }
         $tender->delete();
         Session::put('success', trans('labels.deleted'));
+
         return back();
     }
 
@@ -380,8 +380,10 @@ class TenderController extends Controller
         } else {
             $tenders = Tender::where('project_id', $project->id)->paginate(10);
         }
+
         return view('metronic.tender.index', compact('tenders', 'project'));
     }
+
     public function create_tender(Project $project)
     {
         return view('metronic.tender.edit', compact('project'));
@@ -394,6 +396,7 @@ class TenderController extends Controller
         } else {
             $awards = $tender->awards()->paginate(10);
         }
+
         return view('metronic.award.index', compact('tender', 'awards'));
     }
 

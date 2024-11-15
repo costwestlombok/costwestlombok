@@ -12,15 +12,15 @@
                 <!--begin::Nav Panel Widget 2-->
                 <div class="card card-custom gutter-b card-stretch card-shadowless">
                     <!--begin::Body-->
-                    <div class="card-body p-0 table-responsive">
+                    <div class="p-0 card-body table-responsive">
                         <!--begin::Nav Tabs-->
-                        <ul class="dashboard-tabs nav nav-pills nav-danger m-0 p-0" role="tablist"
+                        <ul class="p-0 m-0 dashboard-tabs nav nav-pills nav-danger" role="tablist"
                             style="min-width: 850px">
                             <!--begin::Item-->
-                            <li class="nav-item d-flex flex-grow-1 flex-shrink-0 mr-3">
-                                <a class="nav-link border py-10 d-flex flex-grow-1 rounded flex-column align-items-center active"
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <a class="py-10 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center active"
                                     data-toggle="pill" href="#tab_forms_widget_1">
-                                    <span class="nav-icon py-2 w-auto">
+                                    <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
                                             <!--begin::Svg Icon | path:/metronic/assets/media/svg/icons/Home/Library.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -40,15 +40,15 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bold text-center">{{ __('labels.project') }}<br />{{ number_format($project_sum) }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bold">{{ __('labels.project') }}<br />{{ number_format($project_sum) }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="nav-item d-flex flex-grow-1 flex-shrink-0 mr-3">
-                                <a class="nav-link border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <a class="py-10 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center"
                                     data-toggle="pill" href="#tab_forms_widget_2">
-                                    <span class="nav-icon py-2 w-auto">
+                                    <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
                                             <!--begin::Svg Icon | path:/metronic/assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -70,15 +70,15 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.tender') }}<br />{{ Auth::user()->agency_id ? App\Tender::whereIn('project_id', $projects->pluck('id'))->count() : App\Tender::count() }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.tender') }}<br />{{ Auth::user()->agency_id ? \App\Models\Tender::whereIn('project_id', $projects->pluck('id'))->count() : \App\Models\Tender::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="nav-item d-flex flex-grow-1 flex-shrink-0 mr-3">
-                                <a class="nav-link border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <a class="py-10 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center"
                                     data-toggle="pill" href="#tab_forms_widget_3">
-                                    <span class="nav-icon py-2 w-auto">
+                                    <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
                                             <!--begin::Svg Icon | path:/metronic/assets/media/svg/icons/Media/Movie-Lane2.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -98,15 +98,15 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.award') }}<br />{{ Auth::user()->agency_id ? App\Award::whereIn('tender_id', App\Tender::whereIn('project_id', $projects->pluck('id'))->pluck('id'))->count() : App\Award::count() }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.award') }}<br />{{ Auth::user()->agency_id ? \App\Models\Award::whereIn('tender_id', \App\Models\Tender::whereIn('project_id', $projects->pluck('id'))->pluck('id'))->count() : \App\Models\Award::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="nav-item d-flex flex-grow-1 flex-shrink-0 mr-3">
-                                <a class="nav-link border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <a class="py-10 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center"
                                     data-toggle="pill" href="#tab_forms_widget_4">
-                                    <span class="nav-icon py-2 w-auto">
+                                    <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
                                             <!--begin::Svg Icon | path:/metronic/assets/media/svg/icons/Media/Equalizer.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -130,16 +130,16 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.contract') }}<br />{{ Auth::user()->agency_id ? App\Contract::whereIn('awards_id', App\Award::whereIn('tender_id', App\Tender::whereIn('project_id', $projects->pluck('id'))->pluck('id'))->pluck('id'))->count() : App\Contract::count() }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.contract') }}<br />{{ Auth::user()->agency_id ? \App\Models\Contract::whereIn('awards_id', \App\Models\Award::whereIn('tender_id', \App\Models\Tender::whereIn('project_id', $projects->pluck('id'))->pluck('id'))->pluck('id'))->count() : \App\Models\Contract::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
                             @if(Auth::user()->type == 'admin')
                             <!--begin::Item-->
-                            <li class="nav-item d-flex flex-grow-1 flex-shrink-0 mr-3">
-                                <a class="nav-link border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <a class="py-10 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center"
                                     data-toggle="pill" href="#tab_forms_widget_5">
-                                    <span class="nav-icon py-2 w-auto">
+                                    <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
                                             <!--begin::Svg Icon | path:/metronic/assets/media/svg/icons/General/Shield-check.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -159,15 +159,15 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.offerer') }}<br />{{ App\Offerer::count() }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.offerer') }}<br />{{ \App\Models\Offerer::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="nav-item d-flex flex-grow-1 flex-shrink-0 mr-0">
-                                <a class="nav-link border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
+                            <li class="flex-shrink-0 mr-0 nav-item d-flex flex-grow-1">
+                                <a class="py-10 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center"
                                     data-toggle="pill" href="#tab_forms_widget_5">
-                                    <span class="nav-icon py-2 w-auto">
+                                    <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
                                             <!--begin::Svg Icon | path:/metronic/assets/media/svg/icons/Communication/Group.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -187,7 +187,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ __('labels.completion') }}<br />{{ App\Completion::count() }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.completion') }}<br />{{ \App\Models\Completion::count() }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
@@ -195,7 +195,7 @@
                         </ul>
                         <!--end::Nav Tabs-->
                         <!--begin::Nav Content-->
-                        <div class="tab-content m-0 p-0">
+                        <div class="p-0 m-0 tab-content">
                             <div class="tab-pane active" id="forms_widget_tab_1" role="tabpanel"></div>
                             <div class="tab-pane" id="forms_widget_tab_2" role="tabpanel"></div>
                             <div class="tab-pane" id="forms_widget_tab_3" role="tabpanel"></div>
@@ -211,14 +211,14 @@
             <div class="col-lg-4">
                 <!--begin::Engage Widget 8-->
                 <div class="card card-custom gutter-b card-stretch card-shadowless">
-                    <div class="card-body p-0 d-flex">
+                    <div class="p-0 card-body d-flex">
                         <div
-                            class="d-flex align-items-start justify-content-start flex-grow-1 bg-light-warning p-8 card-rounded flex-grow-1 position-relative">
+                            class="p-8 d-flex align-items-start justify-content-start flex-grow-1 bg-light-warning card-rounded position-relative">
                             <div class="d-flex flex-column align-items-start flex-grow-1 h-100">
                                 <div class="p-1 flex-grow-1">
                                     <h4 class="text-warning font-weight-bolder">{{ number_format($project_sum) }}
                                         {{ __('labels.project') }}</h4>
-                                    <p class="text-dark-50 font-weight-bold mt-3">Total {{ __('labels.project') }}</p>
+                                    <p class="mt-3 text-dark-50 font-weight-bold">Total {{ __('labels.project') }}</p>
                                 </div>
                                 <a href="{{ route('project.create') }}"
                                     class="btn btn-link btn-link-warning font-weight-bold">{{ __('labels.create') }}
@@ -243,7 +243,7 @@
                                         <!--end::Svg Icon-->
                                     </span></a>
                             </div>
-                            <div class="position-absolute right-0 bottom-0 overflow-hidden">
+                            <div class="bottom-0 right-0 overflow-hidden position-absolute">
                                 <img src="/metronic/assets/media/svg/humans/c.png" class="max-h-100px max-h-xl-180px"
                                     alt="">
                             </div>
@@ -258,12 +258,12 @@
                 <!--begin::Advance Table Widget 1-->
                 <div class="card card-custom card-stretch gutter-b card-shadowless bg-light">
                     <!--begin::Header-->
-                    <div class="card-header border-0 py-5">
+                    <div class="py-5 border-0 card-header">
                         <h3 class="card-title align-items-start flex-column">
                             <span
                                 class="card-label font-weight-bolder text-dark">{{ __('labels.latest_project') }}</span>
                             <span
-                                class="text-muted mt-3 font-weight-bold font-size-sm">{{ __('labels.latest_project_sub') }}</span>
+                                class="mt-3 text-muted font-weight-bold font-size-sm">{{ __('labels.latest_project_sub') }}</span>
                         </h3>
                         <div class="card-toolbar">
                             <a href="{{ url('/project/create') }}"
@@ -273,7 +273,7 @@
                     </div>
                     <!--end::Header-->
                     <!--begin::Body-->
-                    <div class="card-body py-0">
+                    <div class="py-0 card-body">
                         <!--begin::Table-->
                         <div class="table-responsive">
                             <table class="table table-head-custom table-vertical-top" id="kt_advance_table_widget_1">
@@ -307,10 +307,10 @@
                                                 class="label label-lg label-light-success label-inline">{{ __('labels.'.$item->projectStatus->code) ?? '-' }}</span>
                                         </td>
                                         <td>
-                                            <div class="d-flex flex-column w-100 mr-2">
-                                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                            <div class="mr-2 d-flex flex-column w-100">
+                                                <div class="mb-2 d-flex align-items-center justify-content-between">
                                                     <span
-                                                        class="text-muted mr-2 font-size-sm font-weight-bold">{{ number_format($item->latest_progress->real_percent ?? '0') }}%</span>
+                                                        class="mr-2 text-muted font-size-sm font-weight-bold">{{ number_format($item->latest_progress->real_percent ?? '0') }}%</span>
                                                     <span
                                                         class="text-muted font-size-sm font-weight-bold">{{ __('labels.real_physical') }}</span>
                                                 </div>
@@ -355,7 +355,7 @@
                 <!--begin::List Widget 3-->
                 <div class="card card-custom card-stretch gutter-b bg-light-success">
                     <!--begin::Header-->
-                    <div class="card-header border-0">
+                    <div class="border-0 card-header">
                         <h3 class="card-title font-weight-bolder text-dark">{{ __('labels.official') }}</h3>
                         <div class="card-toolbar">
                             <a href="{{ route('official.create') }}" class="btn btn-danger btn-sm font-weight-bolder">
@@ -365,19 +365,19 @@
                     </div>
                     <!--end::Header-->
                     <!--begin::Body-->
-                    <div class="card-body pt-2">
+                    <div class="pt-2 card-body">
                         @foreach ($officials as $a)
                         <!--begin::Item-->
-                        <div class="d-flex align-items-center mb-10">
+                        <div class="mb-10 d-flex align-items-center">
                             <!--begin::Text-->
                             <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                 <a href="{{ route('official.edit', $a) }}"
-                                    class="text-dark text-hover-primary mb-1 font-size-lg">{{ $a->name }}</a>
+                                    class="mb-1 text-dark text-hover-primary font-size-lg">{{ $a->name }}</a>
                                 <span class="text-muted">{{ $a->unit->unit_name }}</span>
                             </div>
                             <!--end::Text-->
                             <!--begin::Dropdown-->
-                            <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title=""
+                            <div class="ml-2 dropdown dropdown-inline" data-toggle="tooltip" title=""
                                 data-placement="left" data-original-title="{{ __('labels.edit') }}">
                                 <a href="{{ route('official.edit', $a) }}"
                                     class="btn btn-clean btn-hover-warning btn-sm btn-icon">
@@ -401,7 +401,7 @@
                 <!--begin::List Widget 3-->
                 <div class="card card-custom card-stretch gutter-b bg-light-info">
                     <!--begin::Header-->
-                    <div class="card-header border-0">
+                    <div class="border-0 card-header">
                         <h3 class="card-title font-weight-bolder text-dark">{{ __('labels.source') }}</h3>
                         <div class="card-toolbar">
                             <a href="{{ route('source.create') }}" class="btn btn-danger btn-sm font-weight-bolder">
@@ -411,19 +411,19 @@
                     </div>
                     <!--end::Header-->
                     <!--begin::Body-->
-                    <div class="card-body pt-2">
+                    <div class="pt-2 card-body">
                         @foreach ($sources as $a)
                         <!--begin::Item-->
-                        <div class="d-flex align-items-center mb-10">
+                        <div class="mb-10 d-flex align-items-center">
                             <!--begin::Text-->
                             <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                 <a href="{{ route('source.edit', $a) }}"
-                                    class="text-dark text-hover-primary mb-1 font-size-lg">{{ $a->source_name }}</a>
+                                    class="mb-1 text-dark text-hover-primary font-size-lg">{{ $a->source_name }}</a>
                                 <span class="text-muted">{{ $a->acronym }}</span>
                             </div>
                             <!--end::Text-->
                             <!--begin::Dropdown-->
-                            <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title=""
+                            <div class="ml-2 dropdown dropdown-inline" data-toggle="tooltip" title=""
                                 data-placement="left" data-original-title="{{ __('labels.edit') }}">
                                 <a href="{{ route('source.edit', $a) }}"
                                     class="btn btn-clean btn-hover-danger btn-sm btn-icon">
@@ -443,11 +443,11 @@
                 <!--begin::Base Table Widget 2-->
                 <div class="card card-custom card-stretch gutter-b bg-light">
                     <!--begin::Header-->
-                    <div class="card-header border-0 pt-5">
+                    <div class="pt-5 border-0 card-header">
                         <h3 class="card-title align-items-start flex-column">
                             <span class="card-label font-weight-bolder text-dark">{{ __('labels.offerer') }}</span>
                             <span
-                                class="text-muted mt-3 font-weight-bold font-size-sm">{{ __('labels.offerer_sub') }}</span>
+                                class="mt-3 text-muted font-weight-bold font-size-sm">{{ __('labels.offerer_sub') }}</span>
                         </h3>
                         <div class="card-toolbar">
                             <a href="{{ route('offerer.create') }}"
@@ -457,7 +457,7 @@
                     </div>
                     <!--end::Header-->
                     <!--begin::Body-->
-                    <div class="card-body pt-2 pb-0">
+                    <div class="pt-2 pb-0 card-body">
                         <!--begin::Table-->
                         <div class="table-responsive">
                             <table class="table table-borderless table-vertical-center">
@@ -473,14 +473,14 @@
                                 <tbody>
                                     @foreach ($offerers as $a)
                                     <tr>
-                                        <td class="pl-0 py-5">
+                                        <td class="py-5 pl-0">
                                             <p class="text-muted font-weight-bold">
                                                 {{ $loop->iteration }}
                                             </p>
                                         </td>
                                         <td class="pl-0">
                                             <a href="{{ route('offerer.edit', $a) }}"
-                                                class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">{{ $a->legal_name }}</a>
+                                                class="mb-1 text-dark font-weight-bolder text-hover-primary font-size-lg">{{ $a->legal_name }}</a>
                                             <span
                                                 class="text-muted font-weight-bold d-block">{{ $a->offerer_name }}</span>
                                         </td>
@@ -491,7 +491,7 @@
                                             <span class="text-muted font-weight-bold">{{ $a->contract->count() }}
                                                 {{ __('labels.contract') }}</span>
                                         </td>
-                                        <td class="text-right pr-0">
+                                        <td class="pr-0 text-right">
                                             <a href="{{ route('offerer.edit', $a) }}"
                                                 class="btn btn-icon btn-light btn-sm">
                                                 <span class="svg-icon svg-icon-md svg-icon-success">
@@ -547,7 +547,7 @@
                     <div class="text-right">
                         <button type="button" class="btn btn-light-primary font-weight-bold"
                             data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary font-weight-bold ml-1">Delete</button>
+                        <button type="submit" class="ml-1 btn btn-primary font-weight-bold">Delete</button>
                     </div>
                 </div>
             </div>

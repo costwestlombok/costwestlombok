@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Sector;
+use App\Models\Sector;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class SectorController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -39,7 +38,6 @@ class SectorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,7 +48,8 @@ class SectorController extends Controller
 
         $data = $request->all();
         Sector::create($data);
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect('/catalog/sector');
     }
 
@@ -79,7 +78,6 @@ class SectorController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -91,7 +89,8 @@ class SectorController extends Controller
 
         $data = $request->all();
         $sector->update($data);
-        Session::put("success", trans('labels.updated'));
+        Session::put('success', trans('labels.updated'));
+
         return redirect('/catalog/sector');
     }
 
@@ -104,6 +103,7 @@ class SectorController extends Controller
     public function destroy(Sector $sector)
     {
         $data = $sector->delete();
+
         return response()->json($data);
     }
 

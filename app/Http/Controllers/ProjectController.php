@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Advance;
+use App\Models\Advance;
 use App\Libraries\Googlemaps;
-use App\Project;
-use App\ProjectDocument;
-use App\Role;
+use App\Models\Project;
+use App\Models\ProjectDocument;
+use App\Models\Role;
 use Auth;
 use Carbon\Carbon;
 use DataTables;
@@ -16,7 +16,6 @@ use Storage;
 
 class ProjectController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -30,7 +29,7 @@ class ProjectController extends Controller
     public function index()
     {
         if (request()->get('query')) {
-            $projects = Project::where('project_title', 'like', '%' . request()->get('query') . '%')->latest();
+            $projects = Project::where('project_title', 'like', '%'.request()->get('query').'%')->latest();
         } else {
             $projects = Project::latest();
         }
@@ -50,6 +49,7 @@ class ProjectController extends Controller
             }
         }
         $projects = $projects->paginate(10);
+
         return view('metronic.project.index', ['projects' => $projects]);
     }
 
@@ -60,7 +60,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $map = new Googlemaps();
+        $map = new Googlemaps;
         $map->add_marker([
             'id' => 'A',
             'title' => 'true',
@@ -78,7 +78,7 @@ class ProjectController extends Controller
             'icon' => 'http://maps.google.com/mapfiles/kml/paddle/B.png',
         ]);
         $map->initialize([
-            'center' => "-8.683070211544514,116.13077257514645",
+            'center' => '-8.683070211544514,116.13077257514645',
             'places' => true,
             'onclick' => '
                 if (marker_A.title == "true") {
@@ -97,13 +97,13 @@ class ProjectController extends Controller
             ',
         ]);
         $map = $map->create_map();
+
         return view('metronic.project.edit', compact('map'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -115,7 +115,7 @@ class ProjectController extends Controller
             $end = Carbon::parse($request->end_date);
             $data['duration'] = $start->diffInDays($end) + 1;
         }
-        $data['budget'] = str_replace(",", "", $request->budget);
+        $data['budget'] = str_replace(',', '', $request->budget);
 
         if ($data['role_id']) {
             $role = Role::where('role_name', $request->role_id)->first();
@@ -136,7 +136,8 @@ class ProjectController extends Controller
             ]);
         }
 
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect('/project');
     }
 
@@ -156,27 +157,28 @@ class ProjectController extends Controller
             return date('d M Y', strtotime($dt->date_of_advance));
         });
         $sf = $progress->map(function ($dt) {
-            return doubleval($dt->scheduled_financing);
+            return floatval($dt->scheduled_financing);
         });
         $rf = $progress->map(function ($dt) {
-            return doubleval($dt->real_financing);
+            return floatval($dt->real_financing);
         });
         $map = false;
         if ($project->initial_lat && $project->initial_lon && $project->final_lat && $project->final_lon) {
-            $map = new Googlemaps();
+            $map = new Googlemaps;
             $map->add_marker([
-                'position' => $project->initial_lat . ',' . $project->initial_lon,
+                'position' => $project->initial_lat.','.$project->initial_lon,
                 'icon' => 'http://maps.google.com/mapfiles/kml/paddle/A.png',
             ]);
             $map->add_marker([
-                'position' => $project->final_lat . ',' . $project->final_lon,
+                'position' => $project->final_lat.','.$project->final_lon,
                 'icon' => 'http://maps.google.com/mapfiles/kml/paddle/B.png',
             ]);
             $map->initialize([
-                'center' => $project->initial_lat . ',' . $project->initial_lon,
+                'center' => $project->initial_lat.','.$project->initial_lon,
             ]);
             $map = $map->create_map();
         }
+
         return view('metronic.project.show', compact('project', 'pp', 'rp', 'sf', 'rf', 'date', 'map'));
     }
 
@@ -189,11 +191,11 @@ class ProjectController extends Controller
     public function edit($id)
     {
         $project = Project::find($id);
-        $map = new Googlemaps();
+        $map = new Googlemaps;
         $map->add_marker([
             'id' => 'A',
             'title' => 'true',
-            'position' => ($project->initial_lat ?? '-8.683070211544514') . ',' . ($project->initial_lon ?? '116.13077257514645'),
+            'position' => ($project->initial_lat ?? '-8.683070211544514').','.($project->initial_lon ?? '116.13077257514645'),
             'draggable' => true,
             'ondragend' => 'document.getElementById("initial_lat").value =event.latLng.lat(); document.getElementById("initial_lon").value = event.latLng.lng();',
             'icon' => 'http://maps.google.com/mapfiles/kml/paddle/A.png',
@@ -201,13 +203,13 @@ class ProjectController extends Controller
         $map->add_marker([
             'id' => 'B',
             'title' => 'false',
-            'position' => ($project->final_lat ?? '-8.679305276105104') . ',' . ($project->final_lon ?? '116.13759645742493'),
+            'position' => ($project->final_lat ?? '-8.679305276105104').','.($project->final_lon ?? '116.13759645742493'),
             'draggable' => true,
             'ondragend' => 'document.getElementById("final_lat").value =event.latLng.lat(); document.getElementById("final_lon").value = event.latLng.lng();',
             'icon' => 'http://maps.google.com/mapfiles/kml/paddle/B.png',
         ]);
         $map->initialize([
-            'center' => ($project->initial_lat ?? '-8.683070211544514') . ',' . ($project->initial_lon ?? '116.13077257514645'),
+            'center' => ($project->initial_lat ?? '-8.683070211544514').','.($project->initial_lon ?? '116.13077257514645'),
             'places' => true,
             'onclick' => '
                 if (marker_A.title == "true") {
@@ -226,13 +228,13 @@ class ProjectController extends Controller
             ',
         ]);
         $map = $map->create_map();
+
         return view('metronic.project.edit', compact('map', 'project'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -247,7 +249,7 @@ class ProjectController extends Controller
         } else {
             $data['duration'] = null;
         }
-        $data['budget'] = str_replace(",", "", $request->budget);
+        $data['budget'] = str_replace(',', '', $request->budget);
         $role = Role::where('role_name', $request->role_id)->first();
 
         if ($data['role_id']) {
@@ -277,6 +279,7 @@ class ProjectController extends Controller
     {
         $project->delete();
         Session::put('success', trans('labels.deleted'));
+
         return redirect('/project');
     }
 
@@ -304,6 +307,7 @@ class ProjectController extends Controller
         Storage::delete($projectdocument->document_path);
         $projectdocument->delete();
         Session::put('success', trans('labels.deleted'));
+
         return back();
     }
 

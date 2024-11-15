@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Project;
+use App\Models\Project;
 use Auth;
+use DB;
 use Illuminate\Support\Facades\Storage;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
-use DB;
 
 class FrontController extends Controller
 {
@@ -21,6 +21,7 @@ class FrontController extends Controller
         } else {
             $projects = Project::whereNull('id')->get();
         }
+
         return view('metronic.dashboard', compact('projects'));
     }
 
@@ -28,37 +29,39 @@ class FrontController extends Controller
     {
         // get last modified
         $arr = [
-            \App\Project::latest()->first()->created_at ?? null,
-            \App\Completion::latest()->first()->created_at ?? null,
-            \App\Contract::latest()->first()->created_at ?? null,
-            \App\Budget::latest()->first()->created_at ?? null,
-            \App\File::latest()->first()->created_at ?? null,
+            \App\Models\Project::latest()->first()->created_at ?? null,
+            \App\Models\Completion::latest()->first()->created_at ?? null,
+            \App\Models\Contract::latest()->first()->created_at ?? null,
+            \App\Models\Budget::latest()->first()->created_at ?? null,
+            \App\Models\File::latest()->first()->created_at ?? null,
         ];
         $arr_map = array_map('strtotime', $arr);
-        $projects = \App\Project::latest()->get()->map(function ($project) {
+        $projects = \App\Models\Project::latest()->get()->map(function ($project) {
             $p = $this->projectOc4idsFormat($project);
+
             return $p;
         });
 
         $oc4ids = [
-            "version" => "0.9",
-            "uri" => "https://cost.digitalcommunity.id/oc4ids",
-            "publishedDate" => $arr[array_search(max($arr_map), $arr_map)]->format('c'),
-            "publisher" => [
-                "name" => "CoST West Lombok",
+            'version' => '0.9',
+            'uri' => 'https://cost.digitalcommunity.id/oc4ids',
+            'publishedDate' => $arr[array_search(max($arr_map), $arr_map)]->format('c'),
+            'publisher' => [
+                'name' => 'CoST West Lombok',
                 // "scheme" => "GB-COH",
                 // "uid" => "9506232",
                 // "uri" => "http://data.companieshouse.gov.uk/doc/company/09506232"
             ],
             // "publicationPolicy" => "https://standard.open-contracting.org/1.1/en/implementation/publication_policy/",
-            "projects" => $projects->toArray(),
+            'projects' => $projects->toArray(),
         ];
         $oc_json = json_encode($oc4ids, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
         Storage::disk('public')->put('docs/oc4ids.json', $oc_json);
+
         return redirect('storage/docs/oc4ids.json');
     }
 
-    function projectOc4idsFormat($project)
+    public function projectOc4idsFormat($project)
     {
         $p['id'] = 'oc4ids-jj5f2u-' . $project->id;
         $p['externalReference'] = $project->project_code;
@@ -132,7 +135,7 @@ class FrontController extends Controller
                 // }),
             ];
         }
-        $offerers = \App\Offerer::whereIn('id', \App\TenderOfferer::whereIn('tender_id', $project->tenders()->pluck('id'))->pluck('offerer_id'))->latest()->get();
+        $offerers = \App\Models\Offerer::whereIn('id', \App\Models\TenderOfferer::whereIn('tender_id', $project->tenders()->pluck('id'))->pluck('offerer_id'))->latest()->get();
         if ($offerers->count()) {
             $p['parties'] = $offerers->map(function ($offerer, $key) {
                 $o['name'] = $offerer->legal_name;
@@ -161,6 +164,7 @@ class FrontController extends Controller
                         'tenderer',
                     ];
                 }
+
                 return $o;
             });
         }
@@ -248,7 +252,7 @@ class FrontController extends Controller
         //     });
         // }
 
-        // budgetBreakdown 
+        // budgetBreakdown
         if ($project->project_budget()->count() && isset($officialObject)) {
             $sources = $project->project_budget()->oldest()->first()->source;
             foreach ($sources as $source) {
@@ -273,7 +277,7 @@ class FrontController extends Controller
         }
 
         // contract
-        $contracts = \App\Contract::whereIn('awards_id', \App\Award::whereIn('tender_id', $project->tenders()->pluck('id'))->pluck('id'))->latest()->get();
+        $contracts = \App\Models\Contract::whereIn('awards_id', \App\Models\Award::whereIn('tender_id', $project->tenders()->pluck('id'))->pluck('id'))->latest()->get();
         if ($contracts->count()) {
             $p['contractingProcesses'] = $contracts->map(function ($contract) {
                 $c['id'] = $contract->id;
@@ -322,7 +326,7 @@ class FrontController extends Controller
                     'currency' => 'IDR',
                 ];
 
-                $offerers = \App\Offerer::whereIn('id', \App\TenderOfferer::whereIn('tender_id', $project->tenders()->pluck('id'))->pluck('offerer_id'))->latest()->get();
+                $offerers = \App\Models\Offerer::whereIn('id', \App\Models\TenderOfferer::whereIn('tender_id', $project->tenders()->pluck('id'))->pluck('offerer_id'))->latest()->get();
                 // suppliers
                 if ($offerers->count()) {
                     $offerer = $offerers->first();
@@ -356,7 +360,7 @@ class FrontController extends Controller
                 $p['completion'] = [
                     'finalValue' => [
                         'amount' => $completion->final_cost,
-                        'currency' => 'IDR'
+                        'currency' => 'IDR',
                     ],
                     'endDate' => $completion->date->format('c'),
                     'finalScope' => $completion->final_scope,
@@ -382,7 +386,7 @@ class FrontController extends Controller
                     'name' => $procuringEntity->official->name,
                 ],
                 'roles' => [
-                    'procuringEntity'
+                    'procuringEntity',
                 ],
             ];
             if ($procuringEntity->official->email) {
@@ -454,6 +458,7 @@ class FrontController extends Controller
                     'startDate' => date('c', strtotime($projectProgress->date_of_advance)),
                     'endDate' => date('c', strtotime($projectProgress->date_of_advance)),
                 ];
+
                 return $pp;
             });
             $p['metrics'][] = $metricPPPO;
@@ -469,6 +474,7 @@ class FrontController extends Controller
                     'startDate' => date('c', strtotime($projectProgress->date_of_advance)),
                     'endDate' => date('c', strtotime($projectProgress->date_of_advance)),
                 ];
+
                 return $pp;
             });
             $p['metrics'][] = $metricFPPO;
@@ -485,6 +491,7 @@ class FrontController extends Controller
                     'startDate' => date('c', strtotime($projectProgress->date_of_advance)),
                     'endDate' => date('c', strtotime($projectProgress->date_of_advance)),
                 ];
+
                 return $pp;
             });
             $p['forecasts'][] = $forecastPPPO;
@@ -500,6 +507,7 @@ class FrontController extends Controller
                     'startDate' => date('c', strtotime($projectProgress->date_of_advance)),
                     'endDate' => date('c', strtotime($projectProgress->date_of_advance)),
                 ];
+
                 return $pp;
             });
             $p['forecasts'][] = $forecastFPPO;
@@ -514,9 +522,10 @@ class FrontController extends Controller
         if ($project) {
             return $this->projectOc4idsFormat($project);
         }
+
         return response()->json([
             'status' => 'error',
-            'message' => 'project not found!'
+            'message' => 'project not found!',
         ], 500);
     }
 
@@ -525,11 +534,13 @@ class FrontController extends Controller
         $project = Project::where(DB::raw('CONCAT("oc4ids-jj5f2u-", id)'), $project_oc4ids_id)->first();
         if ($project) {
             $p = $this->projectOc4idsFormat($project);
+
             return $p['budget'];
         }
+
         return response()->json([
             'status' => 'error',
-            'message' => 'project not found!'
+            'message' => 'project not found!',
         ], 500);
     }
 
@@ -538,11 +549,13 @@ class FrontController extends Controller
         $project = Project::where(DB::raw('CONCAT("oc4ids-jj5f2u-", id)'), $project_oc4ids_id)->first();
         if ($project) {
             $p = $this->projectOc4idsFormat($project);
+
             return $p['parties'];
         }
+
         return response()->json([
             'status' => 'error',
-            'message' => 'project not found!'
+            'message' => 'project not found!',
         ], 500);
     }
 
@@ -551,11 +564,13 @@ class FrontController extends Controller
         $project = Project::where(DB::raw('CONCAT("oc4ids-jj5f2u-", id)'), $project_oc4ids_id)->first();
         if ($project) {
             $p = $this->projectOc4idsFormat($project);
+
             return $p['publicAuthority'];
         }
+
         return response()->json([
             'status' => 'error',
-            'message' => 'project not found!'
+            'message' => 'project not found!',
         ], 500);
     }
 
@@ -564,11 +579,13 @@ class FrontController extends Controller
         $project = Project::where(DB::raw('CONCAT("oc4ids-jj5f2u-", id)'), $project_oc4ids_id)->first();
         if ($project) {
             $p = $this->projectOc4idsFormat($project);
+
             return $p['contractingProcesses'];
         }
+
         return response()->json([
             'status' => 'error',
-            'message' => 'project not found!'
+            'message' => 'project not found!',
         ], 500);
     }
 
@@ -577,11 +594,13 @@ class FrontController extends Controller
         $project = Project::where(DB::raw('CONCAT("oc4ids-jj5f2u-", id)'), $project_oc4ids_id)->first();
         if ($project) {
             $p = $this->projectOc4idsFormat($project);
+
             return $p['documents'];
         }
+
         return response()->json([
             'status' => 'error',
-            'message' => 'project not found!'
+            'message' => 'project not found!',
         ], 500);
     }
 

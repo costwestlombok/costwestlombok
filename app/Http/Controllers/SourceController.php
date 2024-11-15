@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Source;
+use App\Models\Source;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class SourceController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -38,7 +37,6 @@ class SourceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -49,7 +47,8 @@ class SourceController extends Controller
 
         $data = $request->all();
         Source::create($data);
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect('/catalog/source');
     }
 
@@ -78,7 +77,6 @@ class SourceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -91,7 +89,8 @@ class SourceController extends Controller
 
         $data = $request->all();
         $source->update($data);
-        Session::put("success", trans('labels.updated'));
+        Session::put('success', trans('labels.updated'));
+
         return redirect('/catalog/source');
     }
 
@@ -104,6 +103,7 @@ class SourceController extends Controller
     public function destroy(Source $source)
     {
         $data = $source->delete();
+
         return response()->json($data);
     }
 
@@ -119,6 +119,7 @@ class SourceController extends Controller
     public function get_data()
     {
         $data = Source::select('source_name')->get()->pluck('source_name');
+
         return response()->json($data);
     }
 }

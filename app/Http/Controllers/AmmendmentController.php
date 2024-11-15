@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Ammendment;
-use App\Contract;
-use App\Status;
+use App\Models\Ammendment;
+use App\Models\Contract;
+use App\Models\Status;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -38,7 +38,6 @@ class AmmendmentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -51,7 +50,7 @@ class AmmendmentController extends Controller
             'modification_type' => 'required',
         ]);
         $data = $request->all();
-        $data['current_price'] = str_replace(",", "", $request->current_price);
+        $data['current_price'] = str_replace(',', '', $request->current_price);
         if ($request['adendum']) {
             $data['adendum'] = $request->file('adendum')->store('adendum');
         }
@@ -68,7 +67,8 @@ class AmmendmentController extends Controller
         }
         Ammendment::create($data);
         Session::put('success', trans('labels.saved'));
-        return redirect('contract/' . $request->engage_id . '/ammendment');
+
+        return redirect('contract/'.$request->engage_id.'/ammendment');
     }
 
     /**
@@ -91,20 +91,20 @@ class AmmendmentController extends Controller
     public function edit(Ammendment $ammendment)
     {
         $contract = Contract::where('id', $ammendment->engage_id)->first();
+
         return view('metronic.ammendment.edit', compact('ammendment', 'contract'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Ammendment $ammendment)
     {
         $data = $request->all();
-        $data['current_price'] = str_replace(",", "", $request->current_price);
+        $data['current_price'] = str_replace(',', '', $request->current_price);
         if ($request['adendum']) {
             if ($ammendment->adendum) {
                 Storage::delete($ammendment->adendum);
@@ -126,7 +126,8 @@ class AmmendmentController extends Controller
         }
         $ammendment->update($data);
         Session::put('success', trans('labels.updated'));
-        return redirect('contract/' . $request->engage_id . '/ammendment');
+
+        return redirect('contract/'.$request->engage_id.'/ammendment');
     }
 
     /**
@@ -142,6 +143,7 @@ class AmmendmentController extends Controller
         }
         $ammendment->delete();
         Session::put('success', trans('labels.deleted'));
+
         return back();
     }
 

@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Organization;
-use App\OrganizationUnit;
+use App\Models\Organization;
+use App\Models\OrganizationUnit;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class OrganizationUnitController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -42,7 +41,6 @@ class OrganizationUnitController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -52,7 +50,8 @@ class OrganizationUnitController extends Controller
         ]);
         $data = $request->all();
         OrganizationUnit::create($data);
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect('catalog/organization_unit');
     }
 
@@ -76,6 +75,7 @@ class OrganizationUnitController extends Controller
     public function edit(OrganizationUnit $organization_unit)
     {
         $organizations = Organization::all();
+
         return view('metronic.organization_units.edit', compact('organization_unit', 'organizations'));
 
     }
@@ -83,7 +83,6 @@ class OrganizationUnitController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -94,7 +93,7 @@ class OrganizationUnitController extends Controller
         ]);
         $data = $request->all();
         $organizationUnit->update($data);
-        Session::put("success", trans('labels.updated'));
+        Session::put('success', trans('labels.updated'));
 
         return redirect('catalog/organization_unit');
 
@@ -110,12 +109,14 @@ class OrganizationUnitController extends Controller
     {
 
         $data = $organizationUnit->delete();
+
         return response()->json($data);
     }
 
     public function get_unit($entity)
     {
         $data = OrganizationUnit::where('entity_id', $entity)->get();
+
         return response()->json($data);
     }
 

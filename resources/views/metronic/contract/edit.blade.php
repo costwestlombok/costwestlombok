@@ -52,7 +52,7 @@
 </script>
 @endsection
 @php
-$suppliers = App\TenderOfferer::where('tender_id', $award->tender->id)->get();
+$suppliers = \App\Models\TenderOfferer::where('tender_id', $award->tender->id)->get();
 @endphp
 @section('content')
 <div class="d-flex flex-column-fluid">

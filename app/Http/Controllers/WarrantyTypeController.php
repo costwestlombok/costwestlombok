@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\WarrantyType;
+use App\Models\WarrantyType;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class WarrantyTypeController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -39,7 +38,6 @@ class WarrantyTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -54,7 +52,8 @@ class WarrantyTypeController extends Controller
         ]);
 
         $warranty_type->save();
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect('/catalog/warranty-type');
     }
 
@@ -79,13 +78,13 @@ class WarrantyTypeController extends Controller
     {
         //
         $warranty_type = WarrantyType::find($id);
+
         return view('metronic.warranty.type.edit', ['warranty_type' => $warranty_type]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -98,7 +97,8 @@ class WarrantyTypeController extends Controller
         $warranty_type = WarrantyType::find($id);
         $warranty_type->name = $request->get('name');
         $warranty_type->save();
-        Session::put("success", trans('labels.updated'));
+        Session::put('success', trans('labels.updated'));
+
         return redirect('/catalog/warranty-type');
     }
 
@@ -112,6 +112,7 @@ class WarrantyTypeController extends Controller
     {
         $warranty_type = WarrantyType::find($id);
         $data = $warranty_type->delete();
+
         return response()->json($data);
 
     }
@@ -128,6 +129,7 @@ class WarrantyTypeController extends Controller
     public function get_data()
     {
         $data = WarrantyType::select('name')->get()->pluck('name');
+
         return response()->json($data);
     }
 }

@@ -77,7 +77,7 @@
         @if(isset($tender))
         @if(Auth::user())
         @if(Auth::user()->type == 'admin' || in_array($tender->id,
-        App\Tender::whereIn('project_id',
+        \App\Models\Tender::whereIn('project_id',
         Auth::user()->type == 'agency' ?
         Auth::user()->type == 'agency' ?
         Auth::user()->agency->agencyProjects()->pluck('project_id') : [] : [])->pluck('id')->toArray()))
@@ -172,14 +172,14 @@
                                         <!--begin::Navigation-->
                                         <ul class="navi navi-hover">
                                             <li class="navi-item">
-                                                <a href="{{ Auth::user() ? 
-                                                    (empty($award->contract) ? 
-                                                        (in_array($award->id, App\Award::whereIn('tender_id', App\Tender::whereIn('project_id', Auth::user()->type == 'agency' ?
-        Auth::user()->agency->agencyProjects()->pluck('project_id') : [])->pluck('id'))->pluck('id')->toArray()) ? 
+                                                <a href="{{ Auth::user() ?
+                                                    (empty($award->contract) ?
+                                                        (in_array($award->id, \App\Models\Award::whereIn('tender_id', \App\Models\Tender::whereIn('project_id', Auth::user()->type == 'agency' ?
+        Auth::user()->agency->agencyProjects()->pluck('project_id') : [])->pluck('id'))->pluck('id')->toArray()) ?
                                                             route('award.contract.create', $award->id) : route('award.contract.index', $award->id)
-                                                        ) : 
+                                                        ) :
                                                         route('award.contract.index', $award->id)
-                                                    ) : 
+                                                    ) :
                                                     route('award.contract.index', $award->id) }}" class="navi-link">
                                                     <span class="svg-icon menu-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +214,7 @@
                                             </li>
                                             @if(Auth::check())
                                             @if(Auth::user()->type == 'admin' || in_array($award->id,
-                                            App\Award::whereIn('tender_id', App\Tender::whereIn('project_id',
+                                            \App\Models\Award::whereIn('tender_id', \App\Models\Tender::whereIn('project_id',
                                             Auth::user()->type == 'agency' ?
                                             Auth::user()->agency->agencyProjects()->pluck('project_id') :
                                             [])->pluck('id'))->pluck('id')->toArray()))
@@ -339,7 +339,7 @@
                                     @if(empty($award->contract))
                                     @if(Auth::user())
                                     @if(Auth::user()->type == 'admin' || in_array($award->id,
-                                    App\Award::whereIn('tender_id', App\Tender::whereIn('project_id',
+                                    \App\Models\Award::whereIn('tender_id', \App\Models\Tender::whereIn('project_id',
                                     Auth::user()->type == 'agency' ?
                                     Auth::user()->agency->agencyProjects()->pluck('project_id') :
                                     [])->pluck('id'))->pluck('id')->toArray()))

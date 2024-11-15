@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Banner;
-use Illuminate\Http\Request;
-use Storage;
+use App\Models\Banner;
 use DataTables;
+use Illuminate\Http\Request;
 use Session;
+use Storage;
 
 class BannerController extends Controller
 {
@@ -33,7 +33,6 @@ class BannerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -43,7 +42,7 @@ class BannerController extends Controller
             $data['image'] = $request->file('image')->store('banners');
         }
         Banner::create($data);
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
 
         return redirect()->route('banner.index');
     }
@@ -51,7 +50,6 @@ class BannerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Banner  $banner
      * @return \Illuminate\Http\Response
      */
     public function show(Banner $banner)
@@ -62,7 +60,6 @@ class BannerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Banner  $banner
      * @return \Illuminate\Http\Response
      */
     public function edit(Banner $banner)
@@ -73,8 +70,6 @@ class BannerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Banner  $banner
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Banner $banner)
@@ -85,7 +80,7 @@ class BannerController extends Controller
             $data['image'] = $request->file('image')->store('banners');
         }
         $banner->update($data);
-        Session::put("success", trans('labels.updated'));
+        Session::put('success', trans('labels.updated'));
 
         return redirect()->route('banner.index');
     }
@@ -93,13 +88,13 @@ class BannerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Banner  $banner
      * @return \Illuminate\Http\Response
      */
     public function destroy(Banner $banner)
     {
         Storage::delete($banner->image);
         $banner->delete();
+
         return redirect()->route('banner.index');
     }
 

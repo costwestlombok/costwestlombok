@@ -35,7 +35,7 @@
                 xaxis: {
                     categories:  label
                 },
-                
+
                 colors: [primary, success]
             };
 
@@ -87,12 +87,12 @@
 @endsection
 @section('content')
 <!--begin::Subheader-->
-<div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
-    <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+<div class="py-2 subheader py-lg-4 subheader-transparent" id="kt_subheader">
+    <div class="container flex-wrap d-flex align-items-center justify-content-between flex-sm-nowrap">
         <!--begin::Details-->
-        <div class="d-flex align-items-center flex-wrap mr-2">
+        <div class="flex-wrap mr-2 d-flex align-items-center">
             <!--begin::Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+            <h5 class="mt-2 mb-2 mr-5 text-dark font-weight-bold">
                 Detail {{ __('labels.project') }} </h5>
             <!--end::Title-->
         </div>
@@ -121,10 +121,10 @@
                         <!--begin::Section-->
                         <div class="d-flex align-items-center">
                             <!--begin::Info-->
-                            <div class="d-flex flex-column mr-auto">
+                            <div class="mr-auto d-flex flex-column">
                                 <!--begin: Title-->
                                 <a href="{{ route('project.show', $project) }}"
-                                    class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">{{ $project->project_title }}</a>
+                                    class="mb-1 card-title text-hover-primary font-weight-bolder font-size-h5 text-dark">{{ $project->project_title }}</a>
                                 <span class="text-muted font-weight-bold">{{ __('labels.project_code') }}:
                                     {{ $project->project_code }}</span>
                                 <span
@@ -135,7 +135,7 @@
                             </div>
                             <!--end::Info-->
                             <!--begin::Toolbar-->
-                            <div class="card-toolbar mb-auto">
+                            <div class="mb-auto card-toolbar">
                                 <div class="dropdown dropdown-inline">
                                     <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -167,7 +167,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> {{ __('labels.tender') }}</span>
+                                                    <span class="ml-2 navi-text"> {{ __('labels.tender') }}</span>
                                                 </a>
                                             </li>
                                             <li class="navi-item">
@@ -186,7 +186,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> {{ __('labels.document') }}</span>
+                                                    <span class="ml-2 navi-text"> {{ __('labels.document') }}</span>
                                                 </a>
                                             </li>
                                             <li class="navi-item">
@@ -211,7 +211,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> {{ __('labels.budget') }}</span>
+                                                    <span class="ml-2 navi-text"> {{ __('labels.budget') }}</span>
                                                 </a>
                                             </li>
                                             @if(Auth::check())
@@ -236,7 +236,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> {{ __('labels.edit') }}</span>
+                                                    <span class="ml-2 navi-text"> {{ __('labels.edit') }}</span>
                                                 </a>
                                             </li>
                                             @endif
@@ -260,7 +260,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> {{ __('labels.delete') }}</span>
+                                                    <span class="ml-2 navi-text"> {{ __('labels.delete') }}</span>
                                                 </a>
                                             </li>
                                             @endif
@@ -274,20 +274,20 @@
                         </div>
                         <!--end::Section-->
                         <!--begin::Content-->
-                        <div class="d-flex flex-wrap mt-14">
+                        <div class="flex-wrap d-flex mt-14">
                             <div class="mr-12 d-flex flex-column mb-7">
-                                <span class="d-block font-weight-bold mb-4">{{ __('labels.start_date') }}</span>
+                                <span class="mb-4 d-block font-weight-bold">{{ __('labels.start_date') }}</span>
                                 <span
                                     class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ $project->start_date ? $project->start_date->translatedFormat('l, d M Y') : '-' }}</span>
                             </div>
                             <div class="mr-12 d-flex flex-column mb-7">
-                                <span class="d-block font-weight-bold mb-4">{{ __('labels.due_date') }}</span>
+                                <span class="mb-4 d-block font-weight-bold">{{ __('labels.due_date') }}</span>
                                 <span
                                     class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ $project->end_date ? $project->end_date->translatedFormat('l, d M Y') : '-' }}</span>
                             </div>
                             <!--begin::Progress-->
                             <div class="flex-row-fluid mb-7">
-                                <span class="d-block font-weight-bold mb-4">{{ __('labels.progress') }} -
+                                <span class="mb-4 d-block font-weight-bold">{{ __('labels.progress') }} -
                                     {{ __('labels.real_physical') }} <span
                                         class="text-muted font-weight-bold">({{ __('labels.last_update') }}:
                                         {{ Carbon\Carbon::parse($project->latest_progress->date_of_advance ?? now())->translatedFormat('l, d M Y') }})</span>
@@ -300,8 +300,8 @@
                                     </div>
                                     @endif
                                     @endif
-                                    <div class="d-flex align-items-center pt-2">
-                                        <div class="progress progress-xs mt-2 mb-2 w-100">
+                                    <div class="pt-2 d-flex align-items-center">
+                                        <div class="mt-2 mb-2 progress progress-xs w-100">
                                             <div class="progress-bar bg-warning" role="progressbar"
                                                 style="width: {{ number_format($project->latest_progress->real_percent ?? '0') }}%;"
                                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
@@ -314,13 +314,13 @@
                         </div>
                         <!--end::Content-->
                         <!--begin::Text-->
-                        <pre class="mb-7 mt-3"
+                        <pre class="mt-3 mb-7"
                             style="font: inherit; white-space: pre-wrap;">{!! $project->project_description !!}</pre>
                         <!--end::Text-->
                         <!--begin::Blog-->
-                        <div class="d-flex flex-wrap">
+                        <div class="flex-wrap d-flex">
                             <!--begin: Item-->
-                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                            <div class="my-5 mr-5 d-flex align-items-center flex-lg-fill">
                                 <span class="mr-4">
                                     <i class="flaticon-price-tag icon-2x"></i>
                                 </span>
@@ -335,7 +335,7 @@
                             <!--end: Item-->
                             <!--begin: Item-->
                             <!--
-                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                            <div class="my-5 mr-5 d-flex align-items-center flex-lg-fill">
                                 <span class="mr-4">
                                     <i class="fas fa-qrcode icon-2x"></i>
                                 </span>
@@ -349,7 +349,7 @@
                             -->
                             <!--end: Item-->
                             <!--begin: Item-->
-                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                            <div class="my-5 mr-5 d-flex align-items-center flex-lg-fill">
                                 <span class="mr-4">
                                     <i class="flaticon2-calendar-9 icon-2x"></i>
                                 </span>
@@ -367,7 +367,7 @@
                             </div>
                             <!--end: Item-->
                             <!--begin: Item-->
-                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                            <div class="my-5 mr-5 d-flex align-items-center flex-lg-fill">
                                 <span class="mr-4">
                                     <i class="flaticon2-file icon-2x"></i>
                                 </span>
@@ -387,7 +387,7 @@
                             </div>
                             <!--end: Item-->
                             <!--begin: Item-->
-                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                            <div class="my-5 mr-5 d-flex align-items-center flex-lg-fill">
                                 <span class="mr-4">
                                     <i class="flaticon2-clip-symbol icon-2x"></i>
                                 </span>
@@ -407,7 +407,7 @@
                             </div>
                             <!--end: Item-->
                             <!--begin: Item-->
-                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                            <div class="my-5 mr-5 d-flex align-items-center flex-lg-fill">
                                 <span class="mr-4">
                                     <i class="flaticon-price-tag icon-2x"></i>
                                 </span>
@@ -429,7 +429,7 @@
                         </div>
                         <!--end::Blog-->
                         <hr>
-                        <h3 class="card-label mt-5 mb-5">{{ __('labels.project_identity') }}</h3>
+                        <h3 class="mt-5 mb-5 card-label">{{ __('labels.project_identity') }}</h3>
                         <table class="table">
                             <tr>
                                 <td>1</td>
@@ -470,7 +470,7 @@
                             </tr>
                         </table>
                         <hr>
-                        <h3 class="card-label mt-5 mb-5">{{ __('labels.project_preparation') }}</h3>
+                        <h3 class="mt-5 mb-5 card-label">{{ __('labels.project_preparation') }}</h3>
                         <table class="table">
                             <tr>
                                 <td>1</td>
@@ -552,12 +552,12 @@
                                 <td>7</td>
                                 <td>{{ __('labels.approved_date') }}</td>
                                 <td colspan="2">
-                                    {{ $project->date_of_approved ? $project->date_of_approved->isoFormat('D MMMM Y') : '-' }}
+                                    {{ $project->date_of_approved ? $project->date_of_approved?->isoFormat('D MMMM Y') : '-' }}
                             </tr>
                         </table>
                         <hr>
                         @if($project->tenders()->count())
-                        <h3 class="card-label mt-5 mb-5">{{ __('labels.project_completion') }}</h3>
+                        <h3 class="mt-5 mb-5 card-label">{{ __('labels.project_completion') }}</h3>
                         <table class="table">
                             <tr>
                                 <td>1</td>
@@ -587,7 +587,7 @@
                                     @if($project->tenders()->first()->awards()->count() &&
                                     $project->tenders()->first()->awards()->first()->contract &&
                                     $project->tenders()->first()->awards()->first()->contract->completion)
-                                    {{ $project->tenders()->first()->awards()->first()->contract->completion->date->isoFormat('D MMMM Y') ?? '-' }}
+                                    {{ $project->tenders()->first()->awards()->first()->contract?->completion?->date?->isoFormat('D MMMM Y') ?? '-' }}
                                     @else
                                     -
                                     @endif
@@ -629,7 +629,7 @@
                             </tr>
                         </table>
                         {{-- <hr>
-                        <h3 class="card-label mt-5 mb-5">Tahap Kontrak</h3>
+                        <h3 class="mt-5 mb-5 card-label">Tahap Kontrak</h3>
                         <table class="table">
                             <tr>
                                 <td>1</td>
@@ -638,7 +638,7 @@
                             </tr>
                         </table> --}}
                         <hr>
-                        <h3 class="card-label mt-5 mb-5">{{ __('labels.award') }}</h3>
+                        <h3 class="mt-5 mb-5 card-label">{{ __('labels.award') }}</h3>
                         <table class="table">
                             <tr>
                                 <td>1</td>
@@ -724,7 +724,7 @@
                                 <td>12</td>
                                 <td>{{ __('labels.contract_scope') }}</td>
                                 <td>
-                                    <pre class="mb-7 mt-3"
+                                    <pre class="mt-3 mb-7"
                                         style="font: inherit; white-space: pre-wrap;">{!! $project->tenders()->first()->awards()->first()->contract->contract_scope ?? '' !!}</pre>
                                 </td>
                             </tr>
@@ -736,9 +736,9 @@
                                     @if($project->tenders()->first()->awards()->count() &&
                                     $project->tenders()->first()->awards()->first()->contract &&
                                     $project->tenders()->first()->awards()->first()->contract->start_date)
-                                    {{ $project->tenders()->first()->awards()->first()->contract->start_date->isoFormat('D MMMM Y') ?? '-' }}
+                                    {{ $project->tenders()->first()->awards()->first()->contract?->start_date?->isoFormat('D MMMM Y') ?? '-' }}
                                     s/d
-                                    {{ $project->tenders()->first()->awards()->first()->contract->end_date->isoFormat('D MMMM Y') ?? '-' }}
+                                    {{ $project->tenders()->first()->awards()->first()->contract?->end_date?->isoFormat('D MMMM Y') ?? '-' }}
                                     @else
                                     -
                                     @endif
@@ -746,7 +746,7 @@
                             </tr>
                         </table>
                         <hr>
-                        {{-- <h3 class="card-label mt-5 mb-5">Implementasi</h3>
+                        {{-- <h3 class="mt-5 mb-5 card-label">Implementasi</h3>
                         <table class="table">
                             <tr>
                                 <td>1</td>
@@ -781,20 +781,20 @@
                         </table>
                         <hr> --}}
                         @endif
-                        <div class="row mt-5 mb-5">
+                        <div class="mt-5 mb-5 row">
                             <div class="col-md-6">
-                                <h3 class="card-label mt-5 mb-5">{{ __('labels.progress_percent') }} (%)</h3>
+                                <h3 class="mt-5 mb-5 card-label">{{ __('labels.progress_percent') }} (%)</h3>
                                 <div id="chart_1"></div>
                             </div>
                             <div class="col-md-6">
-                                <h3 class="card-label mt-5 mb-5">{{ __('labels.progress_financial') }}</h3>
+                                <h3 class="mt-5 mb-5 card-label">{{ __('labels.progress_financial') }}</h3>
                                 <div id="chart_2"></div>
                             </div>
                         </div>
                         @if($map)
                         <div class="row">
                             <div class="col-md-12">
-                                <h3 class="card-label mt-5 mb-5">{{ __('labels.location') }}</h3>
+                                <h3 class="mt-5 mb-5 card-label">{{ __('labels.location') }}</h3>
                                 {!! $map['js'] !!}
                                 {!! $map['html'] !!}
                             </div>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Completion;
+use App\Models\Completion;
 use Illuminate\Http\Request;
 
 class CompletionController extends Controller
@@ -30,7 +30,6 @@ class CompletionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +40,6 @@ class CompletionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Completion  $completion
      * @return \Illuminate\Http\Response
      */
     public function show(Completion $completion)
@@ -52,7 +50,6 @@ class CompletionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Completion  $completion
      * @return \Illuminate\Http\Response
      */
     public function edit(Completion $completion)
@@ -63,8 +60,6 @@ class CompletionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Completion  $completion
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Completion $completion)
@@ -75,13 +70,13 @@ class CompletionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Completion  $completion
      * @return \Illuminate\Http\Response
      */
     public function destroy(Completion $completion)
     {
         $contract = $completion->contract;
         $completion->delete();
-        return redirect('award/' . $contract->award->id . '/contract');
+
+        return redirect('award/'.$contract->award->id.'/contract');
     }
 }

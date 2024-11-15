@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\TenderMethod;
+use App\Models\TenderMethod;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class TenderMethodController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -39,7 +38,6 @@ class TenderMethodController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,7 +48,8 @@ class TenderMethodController extends Controller
 
         TenderMethod::create($request->all());
 
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect('/catalog/tender_method');
     }
 
@@ -79,7 +78,6 @@ class TenderMethodController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -92,7 +90,8 @@ class TenderMethodController extends Controller
         $method = TenderMethod::find($id);
         $method->method_name = $request->get('method_name');
         $method->save();
-        Session::put("success", trans('labels.updated'));
+        Session::put('success', trans('labels.updated'));
+
         return redirect('/catalog/tender_method');
     }
 
@@ -106,6 +105,7 @@ class TenderMethodController extends Controller
     {
         $method = TenderMethod::find($id);
         $data = $method->delete();
+
         return response()->json($data);
     }
 
@@ -121,6 +121,7 @@ class TenderMethodController extends Controller
     public function get_data()
     {
         $data = TenderMethod::select('method_name')->get()->pluck('method_name');
+
         return response()->json($data);
     }
 }

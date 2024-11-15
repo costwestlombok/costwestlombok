@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Agency;
+use App\Models\Agency;
 use Illuminate\Http\Request;
 use Session;
 
@@ -16,6 +16,7 @@ class AgencyController extends Controller
     public function index()
     {
         $agencies = Agency::latest()->get();
+
         return view('metronic.agency', compact('agencies'));
     }
 
@@ -32,19 +33,18 @@ class AgencyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         Agency::create($request->all());
+
         return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Agency  $agency
      * @return \Illuminate\Http\Response
      */
     public function show(Agency $agency)
@@ -55,7 +55,6 @@ class AgencyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Agency  $agency
      * @return \Illuminate\Http\Response
      */
     public function edit(Agency $agency)
@@ -66,26 +65,25 @@ class AgencyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Agency  $agency
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Agency $agency)
     {
         $agency->update($request->all());
+
         return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Agency  $agency
      * @return \Illuminate\Http\Response
      */
     public function destroy(Agency $agency)
     {
         $agency->user->delete();
         $agency->delete();
+
         return back();
     }
 
@@ -102,14 +100,16 @@ class AgencyController extends Controller
             $agency->user()->update($r);
         } else {
             // check username
-            $is_username_taken = \App\User::where('username', $request->username)->exists();
+            $is_username_taken = \App\Models\User::where('username', $request->username)->exists();
             if ($is_username_taken) {
                 Session::put('fail', __('labels.username_taken'));
+
                 return back()->withInput();
             }
             $r['password'] = bcrypt($r['password']);
             $agency->user()->create($r);
         }
+
         return back();
     }
 }

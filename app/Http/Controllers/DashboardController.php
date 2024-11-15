@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Offerer;
-use App\Official;
-use App\Project;
-use App\Source;
+use App\Models\Offerer;
+use App\Models\Official;
+use App\Models\Project;
+use App\Models\Source;
 use Auth;
 
 class DashboardController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -39,6 +38,7 @@ class DashboardController extends Controller
         $source_sum = Source::count();
         $offerers = Offerer::orderBy('created_at', 'DESC')->limit(5)->get();
         $offerer_sum = Offerer::count();
+
         return view('metronic.index', compact('projects', 'officials', 'sources', 'offerers', 'project_sum', 'source_sum', 'offerer_sum'));
     }
 }

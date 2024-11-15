@@ -32,9 +32,9 @@
                 @method('patch')
                 @endif
                 @php
-                $organizations = App\Organization::all();
+                $organizations = \App\Models\Organization::all();
                 if(isset($official->unit->entity_id)){
-                $units = App\OrganizationUnit::where('entity_id', $official->unit->entity_id)->get();
+                $units = \App\Models\OrganizationUnit::where('entity_id', $official->unit->entity_id)->get();
                 }
                 @endphp
                 <div class="card-body">

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Budget;
-use App\Project;
-use App\ProjectSource;
-use App\Source;
+use App\Models\Budget;
+use App\Models\Project;
+use App\Models\ProjectSource;
+use App\Models\Source;
 use Carbon\Carbon;
 use DataTables;
 use Illuminate\Http\Request;
@@ -16,6 +16,7 @@ class BudgetController extends Controller
     public function index(Project $project)
     {
         $budgets = Budget::where('project_id', $project->id)->latest()->paginate(10);
+
         return view('metronic.budget.index', compact('budgets', 'project'));
     }
 
@@ -30,17 +31,19 @@ class BudgetController extends Controller
         // return $data;
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
-        $data['amount'] = str_replace(",", "", $request->amount);
+        $data['amount'] = str_replace(',', '', $request->amount);
         $data['duration'] = $start->diffInDays($end) + 1;
 
         Budget::create($data);
         Session::put('success', trans('labels.saved'));
-        return redirect('project-budget/' . $request->project_id);
+
+        return redirect('project-budget/'.$request->project_id);
     }
 
     public function edit(Budget $budget)
     {
         $project = Project::where('id', $budget->project_id)->first();
+
         return view('metronic.budget.edit', compact('budget', 'project'));
     }
 
@@ -49,18 +52,20 @@ class BudgetController extends Controller
         $data = $request->all();
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
-        $data['amount'] = str_replace(",", "", $request->amount);
+        $data['amount'] = str_replace(',', '', $request->amount);
         $data['duration'] = $start->diffInDays($end) + 1;
 
         $budget->update($data);
         Session::put('success', trans('labels.updated'));
-        return redirect('project-budget/' . $request->project_id);
+
+        return redirect('project-budget/'.$request->project_id);
     }
 
     public function destroy(Budget $budget)
     {
         $budget->delete();
         Session::put('success', trans('labels.deleted'));
+
         return back();
     }
 
@@ -87,9 +92,10 @@ class BudgetController extends Controller
             ]);
             $data['source_id'] = $s->id;
         }
-        $data['amount'] = str_replace(",", "", $request->amount);
+        $data['amount'] = str_replace(',', '', $request->amount);
         ProjectSource::create($data);
         Session::put('success', trans('labels.saved'));
+
         return back();
     }
 
@@ -97,6 +103,7 @@ class BudgetController extends Controller
     {
         $project_source->delete();
         Session::put('success', trans('labels.deleted'));
+
         return back();
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ProjectStatus;
+use App\Models\ProjectStatus;
 use Illuminate\Http\Request;
 
 class ProjectStatusController extends Controller
@@ -30,7 +30,6 @@ class ProjectStatusController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +40,6 @@ class ProjectStatusController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\ProjectStatus  $projectStatus
      * @return \Illuminate\Http\Response
      */
     public function show(ProjectStatus $projectStatus)
@@ -52,7 +50,6 @@ class ProjectStatusController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ProjectStatus  $projectStatus
      * @return \Illuminate\Http\Response
      */
     public function edit(ProjectStatus $projectStatus)
@@ -63,8 +60,6 @@ class ProjectStatusController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ProjectStatus  $projectStatus
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, ProjectStatus $projectStatus)
@@ -75,7 +70,6 @@ class ProjectStatusController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ProjectStatus  $projectStatus
      * @return \Illuminate\Http\Response
      */
     public function destroy(ProjectStatus $projectStatus)

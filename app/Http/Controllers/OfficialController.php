@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Official;
+use App\Models\Official;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class OfficialController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -38,7 +37,6 @@ class OfficialController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,7 +48,8 @@ class OfficialController extends Controller
 
         $data = $request->all();
         Official::create($data);
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect('/catalog/official');
     }
 
@@ -79,7 +78,6 @@ class OfficialController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -91,7 +89,7 @@ class OfficialController extends Controller
         ]);
         $data = $request->all();
         $official->update($data);
-        Session::put("success", trans('labels.updated'));
+        Session::put('success', trans('labels.updated'));
 
         return redirect('/catalog/official');
     }
@@ -105,12 +103,14 @@ class OfficialController extends Controller
     public function destroy(Official $official)
     {
         $data = $official->delete();
+
         return response()->json($data);
     }
 
     public function get_official($unit)
     {
         $data = Official::where('entity_unit_id', $unit)->get();
+
         return response()->json($data);
     }
 

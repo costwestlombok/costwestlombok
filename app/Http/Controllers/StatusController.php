@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Status;
+use App\Models\Status;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class StatusController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -39,7 +38,6 @@ class StatusController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -54,7 +52,8 @@ class StatusController extends Controller
 
         $status->save();
 
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect('/catalog/status');
     }
 
@@ -79,13 +78,13 @@ class StatusController extends Controller
     {
         //
         $status = Status::find($id);
+
         return view('metronic.status.edit', ['status' => $status]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -99,7 +98,8 @@ class StatusController extends Controller
         $status->status_name = $request->get('status_name');
         $status->save();
 
-        Session::put("success", trans('labels.updated'));
+        Session::put('success', trans('labels.updated'));
+
         return redirect('/catalog/status');
     }
 
@@ -113,6 +113,7 @@ class StatusController extends Controller
     {
         $status = Status::find($id);
         $data = $status->delete();
+
         return response()->json($data);
 
     }
@@ -129,6 +130,7 @@ class StatusController extends Controller
     public function get_data()
     {
         $data = Status::select('status_name')->get()->pluck('status_name');
+
         return response()->json($data);
     }
 }

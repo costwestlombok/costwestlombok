@@ -1,4 +1,4 @@
-<p align="center"><img src="https://intras.fllajlombokbaratkab.or.id/images/cost_65.png"></p>
+<p align="center"><img src="https://intras.lombokbaratkab.go.id/images/cost_65.png"></p>
 
 ## Overview
 
@@ -8,7 +8,7 @@ There will be only one web service URL with GET method for client to call, and t
 
 ## Getting Started
 
-The current version of the API lives at [Live API](https://intras.fllajlombokbaratkab.or.id/oc4ids).
+The current version of the API lives at [Live API](https://intras.lombokbaratkab.go.id/oc4ids).
 
 ### Version
 

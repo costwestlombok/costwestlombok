@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Award;
-use App\ContractMethod;
-use App\Status;
-use App\Tender;
+use App\Models\Award;
+use App\Models\ContractMethod;
+use App\Models\Status;
+use App\Models\Tender;
+use Auth;
 use Illuminate\Http\Request;
 use Session;
 use Storage;
-use Auth;
 
 class AwardController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -39,6 +38,7 @@ class AwardController extends Controller
             }
         }
         $awards = $awards->paginate(10);
+
         return view('metronic.award.index', compact('awards'));
     }
 
@@ -64,14 +64,13 @@ class AwardController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $data = $request->all();
-        $data['cost'] = str_replace(",", "", $request->cost);
-        $data['contract_estimate_cost'] = str_replace(",", "", $request->contract_estimate_cost);
+        $data['cost'] = str_replace(',', '', $request->cost);
+        $data['contract_estimate_cost'] = str_replace(',', '', $request->contract_estimate_cost);
         if ($request->opening_act) {
             $data['opening_act'] = $request->file('opening_act')->store('awards');
         }
@@ -85,7 +84,7 @@ class AwardController extends Controller
             $data['others'] = $request->file('others')->store('awards');
         }
 
-        if($request->contract_method_id) {
+        if ($request->contract_method_id) {
             $contract_method = ContractMethod::where('method_name', $request->contract_method_id)->first();
             if ($contract_method) {
                 $data['contract_method_id'] = $contract_method->id;
@@ -96,7 +95,7 @@ class AwardController extends Controller
                 $data['contract_method_id'] = $cm->id;
             }
         }
-        if($request->status_id) {
+        if ($request->status_id) {
             $status = Status::where('status_name', $request->status_id)->first();
             if ($status) {
                 $data['status_id'] = $status->id;
@@ -110,7 +109,7 @@ class AwardController extends Controller
         Award::create($data);
         Session::put('success', trans('labels.saved'));
 
-        return redirect('tender/' . $request->tender_id . '/award');
+        return redirect('tender/'.$request->tender_id.'/award');
     }
 
     /**
@@ -144,15 +143,14 @@ class AwardController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Award $award)
     {
         $data = $request->all();
-        $data['cost'] = str_replace(",", "", $request->cost);
-        $data['contract_estimate_cost'] = str_replace(",", "", $request->contract_estimate_cost);
+        $data['cost'] = str_replace(',', '', $request->cost);
+        $data['contract_estimate_cost'] = str_replace(',', '', $request->contract_estimate_cost);
         if ($request->opening_act) {
             if ($award->opening_act) {
                 Storage::delete($award->opening_act);
@@ -177,7 +175,7 @@ class AwardController extends Controller
             }
             $data['others'] = $request->file('others')->store('awards');
         }
-        
+
         if ($request->contract_method_id) {
             $contract_method = ContractMethod::where('method_name', $request->contract_method_id)->first();
             if ($contract_method) {
@@ -207,7 +205,7 @@ class AwardController extends Controller
         $award->update($data);
         Session::put('success', trans('labels.updated'));
 
-        return redirect('tender/' . $request->tender_id . '/award');
+        return redirect('tender/'.$request->tender_id.'/award');
     }
 
     /**
@@ -232,6 +230,7 @@ class AwardController extends Controller
         }
         $award->delete();
         Session::put('success', trans('labels.deleted'));
+
         return back();
     }
 
@@ -240,12 +239,15 @@ class AwardController extends Controller
         return view('metronic.award.edit', compact('tender'));
     }
 
-    public function contract(Award $award) {
+    public function contract(Award $award)
+    {
         $contract = $award->contract;
+
         return view('metronic.contract.show', compact('contract', 'award'));
     }
 
-    public function contractCreate(Award $award) {
+    public function contractCreate(Award $award)
+    {
         return view('metronic.contract.edit', compact('award'));
     }
 }

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Role;
+use App\Models\Role;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class RoleController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -39,7 +38,6 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,6 +48,7 @@ class RoleController extends Controller
         $data = $request->all();
         Role::create($data);
         Session::put('success', trans('labels.saved'));
+
         return redirect('/catalog/role');
     }
 
@@ -78,7 +77,6 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -90,6 +88,7 @@ class RoleController extends Controller
         $data = $request->all();
         $role->update($data);
         Session::put('success', trans('labels.updated'));
+
         return redirect('/catalog/role');
     }
 
@@ -102,6 +101,7 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $data = $role->delete();
+
         return response()->json($data);
     }
 
@@ -117,7 +117,7 @@ class RoleController extends Controller
     public function get_data()
     {
         $data = Role::select('role_name')->get()->pluck('role_name');
+
         return response()->json($data);
     }
-
 }

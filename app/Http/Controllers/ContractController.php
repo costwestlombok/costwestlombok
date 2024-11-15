@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Award;
-use App\Completion;
-use App\Contract;
-use App\Status;
+use App\Models\Award;
+use App\Models\Completion;
+use App\Models\Contract;
+use App\Models\Status;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Session;
 
 class ContractController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -30,6 +29,7 @@ class ContractController extends Controller
         } else {
             $contracts = Contract::latest()->paginate(10);
         }
+
         return view('metronic.contract.index', compact('contracts'));
     }
 
@@ -55,7 +55,6 @@ class ContractController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -66,7 +65,7 @@ class ContractController extends Controller
         $end = Carbon::parse($request->end_date);
         $data['duration'] = $start->diffInDays($end) + 1;
         if (isset($data['price_local_currency'])) {
-            $data['price_local_currency'] = str_replace(",", "", $request->price_local_currency);
+            $data['price_local_currency'] = str_replace(',', '', $request->price_local_currency);
         }
         // $data['price_usd_currency'] = str_replace(",", "", $request->price_usd_currency);
 
@@ -83,8 +82,9 @@ class ContractController extends Controller
         }
         Contract::create($data);
         Session::put('success', trans('labels.saved'));
-        $tender = \App\Award::find($request->awards_id)->tender;
-        return redirect('tender/' . $tender->id . '/award');
+        $tender = \App\Models\Award::find($request->awards_id)->tender;
+
+        return redirect('tender/'.$tender->id.'/award');
     }
 
     /**
@@ -108,13 +108,13 @@ class ContractController extends Controller
     public function edit(Contract $contract)
     {
         $award = Award::where('id', $contract->award->id)->first();
+
         return view('metronic.contract.edit', compact('contract', 'award'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -125,7 +125,7 @@ class ContractController extends Controller
         $end = Carbon::parse($request->end_date);
         $data['duration'] = $start->diffInDays($end) + 1;
         if (isset($data['price_local_currency'])) {
-            $data['price_local_currency'] = str_replace(",", "", $request->price_local_currency);
+            $data['price_local_currency'] = str_replace(',', '', $request->price_local_currency);
         }
         // $data['price_usd_currency'] = str_replace(",", "", $request->price_usd_currency);
 
@@ -144,7 +144,8 @@ class ContractController extends Controller
         }
         $contract->update($data);
         Session::put('success', trans('labels.updated'));
-        return redirect('award/' . $contract->award->id . '/contract');
+
+        return redirect('award/'.$contract->award->id.'/contract');
     }
 
     /**
@@ -158,12 +159,14 @@ class ContractController extends Controller
         $id = $contract->award->tender->id;
         $contract->delete();
         Session::put('success', trans('labels.deleted'));
-        return redirect('tender/' . $id . '/award');
+
+        return redirect('tender/'.$id.'/award');
     }
 
     public function completion(Contract $contract)
     {
         $completion = $contract->completion;
+
         return view('metronic.completion.show', compact('completion', 'contract'));
     }
 
@@ -175,6 +178,7 @@ class ContractController extends Controller
     public function completion_edit(Completion $completion)
     {
         $contract = Contract::where('id', $completion->contracts_id)->first();
+
         return view('metronic.completion.edit', compact('contract', 'completion'));
     }
 
@@ -182,22 +186,22 @@ class ContractController extends Controller
     {
         $data = $request->all();
         // return $data;
-        $data['final_cost'] = str_replace(",", "", $request->final_cost);
+        $data['final_cost'] = str_replace(',', '', $request->final_cost);
         $c = Completion::create($data);
         Session::put('success', trans('labels.saved'));
 
-        return redirect('contract/' . $c->contract->id . '/completion');
+        return redirect('contract/'.$c->contract->id.'/completion');
     }
 
     public function completion_update(Request $request, Completion $completion)
     {
         $data = $request->all();
         // return $data;
-        $data['final_cost'] = str_replace(",", "", $request->final_cost);
+        $data['final_cost'] = str_replace(',', '', $request->final_cost);
         $completion->update($data);
         Session::put('success', trans('labels.updated'));
 
-        return redirect('contract/' . $completion->contract->id . '/completion');
+        return redirect('contract/'.$completion->contract->id.'/completion');
     }
 
     public function completion_destroy(Completion $completion)
@@ -206,7 +210,7 @@ class ContractController extends Controller
         $completion->delete();
         Session::put('success', trans('labels.deleted'));
 
-        return redirect('contract/' . $id);
+        return redirect('contract/'.$id);
     }
 
     public function create_contract(Award $award)
@@ -227,6 +231,7 @@ class ContractController extends Controller
     public function execution(Contract $contract)
     {
         $execution = $contract->execution;
+
         return view('metronic.execution.index', compact('execution', 'contract'));
     }
 

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\ContractType;
+use App\Models\ContractType;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class ContractTypeController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -39,7 +38,6 @@ class ContractTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,7 +48,8 @@ class ContractTypeController extends Controller
 
         $data = $request->all();
         ContractType::create($data);
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect('/catalog/contract_type');
     }
 
@@ -75,13 +74,13 @@ class ContractTypeController extends Controller
     {
         //
         $contract_type = ContractType::find($id);
+
         return view('metronic.contract.type.edit', ['contract_type' => $contract_type]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -93,7 +92,8 @@ class ContractTypeController extends Controller
 
         $data = $request->all();
         $contract_type->update($data);
-        Session::put("success", trans('labels.updated'));
+        Session::put('success', trans('labels.updated'));
+
         return redirect('/catalog/contract_type');
     }
 
@@ -106,6 +106,7 @@ class ContractTypeController extends Controller
     public function destroy(ContractType $contract_type)
     {
         $data = $contract_type->delete();
+
         return response()->json($data);
     }
 
@@ -121,6 +122,7 @@ class ContractTypeController extends Controller
     public function get_data()
     {
         $data = ContractType::select('type_name')->get()->pluck('type_name');
+
         return response()->json($data);
     }
 }

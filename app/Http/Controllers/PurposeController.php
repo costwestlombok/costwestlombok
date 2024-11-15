@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Purpose;
+use App\Models\Purpose;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class PurposeController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -39,7 +38,6 @@ class PurposeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,14 +48,15 @@ class PurposeController extends Controller
 
         $data = $request->all();
         Purpose::create($data);
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect('/catalog/purpose');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -68,7 +67,7 @@ class PurposeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Purpose $purpose)
@@ -79,8 +78,7 @@ class PurposeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -90,19 +88,21 @@ class PurposeController extends Controller
         $purpose->purpose_name = $request->get('purpose_name');
         $purpose->save();
 
-        Session::put("success", trans('labels.updated'));
+        Session::put('success', trans('labels.updated'));
+
         return redirect('/catalog/purpose');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Purpose $purpose)
     {
         $data = $purpose->delete();
+
         return response()->json($data);
     }
 
@@ -113,5 +113,13 @@ class PurposeController extends Controller
                 return date('Y-m-d H:i:s', strtotime($purpose->created_at));
             })
             ->make(true);
+    }
+
+    public function addFormApi(Request $request)
+    {
+        $save = Purpose::create([
+            'purpose_name' => $request->purpose_name,
+        ]);
+        return response()->json($save);
     }
 }

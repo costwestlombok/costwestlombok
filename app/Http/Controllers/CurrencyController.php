@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Currency;
 use Illuminate\Http\Request;
-use App\Currency;
 
 class CurrencyController extends Controller
 {
-    
-
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -23,6 +21,7 @@ class CurrencyController extends Controller
     {
         //
         $rows = Currency::all();
+
         return view('currency.index', ['rows' => $rows]);
     }
 
@@ -40,7 +39,6 @@ class CurrencyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -60,6 +58,7 @@ class CurrencyController extends Controller
         ]);
 
         $sector->save();
+
         return redirect('/sector/create')->with('success', 'Section has been added');
     }
 
@@ -84,13 +83,13 @@ class CurrencyController extends Controller
     {
         //
         $sector = Sector::find($id);
+
         return view('sector.edit', ['sector' => $sector]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

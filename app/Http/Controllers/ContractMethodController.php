@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\ContractMethod;
+use App\Models\ContractMethod;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class ContractMethodController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -39,7 +38,6 @@ class ContractMethodController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -53,7 +51,8 @@ class ContractMethodController extends Controller
         ]);
 
         $method->save();
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect('/catalog/contract_method');
     }
 
@@ -78,13 +77,13 @@ class ContractMethodController extends Controller
     {
         //
         $contract_method = ContractMethod::find($id);
+
         return view('metronic.contract.method.edit', compact('contract_method'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -97,7 +96,8 @@ class ContractMethodController extends Controller
         $method = ContractMethod::find($id);
         $method->method_name = $request->get('method_name');
         $method->save();
-        Session::put("success", trans('labels.updated'));
+        Session::put('success', trans('labels.updated'));
+
         return redirect('/catalog/contract_method');
     }
 
@@ -111,6 +111,7 @@ class ContractMethodController extends Controller
     {
         $method = ContractMethod::find($id);
         $data = $method->delete();
+
         return response()->json($data);
     }
 
@@ -126,6 +127,7 @@ class ContractMethodController extends Controller
     public function get_data()
     {
         $data = ContractMethod::select('method_name')->get()->pluck('method_name');
+
         return response()->json($data);
     }
 }

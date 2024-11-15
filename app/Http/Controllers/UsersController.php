@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\User;
-use Session;
 use Illuminate\Support\Facades\Hash;
+use Session;
 
 class UsersController extends Controller
 {
@@ -41,6 +41,7 @@ class UsersController extends Controller
         }
         $user->update($r);
         Session::put('success', trans('labels.updated'));
+
         return back();
     }
 }

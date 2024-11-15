@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Contact;
-use App\Offerer;
+use App\Models\Contact;
+use App\Models\Offerer;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class OffererController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -40,7 +39,6 @@ class OffererController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -56,12 +54,13 @@ class OffererController extends Controller
             $dc['name'] = $o->legal_name;
             $dc['address'] = $o->address;
             $dc['phone'] = $o->phone;
-            $dc['position'] = "Offerer";
-            $dc['email'] = " ";
+            $dc['position'] = 'Offerer';
+            $dc['email'] = ' ';
             Contact::create($dc);
         }
 
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect()->route('offerer.index');
     }
 
@@ -90,7 +89,6 @@ class OffererController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -102,7 +100,8 @@ class OffererController extends Controller
         ]);
         $data = $request->all();
         $offerer->update($data);
-        Session::put("success", trans('labels.updated'));
+        Session::put('success', trans('labels.updated'));
+
         return redirect()->route('offerer.index');
     }
 
@@ -115,6 +114,7 @@ class OffererController extends Controller
     public function destroy(Offerer $offerer)
     {
         $data = $offerer->delete();
+
         return response()->json($data);
     }
 

@@ -117,7 +117,7 @@
                                 </a>
                             </li>
                             @endif
-                            @if(Auth::user()->type == 'admin' || Auth::user()->agency->projects()->where('id', $project->id)->exists())
+                            @if(Auth::user()->type == 'admin' || Auth::user()->agency->projects()->where('projects.id', $project->id)->exists())
                             <li class="navi-item">
                                 <a href="javascript:deleteFn('project', '{{ $project->id }}')" class="navi-link">
                                     <span class="svg-icon menu-icon">
@@ -164,7 +164,7 @@
             <div class="flex-row-fluid mb-7">
                 <span class="d-block font-weight-bold mb-4">{{ __('labels.progress') }} -
                     {{ __('labels.real_physical') }} <span
-                        class="text-muted font-weight-bold">({{ __('labels.last_update') }}:
+                        class="text-muted font-weight-bold">({{ __('labels.last_update') }} :
                         {{ Carbon\Carbon::parse($project->latest_progress->date_of_advance ?? now())->translatedFormat('l, d M Y') }})</span>
                     @if(Auth::check())
                     @if(Auth::user()->type == 'admin' || in_array($project->id,

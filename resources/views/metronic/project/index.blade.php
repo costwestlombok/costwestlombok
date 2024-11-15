@@ -58,7 +58,7 @@
         <div class="d-flex align-items-center">
             <select class="form-control" name="project_status_id" id="status" style="width: auto;" required>
                 <option value="all">Semua status</option>
-                @foreach (\App\ProjectStatus::all() as $status)
+                @foreach (\App\Models\ProjectStatus::all() as $status)
                 <option value="{{$status->code}}" {{ request()->status == $status->code ? 'selected' : '' }}>
                     {{ __('labels.'.$status->code) }}</option>
                 @endforeach
@@ -99,7 +99,7 @@
         <div class="d-flex align-items-center">
             <select class="form-control" name="project_status_id" id="status" style="width: auto;" required>
                 <option value="all">Semua status</option>
-                @foreach (\App\ProjectStatus::all() as $status)
+                @foreach (\App\Models\ProjectStatus::all() as $status)
                 <option value="{{$status->code}}" {{ request()->status == $status->code ? 'selected' : '' }}>
                     {{ __('labels.'.$status->code) }}</option>
                 @endforeach
@@ -134,7 +134,7 @@
     $('#status').select2({
         placeholder: "{{ __('labels.choose_status') }}"
     });
-    $('#status').on("change", function() { 
+    $('#status').on("change", function() {
         window.location.href = "{{ url('project') }}?status=" + this.value;
     });
 </script>

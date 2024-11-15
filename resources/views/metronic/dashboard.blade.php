@@ -17,19 +17,19 @@
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">
-        @if(\App\Banner::count())
+        @if(\App\Models\Banner::count())
         <!--begin::Row-->
         <div class="row">
             <div class="col-xl-12">
                 <div id="carouselExampleIndicators" class="carousel slide gutter-b" data-ride="carousel">
                     <ol class="carousel-indicators">
-                        @foreach (\App\Banner::orderBy('order')->limit(5)->get() as $slider)
+                        @foreach (\App\Models\Banner::orderBy('order')->limit(5)->get() as $slider)
                         <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}"
                             class="{{ $loop->first ? 'active' : '' }}"></li>
                         @endforeach
                     </ol>
                     <div class="carousel-inner" style="border-radius: 0.85rem;">
-                        @foreach (\App\Banner::orderBy('order')->limit(5)->get() as $slider)
+                        @foreach (\App\Models\Banner::orderBy('order')->limit(5)->get() as $slider)
                         <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                             <img class="" style="object-fit: cover; width: 100%;"
                                 src="{{ url('storage/'.$slider->image) }}" alt="First slide">
@@ -59,15 +59,15 @@
                 <!--begin::Nav Panel Widget 2-->
                 <div class="card card-custom gutter-b card-stretch card-shadowless">
                     <!--begin::Body-->
-                    <div class="card-body p-0 table-responsive">
+                    <div class="p-0 card-body table-responsive">
                         <!--begin::Nav Tabs-->
-                        <ul class="dashboard-tabs nav nav-pills nav-danger row row-paddingless m-0 p-0" role="tablist"
+                        <ul class="p-0 m-0 dashboard-tabs nav nav-pills nav-danger row row-paddingless" role="tablist"
                             style="min-width: 910px">
                             <!--begin::Item-->
-                            <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
+                            <li class="flex-shrink-0 mb-3 mr-3 nav-item d-flex col flex-grow-1 mb-lg-0">
                                 <a class="nav-link {{ request()->get('type') == 'airport' ? 'active' : '' }} border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
                                     href="{{ url('/').'?type=airport' }}">
-                                    <span class="nav-icon py-2 w-auto">
+                                    <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
                                             <!--begin::Svg Icon | path:/metronic/theme/html/demo5/dist/assets/media/svg/icons/Home/Library.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +87,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ strtoupper(__('labels.airport')) }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ strtoupper(__('labels.airport')) }}</span>
                                     <span
                                         class="d-block {{ request()->get('type') == 'airport' ? '' : 'text-muted' }} font-size-sm text-center">0
                                         {{ __('labels.project') }}</span>
@@ -95,10 +95,10 @@
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
+                            <li class="flex-shrink-0 mb-3 mr-3 nav-item d-flex col flex-grow-1 mb-lg-0">
                                 <a class="nav-link {{ request()->get('type') == 'building' ? 'active' : '' }} border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
                                     href="{{ url('/').'?type=building' }}">
-                                    <span class="nav-icon py-2 w-auto">
+                                    <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
                                             <!--begin::Svg Icon | path:/metronic/theme/html/demo5/dist/assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -119,7 +119,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ strtoupper(__('labels.building')) }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ strtoupper(__('labels.building')) }}</span>
                                     <span
                                         class="d-block {{ request()->get('type') == 'building' ? '' : 'text-muted' }} font-size-sm text-center">0
                                         {{ __('labels.project') }}</span>
@@ -128,10 +128,10 @@
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
+                            <li class="flex-shrink-0 mb-3 mr-3 nav-item d-flex col flex-grow-1 mb-lg-0">
                                 <a class="nav-link {{ request()->get('type') == 'energy' ? 'active' : '' }} border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
                                     href="{{ url('/').'?type=energy' }}">
-                                    <span class="nav-icon py-2 w-auto">
+                                    <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
                                             <!--begin::Svg Icon | path:/metronic/theme/html/demo5/dist/assets/media/svg/icons/Media/Movie-Lane2.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +155,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ strtoupper(__('labels.energy')) }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ strtoupper(__('labels.energy')) }}</span>
                                     <span
                                         class="d-block {{ request()->get('type') == 'energy' ? '' : 'text-muted' }} font-size-sm text-center">0
                                         {{ __('labels.project') }}</span>
@@ -163,10 +163,10 @@
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
+                            <li class="flex-shrink-0 mb-3 mr-3 nav-item d-flex col flex-grow-1 mb-lg-0">
                                 <a class="nav-link {{ request()->get('type') == 'port' ? 'active' : '' }} border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
                                     href="{{ url('/').'?type=port' }}">
-                                    <span class="nav-icon py-2 w-auto">
+                                    <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
                                             <!--begin::Svg Icon | path:/metronic/theme/html/demo5/dist/assets/media/svg/icons/Media/Equalizer.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +189,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ strtoupper(__('labels.port')) }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ strtoupper(__('labels.port')) }}</span>
                                     <span
                                         class="d-block {{ request()->get('type') == 'port' ? '' : 'text-muted' }} font-size-sm text-center">0
                                         {{ __('labels.project') }}</span>
@@ -197,10 +197,10 @@
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
+                            <li class="flex-shrink-0 mb-3 mr-3 nav-item d-flex col flex-grow-1 mb-lg-0">
                                 <a class="nav-link {{ !request()->get('type') || request()->get('type') == 'road' ? 'active' : '' }} border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
                                     href="{{ url('/').'?type=road' }}">
-                                    <span class="nav-icon py-2 w-auto">
+                                    <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
                                             <!--begin::Svg Icon | path:/metronic/theme/html/demo5/dist/assets/media/svg/icons/General/Shield-check.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -219,18 +219,18 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ strtoupper(__('labels.road')) }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ strtoupper(__('labels.road')) }}</span>
                                     <span
-                                        class="d-block {{ !request()->get('type') || request()->get('type') == 'road' ? '' : 'text-muted' }} font-size-sm text-center">{{ number_format(App\Project::count()) }}
+                                        class="d-block {{ !request()->get('type') || request()->get('type') == 'road' ? '' : 'text-muted' }} font-size-sm text-center">{{ number_format(App\Models\Project::count()) }}
                                         {{ __('labels.project') }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-0 mb-3 mb-lg-0">
+                            <li class="flex-shrink-0 mb-3 mr-0 nav-item d-flex col flex-grow-1 mb-lg-0">
                                 <a class="nav-link {{ request()->get('type') == 'telecommunication' ? 'active' : '' }} border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
                                     href="{{ url('/').'?type=telecommunication' }}">
-                                    <span class="nav-icon py-2 w-auto">
+                                    <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
                                             <!--begin::Svg Icon | path:/metronic/theme/html/demo5/dist/assets/media/svg/icons/Communication/Group.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -250,7 +250,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="nav-text font-size-lg py-2 font-weight-bolder text-center">{{ strtoupper(__('labels.telecommunication')) }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ strtoupper(__('labels.telecommunication')) }}</span>
                                     <span
                                         class="d-block {{ request()->get('type') == 'telecommunication' ? '' : 'text-muted' }} font-size-sm text-center">0
                                         {{ __('labels.project') }}</span>
@@ -260,7 +260,7 @@
                         </ul>
                         <!--end::Nav Tabs-->
                         <!--begin::Nav Content-->
-                        <div class="tab-content m-0 p-0">
+                        <div class="p-0 m-0 tab-content">
                             <div class="tab-pane" id="forms_widget_tab_1" role="tabpanel"></div>
                             <div class="tab-pane" id="forms_widget_tab_2" role="tabpanel"></div>
                             <div class="tab-pane" id="forms_widget_tab_3" role="tabpanel"></div>
@@ -279,11 +279,11 @@
         <!--begin::Row-->
         <div class="row">
             <div class="col-md-12">
-                <div class="d-flex align-items-center mt-5 mb-10">
+                <div class="mt-5 mb-10 d-flex align-items-center">
                     <!--begin::Text-->
                     <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                         <a href="#"
-                            class="text-dark text-hover-primary mb-1 font-size-h5 text-dark">{{ __('labels.latest') }}</a>
+                            class="mb-1 text-dark text-hover-primary font-size-h5">{{ __('labels.latest') }}</a>
                         <span class="text-muted">{{ __('labels.latest_sub') }}</span>
                     </div>
                     <!--end::Text-->

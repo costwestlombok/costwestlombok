@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Advance;
-use App\AdvanceImage;
-use App\Project;
-use App\Status;
+use App\Models\Advance;
+use App\Models\AdvanceImage;
+use App\Models\Project;
+use App\Models\Status;
 use Carbon\Carbon;
 use DataTables;
 use Illuminate\Http\Request;
@@ -22,6 +22,7 @@ class ProgressController extends Controller
     public function index()
     {
         $advances = Advance::orderBy('date_of_advance', 'DESC')->latest()->paginate(10);
+
         return view('metronic.progress.index', compact('advances'));
     }
 
@@ -34,13 +35,13 @@ class ProgressController extends Controller
     {
         $projects = Project::all();
         $status = Status::all();
+
         return view('progress.create', compact('projects', 'status'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -48,10 +49,10 @@ class ProgressController extends Controller
         $data = $request->all();
         // return $data;
         if ($request->scheduled_financing) {
-            $data['scheduled_financing'] = str_replace(",", "", $request->scheduled_financing);
+            $data['scheduled_financing'] = str_replace(',', '', $request->scheduled_financing);
         }
         if ($request->real_financing) {
-            $data['real_financing'] = str_replace(",", "", $request->real_financing);
+            $data['real_financing'] = str_replace(',', '', $request->real_financing);
         }
         if ($request->guaranties_doc) {
             $data['guaranties_doc'] = $request->file('guaranties_doc')->store('advance');
@@ -73,7 +74,8 @@ class ProgressController extends Controller
 
         Advance::create($data);
         Session::put('success', trans('labels.saved'));
-        return redirect('project-progress/' . $request->project_id);
+
+        return redirect('project-progress/'.$request->project_id);
     }
 
     /**
@@ -97,13 +99,13 @@ class ProgressController extends Controller
     {
         // return $progress;
         $project = Project::where('id', $progress->project_id)->first();
+
         return view('metronic.progress.edit', compact('project', 'progress'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -112,10 +114,10 @@ class ProgressController extends Controller
         $data = $request->all();
         // return $data;
         if ($request->scheduled_financing) {
-            $data['scheduled_financing'] = str_replace(",", "", $request->scheduled_financing);
+            $data['scheduled_financing'] = str_replace(',', '', $request->scheduled_financing);
         }
         if ($request->real_financing) {
-            $data['real_financing'] = str_replace(",", "", $request->real_financing);
+            $data['real_financing'] = str_replace(',', '', $request->real_financing);
         }
         if ($request->guaranties_doc) {
             if ($progress->guaranties_doc) {
@@ -145,7 +147,8 @@ class ProgressController extends Controller
 
         $progress->update($data);
         Session::put('success', trans('labels.updated'));
-        return redirect('project-progress/' . $progress->project_id);
+
+        return redirect('project-progress/'.$progress->project_id);
     }
 
     /**
@@ -164,6 +167,7 @@ class ProgressController extends Controller
         }
         $progress->delete();
         Session::put('success', trans('labels.deleted'));
+
         return back();
     }
 
@@ -177,7 +181,7 @@ class ProgressController extends Controller
         // return $request->all();
 
         $image = $request->file('file');
-        $imageName = time() . $image->getClientOriginalName();
+        $imageName = time().$image->getClientOriginalName();
         $upload_success = $request->file('file')->store('advance_images');
         // $image->move(local('images'), $imageName);
         $data['date_of_publication'] = Carbon::now();
@@ -207,6 +211,7 @@ class ProgressController extends Controller
     public function progress(Project $project)
     {
         $advances = Advance::where('project_id', $project->id)->orderBy('date_of_advance', 'DESC')->paginate(8);
+
         return view('metronic.progress.index', compact('advances', 'project'));
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Project;
+use App\Models\Project;
 use Carbon\Carbon;
 
 class HelperController extends Controller

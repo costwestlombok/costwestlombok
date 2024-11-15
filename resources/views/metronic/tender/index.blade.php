@@ -1,20 +1,20 @@
 @extends('layouts.metronic')
 @section('content')
 <!--begin::Subheader-->
-<div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
-    <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+<div class="py-2 subheader py-lg-4 subheader-transparent" id="kt_subheader">
+    <div class="container flex-wrap d-flex align-items-center justify-content-between flex-sm-nowrap">
         <!--begin::Details-->
-        <div class="d-flex align-items-center flex-wrap mr-2">
+        <div class="flex-wrap mr-2 d-flex align-items-center">
             <!--begin::Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+            <h5 class="mt-2 mb-2 mr-5 text-dark font-weight-bold">
                 {{ __('labels.tender') }} </h5>
             <!--end::Title-->
             @if(isset($project))
             <!--begin::Separator-->
-            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+            <div class="mt-2 mb-2 mr-5 bg-gray-200 subheader-separator subheader-separator-ver"></div>
             <!--end::Separator-->
             <!--begin::Breadcrumb-->
-            <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0 mr-5">
+            <ul class="p-0 my-2 mr-5 breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold">
                 <li class="breadcrumb-item">
                     <a href="{{ url('dashboard') }}" class="text-muted">{{ __('labels.dashboard') }}</a>
                 </li>
@@ -28,7 +28,7 @@
             <!--end::Breadcrumb-->
             @endif
             <!--begin::Separator-->
-            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+            <div class="mt-2 mb-2 mr-5 bg-gray-200 subheader-separator subheader-separator-ver"></div>
             <!--end::Separator-->
             <!--begin::Search Form-->
             <div class="d-flex align-items-center" id="kt_subheader_search">
@@ -85,7 +85,7 @@
         <div class="d-flex align-items-center">
             <!--begin::Button-->
             <a href="{{ route('tender.index', ['type' => request()->type == 'only_me' ? 'all' : 'only_me']) }}"
-                class="btn btn-success font-weight-bolder mr-2">
+                class="mr-2 btn btn-success font-weight-bolder">
                 @if(request()->type == 'only_me')
                 {{ __('labels.show_all') }} {{ __('labels.tender') }}
                 @else
@@ -115,15 +115,15 @@
                         <!--begin::Title-->
                         <div class="d-flex">
                             <!--begin::User-->
-                            <div class="d-plex flex-column mr-auto">
+                            <div class="mr-auto d-plex flex-column">
                                 <!--begin::Name-->
                                 <a href="#"
-                                    class="d-flex align-items-center text-dark text-hover-primary font-size-h5 font-weight-bold mr-3">{{ $tender->project_process_name }}</a>
+                                    class="mr-3 d-flex align-items-center text-dark text-hover-primary font-size-h5 font-weight-bold">{{ $tender->project_process_name }}</a>
                                 <!--end::Name-->
                                 <!--begin::Contacts-->
                                 <div class="mt-2">
                                     <a href="javascript:void(0)"
-                                        class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                                        class="mb-2 mr-5 text-muted text-hover-primary font-weight-bold mr-lg-8 mb-lg-0">
                                         {{ __('labels.tender_code') }}
                                         <strong>{{ $tender->process_number }}</strong></a>
                                 </div>
@@ -131,7 +131,7 @@
                                 <!--begin::Contacts-->
                                 <div class="mb-2">
                                     <a href="javascript:void(0)"
-                                        class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                                        class="mb-2 mr-5 text-muted text-hover-primary font-weight-bold mr-lg-8 mb-lg-0">
                                         {{ __('labels.project') }}
                                         <strong>{{ $tender->project->project_title }}</strong></a>
                                 </div>
@@ -169,7 +169,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> {{ __('labels.award') }}</span>
+                                                    <span class="ml-2 navi-text"> {{ __('labels.award') }}</span>
                                                 </a>
                                             </li>
                                             <li class="navi-item">
@@ -190,7 +190,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> {{ __('labels.offerer') }}</span>
+                                                    <span class="ml-2 navi-text"> {{ __('labels.offerer') }}</span>
                                                 </a>
                                             </li>
                                             @if(Auth::check())
@@ -216,7 +216,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> {{ __('labels.edit') }}</span>
+                                                    <span class="ml-2 navi-text"> {{ __('labels.edit') }}</span>
                                                 </a>
                                             </li>
                                             @endif
@@ -240,7 +240,7 @@
                                                             </g>
                                                         </svg>
                                                     </span>
-                                                    <span class="navi-text ml-2"> {{ __('labels.delete') }}</span>
+                                                    <span class="ml-2 navi-text"> {{ __('labels.delete') }}</span>
                                                 </a>
                                             </li>
                                             @endif
@@ -254,26 +254,26 @@
                         </div>
                         <!--end::Title-->
                         <!--begin::Content-->
-                        <div class="d-flex align-items-center flex-wrap mt-14">
+                        <div class="flex-wrap d-flex align-items-center mt-14">
                             <div class="mr-12 d-flex flex-column mb-7">
-                                <span class="d-block font-weight-bold mb-4">{{ __('labels.start_date') }}</span>
+                                <span class="mb-4 d-block font-weight-bold">{{ __('labels.start_date') }}</span>
                                 <span
                                     class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ $tender->start_date ? $tender->start_date->translatedFormat('l, d M Y') : '-' }}</span>
                             </div>
                             <div class="mr-12 d-flex flex-column mb-7">
-                                <span class="d-block font-weight-bold mb-4">{{ __('labels.due_date') }}</span>
+                                <span class="mb-4 d-block font-weight-bold">{{ __('labels.due_date') }}</span>
                                 <span
                                     class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ $tender->end_date ? $tender->end_date->translatedFormat('l, d M Y') : '-' }}</span>
                             </div>
                             <div class="mr-12 d-flex flex-column mb-7">
-                                <span class="d-block font-weight-bold mb-4">{{ __('labels.extended_date') }}</span>
+                                <span class="mb-4 d-block font-weight-bold">{{ __('labels.extended_date') }}</span>
                                 <span
                                     class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ $tender->max_extended_process ? $tender->max_extended_process->translatedFormat('l, d M Y') : '-' }}</span>
                             </div>
                         </div>
-                        <div class="d-flex flex-wrap">
+                        <div class="flex-wrap d-flex">
                             <!--begin: Item-->
-                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                            <div class="my-5 mr-5 d-flex align-items-center flex-lg-fill">
                                 <span class="mr-4">
                                     <i class="flaticon2-architecture-and-city icon-2x"></i>
                                 </span>
@@ -287,7 +287,7 @@
                             <!--end: Item-->
                             @if(false)
                             <!--begin: Item-->
-                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                            <div class="my-5 mr-5 d-flex align-items-center flex-lg-fill">
                                 <span class="mr-4">
                                     <i class="flaticon-add-label-button icon-2x"></i>
                                 </span>
@@ -301,7 +301,7 @@
                             <!--end: Item-->
                             @endif
                             <!--begin: Item-->
-                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                            <div class="my-5 mr-5 d-flex align-items-center flex-lg-fill">
                                 <span class="mr-4">
                                     <i class="fas fa-gavel icon-2x"></i>
                                 </span>
@@ -322,7 +322,7 @@
                             </div>
                             <!--end: Item-->
                             <!--begin: Item-->
-                            <div class="d-flex align-items-center flex-lg-fill mr-5 my-5">
+                            <div class="my-5 mr-5 d-flex align-items-center flex-lg-fill">
                                 <span class="mr-4">
                                     <i class="flaticon2-group icon-2x"></i>
                                 </span>
@@ -351,7 +351,7 @@
             </div>
             {{-- <div class="card-footer d-flex align-items-center">
                 <a href="javascript:void(0)"
-                    class="btn btn-primary btn-sm text-uppercase font-weight-bolder mt-5 mt-sm-0 mr-auto mr-sm-0 ml-sm-auto">details</a>
+                    class="mt-5 mr-auto btn btn-primary btn-sm text-uppercase font-weight-bolder mt-sm-0 mr-sm-0 ml-sm-auto">details</a>
             </div> --}}
         </div>
         <!--end::Card-->

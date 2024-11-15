@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Sector;
-use App\Subsector;
+use App\Models\Subsector;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class SubsectorController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -39,7 +37,6 @@ class SubsectorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,7 +47,8 @@ class SubsectorController extends Controller
         ]);
         $data = $request->all();
         Subsector::create($data);
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect('/catalog/subsector');
     }
 
@@ -79,7 +77,6 @@ class SubsectorController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -91,7 +88,8 @@ class SubsectorController extends Controller
         ]);
         $data = $request->all();
         $subsector->update($data);
-        Session::put("success", trans('labels.saved'));
+        Session::put('success', trans('labels.saved'));
+
         return redirect('/catalog/subsector');
     }
 
@@ -104,26 +102,29 @@ class SubsectorController extends Controller
     public function destroy(Subsector $subsector)
     {
         $data = $subsector->delete();
+
         return response()->json($data);
     }
 
     /**
      * Show subsector un ajax request
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function ajax_get_subsector($id)
     {
         //$subsector = Subsector::find($sector);
 
-        echo "something";
+        echo 'something';
+
         return response()->json(['a' => 'A', 'name' => 'Carlos']);
     }
 
     public function get_subsector($sector)
     {
         $data = Subsector::where('sector_id', $sector)->get();
+
         return response()->json($data);
     }
 
@@ -142,5 +143,4 @@ class SubsectorController extends Controller
             })
             ->make(true);
     }
-
 }

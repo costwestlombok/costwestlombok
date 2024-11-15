@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Award;
-use App\Offerer;
-use App\Tender;
-use App\TenderOfferer;
+use App\Models\Award;
+use App\Models\Offerer;
+use App\Models\Tender;
+use App\Models\TenderOfferer;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
@@ -28,6 +28,7 @@ class TenderOffererController extends Controller
         } else {
             $offerers = Offerer::all();
         }
+
         return view('metronic.tender.offerer', compact('offerers', 'tender', 'tender_offerers'));
         // return view('metronic.tender.offerer', compact('tender_id'));
     }
@@ -45,7 +46,6 @@ class TenderOffererController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -54,6 +54,7 @@ class TenderOffererController extends Controller
         // return $data;
         TenderOfferer::create($data);
         Session::put('success', trans('labels.saved'));
+
         return back();
     }
 
@@ -82,7 +83,6 @@ class TenderOffererController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -102,12 +102,14 @@ class TenderOffererController extends Controller
         $to = TenderOfferer::find($id);
         $to->delete();
         Session::put('success', trans('labels.deleted'));
+
         return back();
     }
 
     public function get_sup(Award $award)
     {
         $supplier = TenderOfferer::with('offerer')->where('tender_id', $award->tender->id)->get();
+
         return response()->json($supplier);
     }
 

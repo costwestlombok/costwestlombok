@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\TenderStatus;
+use App\Models\TenderStatus;
 use Illuminate\Http\Request;
 
 class TenderStatusController extends Controller
@@ -20,6 +20,7 @@ class TenderStatusController extends Controller
     public function index()
     {
         $tender_statuses = TenderStatus::all();
+
         return view('tender_status.index', compact('tender_statuses'));
     }
 
@@ -36,7 +37,6 @@ class TenderStatusController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -72,13 +72,13 @@ class TenderStatusController extends Controller
     public function edit($id)
     {
         $status = TenderStatus::find($id);
+
         return view('tender_status.edit', compact('status'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -90,6 +90,7 @@ class TenderStatusController extends Controller
         $data = $request->all();
         $tenderStatus->update($data);
         Session::put('success', trans('labels.updated'));
+
         return redirect('/catalog/tender-status');
     }
 
@@ -110,6 +111,7 @@ class TenderStatusController extends Controller
     public function get_data()
     {
         $data = TenderStatus::select('status_name')->get()->pluck('status_name');
+
         return response()->json($data);
     }
 }

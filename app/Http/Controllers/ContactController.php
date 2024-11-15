@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Contact;
+use App\Models\Contact;
 use DataTables;
 use Illuminate\Http\Request;
 use Session;
 
 class ContactController extends Controller
 {
-
     public function __construct()
     {
         // $this->middleware('auth');
@@ -39,7 +38,6 @@ class ContactController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -47,6 +45,7 @@ class ContactController extends Controller
         $data = $request->all();
         Contact::create($data);
         Session::put('success', trans('labels.saved'));
+
         return redirect('catalog/contact');
     }
 
@@ -75,7 +74,6 @@ class ContactController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -84,6 +82,7 @@ class ContactController extends Controller
         $data = $request->all();
         $contact->update($data);
         Session::put('success', trans('labels.saved'));
+
         return redirect('/catalog/contact');
     }
 
@@ -96,6 +95,7 @@ class ContactController extends Controller
     public function destroy(Contact $contact)
     {
         $contact->delete();
+
         return redirect('/catalog/contact')->with('success', 'Sector has been destroyed');
     }
 
