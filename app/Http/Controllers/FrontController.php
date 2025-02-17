@@ -36,11 +36,10 @@ class FrontController extends Controller
             \App\Models\File::latest()->first()->created_at ?? null,
         ];
         $arr_map = array_map('strtotime', $arr);
-        $projects = \App\Models\Project::latest()->get()->map(function ($project) {
+        $projects = \App\Models\Project::latest()->get()->map(function ($project, $key) {
             $p = $this->projectOc4idsFormat($project);
-
             return $p;
-        });
+        })->toArray();
 
         $oc4ids = [
             'version' => '0.9',
@@ -53,10 +52,10 @@ class FrontController extends Controller
                 // "uri" => "http://data.companieshouse.gov.uk/doc/company/09506232"
             ],
             // "publicationPolicy" => "https://standard.open-contracting.org/1.1/en/implementation/publication_policy/",
-            'projects' => $projects->toArray(),
+            'projects' => $projects,
         ];
-        $oc_json = json_encode($oc4ids, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-        Storage::disk('public')->put('docs/oc4ids.json', $oc_json);
+        // $oc_json = json_encode($oc4ids, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        Storage::disk('public')->put('docs/oc4ids.json', json_encode($oc4ids));
 
         return redirect('storage/docs/oc4ids.json');
     }
