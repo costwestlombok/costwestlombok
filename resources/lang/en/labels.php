@@ -319,6 +319,7 @@ return [
     'implementation' => 'Implementation',
     'completion' => 'Completion',
     'completed' => 'Completed',
+    'maintenance' => 'Maintenance',
     'cancelled' => 'Cancelled',
 
     // oc4ids

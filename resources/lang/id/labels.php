@@ -321,6 +321,7 @@ return [
     'implementation' => 'Implementasi',
     'completion' => 'Penyelesaian',
     'completed' => 'Selesai',
+    'maintenance' => 'Pemeliharaan',
     'cancelled' => 'Dibatalkan',
 
     // oc4ids

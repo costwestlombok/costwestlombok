@@ -62,184 +62,182 @@ Route::get('oc4ids/project/{project_oc4ids_id}/documents', [FrontController::cla
 Route::get('helper/duration', [HelperController::class, 'duration']);
 
 Route::get('lang/{language}', [LocalizationController::class, 'switch'])->name('localization.switch');
-Route::get('/', [FrontController::class, 'index']);
+Route::get('', [FrontController::class, 'index']);
 Route::get('documentation', [FrontController::class, 'documentation']);
 
 Route::get('home', function () {
     if (Auth::check()) {
         return redirect('dashboard');
     }
-
     return redirect('/');
 })->name('home');
 
-Route::get('/get-entity', [OrganizationController::class, 'get_entity']);
+Route::get('get-entity', [OrganizationController::class, 'get_entity']);
 
-Route::get('/list', [FrontController::class, 'list']);
-
-Route::get('/Users', [UsersController::class, 'login']);
-Route::put('user/{user}', [UsersController::class, 'update'])->name('user.update');
-Route::resource('dashboard', DashboardController::class);
-
-// catalog
-Route::resource('catalog/organization', OrganizationController::class);
-Route::resource('catalog/organization_unit', OrganizationUnitController::class);
-Route::resource('catalog/official', OfficialController::class);
-Route::resource('catalog/role', RoleController::class);
-Route::resource('catalog/sector', SectorController::class);
-Route::resource('catalog/subsector', SubsectorController::class);
-Route::resource('catalog/source', SourceController::class);
-Route::resource('catalog/purpose', PurposeController::class);
-Route::post('catalog/purpose/api-web/store', [PurposeController::class, 'addFormApi'])->name('catalog.purpose.api-web.store');
-Route::resource('catalog/contract_type', ContractTypeController::class);
-Route::resource('catalog/offerer', OffererController::class);
-Route::resource('catalog/tender_method', TenderMethodController::class);
-Route::resource('catalog/contract_method', ContractMethodController::class);
-Route::resource('catalog/warranty-type', WarrantyTypeController::class);
-Route::resource('catalog/status', StatusController::class);
-Route::resource('catalog/tender-status', TenderStatusController::class);
-
-Route::get('/subsector/ajax_get_subsector', [SubsectorController::class, 'ajax_get_subsector']);
-Route::resource('currency', CurrencyController::class);
-Route::resource('catalog/contact', ContactController::class);
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+Auth::routes(['register' => false]);
 
 Route::resource('project', ProjectController::class);
-Route::get('/project-file/{project}', [ProjectController::class, 'project_file']);
-Route::post('/project-file', [ProjectController::class, 'store_file']);
-Route::delete('/project/file/destroy/{projectdocument}', [ProjectController::class, 'project_file_delete']);
-
 Route::get('project/{project}/tender', [TenderController::class, 'index_tender'])->name('project.tender.index');
-Route::get('project/{project}/tender/create', [TenderController::class, 'create_tender'])->name('project.tender.create');
 Route::get('project/{project}/file', [ProjectController::class, 'project_file'])->name('project.file.index');
-
-Route::get('award/{award}/contract', [AwardController::class, 'contract'])->name('award.contract.index');
-Route::get('award/{award}/contract/create', [AwardController::class, 'contractCreate'])->name('award.contract.create');
-
+Route::get('project-file/{project}', [ProjectController::class, 'project_file']);
+Route::get('project-budget/{project}', [BudgetController::class, 'index']);
+Route::get('budget-source/{budget}', [BudgetController::class, 'source']);
 Route::get('tender/{tender}/award', [TenderController::class, 'award'])->name('tender.award.index');
-Route::get('tender/{tender}/award/create', [TenderController::class, 'awardCreate'])->name('tender.award.create');
-
 Route::get('tender/{tender}/offerer', [TenderController::class, 'offerer'])->name('tender.offerer.index');
-Route::get('tender/{tender}/offerer/create', [TenderController::class, 'offererCreate'])->name('tender.offerer.create');
-
-// contract
-Route::get('contract/{contract}/ammendment', [ContractController::class, 'ammendment'])->name('contract.ammendment.index');
-Route::get('contract/{contract}/ammendment/create', [ContractController::class, 'ammendmentCreate'])->name('contract.ammendment.create');
-
-Route::get('contract/{contract}/execution', [ContractController::class, 'execution'])->name('contract.execution.index');
-Route::get('contract/{contract}/execution/create', [ContractController::class, 'executionCreate'])->name('contract.execution.create');
-
-Route::get('contract/{contract}/completion', [ContractController::class, 'completion'])->name('contract.completion.index');
-Route::get('contract/{contract}/completion/create', [ContractController::class, 'completionCreate'])->name('contract.completion.create');
-
-Route::resource('contract', ContractController::class);
-
-//budget
-Route::get('/project-budget/{project}', [BudgetController::class, 'index']);
-Route::get('/project-budget/{project}/create', [BudgetController::class, 'create']);
-Route::get('/project-budget/{budget}/edit', [BudgetController::class, 'edit']);
-Route::patch('/project-budget/{budget}/update', [BudgetController::class, 'update']);
-Route::get('/project-budget/{budget}/delete', [BudgetController::class, 'destroy']);
-Route::post('/project-budget', [BudgetController::class, 'store']);
-Route::get('/budget-source/{budget}', [BudgetController::class, 'source']);
-Route::get('/budget-source/{project_source}/delete', [BudgetController::class, 'destroy_source']);
-Route::post('budget-source', [BudgetController::class, 'store_project_source']);
-
-Route::get('/get-unit/{entity}', [OrganizationUnitController::class, 'get_unit']);
-Route::get('/get-official/{unit}', [OfficialController::class, 'get_official']);
-Route::get('/get-subsector/{sector}', [SubsectorController::class, 'get_subsector']);
-
-Route::get('catalog/subsector/{sectorID}', [CatalogController::class, 'get_subsector']);
-Route::get('catalog/unit/{organizationID}', [CatalogController::class, 'get_units']);
-
-Route::get('transparency/{organization?}/citizens', [TransparencyController::class, 'citizens'])->name('transparency.citizens');
-Route::get('transparency/map', [TransparencyController::class, 'map'])->name('transparency.map');
-Route::get('transparency/faq', [TransparencyController::class, 'faq'])->name('transparency.faq');
-Route::post('transparency/project_states', [TransparencyController::class, 'project_states'])->name('transparency.project_states');
-Route::get('transparency/project/{project_code}', [TransparencyController::class, 'project'])->name('transparency.project');
-Route::get('transparency/project_managment/{project}/{track_engage}', [TransparencyController::class, 'project_managment'])->name('transparency.project_managment');
-Route::post('transparency/search_results', [TransparencyController::class, 'search_results'])->name('transparency.results');
-
-Route::get('temporal/transparency/project/{project_code}', [TemporalController::class, 'project'])->name('temporal.project');
-Route::get('temporal/transparency/project_managment/{project}', [TemporalController::class, 'project_managment'])->name('temporal.project_managment');
-
-Route::get('reports/adquisitions', [ReportsController::class, 'adquisitions'])->name('reports.adquisitions');
-Route::get('reports/technicians', [ReportsController::class, 'technicians'])->name('reports.technicians');
-Route::get('reports/suppliers', [ReportsController::class, 'suppliers'])->name('reports.suppliers');
-Route::get('reports/managment', [ReportsController::class, 'managment'])->name('reports.managment');
-Route::get('reports/download', [ReportsController::class, 'download'])->name('reports.download');
-
-//tender
-Route::resource('tender', TenderController::class);
-Route::get('project-tender/{project}', [TenderController::class, 'index_tender']);
-Route::get('tender-create/{project}', [TenderController::class, 'create_tender']);
-
 Route::get('tender-offerer/{tender}', [TenderOffererController::class, 'index']);
-Route::post('tender-offerer', [TenderOffererController::class, 'store']);
-Route::get('tender-offerer/{tender}/delete', [TenderOffererController::class, 'destroy']);
-Route::get('get-supplier/{award}', [TenderOffererController::class, 'get_sup']);
+Route::get('award/{award}/contract', [AwardController::class, 'contract'])->name('award.contract.index');
+Route::get('contract/{contract}/ammendment', [ContractController::class, 'ammendment'])->name('contract.ammendment.index');
 
-Route::resource('award', AwardController::class);
-Route::get('tender-award/{tender}', [AwardController::class, 'award']);
-Route::get('award-create/{tender}', [AwardController::class, 'create_award']);
+Route::middleware(['auth'])->group(function () {
+    Route::put('user/{user}', [UsersController::class, 'update'])->name('user.update');
+    Route::resource('dashboard', DashboardController::class);
 
-Route::get('contract-create/{award}', [ContractController::class, 'create_contract']);
+    // catalog
+    Route::resource('catalog/organization', OrganizationController::class);
+    Route::resource('catalog/organization_unit', OrganizationUnitController::class);
+    Route::resource('catalog/official', OfficialController::class);
+    Route::resource('catalog/role', RoleController::class);
+    Route::resource('catalog/sector', SectorController::class);
+    Route::resource('catalog/subsector', SubsectorController::class);
+    Route::resource('catalog/source', SourceController::class);
+    Route::resource('catalog/purpose', PurposeController::class);
+    Route::post('catalog/purpose/api-web/store', [PurposeController::class, 'addFormApi'])->name('catalog.purpose.api-web.store');
+    Route::resource('catalog/contract_type', ContractTypeController::class);
+    Route::resource('catalog/offerer', OffererController::class);
+    Route::resource('catalog/tender_method', TenderMethodController::class);
+    Route::resource('catalog/contract_method', ContractMethodController::class);
+    Route::resource('catalog/warranty-type', WarrantyTypeController::class);
+    Route::resource('catalog/status', StatusController::class);
+    Route::resource('catalog/tender-status', TenderStatusController::class);
 
-//completions
-Route::get('/contract-completion/{completion}', [ContractController::class, 'completion']);
-Route::get('/contract-completion/{contract}/create', [ContractController::class, 'completion_create']);
-Route::get('/contract-completion/{completion}/edit', [ContractController::class, 'completion_edit']);
-Route::patch('/contract-completion/{completion}/update', [ContractController::class, 'completion_update']);
-Route::post('/contract-completion', [ContractController::class, 'completion_store']);
-Route::get('/contract-completion/{completion}/delete', [ContractController::class, 'completion_destroy']);
+    Route::get('subsector/ajax_get_subsector', [SubsectorController::class, 'ajax_get_subsector']);
+    Route::resource('currency', CurrencyController::class);
+    Route::resource('catalog/contact', ContactController::class);
 
-Route::get('logout', [LoginController::class, 'logout'])->name('auth.logout');
-Auth::routes();
+    Route::post('project-file', [ProjectController::class, 'store_file']);
+    Route::delete('project/file/destroy/{projectdocument}', [ProjectController::class, 'project_file_delete']);
 
-//contract-management
-Route::resource('ammendment', AmmendmentController::class);
-Route::get('contract-ammendment/{contract}', [AmmendmentController::class, 'ammendment']);
-Route::get('contract-ammendment/{contract}/create', [AmmendmentController::class, 'create_ammendment']);
+    Route::get('project/{project}/tender/create', [TenderController::class, 'create_tender'])->name('project.tender.create');
 
-//execution
-Route::resource('execution', ExecutionController::class);
-Route::get('contract-execution/{execution}', [ExecutionController::class, 'execution']);
-Route::get('contract-execution/{contract}/create', [ExecutionController::class, 'create_execution']);
+    Route::get('award/{award}/contract/create', [AwardController::class, 'contractCreate'])->name('award.contract.create');
 
-//disbursment
-Route::get('/disbursment/{execution}/create', [ExecutionController::class, 'disbursment']);
-Route::get('/disbursment/{disbursment}/edit', [ExecutionController::class, 'disbursment_edit']);
-Route::patch('/disbursment/{disbursment}/update', [ExecutionController::class, 'disbursment_update']);
-Route::post('/disbursment', [ExecutionController::class, 'disbursment_store']);
-Route::get('/disbursment/{disbursment}/delete', [ExecutionController::class, 'disbursment_destroy']);
+    Route::get('tender/{tender}/award/create', [TenderController::class, 'awardCreate'])->name('tender.award.create');
+    Route::get('tender/{tender}/offerer/create', [TenderController::class, 'offererCreate'])->name('tender.offerer.create');
 
-//warranty
-Route::get('/warranty/{execution}', [ExecutionController::class, 'warranty']);
-Route::get('/warranty/{execution}/create', [ExecutionController::class, 'create_warranty']);
-Route::get('/warranty/{warranty}/edit', [ExecutionController::class, 'edit_warranty']);
-Route::patch('/warranty/{warranty}/update', [ExecutionController::class, 'update_warranty']);
-Route::get('/warranty/{warranty}/delete', [ExecutionController::class, 'destroy_warranty']);
-Route::post('/warranty', [ExecutionController::class, 'warranty_store']);
+    // contract
+    Route::get('contract/{contract}/ammendment/create', [ContractController::class, 'ammendmentCreate'])->name('contract.ammendment.create');
 
-Route::resource('progress', ProgressController::class);
-Route::get('project-progress/{project}', [ProgressController::class, 'progress']);
-Route::get('project-progress/{project}/create', [ProgressController::class, 'create_progress']);
-Route::get('project-progress/{progress}/delete', [ProgressController::class, 'destroy']);
-Route::post('project-progress', [ProgressController::class, 'store']);
+    Route::get('contract/{contract}/execution', [ContractController::class, 'execution'])->name('contract.execution.index');
+    Route::get('contract/{contract}/execution/create', [ContractController::class, 'executionCreate'])->name('contract.execution.create');
 
-Route::get('/advance-images/{advance}', [ProgressController::class, 'images']);
-Route::post('/advance-images/{advance}', [ProgressController::class, 'images_store']);
-Route::get('/advance-image/{advance_image}/delete', [ProgressController::class, 'image_destroy']);
+    Route::get('contract/{contract}/completion', [ContractController::class, 'completion'])->name('contract.completion.index');
+    Route::get('contract/{contract}/completion/create', [ContractController::class, 'completionCreate'])->name('contract.completion.create');
 
-//get-typeahed
-Route::get('/get-contract-type', [ContractTypeController::class, 'get_data']);
-Route::get('/get-contract-method', [ContractMethodController::class, 'get_data']);
-Route::get('/get-tender-method', [TenderMethodController::class, 'get_data']);
-Route::get('/get-tender-status', [TenderStatusController::class, 'get_data']);
-Route::get('/get-status', [StatusController::class, 'get_data']);
-Route::get('/get-role', [RoleController::class, 'get_data']);
-Route::get('/get-warranty-type', [WarrantyTypeController::class, 'get_data']);
-Route::get('/get-sources', [SourceController::class, 'get_data']);
+    Route::resource('contract', ContractController::class);
 
-Route::post('agency/{agency}/user', [AgencyController::class, 'user'])->name('agency.user');
-Route::resource('agency', AgencyController::class);
-Route::resource('banner', BannerController::class);
+    //budget
+    Route::get('project-budget/{project}/create', [BudgetController::class, 'create']);
+    Route::get('project-budget/{budget}/edit', [BudgetController::class, 'edit']);
+    Route::patch('project-budget/{budget}/update', [BudgetController::class, 'update']);
+    Route::get('project-budget/{budget}/delete', [BudgetController::class, 'destroy']);
+    Route::post('project-budget', [BudgetController::class, 'store']);
+    Route::get('budget-source/{project_source}/delete', [BudgetController::class, 'destroy_source']);
+    Route::post('budget-source', [BudgetController::class, 'store_project_source']);
+
+    Route::get('get-unit/{entity}', [OrganizationUnitController::class, 'get_unit']);
+    Route::get('get-official/{unit}', [OfficialController::class, 'get_official']);
+    Route::get('get-subsector/{sector}', [SubsectorController::class, 'get_subsector']);
+
+    Route::get('catalog/subsector/{sectorID}', [CatalogController::class, 'get_subsector']);
+    Route::get('catalog/unit/{organizationID}', [CatalogController::class, 'get_units']);
+
+    Route::get('transparency/{organization?}/citizens', [TransparencyController::class, 'citizens'])->name('transparency.citizens');
+    Route::get('transparency/map', [TransparencyController::class, 'map'])->name('transparency.map');
+    Route::get('transparency/faq', [TransparencyController::class, 'faq'])->name('transparency.faq');
+    Route::post('transparency/project_states', [TransparencyController::class, 'project_states'])->name('transparency.project_states');
+    Route::get('transparency/project/{project_code}', [TransparencyController::class, 'project'])->name('transparency.project');
+    Route::get('transparency/project_managment/{project}/{track_engage}', [TransparencyController::class, 'project_managment'])->name('transparency.project_managment');
+    Route::post('transparency/search_results', [TransparencyController::class, 'search_results'])->name('transparency.results');
+
+    Route::get('temporal/transparency/project/{project_code}', [TemporalController::class, 'project'])->name('temporal.project');
+    Route::get('temporal/transparency/project_managment/{project}', [TemporalController::class, 'project_managment'])->name('temporal.project_managment');
+
+    Route::get('reports/adquisitions', [ReportsController::class, 'adquisitions'])->name('reports.adquisitions');
+    Route::get('reports/technicians', [ReportsController::class, 'technicians'])->name('reports.technicians');
+    Route::get('reports/suppliers', [ReportsController::class, 'suppliers'])->name('reports.suppliers');
+    Route::get('reports/managment', [ReportsController::class, 'managment'])->name('reports.managment');
+    Route::get('reports/download', [ReportsController::class, 'download'])->name('reports.download');
+
+    //tender
+    Route::resource('tender', TenderController::class);
+    Route::get('project-tender/{project}', [TenderController::class, 'index_tender']);
+    Route::get('tender-create/{project}', [TenderController::class, 'create_tender']);
+
+    Route::post('tender-offerer', [TenderOffererController::class, 'store']);
+    Route::get('tender-offerer/{tender}/delete', [TenderOffererController::class, 'destroy']);
+    Route::get('get-supplier/{award}', [TenderOffererController::class, 'get_sup']);
+
+    Route::resource('award', AwardController::class);
+    Route::get('tender-award/{tender}', [AwardController::class, 'award']);
+    Route::get('award-create/{tender}', [AwardController::class, 'create_award']);
+
+    Route::get('contract-create/{award}', [ContractController::class, 'create_contract']);
+
+    //completions
+    Route::get('contract-completion/{completion}', [ContractController::class, 'completion']);
+    Route::get('contract-completion/{contract}/create', [ContractController::class, 'completion_create']);
+    Route::get('contract-completion/{completion}/edit', [ContractController::class, 'completion_edit']);
+    Route::patch('contract-completion/{completion}/update', [ContractController::class, 'completion_update']);
+    Route::post('contract-completion', [ContractController::class, 'completion_store']);
+    Route::get('contract-completion/{completion}/delete', [ContractController::class, 'completion_destroy']);
+
+    //contract-management
+    Route::resource('ammendment', AmmendmentController::class);
+    Route::get('contract-ammendment/{contract}', [AmmendmentController::class, 'ammendment']);
+    Route::get('contract-ammendment/{contract}/create', [AmmendmentController::class, 'create_ammendment']);
+
+    //execution
+    Route::resource('execution', ExecutionController::class);
+    Route::get('contract-execution/{execution}', [ExecutionController::class, 'execution']);
+    Route::get('contract-execution/{contract}/create', [ExecutionController::class, 'create_execution']);
+
+    //disbursment
+    Route::get('disbursment/{execution}/create', [ExecutionController::class, 'disbursment']);
+    Route::get('disbursment/{disbursment}/edit', [ExecutionController::class, 'disbursment_edit']);
+    Route::patch('disbursment/{disbursment}/update', [ExecutionController::class, 'disbursment_update']);
+    Route::post('disbursment', [ExecutionController::class, 'disbursment_store']);
+    Route::get('disbursment/{disbursment}/delete', [ExecutionController::class, 'disbursment_destroy']);
+
+    //warranty
+    Route::get('warranty/{execution}', [ExecutionController::class, 'warranty']);
+    Route::get('warranty/{execution}/create', [ExecutionController::class, 'create_warranty']);
+    Route::get('warranty/{warranty}/edit', [ExecutionController::class, 'edit_warranty']);
+    Route::patch('warranty/{warranty}/update', [ExecutionController::class, 'update_warranty']);
+    Route::get('warranty/{warranty}/delete', [ExecutionController::class, 'destroy_warranty']);
+    Route::post('warranty', [ExecutionController::class, 'warranty_store']);
+
+    Route::resource('progress', ProgressController::class);
+    Route::get('project-progress/{project}', [ProgressController::class, 'progress']);
+    Route::get('project-progress/{project}/create', [ProgressController::class, 'create_progress']);
+    Route::get('project-progress/{progress}/delete', [ProgressController::class, 'destroy']);
+    Route::post('project-progress', [ProgressController::class, 'store']);
+
+    Route::get('advance-images/{advance}', [ProgressController::class, 'images']);
+    Route::post('advance-images/{advance}', [ProgressController::class, 'images_store']);
+    Route::get('advance-image/{advance_image}/delete', [ProgressController::class, 'image_destroy']);
+
+    //get-typeahed
+    Route::get('get-contract-type', [ContractTypeController::class, 'get_data']);
+    Route::get('get-contract-method', [ContractMethodController::class, 'get_data']);
+    Route::get('get-tender-method', [TenderMethodController::class, 'get_data']);
+    Route::get('get-tender-status', [TenderStatusController::class, 'get_data']);
+    Route::get('get-status', [StatusController::class, 'get_data']);
+    Route::get('get-role', [RoleController::class, 'get_data']);
+    Route::get('get-warranty-type', [WarrantyTypeController::class, 'get_data']);
+    Route::get('get-sources', [SourceController::class, 'get_data']);
+
+    Route::post('agency/{agency}/user', [AgencyController::class, 'user'])->name('agency.user');
+    Route::resource('agency', AgencyController::class);
+    Route::resource('banner', BannerController::class);
+});

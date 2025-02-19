@@ -17,7 +17,7 @@
                 @method('patch')
                 @endif
                 @php
-                $sectors = App\Sector::all();
+                $sectors = \App\Models\Sector::all();
                 @endphp
                 <div class="card-body">
                     <div class="row">

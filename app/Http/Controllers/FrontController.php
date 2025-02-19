@@ -36,7 +36,14 @@ class FrontController extends Controller
             \App\Models\File::latest()->first()->created_at ?? null,
         ];
         $arr_map = array_map('strtotime', $arr);
-        $projects = \App\Models\Project::latest()->get()->map(function ($project, $key) {
+        $projects = \App\Models\Project::latest();
+        if (request()->page) {
+            $limit = request()->limit ?? 10;
+            $projects = $projects->skip((request()->page - 1) * $limit)->take($limit);
+        } else if (request()->limit) {
+            $projects = $projects->take(request()->limit);
+        }
+        $projects = $projects->get()->map(function ($project, $key) {
             $p = $this->projectOc4idsFormat($project);
             return $p;
         })->toArray();
