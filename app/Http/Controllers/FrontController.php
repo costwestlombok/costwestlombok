@@ -62,9 +62,13 @@ class FrontController extends Controller
             'projects' => $projects,
         ];
         // $oc_json = json_encode($oc4ids, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-        Storage::disk('public')->put('docs/oc4ids.json', json_encode($oc4ids));
+        $path = 'docs/oc4ids.json';
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+        Storage::disk('public')->put($path, json_encode($oc4ids));
 
-        return redirect('storage/docs/oc4ids.json');
+        return redirect("storage/$path");
     }
 
     public function projectOc4idsFormat($project)
