@@ -89,7 +89,9 @@ class FrontController extends Controller
         if ($project->endDate) {
             $p['period']['endDate'] = $project->endDate;
         }
-        $p['period']['durationInDays'] = $project->duration;
+        if ($project->duration > 0) {
+            $p['period']['durationInDays'] = $project->duration;
+        }
         if ($project->subsector?->subsector_code && $project->subsector?->sector?->sector_code) {
             // $p['sector'] = [$project->subsector->sector->sector_name];
 
