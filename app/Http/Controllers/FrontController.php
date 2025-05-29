@@ -689,4 +689,9 @@ class FrontController extends Controller
     {
         return view('metronic.documentation');
     }
+
+    public function publicationPolicy()
+    {
+        return view('metronic.publication_policy');
+    }
 }

@@ -64,6 +64,7 @@ Route::get('helper/duration', [HelperController::class, 'duration']);
 Route::get('lang/{language}', [LocalizationController::class, 'switch'])->name('localization.switch');
 Route::get('', [FrontController::class, 'index']);
 Route::get('documentation', [FrontController::class, 'documentation']);
+Route::get('publication-policy', [FrontController::class, 'publicationPolicy']);
 
 Route::get('home', function () {
     if (Auth::check()) {
