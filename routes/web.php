@@ -242,3 +242,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('agency', AgencyController::class);
     Route::resource('banner', BannerController::class);
 });
+
+Route::get('/oc4ids/export/csv', [FrontController::class, 'exportCsv'])->name('oc4ids.export.csv');

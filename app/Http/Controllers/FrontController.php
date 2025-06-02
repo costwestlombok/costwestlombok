@@ -694,4 +694,153 @@ class FrontController extends Controller
     {
         return view('metronic.publication_policy');
     }
+
+    public function exportCsv()
+    {
+        // Get all projects
+        $projects = Project::latest()->get();
+        
+        // Create temporary directory for CSV files
+        $tempDir = storage_path('app/temp/csv_export_' . time());
+        if (!file_exists($tempDir)) {
+            mkdir($tempDir, 0755, true);
+        }
+
+        // Initialize CSV files
+        $csvFiles = [
+            'projects' => fopen($tempDir . '/projects.csv', 'w'),
+            'parties' => fopen($tempDir . '/parties.csv', 'w'),
+            'contracts' => fopen($tempDir . '/contracts.csv', 'w'),
+            'documents' => fopen($tempDir . '/documents.csv', 'w'),
+            'metrics' => fopen($tempDir . '/metrics.csv', 'w'),
+            'forecasts' => fopen($tempDir . '/forecasts.csv', 'w')
+        ];
+
+        // Write headers for each CSV
+        fputcsv($csvFiles['projects'], ['id', 'title', 'description', 'status', 'startDate', 'endDate', 'durationInDays', 'sector', 'purpose', 'type']);
+        fputcsv($csvFiles['parties'], ['project_id', 'party_id', 'name', 'roles', 'contact_name', 'email', 'phone', 'address']);
+        fputcsv($csvFiles['contracts'], ['project_id', 'contract_id', 'title', 'description', 'procurementMethod', 'numberOfTenderers', 'contractValue', 'supplier_id', 'supplier_name']);
+        fputcsv($csvFiles['documents'], ['project_id', 'document_id', 'description', 'documentType', 'url']);
+        fputcsv($csvFiles['metrics'], ['project_id', 'metric_id', 'title', 'measure', 'date']);
+        fputcsv($csvFiles['forecasts'], ['project_id', 'forecast_id', 'title', 'measure', 'date']);
+
+        // Process each project
+        foreach ($projects as $project) {
+            $projectData = $this->projectOc4idsFormat($project);
+            
+            // Write project data
+            fputcsv($csvFiles['projects'], [
+                $projectData['id'],
+                $projectData['title'],
+                $projectData['description'] ?? '',
+                $projectData['status'] ?? '',
+                $projectData['period']['startDate'] ?? '',
+                $projectData['period']['endDate'] ?? '',
+                $projectData['period']['durationInDays'] ?? '',
+                implode(',', $projectData['sector'] ?? []),
+                $projectData['purpose'] ?? '',
+                $projectData['type'] ?? ''
+            ]);
+
+            // Write parties data
+            if (isset($projectData['parties'])) {
+                foreach ($projectData['parties'] as $party) {
+                    fputcsv($csvFiles['parties'], [
+                        $projectData['id'],
+                        $party['id'],
+                        $party['name'],
+                        implode(',', $party['roles'] ?? []),
+                        $party['contactPoint']['name'] ?? '',
+                        $party['contactPoint']['email'] ?? '',
+                        $party['contactPoint']['telephone'] ?? '',
+                        $party['address']['streetAddress'] ?? ''
+                    ]);
+                }
+            }
+
+            // Write contracts data
+            if (isset($projectData['contractingProcesses'])) {
+                foreach ($projectData['contractingProcesses'] as $contract) {
+                    fputcsv($csvFiles['contracts'], [
+                        $projectData['id'],
+                        $contract['id'],
+                        $contract['summary']['title'],
+                        $contract['summary']['description'] ?? '',
+                        $contract['summary']['tender']['procurementMethod'] ?? '',
+                        $contract['summary']['tender']['numberOfTenderers'] ?? '',
+                        $contract['summary']['contractValue']['amount'] ?? '',
+                        $contract['summary']['suppliers'][0]['id'] ?? '',
+                        $contract['summary']['suppliers'][0]['name'] ?? ''
+                    ]);
+                }
+            }
+
+            // Write documents data
+            if (isset($projectData['documents'])) {
+                foreach ($projectData['documents'] as $document) {
+                    fputcsv($csvFiles['documents'], [
+                        $projectData['id'],
+                        $document['id'],
+                        $document['description'] ?? '',
+                        $document['documentType'] ?? '',
+                        $document['url'] ?? ''
+                    ]);
+                }
+            }
+
+            // Write metrics data
+            if (isset($projectData['metrics'])) {
+                foreach ($projectData['metrics'] as $metric) {
+                    foreach ($metric['observations'] as $observation) {
+                        fputcsv($csvFiles['metrics'], [
+                            $projectData['id'],
+                            $metric['id'],
+                            $metric['title'],
+                            $observation['measure'],
+                            $observation['period']['startDate']
+                        ]);
+                    }
+                }
+            }
+
+            // Write forecasts data
+            if (isset($projectData['forecasts'])) {
+                foreach ($projectData['forecasts'] as $forecast) {
+                    foreach ($forecast['observations'] as $observation) {
+                        fputcsv($csvFiles['forecasts'], [
+                            $projectData['id'],
+                            $forecast['id'],
+                            $forecast['title'],
+                            $observation['measure'],
+                            $observation['period']['startDate']
+                        ]);
+                    }
+                }
+            }
+        }
+
+        // Close all CSV files
+        foreach ($csvFiles as $file) {
+            fclose($file);
+        }
+
+        // Create zip file
+        $zipFile = storage_path('app/public/oc4ids_export_' . date('Y-m-d_His') . '.zip');
+        $zip = new \ZipArchive();
+        $zip->open($zipFile, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+        // Add CSV files to zip
+        foreach (glob($tempDir . '/*.csv') as $file) {
+            $zip->addFile($file, basename($file));
+        }
+
+        $zip->close();
+
+        // Clean up temporary directory
+        array_map('unlink', glob($tempDir . '/*.*'));
+        rmdir($tempDir);
+
+        // Return zip file for download
+        return response()->download($zipFile)->deleteFileAfterSend(true);
+    }
 }

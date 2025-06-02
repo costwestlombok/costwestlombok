@@ -176,6 +176,7 @@
 			<h3>Accessing the Data</h3>
 
 			<h4>OCDS Data Formats</h4>
+			<p>CoST West Lombok makes OCDS data available in various formats to meet the needs of different users. The following formats are available:</p>
 			<table>
 				<thead>
 					<tr>
@@ -187,22 +188,38 @@
 				<tbody>
 					<tr>
 						<td>Bulk OCDS release download (JSON)</td>
-						<td>Annual files segmented by release date</td>
+						<td>Annual files segmented by release date.<br><br>
+							Suitable for analysis and/or storage in a document database.</td>
 						<td><a href="https://intras.lombokbaratkab.go.id/oc4ids">https://intras.lombokbaratkab.go.id/oc4ids</a></td>
 					</tr>
 					<tr>
 						<td>Bulk OCDS record download (JSON)</td>
-						<td>Annual files segmented by initial release date</td>
+						<td>Annual files segmented by initial release date.<br><br>
+							Suitable for analysis and/or storage in a document database.</td>
 						<td><a href="https://intras.lombokbaratkab.go.id/oc4ids">https://intras.lombokbaratkab.go.id/oc4ids</a></td>
 					</tr>
 					<tr>
+						<td>Bulk OCDS release download (CSV)</td>
+						<td>Annual ZIP archive containing a multi-table CSV serialization of OCDS data, segmented by release date.<br><br>
+							Suitable for analysis in spreadsheet software and/or storage in a relational database.</td>
+						<td><a href="https://intras.lombokbaratkab.go.id/oc4ids/export/csv">https://intras.lombokbaratkab.go.id/oc4ids/export/csv</a></td>
+					</tr>
+					<tr>
+						<td>Bulk OCDS record download (CSV)</td>
+						<td>Annual ZIP archive containing a multi-table CSV serialization of OCDS data, segmented by initial release date.<br><br>
+							Suitable for analysis in spreadsheet software and/or storage in a relational database.</td>
+						<td><a href="https://intras.lombokbaratkab.go.id/oc4ids/export/csv">https://intras.lombokbaratkab.go.id/oc4ids/export/csv</a></td>
+					</tr>
+					<tr>
 						<td>Release API (JSON)</td>
-						<td>Programmatic API with query parameters for project_id</td>
+						<td>Programmatic API with query parameters for project_id.<br><br>
+							Suitable for access by digital tools to obtain recently updated data or to download a subset of data.</td>
 						<td><a href="https://intras.lombokbaratkab.go.id/oc4ids/project/{project_id}">https://intras.lombokbaratkab.go.id/oc4ids/project/{project_id}</a></td>
 					</tr>
 					<tr>
 						<td>Record API (JSON)</td>
-						<td>Programmatic API for project details</td>
+						<td>Programmatic API for project details.<br><br>
+							Suitable for access by tools, to obtain recently updated data or to download a subset of data.</td>
 						<td><a href="https://intras.lombokbaratkab.go.id/oc4ids/project/{project_id}">https://intras.lombokbaratkab.go.id/oc4ids/project/{project_id}</a></td>
 					</tr>
 				</tbody>
