@@ -19,6 +19,10 @@ class Award extends Model
         'published_at',
     ];
 
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+
     public function tender()
     {
         return $this->belongsTo(\App\Models\Tender::class, 'tender_id', 'id');
