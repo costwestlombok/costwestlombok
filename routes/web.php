@@ -117,6 +117,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('catalog/contact', ContactController::class);
 
     Route::post('project-file', [ProjectController::class, 'store_file']);
+    Route::post('project/import/excel', [ProjectController::class, 'importExcel'])->name('project.import.excel');
     Route::delete('project/file/destroy/{projectdocument}', [ProjectController::class, 'project_file_delete']);
 
     Route::get('project/{project}/tender/create', [TenderController::class, 'create_tender'])->name('project.tender.create');

@@ -75,6 +75,10 @@
             </a>
             <!--end::Button-->
             @endif
+            <button type="button" class="btn btn-light-primary font-weight-bolder ml-2" data-toggle="modal"
+                data-target="#importProjectExcelModal">
+                Import Excel
+            </button>
             <!--begin::Button-->
             <a href="{{ route('project.create') }}" class="btn btn-primary font-weight-bolder ml-2"><span
                     class="svg-icon svg-icon-md">
@@ -130,6 +134,39 @@
 </div>
 @endsection
 @section('script')
+<div class="modal fade" id="importProjectExcelModal" tabindex="-1" role="dialog"
+    aria-labelledby="importProjectExcelModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="{{ route('project.import.excel') }}" method="POST" enctype="multipart/form-data"
+            class="modal-content">
+            @csrf
+            <div class="modal-header">
+                <h5 class="modal-title" id="importProjectExcelModalLabel">Import Project dari Excel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-2">
+                    <label for="importProjectExcelFile">Pilih file Excel</label>
+                    <div></div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="importProjectExcelFile" name="file"
+                            accept=".xlsx,.xls" required>
+                        <label class="custom-file-label" for="importProjectExcelFile">{{ __('labels.choose_file') }}</label>
+                    </div>
+                </div>
+                <small class="text-muted">
+                    Gunakan template CoST IDS. Data per sheet seperti contoh "DATA COST APRIL" akan diproses.
+                </small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary font-weight-bold">Import</button>
+            </div>
+        </form>
+    </div>
+</div>
 <script>
     $('#status').select2({
         placeholder: "{{ __('labels.choose_status') }}"

@@ -7,6 +7,7 @@ use App\Libraries\Googlemaps;
 use App\Models\Project;
 use App\Models\ProjectDocument;
 use App\Models\Role;
+use App\Services\ProjectExcelImportService;
 use Auth;
 use Carbon\Carbon;
 use DataTables;
@@ -318,5 +319,24 @@ class ProjectController extends Controller
                 return date('Y-m-d H:i:s', strtotime($organization->created_at));
             })
             ->make(true);
+    }
+
+    public function importExcel(Request $request, ProjectExcelImportService $importService)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls',
+        ]);
+
+        try {
+            $result = $importService->import($request->file('file')->getRealPath());
+            Session::put(
+                'success',
+                "Import selesai. Data baru: {$result['imported']}, update: {$result['updated']}, dilewati: {$result['skipped']}."
+            );
+        } catch (\Throwable $th) {
+            Session::put('fail', 'Gagal import Excel: '.$th->getMessage());
+        }
+
+        return redirect()->route('project.index');
     }
 }
