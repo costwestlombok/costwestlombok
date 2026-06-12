@@ -35,37 +35,140 @@
     </noscript>
     <!-- End Google Tag Manager (noscript) -->
     <!--begin::Main-->
+    <!--begin::Main-->
+    <style>
+        .login-bg-container {
+            background: radial-gradient(circle at 10% 20%, #fdfbfc 0%, #f4f2eb 100%) !important;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 1.5rem;
+        }
+        /* Gradient glows in background */
+        .login-glow-1 {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.08) 0%, rgba(0,0,0,0) 70%);
+            top: 5%;
+            left: 5%;
+            z-index: 1;
+        }
+        .login-glow-2 {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.08) 0%, rgba(0,0,0,0) 70%);
+            bottom: 5%;
+            right: 5%;
+            z-index: 1;
+        }
+        .login-card {
+            background: #ffffff !important;
+            border: 1px solid #e2dfd8 !important;
+            border-radius: 24px !important;
+            box-shadow: 0 20px 50px rgba(120, 110, 90, 0.12) !important;
+            max-width: 440px;
+            width: 100%;
+            padding: 3rem 2.5rem !important;
+            position: relative;
+            z-index: 10;
+            transition: transform 0.3s ease;
+        }
+        .login-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(249, 115, 22, 0.3) !important;
+            box-shadow: 0 25px 60px rgba(234, 88, 12, 0.08) !important;
+        }
+        .login-card h3 {
+            font-size: 1.85rem !important;
+            font-weight: 800 !important;
+            letter-spacing: -0.03em;
+            color: #1c1917 !important;
+            margin-bottom: 0.5rem;
+        }
+        .login-card .text-muted {
+            color: #78716c !important;
+            font-weight: 500 !important;
+            margin-bottom: 2.25rem;
+        }
+        .login-card .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .login-card .form-control-solid {
+            background-color: #ffffff !important;
+            border: 1px solid #d6d3d1 !important;
+            color: #292524 !important;
+            border-radius: 12px !important;
+            padding: 14px 20px !important;
+            height: auto !important;
+            font-size: 0.95rem !important;
+            transition: all 0.25s ease !important;
+        }
+        .login-card .form-control-solid:focus {
+            border-color: #f97316 !important;
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15) !important;
+            background-color: #ffffff !important;
+        }
+        .login-card button[type="submit"] {
+            width: 100%;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+            border: none !important;
+            color: #fff !important;
+            font-weight: 700 !important;
+            font-size: 0.95rem !important;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 14px !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 18px rgba(234, 88, 12, 0.3) !important;
+            transition: all 0.25s ease !important;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        .login-card button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(234, 88, 12, 0.45) !important;
+        }
+    </style>
     <div class="d-flex flex-column flex-root">
         <!--begin::Login-->
-        <div class="login login-4 login-signin-on d-flex flex-row-fluid" id="kt_login">
-            <div class="d-flex flex-center flex-row-fluid bgi-size-cover bgi-position-top bgi-no-repeat" style="background-image: url({{ asset('metronic/assets/media/bg/bg-3.jpg') }});">
-                <div class="login-form text-center p-7 position-relative overflow-hidden">
-                    <!--begin::Login Header-->
-                    <div class="d-flex flex-center mb-15">
-                        <a href="{{ url('/') }}">
-                            <img src="{{ asset('images/cost_65.png') }}" class="max-h-65px" alt="" />
-                        </a>
-                    </div>
-                    <!--end::Login Header-->
-                    <!--begin::Login Sign in form-->
-                    <div class="login-signin">
-                        <div class="mb-20">
-                            <h3>{{ __('labels.sign_in') }}</h3>
-                            <div class="text-muted font-weight-bold">{{ __('labels.sign_in_sub') }}</div>
-                        </div>
-                        <form class="form" id="kt_login_signin_form" novalidate="novalidate" method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <div class="form-group">
-                                <input class="form-control h-auto form-control-solid py-4 px-8" type="text" placeholder="Username" name="username" value="{{ old('username') }}" autocomplete="off" />
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control h-auto form-control-solid py-4 px-8" type="password" placeholder="Password" name="password" autocomplete="off" />
-                            </div>
-                            <button type="submit" id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4">{{ __('labels.sign_in') }}</button>
-                        </form>
-                    </div>
-                    <!--end::Login Sign in form-->
+        <div class="login-bg-container">
+            <div class="login-glow-1"></div>
+            <div class="login-glow-2"></div>
+            
+            <div class="login-card text-center">
+                <!--begin::Login Header-->
+                <div class="d-flex flex-center mb-10">
+                    <a href="{{ url('/') }}">
+                        <img src="{{ asset('images/cost_65.png') }}" class="max-h-60px" alt="CoST Logo" />
+                    </a>
                 </div>
+                <!--end::Login Header-->
+                <!--begin::Login Sign in form-->
+                <div class="login-signin">
+                    <div>
+                        <h3>{{ __('labels.sign_in') }}</h3>
+                        <div class="text-muted">{{ __('labels.sign_in_sub') }}</div>
+                    </div>
+                    <form class="form" id="kt_login_signin_form" novalidate="novalidate" method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="form-group">
+                            <input class="form-control form-control-solid" type="text" placeholder="Username" name="username" value="{{ old('username') }}" autocomplete="off" required />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control form-control-solid" type="password" placeholder="Password" name="password" autocomplete="off" required />
+                        </div>
+                        <button type="submit" id="kt_login_signin_submit">{{ __('labels.sign_in') }}</button>
+                    </form>
+                </div>
+                <!--end::Login Sign in form-->
             </div>
         </div>
         <!--end::Login-->

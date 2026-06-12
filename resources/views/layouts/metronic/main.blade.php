@@ -509,6 +509,30 @@
                                 </a>
                             </div>
                         @endif
+                        <!--begin::Theme Toggle-->
+                        <div class="mr-4 topbar-item">
+                            <div class="btn btn-icon btn-sm btn-clean btn-text-dark-75" id="kt_theme_toggle" title="Toggle dark/light mode">
+                                <span class="svg-icon svg-icon-xl">
+                                    <!-- Sun Icon (for dark mode, to switch to light) -->
+                                    <svg id="theme-toggle-sun-icon" class="d-none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="5"></circle>
+                                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                    </svg>
+                                    <!-- Moon Icon (for light mode, to switch to dark) -->
+                                    <svg id="theme-toggle-moon-icon" class="d-none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                        <!--end::Theme Toggle-->
                         <div class="dropdown">
                             <!--begin::Toggle-->
                             <div class="mr-4 topbar-item" data-toggle="dropdown" data-offset="10px,0px" aria-expanded="false">
@@ -677,7 +701,7 @@
                                 <div class="order-2 text-dark order-md-1">
                                     <div>
                                         <a href="https://infrastructuretransparency.org/" target="_blank">
-                                            <img src="{{ url('/images/cwl_50.png') }}" alt="UNDP" class="mb-2 align-top img-responsive" height="50">
+                                            <img src="{{ url('/images/cwl_50.png') }}" alt="CoST" class="mb-2 align-top img-responsive" height="50">
                                         </a>
                                     </div>
                                     <div>

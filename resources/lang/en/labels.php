@@ -349,4 +349,12 @@ return [
     'change_password' => 'Change Password',
 
     'documentation' => 'Documentation',
+    'statistics_summary' => 'Statistics Summary',
+    'statistics_summary_sub' => 'Visual summary of infrastructure project data',
+    'all_years' => 'All Years',
+    'year' => 'Year',
+    'project_trend' => 'Project & Budget Trend',
+    'project_status_distribution' => 'Project Stage Distribution',
+    'budget_by_sector' => 'Budget Allocation by Sector',
+    'project_by_org' => 'Project Contributions by Organization',
 ];

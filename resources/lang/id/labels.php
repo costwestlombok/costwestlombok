@@ -352,4 +352,12 @@ return [
     'change_password' => 'Ubah Password',
 
     'documentation' => 'Dokumentasi',
+    'statistics_summary' => 'Statistik Ringkasan',
+    'statistics_summary_sub' => 'Ringkasan visual data proyek infrastruktur',
+    'all_years' => 'Semua Tahun',
+    'year' => 'Tahun',
+    'project_trend' => 'Tren Proyek & Anggaran',
+    'project_status_distribution' => 'Distribusi Tahapan Proyek',
+    'budget_by_sector' => 'Alokasi Anggaran per Sektor',
+    'project_by_org' => 'Kontribusi Proyek per Organisasi',
 ];

@@ -2,6 +2,16 @@
 <html lang="{{ app()->getLocale() }}">
 
 <head>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <meta charset="utf-8" />
     <title>{{ __('labels.title') }}</title>
     <meta name="description" content="" />
@@ -9,6 +19,7 @@
 
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <!--end::Fonts-->
 
     <!--begin::Global Theme Styles(used by all pages)-->
@@ -176,6 +187,36 @@
                 }
             });
         };
+        // Dark/Light Theme Switcher Logic
+        jQuery(document).ready(function() {
+            const toggleBtn = document.getElementById('kt_theme_toggle');
+            if (toggleBtn) {
+                const sunIcon = document.getElementById('theme-toggle-sun-icon');
+                const moonIcon = document.getElementById('theme-toggle-moon-icon');
+
+                function updateIcons(theme) {
+                    if (theme === 'dark') {
+                        sunIcon.classList.remove('d-none');
+                        moonIcon.classList.add('d-none');
+                    } else {
+                        sunIcon.classList.add('d-none');
+                        moonIcon.classList.remove('d-none');
+                    }
+                }
+
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                updateIcons(currentTheme);
+
+                toggleBtn.addEventListener('click', function() {
+                    const activeTheme = document.documentElement.getAttribute('data-theme');
+                    const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
+                    
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    updateIcons(newTheme);
+                });
+            }
+        });
     </script>
     @yield('script')
     <!-- Histats.com  (div with counter) -->

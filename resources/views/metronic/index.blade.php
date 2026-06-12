@@ -1,7 +1,337 @@
 @extends('layouts.metronic')
 @section('style')
+<style>
+    /* Premium chart styles & Theme blends */
+    .chart-container {
+        border: 1px solid #e7e5e0 !important;
+        background-color: #ffffff !important;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
+    }
+    
+    html[data-theme="dark"] .chart-container {
+        background-color: #1a1a1e !important;
+        border-color: #2d2d34 !important;
+    }
+    
+    html[data-theme="dark"] .chart-container h5 {
+        color: #f4f4f5 !important;
+    }
+    
+    .chart-container:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 10px 25px rgba(217, 119, 6, 0.08) !important;
+        border-color: rgba(217, 119, 6, 0.25) !important;
+    }
+    
+    html[data-theme="dark"] .chart-container:hover {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
+        border-color: rgba(249, 115, 22, 0.3) !important;
+    }
+</style>
 @endsection
 @section('script')
+<script>
+    jQuery(document).ready(function() {
+        // Year filter select change
+        $('#year-filter').on('change', function() {
+            var val = $(this).val();
+            var url = new URL(window.location.href);
+            if (val === 'all') {
+                url.searchParams.delete('year');
+            } else {
+                url.searchParams.set('year', val);
+            }
+            window.location.href = url.toString();
+        });
+
+        // Theme aware helper
+        function isDarkTheme() {
+            return document.documentElement.getAttribute('data-theme') === 'dark';
+        }
+
+        // Get labels & datasets from backend PHP arrays
+        const trendData = @json($trendData ?? []);
+        const statusData = @json($statusData ?? []);
+        const sectorData = @json($sectorData ?? []);
+        const orgData = @json($orgData ?? []);
+
+        // Chart 1: Trend Chart (Mix of Bar for project count and Line for total budget)
+        const trendLabels = trendData.map(item => item.label);
+        const trendCounts = trendData.map(item => item.count);
+        const trendBudgets = trendData.map(item => item.budget);
+
+        const trendOptions = {
+            series: [{
+                name: "{{ __('labels.project') ?? 'Jumlah Proyek' }}",
+                type: 'column',
+                data: trendCounts
+            }, {
+                name: "{{ __('labels.budget') ?? 'Total Anggaran' }} (Rp)",
+                type: 'line',
+                data: trendBudgets
+            }],
+            chart: {
+                height: 350,
+                type: 'line',
+                toolbar: { show: false },
+                foreColor: isDarkTheme() ? '#a1a1aa' : '#57534e'
+            },
+            stroke: {
+                width: [0, 4],
+                curve: 'smooth'
+            },
+            colors: ['#f97316', '#b45309'],
+            dataLabels: {
+                enabled: true,
+                enabledOnSeries: [0]
+            },
+            labels: trendLabels,
+            xaxis: {
+                type: 'category',
+                axisBorder: { show: false },
+                axisTicks: { show: false }
+            },
+            yaxis: [{
+                title: {
+                    text: "{{ __('labels.project') ?? 'Jumlah Proyek' }}",
+                },
+                labels: {
+                    formatter: function(val) { return Math.round(val); }
+                }
+            }, {
+                opposite: true,
+                title: {
+                    text: "{{ __('labels.budget') ?? 'Total Anggaran' }} (Rp)"
+                },
+                labels: {
+                    formatter: function(val) {
+                        if (val >= 1e9) {
+                            return (val / 1e9).toFixed(1) + ' Miliar';
+                        } else if (val >= 1e6) {
+                            return (val / 1e6).toFixed(1) + ' Juta';
+                        }
+                        return val;
+                    }
+                }
+            }],
+            tooltip: {
+                shared: true,
+                intersect: false,
+                y: {
+                    formatter: function (y) {
+                        if (typeof y !== "undefined") {
+                            if (y > 1000) {
+                                return "Rp " + y.toLocaleString('id-ID');
+                            }
+                            return y + " Proyek";
+                        }
+                        return y;
+                    }
+                },
+                theme: isDarkTheme() ? 'dark' : 'light'
+            },
+            theme: {
+                mode: isDarkTheme() ? 'dark' : 'light'
+            },
+            grid: {
+                borderColor: isDarkTheme() ? '#2d2d34' : '#e7e5e0'
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'center'
+            }
+        };
+
+        const chartTrend = new ApexCharts(document.querySelector("#chart-trend"), trendOptions);
+        chartTrend.render();
+
+        // Chart 2: Status Donut Chart
+        const statusLabels = statusData.map(item => item.label);
+        const statusCounts = statusData.map(item => item.count);
+
+        const statusOptions = {
+            series: statusCounts,
+            chart: {
+                height: 350,
+                type: 'donut',
+                foreColor: isDarkTheme() ? '#a1a1aa' : '#57534e'
+            },
+            labels: statusLabels,
+            colors: ['#ea580c', '#f59e0b', '#3b82f6', '#10b981', '#a855f7', '#64748b'],
+            stroke: {
+                show: true,
+                colors: [isDarkTheme() ? '#1a1a1e' : '#ffffff'],
+                width: 2
+            },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }],
+            tooltip: {
+                theme: isDarkTheme() ? 'dark' : 'light',
+                y: {
+                    formatter: function(val) {
+                        return val + " Proyek";
+                    }
+                }
+            },
+            theme: {
+                mode: isDarkTheme() ? 'dark' : 'light'
+            },
+            legend: {
+                position: 'bottom'
+            }
+        };
+
+        const chartStatus = new ApexCharts(document.querySelector("#chart-status"), statusOptions);
+        chartStatus.render();
+
+        // Chart 3: Sector Bar Chart
+        const sectorLabels = sectorData.map(item => item.label);
+        const sectorBudgets = sectorData.map(item => item.budget);
+
+        const sectorOptions = {
+            series: [{
+                name: "{{ __('labels.budget') ?? 'Total Anggaran' }}",
+                data: sectorBudgets
+            }],
+            chart: {
+                type: 'bar',
+                height: 320,
+                toolbar: { show: false },
+                foreColor: isDarkTheme() ? '#a1a1aa' : '#57534e'
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: true,
+                }
+            },
+            colors: ['#10b981'],
+            dataLabels: {
+                enabled: false
+            },
+            xaxis: {
+                categories: sectorLabels,
+                labels: {
+                    formatter: function(val) {
+                        if (val >= 1e9) {
+                            return (val / 1e9).toFixed(1) + ' M';
+                        } else if (val >= 1e6) {
+                            return (val / 1e6).toFixed(1) + ' Jt';
+                        }
+                        return val;
+                    }
+                },
+                axisBorder: { show: false },
+                axisTicks: { show: false }
+            },
+            grid: {
+                borderColor: isDarkTheme() ? '#2d2d34' : '#e7e5e0'
+            },
+            tooltip: {
+                theme: isDarkTheme() ? 'dark' : 'light',
+                y: {
+                    formatter: function(val) {
+                        return "Rp " + val.toLocaleString('id-ID');
+                    }
+                }
+            },
+            theme: {
+                mode: isDarkTheme() ? 'dark' : 'light'
+            }
+        };
+
+        const chartSector = new ApexCharts(document.querySelector("#chart-sector"), sectorOptions);
+        chartSector.render();
+
+        // Chart 4: Organization Pie Chart
+        const orgLabels = orgData.map(item => item.label);
+        const orgCounts = orgData.map(item => item.count);
+
+        const orgOptions = {
+            series: orgCounts,
+            chart: {
+                height: 320,
+                type: 'pie',
+                foreColor: isDarkTheme() ? '#a1a1aa' : '#57534e'
+            },
+            labels: orgLabels,
+            colors: ['#3b82f6', '#f59e0b', '#ef4444', '#10b981', '#a855f7'],
+            stroke: {
+                show: true,
+                colors: [isDarkTheme() ? '#1a1a1e' : '#ffffff'],
+                width: 2
+            },
+            tooltip: {
+                theme: isDarkTheme() ? 'dark' : 'light',
+                y: {
+                    formatter: function(val) {
+                        return val + " Proyek";
+                    }
+                }
+            },
+            theme: {
+                mode: isDarkTheme() ? 'dark' : 'light'
+            },
+            legend: {
+                position: 'bottom'
+            }
+        };
+
+        const chartOrg = new ApexCharts(document.querySelector("#chart-org"), orgOptions);
+        chartOrg.render();
+
+        // Handle Theme switches on the fly
+        const themeBtn = document.getElementById('kt_theme_toggle');
+        if (themeBtn) {
+            themeBtn.addEventListener('click', function() {
+                setTimeout(function() {
+                    const dark = isDarkTheme();
+                    const themeMode = dark ? 'dark' : 'light';
+                    const textColor = dark ? '#a1a1aa' : '#57534e';
+                    const gridColor = dark ? '#2d2d34' : '#e7e5e0';
+                    const strokeColor = dark ? '#1a1a1e' : '#ffffff';
+
+                    chartTrend.updateOptions({
+                        chart: { foreColor: textColor },
+                        theme: { mode: themeMode },
+                        tooltip: { theme: themeMode },
+                        grid: { borderColor: gridColor }
+                    });
+
+                    chartStatus.updateOptions({
+                        chart: { foreColor: textColor },
+                        theme: { mode: themeMode },
+                        tooltip: { theme: themeMode },
+                        stroke: { colors: [strokeColor] }
+                    });
+
+                    chartSector.updateOptions({
+                        chart: { foreColor: textColor },
+                        theme: { mode: themeMode },
+                        tooltip: { theme: themeMode },
+                        grid: { borderColor: gridColor }
+                    });
+
+                    chartOrg.updateOptions({
+                        chart: { foreColor: textColor },
+                        theme: { mode: themeMode },
+                        tooltip: { theme: themeMode },
+                        stroke: { colors: [strokeColor] }
+                    });
+                }, 100);
+            });
+        }
+    });
+</script>
 @endsection
 @section('content')
 <div class="d-flex flex-column-fluid">
@@ -10,9 +340,9 @@
         <div class="row">
             <div class="col-lg-8">
                 <!--begin::Nav Panel Widget 2-->
-                <div class="card card-custom gutter-b card-stretch card-shadowless">
+                <div class="gutter-b">
                     <!--begin::Body-->
-                    <div class="p-0 card-body table-responsive">
+                    <div class="p-0 table-responsive hide-scrollbar">
                         <!--begin::Nav Tabs-->
                         <ul class="p-0 m-0 dashboard-tabs nav nav-pills nav-danger" role="tablist"
                             style="min-width: 850px">
@@ -210,10 +540,10 @@
             </div>
             <div class="col-lg-4">
                 <!--begin::Engage Widget 8-->
-                <div class="card card-custom gutter-b card-stretch card-shadowless">
+                <div class="card card-custom gutter-b card-stretch card-shadowless bg-light-warning">
                     <div class="p-0 card-body d-flex">
                         <div
-                            class="p-8 d-flex align-items-start justify-content-start flex-grow-1 bg-light-warning card-rounded position-relative">
+                            class="p-8 d-flex align-items-start justify-content-start flex-grow-1 card-rounded position-relative">
                             <div class="d-flex flex-column align-items-start flex-grow-1 h-100">
                                 <div class="p-1 flex-grow-1">
                                     <h4 class="text-warning font-weight-bolder">{{ number_format($project_sum) }}
@@ -253,6 +583,69 @@
                 <!--end::Engage Widget 8-->
             </div>
         </div>
+        
+        <!--begin::Statistics Section-->
+        <div class="row gutter-b">
+            <div class="col-lg-12">
+                <div class="card card-custom card-stretch card-shadowless">
+                    <!--begin::Header-->
+                    <div class="py-5 border-0 card-header d-flex align-items-center justify-content-between flex-wrap">
+                        <div class="mr-2 card-title align-items-start flex-column">
+                            <span class="card-label font-weight-bolder text-dark font-size-h4">{{ __('labels.statistics_summary') ?? 'Statistik Ringkasan' }}</span>
+                            <span class="mt-1 text-muted font-weight-bold font-size-sm">{{ __('labels.statistics_summary_sub') ?? 'Ringkasan visual data proyek infrastruktur' }}</span>
+                        </div>
+                        <div class="my-2 card-toolbar d-flex align-items-center">
+                            <label class="mr-3 mb-0 font-weight-bold text-dark-75">{{ __('labels.year') ?? 'Tahun' }}:</label>
+                            <select id="year-filter" class="form-control form-control-sm" style="width: 130px; font-weight: 600;">
+                                <option value="all" {{ $selectedYear == 'all' ? 'selected' : '' }}>{{ __('labels.all_years') ?? 'Semua Tahun' }}</option>
+                                @foreach($availableYears as $year)
+                                    <option value="{{ $year }}" {{ $selectedYear == $year ? 'selected' : '' }}>{{ $year }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <!--end::Header-->
+                    <!--begin::Body-->
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Trend Chart -->
+                            <div class="col-lg-8 col-md-12 gutter-b">
+                                <div class="p-6 rounded chart-container">
+                                    <h5 class="text-dark font-weight-bolder mb-5 font-size-lg">{{ __('labels.project_trend') ?? 'Tren Proyek & Anggaran' }}</h5>
+                                    <div id="chart-trend" style="min-height: 350px;"></div>
+                                </div>
+                            </div>
+                            <!-- Status Chart -->
+                            <div class="col-lg-4 col-md-12 gutter-b">
+                                <div class="p-6 rounded chart-container">
+                                    <h5 class="text-dark font-weight-bolder mb-5 font-size-lg">{{ __('labels.project_status_distribution') ?? 'Distribusi Tahapan Proyek' }}</h5>
+                                    <div id="chart-status" style="min-height: 350px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Sector Budget Distribution -->
+                            <div class="col-lg-6 col-md-12 gutter-b">
+                                <div class="p-6 rounded chart-container">
+                                    <h5 class="text-dark font-weight-bolder mb-5 font-size-lg">{{ __('labels.budget_by_sector') ?? 'Alokasi Anggaran per Sektor' }}</h5>
+                                    <div id="chart-sector" style="min-height: 320px;"></div>
+                                </div>
+                            </div>
+                            <!-- Organization Contributions -->
+                            <div class="col-lg-6 col-md-12 gutter-b">
+                                <div class="p-6 rounded chart-container">
+                                    <h5 class="text-dark font-weight-bolder mb-5 font-size-lg">{{ __('labels.project_by_org') ?? 'Kontribusi Proyek per Organisasi' }}</h5>
+                                    <div id="chart-org" style="min-height: 320px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Body-->
+                </div>
+            </div>
+        </div>
+        <!--end::Statistics Section-->
+
         <div class="row">
             <div class="{{ Auth::user()->type == 'admin' ? 'col-lg-8' : 'col-lg-12' }}">
                 <!--begin::Advance Table Widget 1-->
@@ -304,7 +697,7 @@
                                         </td>
                                         <td class="text-center">
                                             <span
-                                                class="label label-lg label-light-success label-inline">{{ __('labels.'.$item->projectStatus->code) ?? '-' }}</span>
+                                                class="label label-lg label-light-success label-inline">{{ $item->projectStatus ? __('labels.'.$item->projectStatus->code) : '-' }}</span>
                                         </td>
                                         <td>
                                             <div class="mr-2 d-flex flex-column w-100">

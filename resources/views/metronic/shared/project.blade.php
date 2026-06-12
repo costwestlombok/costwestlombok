@@ -8,13 +8,14 @@
             <div class="d-flex flex-column mr-auto">
                 <!--begin: Title-->
                 <a href="{{ route('project.show', $project) }}"
-                    class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">{{ $project->project_title }}</a>
-                <span class="text-muted font-weight-bold">{{ __('labels.project_code') }}:
-                    {{ $project->project_code }}</span>
-                <span
-                    class="text-muted font-weight-bold">{{ $project->subsector->sector->sector_name ?? __('labels.no_sector') }}
-                    -
-                    {{ $project->subsector->subsector_name ?? __('labels.no_subsector') }}</span>
+                    class="card-title text-hover-primary font-weight-bolder font-size-h4 text-dark mb-2">{{ $project->project_title }}</a>
+                <div class="d-flex align-items-center flex-wrap mt-1">
+                    <span class="project-code-badge mr-3">{{ $project->project_code }}</span>
+                    <span class="text-muted font-weight-bold font-size-sm">
+                        <i class="flaticon2-map-pin-shape text-primary mr-1"></i>
+                        {{ $project->subsector->sector->sector_name ?? __('labels.no_sector') }} - {{ $project->subsector->subsector_name ?? __('labels.no_subsector') }}
+                    </span>
+                </div>
                 <!--end::Title-->
             </div>
             <!--end::Info-->
@@ -285,12 +286,12 @@
                 <div class="d-flex flex-column flex-lg-fill">
                     <a href="{{ url('project-budget/'.$project->id) }}"
                         class="text-dark-75 font-weight-bolder font-size-sm">{{ number_format($project->project_budget->count()) }}
-                        {{ __('labels.budget') }}</a>
+                        {{ __('labels.source_list') }}</a>
                     @if(Auth::check())
                     @if(Auth::user()->type == 'admin' || in_array($project->id,
                     Auth::user()->agency->agencyProjects()->pluck('project_id')->toArray()))
                     <a href="{{ url('project-budget/'.$project->id) }}"
-                        class="text-primary font-weight-bolder">{{ __('labels.add') }} {{ __('labels.budget') }}</a>
+                        class="text-primary font-weight-bolder">{{ __('labels.add') }} {{ __('labels.source_name') }}</a>
                     @endif
                     @endif
                 </div>

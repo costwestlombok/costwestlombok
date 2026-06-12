@@ -1,3 +1,4 @@
+/* Original utility styles preserved */
 .logo-image {
     margin: 11px 0;
     height: 28px;
@@ -11,7 +12,6 @@
 .column-fit {
     width: 1%;
     white-space: nowrap;
-    /* text-align: right !important; */
 }
 
 table.dataTable > tbody > tr.child ul.dtr-details {
@@ -19,7 +19,7 @@ table.dataTable > tbody > tr.child ul.dtr-details {
 }
 
 .border-radius {
-    border-radius: 0.85rem;
+    border-radius: 12px;
 }
 
 .textarea {
@@ -27,4 +27,1011 @@ table.dataTable > tbody > tr.child ul.dtr-details {
     font: inherit;
     white-space: pre-wrap;
     margin-bottom: 0;
+}
+
+/* ==========================================
+   IMPECCABLE DESIGN SYSTEM: WARM LIGHT THEME
+   ========================================== */
+
+/* 1. Typography & Global Body Reset */
+body, .btn, .card, .form-control, .menu-text, h1, h2, h3, h4, h5, h6, th, td, a {
+    font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif !important;
+}
+
+html, body, #kt_body {
+    background-color: #faf8f5 !important; /* Soft warm cream background */
+    color: #292524 !important; /* Stone charcoal */
+    overflow-x: hidden;
+}
+
+/* 2. Top Header Navigation (Clean Warm White) */
+.header, #kt_header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #e7e5e0 !important;
+    box-shadow: 0 2px 15px rgba(120, 110, 90, 0.05) !important;
+}
+
+.header-mobile {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #e7e5e0 !important;
+}
+
+/* 3. Aside Navigation Bar (Warm Light Grey Panel) */
+.aside, #kt_aside {
+    background-color: #f5f4f0 !important;
+    border-right: 1px solid #e7e5e0 !important;
+}
+
+.aside-menu {
+    background-color: transparent !important;
+}
+
+.aside-menu .menu-nav {
+    padding: 15px 0 !important;
+}
+
+.aside-menu .menu-nav .menu-item .menu-link {
+    border-radius: 10px !important;
+    margin: 4px 15px !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background-color: transparent !important;
+    color: #57534e !important;
+}
+
+.aside-menu .menu-nav .menu-item .menu-link:hover,
+.aside-menu .menu-nav .menu-item.menu-item-active > .menu-link {
+    background-color: #ffffff !important;
+    color: #b45309 !important; /* Warm amber active link text */
+    box-shadow: 0 4px 12px rgba(120, 110, 90, 0.05) !important;
+}
+
+.aside-menu .menu-nav .menu-item.menu-item-active > .menu-link {
+    border-left: 3px solid #f97316 !important; /* Terracotta active indicator */
+    padding-left: 22px !important;
+}
+
+.aside-menu .menu-nav .menu-item.menu-item-active > .menu-link .menu-icon svg path,
+.aside-menu .menu-nav .menu-item .menu-link:hover .menu-icon svg path {
+    fill: #ea580c !important;
+}
+
+.aside-menu .menu-nav .menu-section .menu-text {
+    color: #a8a29e !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.08em !important;
+    font-weight: 700 !important;
+}
+
+.aside-menu .menu-nav .menu-item .menu-submenu .menu-subnav {
+    background-color: rgba(245, 244, 240, 0.5) !important;
+}
+
+.aside-menu .menu-nav .menu-item .menu-submenu .menu-subnav .menu-item .menu-link {
+    margin: 2px 10px 2px 25px !important;
+}
+
+/* 4. Dashboard Cards (Warm Clean White with Soft Glow Shadows) */
+.card, .card.card-custom, .panel-flat, .modal-content {
+    background: #ffffff !important;
+    border: 1px solid #e7e5e0 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 6px 20px -4px rgba(120, 110, 90, 0.08) !important;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.card:hover, .panel-flat:hover {
+    transform: translateY(-4px) scale(1.005) !important;
+    box-shadow: 0 16px 36px -8px rgba(217, 119, 6, 0.12) !important; /* Soft warm glow */
+    border-color: rgba(217, 119, 6, 0.2) !important;
+}
+
+/* 5. Typography Contrast Correctors */
+h1, h2, h3, h4, h5, h6, 
+.card-title, .modal-title,
+.font-weight-bolder.text-dark, 
+.text-hover-primary,
+.menu-text, .subheader-title {
+    color: #1c1917 !important; /* Stone black */
+}
+
+.text-hover-primary:hover {
+    color: #ea580c !important; /* Terracotta hover link */
+}
+
+.text-muted, .text-dark-50, .text-dark-75, .subheader-transparent, .breadcrumb-item {
+    color: #78716c !important; /* Stone secondary gray */
+}
+
+/* 6. Form Control & Inputs styling (Warm Borders & Focus Glow) */
+.form-control, 
+.select2-container--default .select2-selection--single, 
+.select2-container--default .select2-selection--multiple,
+.custom-file-label {
+    background-color: #ffffff !important;
+    border: 1px solid #d6d3d1 !important;
+    color: #292524 !important;
+    border-radius: 10px !important;
+    padding: 0.6rem 1rem !important;
+    height: auto !important;
+    transition: all 0.25s ease !important;
+}
+
+.form-control:focus, 
+.select2-container--default.select2-container--open .select2-selection--single,
+.custom-file-input:focus ~ .custom-file-label {
+    border-color: #f97316 !important; /* Terracotta */
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #292524 !important;
+}
+
+.select2-dropdown {
+    background-color: #ffffff !important;
+    border: 1px solid #d6d3d1 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 10px 30px rgba(120, 110, 90, 0.15) !important;
+}
+
+.select2-results__option {
+    color: #57534e !important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #f97316 !important;
+    color: #ffffff !important;
+}
+
+/* Select2 single selection adjustments to match button height (40px) and prevent text truncation */
+.select2-container--default .select2-selection--single {
+    height: 40px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 38px !important;
+    padding-left: 1rem !important;
+    padding-right: 2.5rem !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 38px !important;
+    top: 0 !important;
+    right: 8px !important;
+}
+
+/* Select2 Search Field Design (Removes raw box-in-a-box styling) */
+.select2-search--dropdown {
+    padding: 8px 8px 4px 8px !important;
+    background-color: transparent !important;
+}
+
+.select2-search--dropdown .select2-search__field {
+    background-color: #faf8f5 !important;
+    border: 1px solid #e7e5e0 !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 0.75rem !important;
+    color: #292524 !important;
+    outline: none !important;
+    font-size: 0.9rem !important;
+}
+
+html[data-theme="dark"] .select2-search--dropdown .select2-search__field {
+    background-color: #222227 !important;
+    border: 1px solid #3a3a44 !important;
+    color: #e4e4e7 !important;
+}
+
+.select2-search--dropdown .select2-search__field:focus {
+    border-color: #f97316 !important;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15) !important;
+}
+
+/* Status dropdown min-width constraint to prevent text truncation */
+select#status + .select2-container {
+    min-width: 160px !important;
+}
+
+/* 7. Buttons Redesign (Warm Energetic Terracotta/Amber) */
+.btn {
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    padding: 0.6rem 1.2rem !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important; /* Terracotta gradient */
+    border: none !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 18px rgba(234, 88, 12, 0.25) !important;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 24px rgba(234, 88, 12, 0.4) !important;
+    opacity: 0.95 !important;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 18px rgba(16, 185, 129, 0.2) !important;
+}
+
+.btn-success:hover, .btn-success:focus {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 24px rgba(16, 185, 129, 0.35) !important;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 18px rgba(239, 68, 68, 0.2) !important;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 24px rgba(239, 68, 68, 0.35) !important;
+}
+
+.btn-light-primary {
+    background-color: rgba(249, 115, 22, 0.06) !important;
+    color: #c2410c !important;
+    border: 1px solid rgba(249, 115, 22, 0.12) !important;
+}
+
+.btn-light-primary:hover {
+    background-color: rgba(249, 115, 22, 0.12) !important;
+    color: #9a3412 !important;
+}
+
+.btn-light-danger {
+    background-color: rgba(239, 68, 68, 0.06) !important;
+    color: #b91c1c !important;
+    border: 1px solid rgba(239, 68, 68, 0.12) !important;
+}
+
+.btn-light-danger:hover {
+    background-color: rgba(239, 68, 68, 0.12) !important;
+    color: #7f1d1d !important;
+}
+
+.btn-clean {
+    color: #78716c !important;
+}
+
+.btn-clean:hover {
+    background-color: rgba(120, 110, 90, 0.05) !important;
+    color: #1c1917 !important;
+}
+
+/* 8. Dashboard Navigation Tabs (Warm Ivory Ivory Hover & Golden Highlights) */
+.dashboard-tabs {
+    border: none !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+}
+
+.dashboard-tabs .nav-item {
+    margin-bottom: 0.5rem !important;
+}
+
+.dashboard-tabs a.nav-link {
+    background: #ffffff !important;
+    border: 1px solid #e7e5e0 !important;
+    border-radius: 12px !important;
+    color: #78716c !important;
+    transition: all 0.3s ease !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem !important;
+    box-shadow: 0 4px 10px rgba(120, 110, 90, 0.03) !important;
+}
+
+.dashboard-tabs a.nav-link .nav-text,
+.dashboard-tabs a.nav-link span {
+    color: #78716c !important;
+    transition: color 0.3s ease !important;
+}
+
+.dashboard-tabs a.nav-link:hover {
+    background: #faf8f5 !important;
+    border-color: rgba(249, 115, 22, 0.3) !important;
+    color: #ea580c !important;
+    transform: translateY(-2px) !important;
+}
+
+.dashboard-tabs a.nav-link:hover .nav-text,
+.dashboard-tabs a.nav-link:hover span {
+    color: #ea580c !important;
+}
+
+.dashboard-tabs a.nav-link.active {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%) !important; /* Golden Warmth */
+    border-color: #f59e0b !important;
+    color: #b45309 !important;
+    box-shadow: 0 8px 20px rgba(217, 119, 6, 0.1), inset 0 0 10px rgba(217, 119, 6, 0.05) !important;
+}
+
+.dashboard-tabs a.nav-link.active .nav-text,
+.dashboard-tabs a.nav-link.active span {
+    color: #b45309 !important;
+}
+
+/* Default SVG colors */
+.dashboard-tabs.nav.nav-pills a.nav-link .nav-icon .svg-icon svg g [fill] {
+    fill: #a8a29e !important;
+}
+.dashboard-tabs.nav.nav-pills a.nav-link .nav-icon .svg-icon svg g [stroke] {
+    stroke: #a8a29e !important;
+}
+
+/* Active SVG colors */
+.dashboard-tabs.nav.nav-pills.nav-danger a.nav-link.active .nav-icon .svg-icon svg g [fill] {
+    fill: #b45309 !important;
+}
+.dashboard-tabs.nav.nav-pills.nav-danger a.nav-link.active .nav-icon .svg-icon svg g [stroke] {
+    stroke: #b45309 !important;
+}
+
+/* Hover SVG colors */
+.dashboard-tabs.nav.nav-pills.nav-danger a.nav-link:hover .nav-icon .svg-icon svg g [fill] {
+    fill: #ea580c !important;
+}
+.dashboard-tabs.nav.nav-pills.nav-danger a.nav-link:hover .nav-icon .svg-icon svg g [stroke] {
+    stroke: #ea580c !important;
+}
+
+/* 9. Progress Bars & Badges */
+.progress {
+    background-color: #f5f4f0 !important;
+    border-radius: 8px !important;
+    height: 8px !important;
+}
+
+.progress-bar {
+    border-radius: 8px !important;
+    background: linear-gradient(90deg, #f97316 0%, #d97706 100%) !important;
+}
+
+.progress-bar.bg-warning {
+    background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%) !important;
+}
+
+.label, .badge {
+    border-radius: 6px !important;
+    font-weight: 600 !important;
+    padding: 0.35em 0.65em !important;
+}
+
+/* 10. Tables Redesign */
+.table {
+    background-color: transparent !important;
+    color: #44403c !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+.table th:not(.p-0), .table.table-head-custom thead th:not(.p-0) {
+    background-color: #f2efe7 !important; /* Soft warmer blend */
+    border-bottom: 2px solid #e2dfd8 !important;
+    border-top: 1px solid #e2dfd8 !important;
+    color: #57534e !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 1rem 0.75rem !important;
+}
+
+.table th:not(.p-0):first-child, .table.table-head-custom thead th:not(.p-0):first-child {
+    border-top-left-radius: 12px !important;
+    border-bottom-left-radius: 12px !important;
+    border-left: 1px solid #e2dfd8 !important;
+}
+
+.table th:not(.p-0):last-child, .table.table-head-custom thead th:not(.p-0):last-child {
+    border-top-right-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
+    border-right: 1px solid #e2dfd8 !important;
+}
+
+.table td {
+    border-top: 1px solid #f5f4f0 !important;
+    vertical-align: middle !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #faf8f5 !important;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #ffffff !important;
+}
+
+/* 11. Modal customizations */
+.modal-header {
+    border-bottom: 1px solid #e7e5e0 !important;
+}
+
+.modal-footer {
+    border-top: 1px solid #e7e5e0 !important;
+}
+
+/* 12. Dropdowns */
+.dropdown-menu {
+    background-color: #ffffff !important;
+    border: 1px solid #e7e5e0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(120, 110, 90, 0.1) !important;
+}
+
+.dropdown-item {
+    color: #57534e !important;
+    transition: all 0.2s ease !important;
+}
+
+.dropdown-item:hover {
+    background-color: #faf8f5 !important;
+    color: #ea580c !important;
+}
+
+/* 13. Search bar quick-search reset */
+.quick-search .input-group {
+    background-color: #ffffff !important;
+    border: 1px solid #d6d3d1 !important;
+    border-radius: 10px !important;
+}
+
+.quick-search input {
+    background-color: transparent !important;
+    color: #292524 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.quick-search .input-group-text {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.quick-search .input-group-text svg path {
+    fill: #78716c !important;
+}
+
+/* 14. Carousel indicator reset */
+.carousel-indicators li {
+    background-color: rgba(120, 110, 90, 0.3) !important;
+}
+
+.carousel-indicators li.active {
+    background-color: #f97316 !important;
+}
+
+/* 15. Project Code Badge */
+.project-code-badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    color: #c2410c !important; /* deep warm terracotta */
+    background-color: rgba(249, 115, 22, 0.08) !important;
+    border: 1px solid rgba(249, 115, 22, 0.15) !important;
+    border-radius: 8px !important;
+    line-height: 1 !important;
+}
+
+/* ==========================================
+   IMPECCABLE DESIGN SYSTEM: DARK MODE
+   ========================================== */
+html[data-theme="dark"],
+html[data-theme="dark"] body,
+html[data-theme="dark"] #kt_body {
+    background-color: #121214 !important; /* Deep charcoal slate */
+    color: #e4e4e7 !important; /* Premium light silver */
+}
+
+/* 2. Top Header Navigation (Clean Dark Charcoal) */
+html[data-theme="dark"] .header,
+html[data-theme="dark"] #kt_header {
+    background-color: #1a1a1e !important;
+    border-bottom: 1px solid #2d2d34 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-theme="dark"] .header-mobile {
+    background-color: #1a1a1e !important;
+    border-bottom: 1px solid #2d2d34 !important;
+}
+
+/* 3. Aside Navigation Bar (Deep Dark Grey Panel) */
+html[data-theme="dark"] .aside,
+html[data-theme="dark"] #kt_aside {
+    background-color: #151518 !important;
+    border-right: 1px solid #2d2d34 !important;
+}
+
+html[data-theme="dark"] .aside-menu .menu-nav .menu-item .menu-link {
+    color: #a1a1aa !important;
+}
+
+html[data-theme="dark"] .aside-menu .menu-nav .menu-item .menu-link:hover,
+html[data-theme="dark"] .aside-menu .menu-nav .menu-item.menu-item-active > .menu-link {
+    background-color: #1e1e24 !important;
+    color: #f97316 !important; /* Terracotta active link text */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+}
+
+html[data-theme="dark"] .aside-menu .menu-nav .menu-item.menu-item-active > .menu-link {
+    border-left: 3px solid #f97316 !important;
+}
+
+html[data-theme="dark"] .aside-menu .menu-nav .menu-item.menu-item-active > .menu-link .menu-icon svg path,
+html[data-theme="dark"] .aside-menu .menu-nav .menu-item .menu-link:hover .menu-icon svg path {
+    fill: #f97316 !important;
+}
+
+html[data-theme="dark"] .aside-menu .menu-nav .menu-section .menu-text {
+    color: #71717a !important;
+}
+
+html[data-theme="dark"] .aside-menu .menu-nav .menu-item .menu-submenu .menu-subnav {
+    background-color: rgba(21, 21, 24, 0.5) !important;
+}
+
+/* 4. Dashboard Cards (Dark Charcoal Panel with Soft Shadow) */
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .card.card-custom,
+html[data-theme="dark"] .panel-flat,
+html[data-theme="dark"] .modal-content {
+    background: #1a1a1e !important;
+    border: 1px solid #2d2d34 !important;
+    box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.3) !important;
+}
+
+html[data-theme="dark"] .card:hover,
+html[data-theme="dark"] .panel-flat:hover {
+    box-shadow: 0 16px 36px -8px rgba(249, 115, 22, 0.15) !important; /* Terracotta soft glow */
+    border-color: rgba(249, 115, 22, 0.3) !important;
+}
+
+/* 5. Typography Contrast Correctors */
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] h5,
+html[data-theme="dark"] h6,
+html[data-theme="dark"] .card-title,
+html[data-theme="dark"] .modal-title,
+html[data-theme="dark"] .font-weight-bolder.text-dark,
+html[data-theme="dark"] .text-hover-primary,
+html[data-theme="dark"] .menu-text,
+html[data-theme="dark"] .subheader-title,
+html[data-theme="dark"] .text-dark-75 {
+    color: #f4f4f5 !important; /* Light zinc text */
+}
+
+html[data-theme="dark"] .text-hover-primary:hover {
+    color: #f97316 !important;
+}
+
+html[data-theme="dark"] .text-muted,
+html[data-theme="dark"] .text-dark-50,
+html[data-theme="dark"] .subheader-transparent,
+html[data-theme="dark"] .breadcrumb-item {
+    color: #a1a1aa !important; /* Zinc zinc-400 */
+}
+
+/* 6. Form Control & Inputs styling */
+html[data-theme="dark"] .form-control,
+html[data-theme="dark"] .select2-container--default .select2-selection--single,
+html[data-theme="dark"] .select2-container--default .select2-selection--multiple,
+html[data-theme="dark"] .custom-file-label {
+    background-color: #222227 !important;
+    border: 1px solid #3a3a44 !important;
+    color: #e4e4e7 !important;
+}
+
+html[data-theme="dark"] .form-control:focus,
+html[data-theme="dark"] .select2-container--default.select2-container--open .select2-selection--single,
+html[data-theme="dark"] .custom-file-input:focus ~ .custom-file-label {
+    border-color: #f97316 !important;
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.25) !important;
+}
+
+html[data-theme="dark"] .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #e4e4e7 !important;
+}
+
+html[data-theme="dark"] .select2-dropdown {
+    background-color: #1e1e24 !important;
+    border: 1px solid #3a3a44 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+html[data-theme="dark"] .select2-results__option {
+    color: #d4d4d8 !important;
+}
+
+/* 7. Buttons Adjustments for Dark Mode */
+html[data-theme="dark"] .btn-clean {
+    color: #a1a1aa !important;
+}
+
+html[data-theme="dark"] .btn-clean:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .btn-light-primary {
+    background-color: rgba(249, 115, 22, 0.1) !important;
+    color: #fdba74 !important;
+    border: 1px solid rgba(249, 115, 22, 0.2) !important;
+}
+
+html[data-theme="dark"] .btn-light-primary:hover {
+    background-color: rgba(249, 115, 22, 0.2) !important;
+    color: #ffedd5 !important;
+}
+
+/* 8. Dashboard Navigation Tabs (Dark Premium Card & Deep Amber Gradient) */
+html[data-theme="dark"] .dashboard-tabs a.nav-link {
+    background: #1a1a1e !important;
+    border: 1px solid #2d2d34 !important;
+    color: #a1a1aa !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+html[data-theme="dark"] .dashboard-tabs a.nav-link .nav-text,
+html[data-theme="dark"] .dashboard-tabs a.nav-link span {
+    color: #a1a1aa !important;
+}
+
+html[data-theme="dark"] .dashboard-tabs a.nav-link:hover {
+    background: #222227 !important;
+    border-color: rgba(249, 115, 22, 0.4) !important;
+    color: #f97316 !important;
+}
+
+html[data-theme="dark"] .dashboard-tabs a.nav-link:hover .nav-text,
+html[data-theme="dark"] .dashboard-tabs a.nav-link:hover span {
+    color: #f97316 !important;
+}
+
+html[data-theme="dark"] .dashboard-tabs a.nav-link.active {
+    background: linear-gradient(135deg, #451a03 0%, #78350f 100%) !important; /* Deep Warm Amber */
+    border-color: #f59e0b !important;
+    color: #fef3c7 !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(217, 119, 6, 0.1) !important;
+}
+
+html[data-theme="dark"] .dashboard-tabs a.nav-link.active .nav-text,
+html[data-theme="dark"] .dashboard-tabs a.nav-link.active span {
+    color: #fef3c7 !important;
+}
+
+/* SVG colors in dark mode */
+html[data-theme="dark"] .dashboard-tabs.nav.nav-pills a.nav-link .nav-icon .svg-icon svg g [fill] {
+    fill: #a1a1aa !important;
+}
+html[data-theme="dark"] .dashboard-tabs.nav.nav-pills a.nav-link .nav-icon .svg-icon svg g [stroke] {
+    stroke: #a1a1aa !important;
+}
+
+html[data-theme="dark"] .dashboard-tabs.nav.nav-pills.nav-danger a.nav-link.active .nav-icon .svg-icon svg g [fill] {
+    fill: #fef3c7 !important;
+}
+html[data-theme="dark"] .dashboard-tabs.nav.nav-pills.nav-danger a.nav-link.active .nav-icon .svg-icon svg g [stroke] {
+    stroke: #fef3c7 !important;
+}
+
+html[data-theme="dark"] .dashboard-tabs.nav.nav-pills.nav-danger a.nav-link:hover .nav-icon .svg-icon svg g [fill] {
+    fill: #f97316 !important;
+}
+html[data-theme="dark"] .dashboard-tabs.nav.nav-pills.nav-danger a.nav-link:hover .nav-icon .svg-icon svg g [stroke] {
+    stroke: #f97316 !important;
+}
+
+/* 10. Tables Redesign for Dark Mode */
+html[data-theme="dark"] .table {
+    color: #d4d4d8 !important;
+}
+
+html[data-theme="dark"] .table th:not(.p-0), 
+html[data-theme="dark"] .table.table-head-custom thead th:not(.p-0) {
+    background-color: #222227 !important;
+    border-bottom: 2px solid #2d2d34 !important;
+    border-top: 1px solid #2d2d34 !important;
+    color: #a1a1aa !important;
+}
+
+html[data-theme="dark"] .table th:not(.p-0):first-child, 
+html[data-theme="dark"] .table.table-head-custom thead th:not(.p-0):first-child {
+    border-left: 1px solid #2d2d34 !important;
+}
+
+html[data-theme="dark"] .table th:not(.p-0):last-child, 
+html[data-theme="dark"] .table.table-head-custom thead th:not(.p-0):last-child {
+    border-right: 1px solid #2d2d34 !important;
+}
+
+html[data-theme="dark"] .table td {
+    border-top: 1px solid #222227 !important;
+}
+
+html[data-theme="dark"] .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #1c1c21 !important;
+}
+
+html[data-theme="dark"] .table-striped tbody tr:nth-of-type(even) {
+    background-color: #1a1a1e !important;
+}
+
+html[data-theme="dark"] .table a {
+    color: #fdba74 !important; /* Warm light orange link */
+}
+
+html[data-theme="dark"] .table a:hover {
+    color: #f97316 !important;
+    text-decoration: none !important;
+}
+
+/* 11. Modal, Dropdowns & Header tweaks */
+html[data-theme="dark"] .modal-header,
+html[data-theme="dark"] .modal-footer,
+html[data-theme="dark"] .dropdown-menu {
+    border-color: #2d2d34 !important;
+}
+
+html[data-theme="dark"] .dropdown-menu {
+    background-color: #1a1a1e !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-theme="dark"] .dropdown-item {
+    color: #a1a1aa !important;
+}
+
+html[data-theme="dark"] .dropdown-item:hover {
+    background-color: #222227 !important;
+    color: #f97316 !important;
+}
+
+/* 13. Search bar quick-search reset */
+html[data-theme="dark"] .quick-search .input-group {
+    background-color: #222227 !important;
+    border: 1px solid #3a3a44 !important;
+}
+
+html[data-theme="dark"] .quick-search input {
+    color: #e4e4e7 !important;
+}
+
+html[data-theme="dark"] .quick-search .input-group-text svg path {
+    fill: #a1a1aa !important;
+}
+
+/* footer */
+html[data-theme="dark"] .footer {
+    background-color: #1a1a1e !important;
+    border-top: 1px solid #2d2d34 !important;
+}
+
+html[data-theme="dark"] .footer a {
+    color: #fdba74 !important;
+}
+
+html[data-theme="dark"] .footer a:hover {
+    color: #f97316 !important;
+}
+
+/* Scrolltop */
+html[data-theme="dark"] .scrolltop {
+    background-color: #f97316 !important;
+}
+
+/* Custom theme switch icon adjustments */
+html[data-theme="dark"] #theme-toggle-sun-icon {
+    color: #fdba74 !important; /* Soft glowing sun */
+}
+
+html:not([data-theme="dark"]) #theme-toggle-moon-icon {
+    color: #57534e !important; /* Warm charcoal moon */
+}
+
+/* Excavator card styling overrides for dark mode */
+html[data-theme="dark"] .bg-light-warning {
+    background-color: #2a2015 !important;
+    border-color: #3f301d !important;
+}
+
+html[data-theme="dark"] .bg-light-warning h4.text-warning {
+    color: #fdba74 !important;
+}
+
+html[data-theme="dark"] .bg-light-warning p.text-dark-50 {
+    color: #e4e4e7 !important;
+}
+
+html[data-theme="dark"] .bg-light-warning .btn-link-warning {
+    color: #fdba74 !important;
+}
+
+html[data-theme="dark"] .bg-light-warning .btn-link-warning svg g [fill] {
+    fill: #fdba74 !important;
+}
+
+html[data-theme="dark"] .bg-light-warning .btn-link-warning svg g [stroke] {
+    stroke: #fdba74 !important;
+}
+
+/* Adjust excavator image brightness/contrast in dark mode */
+html[data-theme="dark"] .bg-light-warning img {
+    filter: brightness(0.85) contrast(1.1) !important;
+}
+
+/* Histats button styling to make it blend and less distracting */
+#histats_counter {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    z-index: 9999;
+    opacity: 0.45;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(120, 110, 90, 0.15) !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    padding: 3px !important;
+    border: 1px solid #e7e5e0 !important;
+}
+
+html[data-theme="dark"] #histats_counter {
+    background-color: rgba(26, 26, 30, 0.8) !important;
+    border-color: #2d2d34 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+#histats_counter:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* ==========================================
+   DARK MODE: UI COMPONENTS FIXES
+   ========================================== */
+
+/* <code> tags */
+html[data-theme="dark"] code {
+    background-color: rgba(249, 115, 22, 0.12) !important;
+    color: #fdba74 !important;
+    border: 1px solid rgba(249, 115, 22, 0.2) !important;
+}
+
+/* Label badges */
+html[data-theme="dark"] .label.label-light-success,
+html[data-theme="dark"] .label.label-light-info,
+html[data-theme="dark"] .label.label-light-warning,
+html[data-theme="dark"] .label.label-light-danger,
+html[data-theme="dark"] .label.label-light-primary {
+    background-color: rgba(28, 197, 189, 0.15) !important;
+    color: #5eead4 !important;
+    border: 1px solid rgba(28, 197, 189, 0.25) !important;
+}
+
+html[data-theme="dark"] .label.label-light-info {
+    background-color: rgba(137, 80, 252, 0.15) !important;
+    color: #c4b5fd !important;
+    border-color: rgba(137, 80, 252, 0.25) !important;
+}
+
+html[data-theme="dark"] .label.label-light-warning {
+    background-color: rgba(255, 168, 0, 0.15) !important;
+    color: #fcd34d !important;
+    border-color: rgba(255, 168, 0, 0.25) !important;
+}
+
+html[data-theme="dark"] .label.label-light-danger {
+    background-color: rgba(246, 78, 96, 0.15) !important;
+    color: #fca5a5 !important;
+    border-color: rgba(246, 78, 96, 0.25) !important;
+}
+
+html[data-theme="dark"] .label.label-light-primary {
+    background-color: rgba(105, 147, 255, 0.15) !important;
+    color: #93c5fd !important;
+    border-color: rgba(105, 147, 255, 0.25) !important;
+}
+
+/* Progress bars */
+html[data-theme="dark"] .progress {
+    background-color: #2d2d34 !important;
+}
+
+html[data-theme="dark"] .progress-bar.bg-danger {
+    background: linear-gradient(90deg, #f97316 0%, #ea580c 100%) !important;
+}
+
+html[data-theme="dark"] .progress-bar.bg-warning {
+    background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%) !important;
+}
+
+/* btn-light-success */
+html[data-theme="dark"] .btn.btn-light-success {
+    background-color: rgba(28, 197, 189, 0.15) !important;
+    color: #5eead4 !important;
+    border: 1px solid rgba(28, 197, 189, 0.25) !important;
+}
+
+html[data-theme="dark"] .btn.btn-light-success:hover,
+html[data-theme="dark"] .btn.btn-light-success:focus {
+    background-color: rgba(28, 197, 189, 0.25) !important;
+    color: #99f6e4 !important;
+}
+
+html[data-theme="dark"] .btn.btn-light-success i {
+    color: #5eead4 !important;
+}
+
+/* svg-icon-success */
+html[data-theme="dark"] .svg-icon.svg-icon-success svg g [fill] {
+    fill: #5eead4 !important;
+}
+
+html[data-theme="dark"] .btn.btn-light .svg-icon svg g [fill] {
+    fill: #a1a1aa !important;
+}
+
+html[data-theme="dark"] .btn.btn-light {
+    background-color: #2d2d34 !important;
+    border-color: #3a3a44 !important;
+}
+
+html[data-theme="dark"] .btn.btn-light:hover {
+    background-color: #3a3a44 !important;
+}
+
+/* Dashboard bg-light cards */
+html[data-theme="dark"] .bg-light {
+    background-color: #1a1a1e !important;
+}
+
+html[data-theme="dark"] .bg-light-success {
+    background-color: #152520 !important;
+}
+
+html[data-theme="dark"] .bg-light-info {
+    background-color: #1a1828 !important;
+}
+
+html[data-theme="dark"] .card-stretch.bg-light .card-label.text-dark,
+html[data-theme="dark"] .card-stretch.bg-light-success .card-title.text-dark,
+html[data-theme="dark"] .card-stretch.bg-light-info .card-label.text-dark,
+html[data-theme="dark"] .bg-light .text-dark,
+html[data-theme="dark"] .bg-light-success .text-dark,
+html[data-theme="dark"] .bg-light-info .text-dark {
+    color: #f4f4f5 !important;
+}
+
+html[data-theme="dark"] .footer .text-dark-75 {
+    color: #fdba74 !important;
+}
+
+html[data-theme="dark"] .footer .order-2.text-dark {
+    color: #e4e4e7 !important;
+}
+
+/* Project code badge dark mode */
+html[data-theme="dark"] .project-code-badge {
+    color: #fdba74 !important;
+    background-color: rgba(249, 115, 22, 0.12) !important;
+    border-color: rgba(249, 115, 22, 0.25) !important;
 }
