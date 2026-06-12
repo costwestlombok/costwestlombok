@@ -104,10 +104,10 @@
                 <table class="table" id="kt_datatable" style="margin-top: 13px !important">
                     <thead>
                         <tr>
-                            <th class="text-center column-fit">#</th>
+                            <th class="text-center column-fit no-sort">#</th>
                             <th>{{ __('labels.status') }}</th>
                             <th class="column-fit">{{ __('labels.created_at') }}</th>
-                            <th class="text-right column-fit">{{ __('labels.action') }}</th>
+                            <th class="text-right column-fit no-sort">{{ __('labels.action') }}</th>
                         </tr>
                     </thead>
                 </table>

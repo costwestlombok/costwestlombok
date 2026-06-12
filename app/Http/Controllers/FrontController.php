@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Award;
+use App\Models\Completion;
+use App\Models\Contract;
 use App\Models\Project;
+use App\Models\Tender;
 use Auth;
 use DB;
 use Illuminate\Support\Facades\Storage;
@@ -16,13 +20,40 @@ class FrontController extends Controller
         if (Auth::check()) {
             return redirect('home');
         }
-        if (!request()->get('type') || request()->get('type') == 'road') {
-            $projects = Project::orderBy('created_at', 'DESC')->limit(5)->get();
-        } else {
-            $projects = Project::whereNull('id')->get();
+
+        $type = request()->get('type', 'road');
+        $allowedTypes = ['airport', 'building', 'energy', 'port', 'road', 'telecommunication'];
+        if (!in_array($type, $allowedTypes, true)) {
+            $type = 'road';
         }
 
-        return view('metronic.dashboard', compact('projects'));
+        $projectCount = Project::count();
+
+        $stats = [
+            'projects' => $projectCount,
+            'tenders' => Tender::count(),
+            'awards' => Award::count(),
+            'contracts' => Contract::count(),
+            'completions' => Completion::count(),
+        ];
+
+        $categoryCounts = [
+            'airport' => 0,
+            'building' => 0,
+            'energy' => 0,
+            'port' => 0,
+            'road' => $projectCount,
+            'telecommunication' => 0,
+        ];
+
+        $projects = $type === 'road'
+            ? Project::with(['subsector.sector', 'projectStatus', 'latest_progress'])
+                ->orderByDesc('created_at')
+                ->limit(6)
+                ->get()
+            : collect();
+
+        return view('metronic.dashboard', compact('projects', 'stats', 'categoryCounts', 'type'));
     }
 
     public function oc4ids()

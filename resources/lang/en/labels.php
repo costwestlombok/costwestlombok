@@ -55,8 +55,20 @@ return [
 
     // landing
     'latest' => 'Latest Project',
-    'latest_sub' => '5 of the latest project',
+    'latest_sub' => 'Recently published infrastructure projects',
     'view_all' => 'View All',
+    'landing_stats_sub' => 'Infrastructure transparency data summary',
+    'quick_access' => 'Quick Access',
+    'quick_access_sub' => 'CoST documents and open data',
+    'documentation_sub' => 'Platform user guide',
+    'publication_policy_sub' => 'Project data publication standards',
+    'open_data_sub' => 'Download projects in open format',
+    'open_data' => 'Open Data',
+    'publication_policy' => 'Publication Policy',
+    'no_projects_in_category' => 'No projects in this category yet.',
+    'others' => 'Others',
+    'not_determined' => 'Not determined',
+    'unknown' => 'Not determined',
 
     // shared/project
     'document' => 'Document',

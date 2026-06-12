@@ -701,7 +701,8 @@
                                 <div class="order-2 text-dark order-md-1">
                                     <div>
                                         <a href="https://infrastructuretransparency.org/" target="_blank">
-                                            <img src="{{ url('/images/cwl_50.png') }}" alt="CoST" class="mb-2 align-top img-responsive" height="50">
+                                            <img src="{{ url('/images/cwl_50.png') }}" alt="CoST" class="footer-cost-logo footer-cost-logo--light mb-2 align-top img-responsive" height="50">
+                                            <img src="{{ asset('images/logo-light.png') }}" alt="CoST" class="footer-cost-logo footer-cost-logo--dark mb-2 align-top img-responsive" height="50">
                                         </a>
                                     </div>
                                     <div>

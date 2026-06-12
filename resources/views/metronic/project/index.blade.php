@@ -23,7 +23,7 @@
                     @if(request()->status)
                     <input type="hidden" name="status" value="{{ request()->status }}">
                     @endif
-                    <div class="input-group input-group-sm input-group-solid" style="max-width: 175px">
+                    <div class="input-group input-group-sm" style="max-width: 175px">
                         <input type="text" name="query" value="{{ request()->get('query') }}" class="form-control"
                             id="kt_subheader_search_form" placeholder="{{ __('labels.search') }}...">
                         <div class="input-group-append">
@@ -169,10 +169,18 @@
 </div>
 <script>
     $('#status').select2({
-        placeholder: "{{ __('labels.choose_status') }}"
+        placeholder: "{{ __('labels.choose_status') }}",
+        minimumResultsForSearch: Infinity,
     });
     $('#status').on("change", function() {
-        window.location.href = "{{ url('project') }}?status=" + this.value;
+        var params = new URLSearchParams(window.location.search);
+        if (this.value === 'all') {
+            params.delete('status');
+        } else {
+            params.set('status', this.value);
+        }
+        var query = params.toString();
+        window.location.href = "{{ url('project') }}" + (query ? '?' + query : '');
     });
 </script>
 @endsection

@@ -55,8 +55,20 @@ return [
 
     // landing
     'latest' => 'Proyek Terbaru',
-    'latest_sub' => '5 dari proyek terbaru',
+    'latest_sub' => 'Informasi proyek infrastruktur yang baru dipublikasikan',
     'view_all' => 'Lihat Semua',
+    'landing_stats_sub' => 'Ringkasan data transparansi infrastruktur',
+    'quick_access' => 'Akses Cepat',
+    'quick_access_sub' => 'Dokumen dan data terbuka CoST',
+    'documentation_sub' => 'Panduan penggunaan platform',
+    'publication_policy_sub' => 'Standar publikasi data proyek',
+    'open_data_sub' => 'Unduh data proyek format terbuka',
+    'open_data' => 'Data Terbuka',
+    'publication_policy' => 'Kebijakan Publikasi',
+    'no_projects_in_category' => 'Belum ada proyek pada kategori ini.',
+    'others' => 'Lainnya',
+    'not_determined' => 'Belum ditentukan',
+    'unknown' => 'Belum ditentukan',
 
     // shared/project
     'document' => 'Dokumen',

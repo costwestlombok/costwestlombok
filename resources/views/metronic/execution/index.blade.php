@@ -315,7 +315,7 @@
                             <th>{{ __('labels.amount') }}</th>
                             <th>{{ __('labels.description') }}</th>
                             <th class="column-fit">{{ __('labels.created_at') }}</th>
-                            <th class="text-right column-fit">{{ __('labels.action') }}</th>
+                            <th class="text-right column-fit no-sort">{{ __('labels.action') }}</th>
                         </tr>
                     </thead>
                 </table>

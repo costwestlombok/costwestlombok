@@ -3,6 +3,16 @@
 <!--begin::Head-->
 
 <head>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <meta charset="utf-8" />
     <title>{{ __('labels.title') }}</title>
     <meta name="description" content="Login page example" />
@@ -137,6 +147,22 @@
             box-shadow: 0 6px 24px rgba(234, 88, 12, 0.45) !important;
         }
     </style>
+    <button type="button" class="login-theme-toggle" id="kt_theme_toggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode">
+        <svg id="theme-toggle-sun-icon" class="d-none" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg id="theme-toggle-moon-icon" class="d-none" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
     <div class="d-flex flex-column flex-root">
         <!--begin::Login-->
         <div class="login-bg-container">
@@ -257,6 +283,36 @@
             toastr.error('{!! Session::pull('fail') !!}');
         </script>
     @endif
+    <script>
+        (function() {
+            const toggleBtn = document.getElementById('kt_theme_toggle');
+            if (!toggleBtn) return;
+
+            const sunIcon = document.getElementById('theme-toggle-sun-icon');
+            const moonIcon = document.getElementById('theme-toggle-moon-icon');
+
+            function updateIcons(theme) {
+                if (theme === 'dark') {
+                    sunIcon.classList.remove('d-none');
+                    moonIcon.classList.add('d-none');
+                } else {
+                    sunIcon.classList.add('d-none');
+                    moonIcon.classList.remove('d-none');
+                }
+            }
+
+            updateIcons(document.documentElement.getAttribute('data-theme') || 'light');
+
+            toggleBtn.addEventListener('click', function() {
+                const activeTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
+
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateIcons(newTheme);
+            });
+        })();
+    </script>
     @yield('script')
     <!-- Histats.com  (div with counter) -->
     <div id="histats_counter"></div>

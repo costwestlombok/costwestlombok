@@ -1,17 +1,7 @@
 @extends('layouts.metronic')
 @section('style')
-<!--begin::Page Vendors Styles(used by this page)-->
-<link href="{{ asset('metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet"
-    type="text/css" />
-<!--end::Page Vendors Styles-->
 @endsection
 @section('script')
-<!--begin::Page Vendors(used by this page)-->
-<script src="{{ asset('metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
-<!--end::Page Vendors-->
-<!--begin::Page Scripts(used by this page)-->
-<script src="{{ asset('metronic/assets/js/pages/widgets.js') }}"></script>
-<!--end::Page Scripts-->
 @endsection
 @section('content')
 <div class="d-flex flex-column-fluid">
@@ -53,19 +43,44 @@
         </div>
         <!--end::Row-->
         @endif
+        <!--begin::Welcome-->
+        <div class="row gutter-b">
+            <div class="col-xl-12">
+                <div class="card card-custom landing-hero-card">
+                    <div class="card-body py-8 px-8 d-flex flex-column flex-lg-row align-items-lg-center justify-content-between">
+                        <div class="mr-lg-10 mb-6 mb-lg-0">
+                            <h2 class="font-weight-bolder text-dark mb-2">{{ __('labels.welcome') }}</h2>
+                            <p class="text-muted font-size-lg mb-0">{{ __('labels.welcome_sub') }}</p>
+                        </div>
+                        <div class="d-flex flex-wrap">
+                            <a href="{{ url('documentation') }}" class="btn btn-light-primary font-weight-bold mr-3 mb-2">
+                                {{ __('labels.documentation') }}
+                            </a>
+                            <a href="{{ url('oc4ids') }}" class="btn btn-light-warning font-weight-bold mr-3 mb-2">
+                                {{ __('labels.open_data') }}
+                            </a>
+                            <a href="{{ route('login') }}" class="btn btn-primary font-weight-bold mb-2">
+                                {{ __('labels.sign_in') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Welcome-->
         <!--begin::Row-->
         <div class="row">
             <div class="col-xl-12">
                 <!--begin::Nav Panel Widget 2-->
-                <div class="card card-custom gutter-b card-stretch card-shadowless">
+                <div class="gutter-b">
                     <!--begin::Body-->
-                    <div class="p-0 card-body table-responsive">
+                    <div class="p-0 table-responsive hide-scrollbar">
                         <!--begin::Nav Tabs-->
-                        <ul class="p-0 m-0 dashboard-tabs nav nav-pills nav-danger row row-paddingless" role="tablist"
+                        <ul class="p-0 m-0 dashboard-tabs nav nav-pills nav-danger" role="tablist"
                             style="min-width: 910px">
                             <!--begin::Item-->
-                            <li class="flex-shrink-0 mb-3 mr-3 nav-item d-flex col flex-grow-1 mb-lg-0">
-                                <a class="nav-link {{ request()->get('type') == 'airport' ? 'active' : '' }} border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <a class="py-10 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center {{ $type == 'airport' ? 'active' : '' }}"
                                     href="{{ url('/').'?type=airport' }}">
                                     <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
@@ -87,16 +102,13 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ strtoupper(__('labels.airport')) }}</span>
-                                    <span
-                                        class="d-block {{ request()->get('type') == 'airport' ? '' : 'text-muted' }} font-size-sm text-center">0
-                                        {{ __('labels.project') }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.airport') }}<br />{{ number_format($categoryCounts['airport']) }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="flex-shrink-0 mb-3 mr-3 nav-item d-flex col flex-grow-1 mb-lg-0">
-                                <a class="nav-link {{ request()->get('type') == 'building' ? 'active' : '' }} border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <a class="py-10 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center {{ $type == 'building' ? 'active' : '' }}"
                                     href="{{ url('/').'?type=building' }}">
                                     <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
@@ -119,17 +131,13 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ strtoupper(__('labels.building')) }}</span>
-                                    <span
-                                        class="d-block {{ request()->get('type') == 'building' ? '' : 'text-muted' }} font-size-sm text-center">0
-                                        {{ __('labels.project') }}</span>
-
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.building') }}<br />{{ number_format($categoryCounts['building']) }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="flex-shrink-0 mb-3 mr-3 nav-item d-flex col flex-grow-1 mb-lg-0">
-                                <a class="nav-link {{ request()->get('type') == 'energy' ? 'active' : '' }} border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <a class="py-10 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center {{ $type == 'energy' ? 'active' : '' }}"
                                     href="{{ url('/').'?type=energy' }}">
                                     <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
@@ -155,16 +163,13 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ strtoupper(__('labels.energy')) }}</span>
-                                    <span
-                                        class="d-block {{ request()->get('type') == 'energy' ? '' : 'text-muted' }} font-size-sm text-center">0
-                                        {{ __('labels.project') }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.energy') }}<br />{{ number_format($categoryCounts['energy']) }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="flex-shrink-0 mb-3 mr-3 nav-item d-flex col flex-grow-1 mb-lg-0">
-                                <a class="nav-link {{ request()->get('type') == 'port' ? 'active' : '' }} border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <a class="py-10 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center {{ $type == 'port' ? 'active' : '' }}"
                                     href="{{ url('/').'?type=port' }}">
                                     <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
@@ -189,16 +194,13 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ strtoupper(__('labels.port')) }}</span>
-                                    <span
-                                        class="d-block {{ request()->get('type') == 'port' ? '' : 'text-muted' }} font-size-sm text-center">0
-                                        {{ __('labels.project') }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.port') }}<br />{{ number_format($categoryCounts['port']) }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="flex-shrink-0 mb-3 mr-3 nav-item d-flex col flex-grow-1 mb-lg-0">
-                                <a class="nav-link {{ !request()->get('type') || request()->get('type') == 'road' ? 'active' : '' }} border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <a class="py-10 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center {{ $type == 'road' ? 'active' : '' }}"
                                     href="{{ url('/').'?type=road' }}">
                                     <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
@@ -219,16 +221,13 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ strtoupper(__('labels.road')) }}</span>
-                                    <span
-                                        class="d-block {{ !request()->get('type') || request()->get('type') == 'road' ? '' : 'text-muted' }} font-size-sm text-center">{{ number_format(App\Models\Project::count()) }}
-                                        {{ __('labels.project') }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bold">{{ __('labels.road') }}<br />{{ number_format($categoryCounts['road']) }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="flex-shrink-0 mb-3 mr-0 nav-item d-flex col flex-grow-1 mb-lg-0">
-                                <a class="nav-link {{ request()->get('type') == 'telecommunication' ? 'active' : '' }} border py-10 d-flex flex-grow-1 rounded flex-column align-items-center"
+                            <li class="flex-shrink-0 mr-0 nav-item d-flex flex-grow-1">
+                                <a class="py-10 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center {{ $type == 'telecommunication' ? 'active' : '' }}"
                                     href="{{ url('/').'?type=telecommunication' }}">
                                     <span class="w-auto py-2 nav-icon">
                                         <span class="svg-icon svg-icon-3x">
@@ -250,25 +249,12 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ strtoupper(__('labels.telecommunication')) }}</span>
-                                    <span
-                                        class="d-block {{ request()->get('type') == 'telecommunication' ? '' : 'text-muted' }} font-size-sm text-center">0
-                                        {{ __('labels.project') }}</span>
+                                        class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.telecommunication') }}<br />{{ number_format($categoryCounts['telecommunication']) }}</span>
                                 </a>
                             </li>
                             <!--end::Item-->
                         </ul>
                         <!--end::Nav Tabs-->
-                        <!--begin::Nav Content-->
-                        <div class="p-0 m-0 tab-content">
-                            <div class="tab-pane" id="forms_widget_tab_1" role="tabpanel"></div>
-                            <div class="tab-pane" id="forms_widget_tab_2" role="tabpanel"></div>
-                            <div class="tab-pane" id="forms_widget_tab_3" role="tabpanel"></div>
-                            <div class="tab-pane" id="forms_widget_tab_4" role="tabpanel"></div>
-                            <div class="tab-pane" id="forms_widget_tab_5" role="tabpanel"></div>
-                            <div class="tab-pane" id="forms_widget_tab_6" role="tabpanel"></div>
-                        </div>
-                        <!--end::Nav Content-->
                     </div>
                     <!--end::Body-->
                 </div>
@@ -276,52 +262,136 @@
             </div>
         </div>
         <!--end::Row-->
-        <!--begin::Row-->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="mt-5 mb-10 d-flex align-items-center">
-                    <!--begin::Text-->
-                    <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                        <a href="#"
-                            class="mb-1 text-dark text-hover-primary font-size-h5">{{ __('labels.latest') }}</a>
-                        <span class="text-muted">{{ __('labels.latest_sub') }}</span>
+        <!--begin::Stats Overview-->
+        <div class="row gutter-b">
+            <div class="col-xl-12">
+                <div class="gutter-b">
+                    <div class="p-0 table-responsive hide-scrollbar">
+                        <ul class="p-0 m-0 dashboard-tabs nav nav-pills nav-danger" role="tablist" style="min-width: 720px">
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <div class="py-8 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center active landing-stat-card">
+                                    <span class="py-2 text-center nav-text font-size-lg font-weight-bold">{{ __('labels.project') }}<br />{{ number_format($stats['projects']) }}</span>
+                                </div>
+                            </li>
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <div class="py-8 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center landing-stat-card">
+                                    <span class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.tender') }}<br />{{ number_format($stats['tenders']) }}</span>
+                                </div>
+                            </li>
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <div class="py-8 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center landing-stat-card">
+                                    <span class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.award') }}<br />{{ number_format($stats['awards']) }}</span>
+                                </div>
+                            </li>
+                            <li class="flex-shrink-0 mr-3 nav-item d-flex flex-grow-1">
+                                <div class="py-8 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center landing-stat-card">
+                                    <span class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.contract') }}<br />{{ number_format($stats['contracts']) }}</span>
+                                </div>
+                            </li>
+                            <li class="flex-shrink-0 mr-0 nav-item d-flex flex-grow-1">
+                                <div class="py-8 border rounded nav-link d-flex flex-grow-1 flex-column align-items-center landing-stat-card">
+                                    <span class="py-2 text-center nav-text font-size-lg font-weight-bolder">{{ __('labels.completion') }}<br />{{ number_format($stats['completions']) }}</span>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    <!--end::Text-->
-                    <!--begin::Dropdown-->
-                    <a href="{{ route('project.index') }}"
-                        class="btn btn-link btn-link-primary font-weight-bold">{{ __('labels.view_all') }}<span
-                            class="svg-icon svg-icon-lg svg-icon-primary">
-                            <!--begin::Svg Icon | path:/metronic/theme/html/demo5/dist/assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                    <rect fill="#000000" opacity="0.3"
-                                        transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                        x="11" y="5" width="2" height="14" rx="1"></rect>
-                                    <path
-                                        d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                        fill="#000000" fill-rule="nonzero"
-                                        transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                    </path>
-                                </g>
-                            </svg>
-                            <!--end::Svg Icon-->
-                        </span></a>
-                    <!--end::Dropdown-->
+                    <p class="text-muted font-size-sm mb-0 mt-2">{{ __('labels.landing_stats_sub') }}</p>
                 </div>
             </div>
         </div>
-        <!--end::Row-->
-        <!--begin::Row-->
-        <div class="row">
-            @foreach ($projects as $project)
-            <div class="col-md-12">
-                @include('metronic.shared.project')
+        <!--end::Stats Overview-->
+        <!--begin::Quick Access-->
+        <div class="row gutter-b">
+            <div class="col-xl-12 mb-4">
+                <h4 class="font-weight-bolder text-dark mb-1">{{ __('labels.quick_access') }}</h4>
+                <span class="text-muted font-size-sm">{{ __('labels.quick_access_sub') }}</span>
             </div>
-            @endforeach
+            <div class="col-lg-4 col-md-6">
+                <a href="{{ url('documentation') }}" class="card card-custom landing-quick-card h-100 text-hover-primary">
+                    <div class="card-body d-flex align-items-center py-6">
+                        <span class="svg-icon svg-icon-3x svg-icon-primary mr-5">
+                            <i class="flaticon2-open-text-book icon-3x text-primary"></i>
+                        </span>
+                        <div>
+                            <div class="font-weight-bolder text-dark font-size-h6">{{ __('labels.documentation') }}</div>
+                            <div class="text-muted font-size-sm">{{ __('labels.documentation_sub') }}</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <a href="{{ url('publication-policy') }}" class="card card-custom landing-quick-card h-100 text-hover-primary">
+                    <div class="card-body d-flex align-items-center py-6">
+                        <span class="svg-icon svg-icon-3x svg-icon-warning mr-5">
+                            <i class="flaticon2-file icon-3x text-warning"></i>
+                        </span>
+                        <div>
+                            <div class="font-weight-bolder text-dark font-size-h6">{{ __('labels.publication_policy') }}</div>
+                            <div class="text-muted font-size-sm">{{ __('labels.publication_policy_sub') }}</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <a href="{{ url('oc4ids') }}" class="card card-custom landing-quick-card h-100 text-hover-primary">
+                    <div class="card-body d-flex align-items-center py-6">
+                        <span class="svg-icon svg-icon-3x svg-icon-success mr-5">
+                            <i class="flaticon2-download icon-3x text-success"></i>
+                        </span>
+                        <div>
+                            <div class="font-weight-bolder text-dark font-size-h6">{{ __('labels.open_data') }} (OC4IDS)</div>
+                            <div class="text-muted font-size-sm">{{ __('labels.open_data_sub') }}</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
-        <!--end::Row-->
+        <!--end::Quick Access-->
+        <!--begin::Latest Projects-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mb-8 d-flex align-items-center">
+                    <div class="d-flex flex-column flex-grow-1">
+                        <h4 class="mb-1 text-dark font-weight-bolder">{{ __('labels.latest') }}</h4>
+                        <span class="text-muted">{{ __('labels.latest_sub') }}</span>
+                    </div>
+                    @if($type === 'road' && $projects->count())
+                    <a href="{{ url('project') }}" class="btn btn-link btn-link-primary font-weight-bold">
+                        {{ __('labels.view_all') }}
+                    </a>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @forelse ($projects as $project)
+            <div class="col-lg-6">
+                @include('metronic.shared.project-card-public')
+            </div>
+            @empty
+            <div class="col-12">
+                <div class="card card-custom">
+                    <div class="card-body text-center py-12">
+                        <span class="svg-icon svg-icon-4x svg-icon-muted mb-5 d-block">
+                            <i class="flaticon2-search-1 icon-4x text-muted"></i>
+                        </span>
+                        <h5 class="text-muted font-weight-bold mb-2">{{ __('labels.no_project') }}</h5>
+                        <p class="text-muted mb-0">{{ __('labels.no_projects_in_category') }}</p>
+                    </div>
+                </div>
+            </div>
+            @endforelse
+        </div>
+        <!--end::Latest Projects-->
+        <div class="row gutter-b mt-6">
+            <div class="col-xl-12">
+                <div class="card card-custom landing-support-card">
+                    <div class="card-body py-6 px-8">
+                        <p class="text-muted font-size-sm mb-0">{{ __('labels.supported_by') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!--end::Container-->
 </div>

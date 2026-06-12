@@ -107,7 +107,7 @@ class DashboardController extends Controller
             return $p->projectStatus ? $p->projectStatus->code : 'unknown';
         });
         foreach ($groupedByStatus as $statusCode => $group) {
-            $statusLabel = ($statusCode !== 'unknown') ? __('labels.' . $statusCode) : __('labels.unknown');
+            $statusLabel = ($statusCode !== 'unknown') ? __('labels.' . $statusCode) : __('labels.not_determined');
             if ($statusLabel === 'labels.' . $statusCode) {
                 $statusLabel = ucfirst($statusCode);
             }
@@ -125,10 +125,22 @@ class DashboardController extends Controller
         });
         foreach ($groupedBySector as $sectorName => $group) {
             $sectorData[] = [
-                'label' => __($sectorName),
+                'label' => $sectorName === 'Unknown' ? __('labels.not_determined') : __($sectorName),
                 'count' => $group->count(),
                 'budget' => (float)$group->sum('budget')
             ];
+        }
+        usort($sectorData, fn ($a, $b) => $b['budget'] <=> $a['budget']);
+        $sectorLimit = 8;
+        if (count($sectorData) > $sectorLimit) {
+            $topSectors = array_slice($sectorData, 0, $sectorLimit);
+            $otherSectors = array_slice($sectorData, $sectorLimit);
+            $topSectors[] = [
+                'label' => __('labels.others'),
+                'count' => array_sum(array_column($otherSectors, 'count')),
+                'budget' => (float) array_sum(array_column($otherSectors, 'budget')),
+            ];
+            $sectorData = $topSectors;
         }
 
         // 4. Organization Split (Donut/Pie chart)
@@ -138,10 +150,22 @@ class DashboardController extends Controller
         });
         foreach ($groupedByOrg as $orgName => $group) {
             $orgData[] = [
-                'label' => __($orgName),
+                'label' => $orgName === 'Unknown' ? __('labels.not_determined') : $orgName,
                 'count' => $group->count(),
                 'budget' => (float)$group->sum('budget')
             ];
+        }
+        usort($orgData, fn ($a, $b) => $b['count'] <=> $a['count']);
+        $orgLimit = 6;
+        if (count($orgData) > $orgLimit) {
+            $topOrgs = array_slice($orgData, 0, $orgLimit);
+            $otherOrgs = array_slice($orgData, $orgLimit);
+            $topOrgs[] = [
+                'label' => __('labels.others'),
+                'count' => array_sum(array_column($otherOrgs, 'count')),
+                'budget' => (float) array_sum(array_column($otherOrgs, 'budget')),
+            ];
+            $orgData = $topOrgs;
         }
 
         $officials = Official::orderBy('created_at', 'DESC')->limit(5)->get();

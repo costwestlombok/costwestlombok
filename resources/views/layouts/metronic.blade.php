@@ -130,6 +130,22 @@
     <script src="/metronic/assets/js/scripts.bundle.js?v=7.0.6"></script>
     <!--end::Global Theme Bundle-->
     <script src="{{ asset('metronic/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <script>
+        if (jQuery.fn.dataTable) {
+            jQuery.extend(true, jQuery.fn.dataTable.defaults, {
+                language: {
+                    url: "{{ app()->getLocale() == 'id' ? 'https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json' : '' }}"
+                },
+                columnDefs: [
+                    {
+                        targets: '.no-sort',
+                        orderable: false,
+                        searchable: false,
+                    },
+                ],
+            });
+        }
+    </script>
     <script src="{{ asset('metronic/assets/js/pages/features/miscellaneous/sweetalert2.js') }}"></script>
     <script src="{{ asset('metronic/assets/js/pages/features/miscellaneous/toastr.js') }}"></script>
     @if (Session::has('success'))
@@ -143,14 +159,6 @@
         </script>
     @endif
     <script>
-        jQuery(document).ready(function() {
-            $.extend(true, $.fn.dataTable.defaults, {
-                "language": {
-                    "url": "{{ app()->getLocale() == 'id' ? 'https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json' : '' }}"
-                },
-            });
-        });
-
         function deleteFn(tag, id) {
             Swal.fire({
                 title: "{{ __('labels.delete_sub') }}",

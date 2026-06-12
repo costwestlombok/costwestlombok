@@ -27,6 +27,42 @@
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
         border-color: rgba(249, 115, 22, 0.3) !important;
     }
+
+    .chart-container .apexcharts-canvas,
+    .chart-container .apexcharts-svg,
+    .chart-container .apexcharts-inner,
+    .chart-container .apexcharts-graphical {
+        background: transparent !important;
+    }
+
+    .chart-sector-scroll {
+        max-height: 420px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .chart-sector-scroll::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .chart-sector-scroll::-webkit-scrollbar-thumb {
+        background: rgba(120, 110, 90, 0.25);
+        border-radius: 6px;
+    }
+
+    html[data-theme="dark"] .chart-sector-scroll::-webkit-scrollbar-thumb {
+        background: rgba(161, 161, 170, 0.35);
+    }
+
+    #chart-org .apexcharts-legend {
+        max-height: 130px;
+        overflow-y: auto;
+        padding-right: 4px;
+    }
+
+    #chart-org .apexcharts-legend-series {
+        margin: 4px 10px 4px 0 !important;
+    }
 </style>
 @endsection
 @section('script')
@@ -44,9 +80,32 @@
             window.location.href = url.toString();
         });
 
-        // Theme aware helper
+        // Theme aware helpers
         function isDarkTheme() {
             return document.documentElement.getAttribute('data-theme') === 'dark';
+        }
+
+        function getChartThemeVars() {
+            const dark = isDarkTheme();
+            const container = document.querySelector('.chart-container');
+            const strokeColor = container
+                ? getComputedStyle(container).backgroundColor
+                : (dark ? 'rgb(26, 26, 30)' : 'rgb(255, 255, 255)');
+
+            return {
+                foreColor: dark ? '#a1a1aa' : '#57534e',
+                gridColor: dark ? '#2d2d34' : '#e7e5e0',
+                strokeColor: strokeColor,
+                tooltipTheme: dark ? 'dark' : 'light',
+            };
+        }
+
+        function baseChartOptions() {
+            const theme = getChartThemeVars();
+            return {
+                background: 'transparent',
+                foreColor: theme.foreColor,
+            };
         }
 
         // Get labels & datasets from backend PHP arrays
@@ -60,6 +119,7 @@
         const trendCounts = trendData.map(item => item.count);
         const trendBudgets = trendData.map(item => item.budget);
 
+        const trendTheme = getChartThemeVars();
         const trendOptions = {
             series: [{
                 name: "{{ __('labels.project') ?? 'Jumlah Proyek' }}",
@@ -74,7 +134,7 @@
                 height: 350,
                 type: 'line',
                 toolbar: { show: false },
-                foreColor: isDarkTheme() ? '#a1a1aa' : '#57534e'
+                ...baseChartOptions(),
             },
             stroke: {
                 width: [0, 4],
@@ -128,13 +188,10 @@
                         return y;
                     }
                 },
-                theme: isDarkTheme() ? 'dark' : 'light'
-            },
-            theme: {
-                mode: isDarkTheme() ? 'dark' : 'light'
+                theme: trendTheme.tooltipTheme
             },
             grid: {
-                borderColor: isDarkTheme() ? '#2d2d34' : '#e7e5e0'
+                borderColor: trendTheme.gridColor
             },
             legend: {
                 position: 'top',
@@ -149,18 +206,19 @@
         const statusLabels = statusData.map(item => item.label);
         const statusCounts = statusData.map(item => item.count);
 
+        const statusTheme = getChartThemeVars();
         const statusOptions = {
             series: statusCounts,
             chart: {
                 height: 350,
                 type: 'donut',
-                foreColor: isDarkTheme() ? '#a1a1aa' : '#57534e'
+                ...baseChartOptions(),
             },
             labels: statusLabels,
             colors: ['#ea580c', '#f59e0b', '#3b82f6', '#10b981', '#a855f7', '#64748b'],
             stroke: {
                 show: true,
-                colors: [isDarkTheme() ? '#1a1a1e' : '#ffffff'],
+                colors: [statusTheme.strokeColor],
                 width: 2
             },
             responsive: [{
@@ -175,15 +233,12 @@
                 }
             }],
             tooltip: {
-                theme: isDarkTheme() ? 'dark' : 'light',
+                theme: statusTheme.tooltipTheme,
                 y: {
                     formatter: function(val) {
                         return val + " Proyek";
                     }
                 }
-            },
-            theme: {
-                mode: isDarkTheme() ? 'dark' : 'light'
             },
             legend: {
                 position: 'bottom'
@@ -196,7 +251,21 @@
         // Chart 3: Sector Bar Chart
         const sectorLabels = sectorData.map(item => item.label);
         const sectorBudgets = sectorData.map(item => item.budget);
+        const sectorBarRowHeight = 44;
+        const sectorChartHeight = Math.max(280, sectorLabels.length * sectorBarRowHeight);
+        const sectorChartEl = document.querySelector("#chart-sector");
+        if (sectorChartEl) {
+            sectorChartEl.style.height = sectorChartHeight + 'px';
+        }
 
+        function truncateSectorLabel(label, maxLength = 26) {
+            if (typeof label !== 'string') {
+                return label;
+            }
+            return label.length > maxLength ? label.substring(0, maxLength) + '…' : label;
+        }
+
+        const sectorTheme = getChartThemeVars();
         const sectorOptions = {
             series: [{
                 name: "{{ __('labels.budget') ?? 'Total Anggaran' }}",
@@ -204,14 +273,15 @@
             }],
             chart: {
                 type: 'bar',
-                height: 320,
+                height: sectorChartHeight,
                 toolbar: { show: false },
-                foreColor: isDarkTheme() ? '#a1a1aa' : '#57534e'
+                ...baseChartOptions(),
             },
             plotOptions: {
                 bar: {
                     borderRadius: 4,
                     horizontal: true,
+                    barHeight: '65%',
                 }
             },
             colors: ['#10b981'],
@@ -222,6 +292,9 @@
                 categories: sectorLabels,
                 labels: {
                     formatter: function(val) {
+                        if (typeof val !== 'number') {
+                            return val;
+                        }
                         if (val >= 1e9) {
                             return (val / 1e9).toFixed(1) + ' M';
                         } else if (val >= 1e6) {
@@ -233,103 +306,148 @@
                 axisBorder: { show: false },
                 axisTicks: { show: false }
             },
-            grid: {
-                borderColor: isDarkTheme() ? '#2d2d34' : '#e7e5e0'
-            },
-            tooltip: {
-                theme: isDarkTheme() ? 'dark' : 'light',
-                y: {
+            yaxis: {
+                labels: {
+                    maxWidth: 200,
+                    style: {
+                        fontSize: '12px',
+                    },
                     formatter: function(val) {
-                        return "Rp " + val.toLocaleString('id-ID');
+                        return truncateSectorLabel(val);
                     }
                 }
             },
-            theme: {
-                mode: isDarkTheme() ? 'dark' : 'light'
+            grid: {
+                borderColor: sectorTheme.gridColor,
+                padding: {
+                    left: 8,
+                    right: 12,
+                }
+            },
+            tooltip: {
+                theme: sectorTheme.tooltipTheme,
+                y: {
+                    title: {
+                        formatter: function(seriesName) {
+                            return seriesName;
+                        }
+                    },
+                    formatter: function(val, opts) {
+                        const label = sectorLabels[opts.dataPointIndex] || '';
+                        return label + ': Rp ' + val.toLocaleString('id-ID');
+                    }
+                }
             }
         };
 
         const chartSector = new ApexCharts(document.querySelector("#chart-sector"), sectorOptions);
         chartSector.render();
 
-        // Chart 4: Organization Pie Chart
+        // Chart 4: Organization Donut Chart
         const orgLabels = orgData.map(item => item.label);
         const orgCounts = orgData.map(item => item.count);
 
+        function truncateOrgLabel(label, maxLength = 30) {
+            if (typeof label !== 'string') {
+                return label;
+            }
+            return label.length > maxLength ? label.substring(0, maxLength) + '…' : label;
+        }
+
+        const orgTheme = getChartThemeVars();
         const orgOptions = {
             series: orgCounts,
             chart: {
-                height: 320,
-                type: 'pie',
-                foreColor: isDarkTheme() ? '#a1a1aa' : '#57534e'
+                height: 360,
+                type: 'donut',
+                ...baseChartOptions(),
             },
             labels: orgLabels,
-            colors: ['#3b82f6', '#f59e0b', '#ef4444', '#10b981', '#a855f7'],
+            colors: ['#3b82f6', '#f59e0b', '#ef4444', '#10b981', '#a855f7', '#06b6d4', '#64748b'],
             stroke: {
                 show: true,
-                colors: [isDarkTheme() ? '#1a1a1e' : '#ffffff'],
+                colors: [orgTheme.strokeColor],
                 width: 2
             },
-            tooltip: {
-                theme: isDarkTheme() ? 'dark' : 'light',
-                y: {
-                    formatter: function(val) {
-                        return val + " Proyek";
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '62%',
+                        labels: {
+                            show: false
+                        }
                     }
                 }
             },
-            theme: {
-                mode: isDarkTheme() ? 'dark' : 'light'
+            dataLabels: {
+                enabled: false
+            },
+            tooltip: {
+                theme: orgTheme.tooltipTheme,
+                y: {
+                    formatter: function(val, opts) {
+                        const label = orgLabels[opts.seriesIndex] || '';
+                        return label + ': ' + val + " {{ __('labels.project') }}";
+                    }
+                }
             },
             legend: {
-                position: 'bottom'
+                position: 'bottom',
+                horizontalAlign: 'left',
+                fontSize: '11px',
+                markers: {
+                    width: 10,
+                    height: 10,
+                    radius: 12
+                },
+                itemMargin: {
+                    horizontal: 10,
+                    vertical: 5
+                },
+                formatter: function(seriesName) {
+                    return truncateOrgLabel(seriesName);
+                }
             }
         };
 
         const chartOrg = new ApexCharts(document.querySelector("#chart-org"), orgOptions);
         chartOrg.render();
 
-        // Handle Theme switches on the fly
-        const themeBtn = document.getElementById('kt_theme_toggle');
-        if (themeBtn) {
-            themeBtn.addEventListener('click', function() {
-                setTimeout(function() {
-                    const dark = isDarkTheme();
-                    const themeMode = dark ? 'dark' : 'light';
-                    const textColor = dark ? '#a1a1aa' : '#57534e';
-                    const gridColor = dark ? '#2d2d34' : '#e7e5e0';
-                    const strokeColor = dark ? '#1a1a1e' : '#ffffff';
+        function refreshChartsForTheme() {
+            const theme = getChartThemeVars();
 
-                    chartTrend.updateOptions({
-                        chart: { foreColor: textColor },
-                        theme: { mode: themeMode },
-                        tooltip: { theme: themeMode },
-                        grid: { borderColor: gridColor }
-                    });
+            chartTrend.updateOptions({
+                chart: { background: 'transparent', foreColor: theme.foreColor },
+                tooltip: { theme: theme.tooltipTheme },
+                grid: { borderColor: theme.gridColor }
+            });
 
-                    chartStatus.updateOptions({
-                        chart: { foreColor: textColor },
-                        theme: { mode: themeMode },
-                        tooltip: { theme: themeMode },
-                        stroke: { colors: [strokeColor] }
-                    });
+            chartStatus.updateOptions({
+                chart: { background: 'transparent', foreColor: theme.foreColor },
+                tooltip: { theme: theme.tooltipTheme },
+                stroke: { colors: [theme.strokeColor] }
+            });
 
-                    chartSector.updateOptions({
-                        chart: { foreColor: textColor },
-                        theme: { mode: themeMode },
-                        tooltip: { theme: themeMode },
-                        grid: { borderColor: gridColor }
-                    });
+            chartSector.updateOptions({
+                chart: { background: 'transparent', foreColor: theme.foreColor },
+                tooltip: { theme: theme.tooltipTheme },
+                grid: { borderColor: theme.gridColor }
+            });
 
-                    chartOrg.updateOptions({
-                        chart: { foreColor: textColor },
-                        theme: { mode: themeMode },
-                        tooltip: { theme: themeMode },
-                        stroke: { colors: [strokeColor] }
-                    });
-                }, 100);
+            chartOrg.updateOptions({
+                chart: { background: 'transparent', foreColor: theme.foreColor },
+                tooltip: { theme: theme.tooltipTheme },
+                stroke: { colors: [theme.strokeColor] }
             });
         }
+
+        const themeObserver = new MutationObserver(function() {
+            requestAnimationFrame(refreshChartsForTheme);
+        });
+        themeObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-theme']
+        });
     });
 </script>
 @endsection
@@ -628,14 +746,16 @@
                             <div class="col-lg-6 col-md-12 gutter-b">
                                 <div class="p-6 rounded chart-container">
                                     <h5 class="text-dark font-weight-bolder mb-5 font-size-lg">{{ __('labels.budget_by_sector') ?? 'Alokasi Anggaran per Sektor' }}</h5>
-                                    <div id="chart-sector" style="min-height: 320px;"></div>
+                                    <div class="chart-sector-scroll">
+                                        <div id="chart-sector"></div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- Organization Contributions -->
                             <div class="col-lg-6 col-md-12 gutter-b">
                                 <div class="p-6 rounded chart-container">
                                     <h5 class="text-dark font-weight-bolder mb-5 font-size-lg">{{ __('labels.project_by_org') ?? 'Kontribusi Proyek per Organisasi' }}</h5>
-                                    <div id="chart-org" style="min-height: 320px;"></div>
+                                    <div id="chart-org" style="min-height: 360px;"></div>
                                 </div>
                             </div>
                         </div>
