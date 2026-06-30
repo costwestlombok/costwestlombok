@@ -1,87 +1,150 @@
 @extends('layouts.metronic')
 @section('style')
+<style>
+    .project-chart-wrap .apexcharts-canvas,
+    .project-chart-wrap .apexcharts-svg {
+        background: transparent !important;
+    }
+</style>
 @endsection
 @section('script')
 <script>
     "use strict";
-    // Shared Colors Definition
+
     const primary = '#6993FF';
     const success = '#1BC5BD';
-    const info = '#8950FC';
     const warning = '#FFA800';
     const danger = '#F64E60';
-    var label = JSON.parse('{!! $date !!}');
-    var KTApexChartsDemo = function () {
-        var _demo1 = function () {
-		const apexChart = "#chart_1";
-            var options = {
-                series: [{
-                    name: 'Programmed',
-                    data: {{ $pp }}
-                }, {
-                    name: 'Real',
-                    data: {{ $rp }}
-                }],
-                chart: {
-                    height: 350,
-                    type: 'area'
-                },
-                dataLabels: {
-                    enabled: true
-                },
-                stroke: {
-                    curve: 'smooth'
-                },
-                xaxis: {
-                    categories:  label
-                },
+    const label = JSON.parse('{!! $date !!}');
 
-                colors: [primary, success]
-            };
+    function isDarkTheme() {
+        return document.documentElement.getAttribute('data-theme') === 'dark';
+    }
 
-            var chart = new ApexCharts(document.querySelector(apexChart), options);
-            chart.render();
-        };
-        var _demo2 = function () {
-		const apexChart = "#chart_2";
-            var options = {
-                series: [{
-                    name: 'Scheduled Financing',
-                    data: {{ $sf }}
-                }, {
-                    name: 'Real Financing',
-                    data: {{ $rf }}
-                }],
-                chart: {
-                    height: 350,
-                    type: 'area'
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    curve: 'smooth'
-                },
-                xaxis: {
-                    categories: label
-                },
-                colors: [warning, danger]
-            };
-
-            var chart = new ApexCharts(document.querySelector(apexChart), options);
-            chart.render();
-        };
+    function getChartThemeVars() {
+        const dark = isDarkTheme();
         return {
-		// public functions
-            init: function () {
-                _demo1();
-                _demo2();
-            }
+            foreColor: dark ? '#a1a1aa' : '#57534e',
+            gridColor: dark ? '#2d2d34' : '#e7e5e0',
+            strokeColor: dark ? '#1a1a1e' : '#ffffff',
+            tooltipTheme: dark ? 'dark' : 'light',
         };
+    }
 
-    }();
+    function buildAreaChartOptions(series, colors, showDataLabels) {
+        const theme = getChartThemeVars();
+        const dark = isDarkTheme();
+
+        return {
+            series: series,
+            chart: {
+                height: 350,
+                type: 'area',
+                background: 'transparent',
+                foreColor: theme.foreColor,
+                toolbar: { show: true },
+            },
+            colors: colors,
+            dataLabels: {
+                enabled: showDataLabels,
+                style: {
+                    colors: [dark ? '#f4f4f5' : '#1c1917'],
+                },
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 2,
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: dark ? 0.35 : 0.45,
+                    opacityTo: dark ? 0.05 : 0.1,
+                },
+            },
+            xaxis: {
+                categories: label,
+                labels: {
+                    style: { colors: theme.foreColor },
+                },
+                crosshairs: {
+                    stroke: { color: theme.gridColor },
+                },
+            },
+            yaxis: {
+                labels: {
+                    style: { colors: theme.foreColor },
+                },
+            },
+            grid: {
+                borderColor: theme.gridColor,
+            },
+            legend: {
+                labels: {
+                    colors: theme.foreColor,
+                },
+            },
+            tooltip: {
+                theme: theme.tooltipTheme,
+            },
+            theme: {
+                mode: dark ? 'dark' : 'light',
+            },
+        };
+    }
+
+    let chartProgress = null;
+    let chartFinancial = null;
+
     jQuery(document).ready(function () {
-        KTApexChartsDemo.init();
+        chartProgress = new ApexCharts(
+            document.querySelector('#chart_1'),
+            buildAreaChartOptions([
+                { name: 'Programmed', data: {{ $pp }} },
+                { name: 'Real', data: {{ $rp }} },
+            ], [primary, success], true)
+        );
+        chartProgress.render();
+
+        chartFinancial = new ApexCharts(
+            document.querySelector('#chart_2'),
+            buildAreaChartOptions([
+                { name: 'Scheduled Financing', data: {{ $sf }} },
+                { name: 'Real Financing', data: {{ $rf }} },
+            ], [warning, danger], false)
+        );
+        chartFinancial.render();
+
+        function refreshChartsForTheme() {
+            const theme = getChartThemeVars();
+            const dark = isDarkTheme();
+            const update = {
+                chart: { background: 'transparent', foreColor: theme.foreColor },
+                tooltip: { theme: theme.tooltipTheme },
+                grid: { borderColor: theme.gridColor },
+                legend: { labels: { colors: theme.foreColor } },
+                xaxis: {
+                    labels: { style: { colors: theme.foreColor } },
+                    crosshairs: { stroke: { color: theme.gridColor } },
+                },
+                yaxis: {
+                    labels: { style: { colors: theme.foreColor } },
+                },
+                theme: { mode: dark ? 'dark' : 'light' },
+            };
+
+            chartProgress.updateOptions(update);
+            chartFinancial.updateOptions(update);
+        }
+
+        const themeObserver = new MutationObserver(function () {
+            requestAnimationFrame(refreshChartsForTheme);
+        });
+        themeObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-theme'],
+        });
     });
 </script>
 @endsection
@@ -782,11 +845,11 @@
                         <hr> --}}
                         @endif
                         <div class="mt-5 mb-5 row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 project-chart-wrap">
                                 <h3 class="mt-5 mb-5 card-label">{{ __('labels.progress_percent') }} (%)</h3>
                                 <div id="chart_1"></div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 project-chart-wrap">
                                 <h3 class="mt-5 mb-5 card-label">{{ __('labels.progress_financial') }}</h3>
                                 <div id="chart_2"></div>
                             </div>

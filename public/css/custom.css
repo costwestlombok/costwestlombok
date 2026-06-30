@@ -1455,6 +1455,10 @@ html[data-theme="dark"] .login-theme-toggle:hover {
     transition: transform 0.25s ease, box-shadow 0.25s ease !important;
 }
 
+.landing-project-card .card-body {
+    padding-bottom: 1.5rem !important;
+}
+
 .landing-project-card:hover {
     transform: translateY(-2px) !important;
 }
@@ -1478,4 +1482,70 @@ html[data-theme="dark"] .landing-hero-card {
 html[data-theme="dark"] .landing-support-card {
     background: #151518 !important;
     border-color: #2d2d34 !important;
+}
+
+/* ApexCharts dark mode */
+html[data-theme="dark"] .apexcharts-canvas,
+html[data-theme="dark"] .apexcharts-svg {
+    background: transparent !important;
+}
+
+html[data-theme="dark"] .apexcharts-text,
+html[data-theme="dark"] .apexcharts-legend-text {
+    fill: #a1a1aa !important;
+    color: #a1a1aa !important;
+}
+
+html[data-theme="dark"] .apexcharts-tooltip {
+    background: #1e1e24 !important;
+    border: 1px solid #2d2d34 !important;
+    color: #e4e4e7 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+}
+
+html[data-theme="dark"] .apexcharts-tooltip-title {
+    background: #222227 !important;
+    border-bottom: 1px solid #2d2d34 !important;
+    color: #f4f4f5 !important;
+}
+
+html[data-theme="dark"] .apexcharts-tooltip-text,
+html[data-theme="dark"] .apexcharts-tooltip-text-y-label,
+html[data-theme="dark"] .apexcharts-tooltip-text-y-value,
+html[data-theme="dark"] .apexcharts-tooltip-text-goals-label,
+html[data-theme="dark"] .apexcharts-tooltip-text-goals-value {
+    color: #e4e4e7 !important;
+}
+
+html[data-theme="dark"] .apexcharts-tooltip-series-group {
+    background: transparent !important;
+}
+
+html[data-theme="dark"] .apexcharts-xaxistooltip {
+    background: #1e1e24 !important;
+    border: 1px solid #2d2d34 !important;
+    color: #f4f4f5 !important;
+}
+
+html[data-theme="dark"] .apexcharts-xaxistooltip-text {
+    color: #f4f4f5 !important;
+}
+
+html[data-theme="dark"] .apexcharts-menu {
+    background: #1a1a1e !important;
+    border: 1px solid #2d2d34 !important;
+    color: #e4e4e7 !important;
+}
+
+html[data-theme="dark"] .apexcharts-menu-item:hover {
+    background: #222227 !important;
+    color: #f97316 !important;
+}
+
+html[data-theme="dark"] .apexcharts-toolbar svg,
+html[data-theme="dark"] .apexcharts-zoom-icon svg,
+html[data-theme="dark"] .apexcharts-pan-icon svg,
+html[data-theme="dark"] .apexcharts-reset-icon svg,
+html[data-theme="dark"] .apexcharts-menu-icon svg {
+    fill: #a1a1aa !important;
 }

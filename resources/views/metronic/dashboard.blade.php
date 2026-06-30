@@ -363,9 +363,9 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row gutter-b">
             @forelse ($projects as $project)
-            <div class="col-lg-6">
+            <div class="col-lg-6 mb-5">
                 @include('metronic.shared.project-card-public')
             </div>
             @empty

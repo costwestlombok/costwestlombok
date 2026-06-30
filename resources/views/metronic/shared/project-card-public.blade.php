@@ -1,4 +1,4 @@
-<div class="card card-custom gutter-b landing-project-card h-100">
+<div class="card card-custom landing-project-card h-100">
     <div class="card-body d-flex flex-column">
         <div class="d-flex align-items-start justify-content-between mb-4">
             <div class="mr-3">
